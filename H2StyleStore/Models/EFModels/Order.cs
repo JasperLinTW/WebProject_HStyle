@@ -21,7 +21,7 @@ namespace H2StyleStore.Models.EFModels
 
         public DateTime? ShippedDate { get; set; }
 
-        public int ShipVia { get; set; }
+        public string ShipVia { get; set; }
 
         public int Freight { get; set; }
 
