@@ -12,6 +12,7 @@ namespace H2StyleStore.Models.EFModels
         public Product()
         {
             Specs = new HashSet<Spec>();
+            Images = new HashSet<Image>();
             Tags = new HashSet<Tag>();
         }
 
@@ -28,8 +29,6 @@ namespace H2StyleStore.Models.EFModels
         [StringLength(500)]
         public string Description { get; set; }
 
-        public int Stock { get; set; }
-
         public DateTime Create_at { get; set; }
 
         public bool Discontinued { get; set; }
@@ -42,6 +41,9 @@ namespace H2StyleStore.Models.EFModels
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Spec> Specs { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Image> Images { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tag> Tags { get; set; }

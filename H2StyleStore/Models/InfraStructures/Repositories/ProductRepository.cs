@@ -19,8 +19,8 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 
 		public IEnumerable<ProductDto> GetProducts()
 		{
-			IEnumerable<Product> query = _db.Products
-				.Include("PCategory");
+			IEnumerable<Product> query = _db.Products;
+				//.Include("PCategory");
 			
 			query = query.OrderBy(x => x.DisplayOrder);
 

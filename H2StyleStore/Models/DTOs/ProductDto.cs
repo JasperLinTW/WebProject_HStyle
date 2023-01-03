@@ -26,6 +26,11 @@ namespace H2StyleStore.Models.DTOs
 		public int DisplayOrder { get; set; }
 
 		public PCategoryDto PCategory { get; set; }
+
+		public IEnumerable<ImageDto> imgs { get; set; }
+
+		public IEnumerable<SpecDto> specs { get; set; }
+		public IEnumerable<TagDto> tags { get; set; }
 	}
 
 	public static class ProductExts
@@ -37,11 +42,14 @@ namespace H2StyleStore.Models.DTOs
 			Product_Name = source.Product_Name,
 			UnitPrice = source.UnitPrice,
 			Description = source.Description,
-			Stock = source.Stock,
 			Create_at = source.Create_at,
 			Discontinued = source.Discontinued,
 			DisplayOrder = source.DisplayOrder,
 			PCategory = source.PCategory.ToDto(),
+			imgs = source.Images.Select(x => x.ToDto()),
+			specs = source.Specs.Select(x => x.ToDto()),
+			tags = source.Tags.Select(x => x.ToDto()),
+			
 		};
 	}
 }

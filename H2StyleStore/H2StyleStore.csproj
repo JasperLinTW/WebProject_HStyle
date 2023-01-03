@@ -133,19 +133,23 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DTOs\ImageDto.cs" />
     <Compile Include="Models\DTOs\PCategoryDto.cs" />
     <Compile Include="Models\DTOs\ProductDto.cs" />
+    <Compile Include="Models\DTOs\SpecDto.cs" />
+    <Compile Include="Models\DTOs\TagDto.cs" />
     <Compile Include="Models\EFModels\AppDbContext.cs" />
+    <Compile Include="Models\EFModels\Image.cs" />
     <Compile Include="Models\EFModels\PCategory.cs" />
-    <Compile Include="Models\EFModels\Photo.cs" />
     <Compile Include="Models\EFModels\Product.cs" />
     <Compile Include="Models\EFModels\Spec.cs" />
-    <Compile Include="Models\EFModels\Spec_details.cs" />
     <Compile Include="Models\EFModels\Tag.cs" />
     <Compile Include="Models\Infrastructures\Repositories\ProductRepository.cs" />
     <Compile Include="Models\Services\IProductRepository.cs" />
     <Compile Include="Models\Services\ProductService.cs" />
     <Compile Include="Models\ViewModels\ProductVM.cs" />
+    <Compile Include="Models\ViewModels\SpecVm.cs" />
+    <Compile Include="Models\ViewModels\TagVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -153,6 +157,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\StyleSheet1.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -189,7 +194,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\Infrastructures\ExtensionMethods\" />
-    <Folder Include="Views\jasper\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
