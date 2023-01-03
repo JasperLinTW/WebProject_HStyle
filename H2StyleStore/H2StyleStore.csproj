@@ -135,6 +135,8 @@
     <Compile Include="Models\EFModels\AppDbContext.cs" />
     <Compile Include="Models\EFModels\Order.cs" />
     <Compile Include="Models\EFModels\Order_Details.cs" />
+    <Compile Include="Models\ViewModels\OrderVM.cs" />
+    <Compile Include="Models\ViewModels\Order_DetailsVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -180,7 +182,6 @@
     <Folder Include="Models\Infrastructures\ExtensionMethods\" />
     <Folder Include="Models\Infrastructures\Repositories\" />
     <Folder Include="Models\Services\" />
-    <Folder Include="Models\ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

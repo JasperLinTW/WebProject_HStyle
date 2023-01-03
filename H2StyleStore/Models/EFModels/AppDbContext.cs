@@ -8,7 +8,7 @@ namespace H2StyleStore.Models.EFModels
 	public partial class AppDbContext : DbContext
 	{
 		public AppDbContext()
-			: base("name=AppDbContext")
+			: base("name=AppDbContext1")
 		{
 		}
 
@@ -28,6 +28,10 @@ namespace H2StyleStore.Models.EFModels
 			modelBuilder.Entity<Order_Details>()
 				.Property(e => e.Discount)
 				.HasPrecision(18, 0);
+
+			modelBuilder.Entity<Order>()
+				.HasOptional(e => e.Order_Details)
+				.WithRequired(e => e.Order);
 		}
 	}
 }

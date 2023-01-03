@@ -24,5 +24,7 @@ namespace H2StyleStore.Models.EFModels
         public int Quantity { get; set; }
 
         public decimal? Discount { get; set; }
+
+        public virtual Order Order { get; set; }
     }
 }

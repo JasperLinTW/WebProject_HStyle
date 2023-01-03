@@ -44,5 +44,7 @@ namespace H2StyleStore.Models.EFModels
         public DateTime CreatedTime { get; set; }
 
         public int Status { get; set; }
+
+        public virtual Order_Details Order_Details { get; set; }
     }
 }
