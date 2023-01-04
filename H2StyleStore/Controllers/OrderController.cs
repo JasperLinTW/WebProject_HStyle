@@ -24,11 +24,17 @@ namespace H2StyleStore.Controllers
         }
 
         // GET: Order
-        public ActionResult Index()
+        public ActionResult Index(int status)
         {
+            ViewBag.Status = GetStatus(status);
             var data = orderService.Load()
                        .Select(x => x.ToVM());
 			return View(data);
+        }
+
+        public ActionResult Details()
+        {
+            return View();
         }
     }
 }
