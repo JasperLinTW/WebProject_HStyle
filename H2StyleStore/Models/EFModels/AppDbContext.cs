@@ -17,17 +17,6 @@ namespace H2StyleStore.Models.EFModels
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
-			modelBuilder.Entity<Order_Details>()
-				.Property(e => e.UnitPrice)
-				.HasPrecision(18, 0);
-
-			modelBuilder.Entity<Order_Details>()
-				.Property(e => e.SubTotal)
-				.HasPrecision(18, 0);
-
-			modelBuilder.Entity<Order_Details>()
-				.Property(e => e.Discount)
-				.HasPrecision(18, 0);
 		}
 	}
 }
