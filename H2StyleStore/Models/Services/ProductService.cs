@@ -19,5 +19,7 @@ namespace H2StyleStore.Models.Services
 		{
 			return _repository.GetProducts();
 		}
+
+		
 	}
 }

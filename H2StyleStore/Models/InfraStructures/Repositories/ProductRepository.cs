@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.Entity;
+using System.Web.Mvc;
 
 namespace H2StyleStore.Models.Infrastructures.Repositories
 {
@@ -25,6 +26,19 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			query = query.OrderBy(x => x.DisplayOrder);
 
 			return query.Select(x => x.ToDto());
+		}
+
+		public IEnumerable<SelectListItem> GetCategories()
+		{
+			var data = _db.PCategories;
+
+			
+			foreach (var item in data)
+			{
+				yield return new SelectListItem { Value = item.PCategory_Id.ToString(), Text = item.PCategoryName };
+				
+			}
+			
 		}
 	}
 }

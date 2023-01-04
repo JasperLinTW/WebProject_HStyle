@@ -31,6 +31,8 @@ namespace H2StyleStore.Controllers
 
         public ActionResult CreateProduct()
         {
+            //todo直接呼叫要改成三層式
+            ViewBag.PCategories = new ProductRepository(new AppDbContext()).GetCategories();
             return View();
         }
     }
