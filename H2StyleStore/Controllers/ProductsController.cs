@@ -28,5 +28,10 @@ namespace H2StyleStore.Controllers
             
             return View(data);
         }
+
+        public ActionResult CreateProduct()
+        {
+            return View();
+        }
     }
 }
