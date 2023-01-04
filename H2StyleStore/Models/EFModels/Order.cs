@@ -21,6 +21,8 @@ namespace H2StyleStore.Models.EFModels
 
         public DateTime? ShippedDate { get; set; }
 
+        [Required]
+        [StringLength(50)]
         public string ShipVia { get; set; }
 
         public int Freight { get; set; }
@@ -44,7 +46,5 @@ namespace H2StyleStore.Models.EFModels
         public DateTime CreatedTime { get; set; }
 
         public int Status { get; set; }
-
-        public virtual Order_Details Order_Details { get; set; }
     }
 }

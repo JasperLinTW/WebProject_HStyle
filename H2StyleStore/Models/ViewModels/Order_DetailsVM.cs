@@ -31,8 +31,5 @@ namespace H2StyleStore.Models.ViewModels
 
 		[DisplayName("折扣")]
 		public decimal? Discount { get; set; }
-
-		[DisplayName("訂單內容")]
-		public virtual Order Order { get; set; }
 	}
 }

@@ -9,8 +9,12 @@ namespace H2StyleStore.Models.EFModels
     public partial class Order_Details
     {
         [Key]
+        [Column(Order = 0)]
         public int Order_id { get; set; }
 
+        [Key]
+        [Column(Order = 1)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Product_id { get; set; }
 
         [Required]
@@ -24,7 +28,5 @@ namespace H2StyleStore.Models.EFModels
         public int Quantity { get; set; }
 
         public decimal? Discount { get; set; }
-
-        public virtual Order Order { get; set; }
     }
 }
