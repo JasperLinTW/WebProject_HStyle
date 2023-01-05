@@ -24,9 +24,9 @@ namespace H2StyleStore.Controllers
         }
 
         // GET: Order
-        public ActionResult Index(int status)
+        public ActionResult Index(int? status)
         {
-            ViewBag.Status = GetStatus(status);
+            ViewBag.Status = orderService.GetStatus(status);
             var data = orderService.Load()
                        .Select(x => x.ToVM());
 			return View(data);

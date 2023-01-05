@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace H2StyleStore.Models.Infrastructures.Repositories
 {
@@ -15,6 +16,20 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 		public OrderRepository(AppDbContext db)
 		{
 			_db = db;
+		}
+
+		public IEnumerable<SelectListItem> GetStatus(int? status)
+		{
+			var items = _db.Orders.Select(s => new SelectListItem
+			{
+				//Value = s.Status.ToString(),
+				//Text = c.,
+				//Selected = (categoryId.HasValue && c.Id == categoryId.Value)
+			})
+			.ToList()
+			.Prepend(new SelectListItem { Value = string.Empty, Text = "所有" });
+
+			return items;
 		}
 
 		public IEnumerable<OrderDTO> Load()
