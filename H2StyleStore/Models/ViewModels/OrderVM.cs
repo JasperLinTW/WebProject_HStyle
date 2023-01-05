@@ -61,6 +61,7 @@ namespace H2StyleStore.Models.ViewModels
 		public int Status { get; set; }
 
 		public IEnumerable<Order_DetailsVM> Order_Details { get; set; }
+
 	}
 
 	public static class OrderDTOExts
