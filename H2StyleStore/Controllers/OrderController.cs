@@ -4,9 +4,11 @@ using H2StyleStore.Models.Infrastructures.Repositories;
 using H2StyleStore.Models.Services;
 using H2StyleStore.Models.Services.Interfaces;
 using H2StyleStore.Models.ViewModels;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 
@@ -16,7 +18,7 @@ namespace H2StyleStore.Controllers
     {
         private OrderService orderService;
 
-        public OrderController()
+		public OrderController()
         {
             var db = new AppDbContext();
             IOrderRepository repo = new OrderRepository(db);
@@ -39,9 +41,10 @@ namespace H2StyleStore.Controllers
 			return View(data);
         }
 
-        public ActionResult Details()
+        public ActionResult Details(int id)
         {
-            return View();
+			var orderDetail = orderService.Find(id);
+			return View(orderDetail);
         }
     }
 }

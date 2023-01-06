@@ -69,9 +69,11 @@
         <th></th>
     </tr>
 
+    @{int id = 1;} 
+
     @foreach (var item in Model)
     {
-        <tr>
+        <tr id="@id" class="orderrow">
             <td>
                 @Html.DisplayFor(modelItem => item.Order_id)
             </td>
@@ -111,11 +113,18 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
-            <td>
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
         </tr>
+        id++;
     }
-
 </table>
+
+@section Scripts{
+    <script>
+        $('.orderrow').on('click', function (event) {
+            var orderId = $(this).attr("id");
+            document.location.href = ""
+        });
+
+    </script>
+
+    }
