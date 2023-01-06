@@ -14,51 +14,45 @@ namespace H2StyleStore.Models.EFModels
 
 		public virtual DbSet<Eassy_Follows> Eassy_Follows { get; set; }
 		public virtual DbSet<EComments_Likes> EComments_Likes { get; set; }
-		public virtual DbSet<Elike> Elikes { get; set; }
-		public virtual DbSet<Employee> Employees { get; set; }
-		public virtual DbSet<Essay> Essays { get; set; }
+		public virtual DbSet<Elikes> Elikes { get; set; }
+		public virtual DbSet<Employees> Employees { get; set; }
+		public virtual DbSet<Essays> Essays { get; set; }
 		public virtual DbSet<Essays_Comments> Essays_Comments { get; set; }
 		public virtual DbSet<Essays_Tags> Essays_Tags { get; set; }
-		public virtual DbSet<Image> Images { get; set; }
+		public virtual DbSet<Images> Images { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
-			modelBuilder.Entity<Employee>()
+			modelBuilder.Entity<Employees>()
 				.Property(e => e.Account)
 				.IsUnicode(false);
 
-			modelBuilder.Entity<Employee>()
-				.Property(e => e.Password)
+			modelBuilder.Entity<Employees>()
+				.Property(e => e.EncryptedPassword)
 				.IsUnicode(false);
 
-			modelBuilder.Entity<Employee>()
-				.HasMany(e => e.Essays)
-				.WithRequired(e => e.Employee)
-				.HasForeignKey(e => e.Influencer_Id)
-				.WillCascadeOnDelete(false);
-
-			modelBuilder.Entity<Essay>()
+			modelBuilder.Entity<Essays>()
 				.HasMany(e => e.Eassy_Follows)
-				.WithRequired(e => e.Essay)
+				.WithRequired(e => e.Essays)
 				.HasForeignKey(e => e.Eassy_Id)
 				.WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<Essay>()
+			modelBuilder.Entity<Essays>()
 				.HasMany(e => e.Elikes)
-				.WithRequired(e => e.Essay)
+				.WithRequired(e => e.Essays)
 				.WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<Essay>()
+			modelBuilder.Entity<Essays>()
 				.HasMany(e => e.Essays_Comments)
-				.WithRequired(e => e.Essay)
+				.WithRequired(e => e.Essays)
 				.WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<Essay>()
+			modelBuilder.Entity<Essays>()
 				.HasMany(e => e.Essays_Tags)
-				.WithRequired(e => e.Essay)
+				.WithRequired(e => e.Essays)
 				.WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<Essay>()
+			modelBuilder.Entity<Essays>()
 				.HasMany(e => e.Images)
 				.WithMany(e => e.Essays)
 				.Map(m => m.ToTable("Essays_Imgs").MapLeftKey("Essay_Id").MapRightKey("Img_Id"));
@@ -68,7 +62,7 @@ namespace H2StyleStore.Models.EFModels
 				.WithRequired(e => e.Essays_Comments)
 				.WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<Image>()
+			modelBuilder.Entity<Images>()
 				.Property(e => e.Path)
 				.IsUnicode(false);
 		}

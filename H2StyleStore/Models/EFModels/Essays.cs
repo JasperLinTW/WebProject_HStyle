@@ -6,16 +6,16 @@ namespace H2StyleStore.Models.EFModels
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Essay
+    public partial class Essays
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Essay()
+        public Essays()
         {
             Eassy_Follows = new HashSet<Eassy_Follows>();
-            Elikes = new HashSet<Elike>();
+            Elikes = new HashSet<Elikes>();
             Essays_Comments = new HashSet<Essays_Comments>();
             Essays_Tags = new HashSet<Essays_Tags>();
-            Images = new HashSet<Image>();
+            Images = new HashSet<Images>();
         }
 
         [Key]
@@ -33,13 +33,17 @@ namespace H2StyleStore.Models.EFModels
         [StringLength(1000)]
         public string EContent { get; set; }
 
+		public bool? IsConfirmed { get; set; }
+
+		public DateTime UpLoad { get; set; }
+
+        public DateTime Removed { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Eassy_Follows> Eassy_Follows { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Elike> Elikes { get; set; }
-
-        public virtual Employee Employee { get; set; }
+        public virtual ICollection<Elikes> Elikes { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Essays_Comments> Essays_Comments { get; set; }
@@ -48,6 +52,6 @@ namespace H2StyleStore.Models.EFModels
         public virtual ICollection<Essays_Tags> Essays_Tags { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Image> Images { get; set; }
+        public virtual ICollection<Images> Images { get; set; }
     }
 }

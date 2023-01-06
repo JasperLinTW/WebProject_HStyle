@@ -23,6 +23,12 @@
         <th>
             @Html.DisplayNameFor(model => model.EContent)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UpLoad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Removed)
+        </th>
         <th></th>
     </tr>
 
@@ -41,9 +47,15 @@
             @Html.DisplayFor(modelItem => item.EContent)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Essay_Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Essay_Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Essay_Id })
+            @Html.DisplayFor(modelItem => item.UpLoad)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Removed)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.Essay_Id }) |
+            @Html.ActionLink("Details", "Details", new { id = item.Essay_Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Essay_Id })
         </td>
     </tr>
 }

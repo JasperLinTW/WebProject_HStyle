@@ -14,6 +14,7 @@ namespace H2StyleStore.Controllers
 {
     public class EssaysController : Controller
     {
+		private IEssayRepository repo;
 		private EssayService essayService;
 
 		public EssaysController()
@@ -34,10 +35,30 @@ namespace H2StyleStore.Controllers
         {
             return View();
         }
-  //      [HttpPost]
-  //      public ActionResult Uploadblog(Essay bg)
-		//{
-         
-		//}
+		[HttpPost]
+		public ActionResult Register(EssayVM model)
+		{
+			if (!ModelState.IsValid)
+			{
+				return View(model);
+			}
+
+			var service = new EssayService(repo);
+
+			(bool IsSuccess, string ErrorMessage) response =
+				service.CreateNewEssay(model.ToVM());
+
+			if (response.IsSuccess)
+			{
+				// 建檔成功 redirect to confirm page
+				return View("RegisterConfirm");
+			}
+			else
+			{
+				ModelState.AddModelError(string.Empty, response.ErrorMessage);
+				return View(model);
+			}
+		}
+
 	}
 }

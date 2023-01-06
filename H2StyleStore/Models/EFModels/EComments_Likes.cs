@@ -15,6 +15,7 @@ namespace H2StyleStore.Models.EFModels
 
         [Key]
         [Column(Order = 1)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Comment_Id { get; set; }
 
         public virtual Essays_Comments Essays_Comments { get; set; }

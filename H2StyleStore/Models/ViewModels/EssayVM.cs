@@ -24,6 +24,10 @@ namespace H2StyleStore.Models.ViewModels
 		[StringLength(1000)]
 		public string EContent { get; set; }
 
+		public DateTime UpLoad { get; set; }
+
+		public DateTime Removed { get; set; }
+
 
 	}
 	public static class EssayDtoExts
@@ -36,6 +40,8 @@ namespace H2StyleStore.Models.ViewModels
 			UplodTime = source.UplodTime,
 			ETitle = source.ETitle,
 			EContent = source.EContent,
+			UpLoad= source.UpLoad,
+			Removed = source.Removed,
 		};
 	}
 }

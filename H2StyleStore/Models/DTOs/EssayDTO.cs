@@ -24,10 +24,14 @@ namespace H2StyleStore.Models.DTOs
 		[StringLength(1000)]
 		public string EContent { get; set; }
 
+		public DateTime UpLoad { get; set; }
+
+		public DateTime Removed { get; set; }
+		public string ConfirmCode { get;  set; }
 	}
 	public static class EssayExts
 	{
-		public static EssayDTO ToDto(this Essay source)
+		public static EssayDTO ToDto(this Essays source)
 		=> new EssayDTO
 		{
 			Essay_Id = source.Essay_Id,
@@ -35,6 +39,8 @@ namespace H2StyleStore.Models.DTOs
 			UplodTime = source.UplodTime,
 			ETitle = source.ETitle,
 			EContent = source.EContent,
+			UpLoad = source.UpLoad,
+			Removed = source.Removed,
 		};
 	}
 }

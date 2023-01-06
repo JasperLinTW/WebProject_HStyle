@@ -131,19 +131,21 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\EssaysController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\uploadEssaysController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\DTOs\EssayDTO.cs" />
+    <Compile Include="Models\DTOs\RegisterVM.cs" />
     <Compile Include="Models\EFModels\AppDbContext.cs" />
     <Compile Include="Models\EFModels\Eassy_Follows.cs" />
     <Compile Include="Models\EFModels\EComments_Likes.cs" />
-    <Compile Include="Models\EFModels\Elike.cs" />
-    <Compile Include="Models\EFModels\Employee.cs" />
-    <Compile Include="Models\EFModels\Essay.cs" />
+    <Compile Include="Models\EFModels\Elikes.cs" />
+    <Compile Include="Models\EFModels\Employees.cs" />
+    <Compile Include="Models\EFModels\Essays.cs" />
     <Compile Include="Models\EFModels\Essays_Comments.cs" />
     <Compile Include="Models\EFModels\Essays_Tags.cs" />
-    <Compile Include="Models\EFModels\Image.cs" />
+    <Compile Include="Models\EFModels\Images.cs" />
     <Compile Include="Models\Infrastructures\Repositories\EssayRepository.cs" />
     <Compile Include="Models\Services\EssayService.cs" />
     <Compile Include="Models\Services\Interfaces\IEssayRepository.cs" />
@@ -187,11 +189,10 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Essays\Index.cshtml" />
+    <Content Include="Views\uploadEssays\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\DTOs\" />
-    <Folder Include="Models\EFModels\" />
     <Folder Include="Models\Infrastructures\ExtensionMethods\" />
     <Folder Include="Views\Blog\" />
   </ItemGroup>

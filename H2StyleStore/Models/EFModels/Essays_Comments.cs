@@ -25,13 +25,11 @@ namespace H2StyleStore.Models.EFModels
         [StringLength(50)]
         public string CComment { get; set; }
 
-        public int CTime { get; set; }
-
-        public int Clike { get; set; }
+        public DateTime CTime { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EComments_Likes> EComments_Likes { get; set; }
 
-        public virtual Essay Essay { get; set; }
+        public virtual Essays Essays { get; set; }
     }
 }

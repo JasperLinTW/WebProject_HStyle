@@ -17,6 +17,6 @@ namespace H2StyleStore.Models.EFModels
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Essay_Id { get; set; }
 
-        public virtual Essay Essay { get; set; }
+        public virtual Essays Essays { get; set; }
     }
 }

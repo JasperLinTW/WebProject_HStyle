@@ -6,7 +6,7 @@ namespace H2StyleStore.Models.EFModels
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Elike
+    public partial class Elikes
     {
         [Key]
         [Column(Order = 0)]
@@ -17,6 +17,6 @@ namespace H2StyleStore.Models.EFModels
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Essay_Id { get; set; }
 
-        public virtual Essay Essay { get; set; }
+        public virtual Essays Essays { get; set; }
     }
 }
