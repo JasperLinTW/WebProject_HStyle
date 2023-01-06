@@ -25,9 +25,13 @@ namespace H2StyleStore.Controllers
 		}
 
 		// GET: H_Activities
-		public ActionResult Index()
+		public ActionResult Index(string activityName)
 		{
+			ViewBag.ActivityName = activityName;
+
 			var data = _hActivitiesService.GetHActivity().Select(a => a.ToVM());
+			if (string.IsNullOrEmpty(activityName) == false) data = data.Where(a => a.Activity_Name.Contains(activityName));
+
 			return View(data);
 		}
 	}
