@@ -26,7 +26,7 @@ namespace H2StyleStore.Models.Services
 			return _repository.GetStatus();
 		}
 
-		public Order_DetailDTO Find(int id)
+		public IEnumerable<Order_DetailDTO> FindById(int? id)
 		{
 			return _repository.FindById(id);
 		}

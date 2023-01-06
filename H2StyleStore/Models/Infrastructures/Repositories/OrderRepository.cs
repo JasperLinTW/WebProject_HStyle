@@ -1,6 +1,7 @@
 ﻿using H2StyleStore.Models.DTOs;
 using H2StyleStore.Models.EFModels;
 using H2StyleStore.Models.Services.Interfaces;
+using H2StyleStore.Models.ViewModels;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,6 +18,14 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 		public OrderRepository(AppDbContext db)
 		{
 			_db = db;
+		}
+
+		public IEnumerable<Order_DetailDTO> FindById(int? id)
+		{
+			IEnumerable<Order_Details> order_detail = _db.Order_Details;
+			var data = order_detail.Select(od => od.ToDTO());
+
+			return data;
 		}
 
 		public IEnumerable<SelectListItem> GetStatus()

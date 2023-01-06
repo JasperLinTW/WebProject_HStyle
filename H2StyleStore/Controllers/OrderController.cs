@@ -41,10 +41,15 @@ namespace H2StyleStore.Controllers
 			return View(data);
         }
 
-        public ActionResult Details(int id)
+        public ActionResult Details(int? id)
         {
-			var orderDetail = orderService.Find(id);
-			return View(orderDetail);
+			var data = orderService.FindById(id).Select(x => x.ToVM());
+			if (id != null)
+			{
+				data = data.Where(od => od.Order_id == id);
+			}
+
+			return View(data);
         }
     }
 }

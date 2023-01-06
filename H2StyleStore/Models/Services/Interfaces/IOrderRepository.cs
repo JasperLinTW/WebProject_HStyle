@@ -15,6 +15,6 @@ namespace H2StyleStore.Models.Services.Interfaces
 
 		IEnumerable<SelectListItem> GetStatus();
 
-		Order_DetailDTO FindById(int id);
+		IEnumerable<Order_DetailDTO> FindById(int? id);
 	}
 }

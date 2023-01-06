@@ -1,4 +1,5 @@
-﻿using H2StyleStore.Models.EFModels;
+﻿using H2StyleStore.Models.DTOs;
+using H2StyleStore.Models.EFModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -31,5 +32,21 @@ namespace H2StyleStore.Models.ViewModels
 
 		[DisplayName("折扣")]
 		public int? Discount { get; set; }
+	}
+	public static class Order_DetailDTOExts
+	{
+		public static Order_DetailsVM ToVM(this Order_DetailDTO source)
+		{
+			return new Order_DetailsVM
+			{
+				Order_id = source.Order_id,
+				Product_id = source.Product_id,
+				ProductName = source.ProductName,	
+				UnitPrice = source.UnitPrice,
+				SubTotal = source.SubTotal,
+				Quantity = source.Quantity, 
+				Discount = source.Discount,
+			};
+		}
 	}
 }

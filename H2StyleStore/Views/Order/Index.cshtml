@@ -113,6 +113,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.Order_id })
+            </td>
         </tr>
         id++;
     }
@@ -122,7 +125,6 @@
     <script>
         $('.orderrow').on('click', function (event) {
             var orderId = $(this).attr("id");
-            document.location.href = ""
         });
 
     </script>
