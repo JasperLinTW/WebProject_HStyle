@@ -164,7 +164,6 @@
     <Compile Include="Models\EFModels\AppDbContext.cs" />
     <Compile Include="Models\EFModels\Order.cs" />
     <Compile Include="Models\EFModels\Order_Details.cs" />
-    <Compile Include="Models\EFModels\Status.cs" />
     <Compile Include="Models\Infrastructures\Repositories\OrderRepository.cs" />
     <Compile Include="Models\Services\Interfaces\IOrderRepository.cs" />
     <Compile Include="Models\Services\OrderService.cs" />

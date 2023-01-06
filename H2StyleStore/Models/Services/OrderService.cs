@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace H2StyleStore.Models.Services
 {
@@ -20,25 +21,9 @@ namespace H2StyleStore.Models.Services
 			return _repository.Load();
 		}
 
-		public string GetStatus(int? status)
+		public IEnumerable<SelectListItem> GetStatus(int? status)
 		{
-			string msg;
-			if (status.HasValue == false)
-			{
-				return msg = "所有";
-			}
-			else if (status.Value == 0)
-			{
-				return msg = "待處理";
-			}
-			else if (status.Value == 1)
-			{
-				return msg = "已結案";
-			}
-			else
-			{
-				return msg = "已取消";
-		    };
+			return _repository.GetStatus(status);
 		}
 	}
 }

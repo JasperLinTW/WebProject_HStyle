@@ -21,50 +21,17 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 
 		public IEnumerable<SelectListItem> GetStatus(int? status)
 		{
-			var items = _db.Orders.Select(s => new SelectListItem
-			source.Add(0, "待處理");
-			source.Add(1, "已結案");
-			source.Add(-1,"已取消");
-			string msg = string.Empty;
-			if (status == null)
-			source.Add(0, "待處理");
-			source.Add(1, "已結案");
-			source.Add(-1,"已取消");
-			string msg = string.Empty;
-			if (status == null)
-			source.Add(0, "待處理");
-			source.Add(1, "已結案");
-			source.Add(-1,"已取消");
-			string msg = string.Empty;
-			if (status == null)
-			source.Add(0, "待處理");
-			source.Add(1, "已結案");
-			source.Add(-1,"已取消");
-			string msg = string.Empty;
-			if (status == null)
-			source.Add(0, "待處理");
-			source.Add(1, "已結案");
-			source.Add(-1,"已取消");
-			string msg = string.Empty;
-			if (status == null)
-			source.Add(0, "待處理");
-			source.Add(1, "已結案");
-			source.Add(-1,"已取消");
-			string msg = string.Empty;
-			if (status == null)
-			{
-				msg = "所有";
-			}
-			else
-			{
-				msg = source[status];
-			};
 
-			var items = _db.Orders.AsEnumerable().Select(o => new SelectListItem
+			Dictionary<int, string> source = new Dictionary<int, string>();
+			source.Add(0, "待處理");
+			source.Add(1, "已結案");
+			source.Add(-1, "已取消");
+
+			var items = source.Select(x => new SelectListItem
 			{
-				Value = o.Status.ToString(),
-				Text = msg,
-				Selected = (status.HasValue && o.Status == status)
+				Value = x.Key.ToString(),
+				Text = x.Value,
+				Selected = (status.HasValue && x.Key == status)
 			})
 			.ToList()
 			.Prepend(new SelectListItem { Value = string.Empty, Text = "所有" });
