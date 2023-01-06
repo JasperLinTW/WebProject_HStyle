@@ -13,6 +13,6 @@ namespace H2StyleStore.Models.Services.Interfaces
 	{
 		IEnumerable<OrderDTO> Load();
 
-		IEnumerable<SelectListItem> GetStatus(int? status);
+		IEnumerable<SelectListItem> GetStatus();
 	}
 }

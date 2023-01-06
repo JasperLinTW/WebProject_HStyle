@@ -58,7 +58,7 @@ namespace H2StyleStore.Models.ViewModels
 		[DisplayName("訂單日期")]
 		public DateTime CreatedTime { get; set; }
 		[DisplayName("訂單狀態")]
-		public int Status { get; set; }
+		public string Status { get; set; }
 
 		public IEnumerable<Order_DetailsVM> Order_Details { get; set; }
 

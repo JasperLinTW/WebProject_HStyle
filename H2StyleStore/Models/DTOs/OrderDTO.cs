@@ -38,7 +38,7 @@ namespace H2StyleStore.Models.DTOs
 
 		public DateTime CreatedTime { get; set; }
 
-		public int Status { get; set; }
+		public string Status { get; set; }
 	}
 
 	public static class OrderExts

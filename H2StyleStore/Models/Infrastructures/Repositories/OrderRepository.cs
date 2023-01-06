@@ -19,18 +19,17 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			_db = db;
 		}
 
-		public IEnumerable<SelectListItem> GetStatus(int? status)
+		public IEnumerable<SelectListItem> GetStatus()
 		{
 
 			Dictionary<int, string> source = new Dictionary<int, string>();
 			source.Add(0, "待處理");
 			source.Add(1, "已結案");
-			source.Add(-1, "已取消");
+			source.Add(2, "已取消");
 			var items = source.Select(x => new SelectListItem
 			{
-				Value = x.Key.ToString(),
+				Value = x.Value,
 				Text = x.Value,
-				Selected = (status.HasValue && x.Key == status)
 			})
 			.ToList()
 			.Prepend(new SelectListItem { Value = string.Empty, Text = "所有" });

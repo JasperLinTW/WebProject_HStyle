@@ -45,8 +45,8 @@ namespace H2StyleStore.Models.EFModels
 
         public DateTime CreatedTime { get; set; }
 
-        public int Status { get; set; }
-
-        public IEnumerable<Order_Details> order_Detail { get; set; }
+        [Required]
+        [StringLength(50)]
+        public string Status { get; set; }
     }
 }

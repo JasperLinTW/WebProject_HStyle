@@ -21,9 +21,9 @@ namespace H2StyleStore.Models.Services
 			return _repository.Load();
 		}
 
-		public IEnumerable<SelectListItem> GetStatus(int? status)
+		public IEnumerable<SelectListItem> GetStatus()
 		{
-			return _repository.GetStatus(status);
+			return _repository.GetStatus();
 		}
 	}
 }
