@@ -1,5 +1,4 @@
 ﻿using H2StyleStore.Models.DTOs;
-using H2StyleStore.Models.EFModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,10 +7,12 @@ using System.Threading.Tasks;
 
 namespace H2StyleStore.Models.Services.Interfaces
 {
-	public interface IH_ActivityRepository
+	public interface IH_Source_DetailRepository
 	{
-		IEnumerable<H_ActivityDto> GetHActivity();
-
-		IEnumerable<H_ActivityDto> GetHActivityItem(int id);
+		/// <summary>
+		/// 取得所有資料
+		/// </summary>
+		/// <returns></returns>
+		IEnumerable<H_Source_DetailDto> GetSource();
 	}
 }

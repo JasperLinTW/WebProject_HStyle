@@ -21,5 +21,10 @@ namespace H2StyleStore.Models.Services
 		{
 			return _repository.GetHActivity();
 		}
+		public IEnumerable<H_ActivityDto> GetHActivityItem(int id)
+		{
+			
+			return _repository.GetHActivityItem(id);
+		}
 	}
 }

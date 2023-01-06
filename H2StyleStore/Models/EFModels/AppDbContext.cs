@@ -29,6 +29,6 @@ namespace H2StyleStore.Models.EFModels
 				.WillCascadeOnDelete(false);
 		}
 
-        public System.Data.Entity.DbSet<H2StyleStore.Models.ViewModels.H_ActivityVM> H_ActivityVM { get; set; }
+        public System.Data.Entity.DbSet<H2StyleStore.Models.ViewModels.H_Source_DetailVM> H_Source_DetailVM { get; set; }
     }
 }

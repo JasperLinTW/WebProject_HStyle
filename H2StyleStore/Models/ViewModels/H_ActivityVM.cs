@@ -16,11 +16,14 @@ namespace H2StyleStore.Models.ViewModels
 
 		[Required]
 		[StringLength(50)]
+		[DisplayName("活動名稱")]
 		public string Activity_Name { get; set; }
 
 		[Required]
+		[DisplayName("活動描述")]
 		public string Activity_Describe { get; set; }
 
+		[DisplayName("多少H幣")]
 		public int H_Value { get; set; }
 	}
 

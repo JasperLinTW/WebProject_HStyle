@@ -22,5 +22,9 @@
 	add 擴充方法 H_Activities_CategoryDto ToDto(this H_Activities_CategoryVM source)
 [V]add H_Activities_CategoryController, HcoinActivity action
 
---實作 H_ActivityService, IH_ActivityRepository, H_ActivityRepository
+-- 實作 H_ActivityService, IH_ActivityRepository, H_ActivityRepository
 	display H_Activity
+
+-- add H_Source_DetailsController, H_Source_DetailVM, H_Source_DetailService,H_Source_DetailDto
+       IH_Source_DetailRepository, H_Source_DetailRepository
+	   並建立與H_Activity的關聯
