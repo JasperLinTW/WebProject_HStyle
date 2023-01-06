@@ -26,7 +26,6 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			source.Add(0, "待處理");
 			source.Add(1, "已結案");
 			source.Add(-1, "已取消");
-
 			var items = source.Select(x => new SelectListItem
 			{
 				Value = x.Key.ToString(),
