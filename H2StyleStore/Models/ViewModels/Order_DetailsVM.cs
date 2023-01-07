@@ -13,6 +13,7 @@ namespace H2StyleStore.Models.ViewModels
 	{
 		[DisplayName("訂單編號")]
 		public int Order_id { get; set; }
+
 		[DisplayName("商品編號")]
 		public int Product_id { get; set; }
 

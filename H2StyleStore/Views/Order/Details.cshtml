@@ -1,74 +1,55 @@
-﻿@model H2StyleStore.Models.ViewModels.Order_DetailsVM
+﻿@model IEnumerable<H2StyleStore.Models.ViewModels.Order_DetailsVM>
 
 @{
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>訂單詳情</h2>
 
-<div>
-    <h4>Order_DetailsVM</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Order_id)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Order_id)
-        </dd>
-
-        <dt>
+<table class="table">
+    <tr>
+        <th>
             @Html.DisplayNameFor(model => model.Product_id)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Product_id)
-        </dd>
-
-        <dt>
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.ProductName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ProductName)
-        </dd>
-
-        <dt>
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.UnitPrice)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UnitPrice)
-        </dd>
-
-        <dt>
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.SubTotal)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SubTotal)
-        </dd>
-
-        <dt>
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Quantity)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Quantity)
-        </dd>
-
-        <dt>
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Discount)
-        </dt>
+        </th>
+        <th></th>
+    </tr>
 
-        <dd>
-            @Html.DisplayFor(model => model.Discount)
-        </dd>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Product_id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UnitPrice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SubTotal)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Quantity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Discount)
+        </td>
+    </tr>
+}
 
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+</table>

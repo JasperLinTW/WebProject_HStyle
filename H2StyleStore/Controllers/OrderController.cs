@@ -1,5 +1,6 @@
 ﻿using H2StyleStore.Models.DTOs;
 using H2StyleStore.Models.EFModels;
+using H2StyleStore.Models.Infrastructures.Extensions;
 using H2StyleStore.Models.Infrastructures.Repositories;
 using H2StyleStore.Models.Services;
 using H2StyleStore.Models.Services.Interfaces;
@@ -33,7 +34,11 @@ namespace H2StyleStore.Controllers
             var data = orderService.Load()
                        .Select(x => x.ToVM());
 
-            if (string.IsNullOrEmpty(status) == false)
+            //依訂單成立時間排序
+            data.OrderBy(x => x.CreatedTime);
+
+            //可篩選
+			if (string.IsNullOrEmpty(status) == false)
             {
 				data = data.Where(s => s.Status == status);
 			}

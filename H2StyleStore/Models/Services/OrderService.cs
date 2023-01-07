@@ -1,10 +1,12 @@
 ﻿using H2StyleStore.Models.DTOs;
+using H2StyleStore.Models.EFModels;
 using H2StyleStore.Models.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using X.PagedList;
 
 namespace H2StyleStore.Models.Services
 {
@@ -30,5 +32,6 @@ namespace H2StyleStore.Models.Services
 		{
 			return _repository.FindById(id);
 		}
+
 	}
 }

@@ -24,7 +24,7 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 		{
 			IEnumerable<Order_Details> order_detail = _db.Order_Details;
 			var data = order_detail.Select(od => od.ToDTO());
-
+			
 			return data;
 		}
 
