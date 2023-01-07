@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
 
@@ -18,6 +19,16 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 		public OrderRepository(AppDbContext db)
 		{
 			_db = db;
+		}
+
+		public void Update(OrderDTO entity)
+		{
+			Order order = _db.Orders.Find(entity.Order_id);
+
+			order.Status = entity.Status;
+			order.ShippedDate = entity.ShippedDate;
+
+			_db.SaveChanges();
 		}
 
 		public IEnumerable<Order_DetailDTO> FindById(int? id)
@@ -33,8 +44,9 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 
 			Dictionary<int, string> source = new Dictionary<int, string>();
 			source.Add(0, "待處理");
-			source.Add(1, "已結案");
-			source.Add(2, "已取消");
+			source.Add(1, "處理中");
+			source.Add(2, "已結案");
+			source.Add(3, "已取消");
 			var items = source.Select(x => new SelectListItem
 			{
 				Value = x.Value,
@@ -52,6 +64,13 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			var data = orders.Select(o => o.ToDTO());
 
 			return data;
+		}
+
+		public OrderDTO GetById(int id)
+		{
+			return _db.Orders
+				.SingleOrDefault(x => x.Order_id == id)
+				.ToDTO();
 		}
 	}
 }

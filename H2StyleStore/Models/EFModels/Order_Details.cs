@@ -10,6 +10,7 @@ namespace H2StyleStore.Models.EFModels
     {
         [Key]
         [Column(Order = 0)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Order_id { get; set; }
 
         [Key]

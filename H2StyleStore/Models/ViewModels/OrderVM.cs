@@ -17,7 +17,7 @@ namespace H2StyleStore.Models.ViewModels
 		public int Member_id { get; set; }
 
 		[DisplayName("員工編號")]
-		public int Employee_id { get; set; }
+		public int? Employee_id { get; set; }
 
 		[DisplayName("總額")]
 		public int Total { get; set; }
@@ -88,4 +88,31 @@ namespace H2StyleStore.Models.ViewModels
 			};
 		}
 	}
+
+	public static class OrderVMExts
+	{
+		public static OrderDTO ToDTO(this OrderVM source)
+		{
+			return new OrderDTO
+			{
+				Order_id = source.Order_id,
+				Member_id = source.Member_id,
+				Employee_id = source.Employee_id,
+				Total = source.Total,
+				Payment = source.Payment,
+				ShippedDate = source.ShippedDate,
+				ShipVia = source.ShipVia,
+				Freight = source.Freight,
+				ShipName = source.ShipName,
+				ShipAddress = source.ShipAddress,
+				ShipPhone = source.ShipPhone,
+				RequestRefundTime = source.RequestRefundTime,
+				RequestRefund = source.RequestRefund,
+				CreatedTime = source.CreatedTime,
+				Status = source.Status,
+			};
+		}
+	}
+
+
 }

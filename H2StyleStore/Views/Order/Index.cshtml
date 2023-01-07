@@ -25,9 +25,12 @@
         <input type="submit" class="btn btn-primary" value="Search" />
     </div>
 </form>
-
+<a href="@Url.Action("Update") class="btn btn-info">批次修改</a>
 <table class="table">
     <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Member_id)
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.Order_id)
         </th>
@@ -76,6 +79,9 @@
     {
         <tr id="@id" class="orderrow">
             <td>
+                @Html.DisplayFor(modelItem => item.Member_id)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Order_id)
             </td>
             <td>
@@ -115,7 +121,7 @@
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
-                @Html.ActionLink("Details", "Details", new { id = item.Order_id })
+                @Html.ActionLink("訂單詳情", "Details", new { id = item.Order_id }, new { @class = "btn btn-default" })
             </td>
         </tr>
         id++;

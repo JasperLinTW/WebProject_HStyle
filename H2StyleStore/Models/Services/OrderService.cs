@@ -33,5 +33,13 @@ namespace H2StyleStore.Models.Services
 			return _repository.FindById(id);
 		}
 
+		public void Update(OrderDTO request)
+		{
+			OrderDTO entity = _repository.GetById(request.Order_id);
+			if (entity == null) throw new Exception("找不到要修改的會員記錄");
+
+			_repository.Update(entity);
+		}
+
 	}
 }

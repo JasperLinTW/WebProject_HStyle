@@ -1,0 +1,121 @@
+﻿@model IEnumerable<H2StyleStore.Models.ViewModels.OrderVM>
+
+@{
+    ViewBag.Title = "Update";
+}
+
+<h2>批次更新</h2>
+
+<form action="@Url.Action("Update")" method="post">
+
+    <p>
+        <input type="submit" value="修改" class="btn btn-info" onclick="return confirm('確定修改?')"/>
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Order_id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Member_id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Employee_id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Total)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Payment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ShippedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ShipVia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Freight)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ShipName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ShipAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ShipPhone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RequestRefundTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RequestRefund)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+        </tr>
+        @{int i = 0; }
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Order_id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Member_id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Employee_id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Total)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Payment)
+                </td>
+                <td>
+                    <input type="datetime-local" value="@item.ShippedDate" name="orders[@i].ShippedDate" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ShipVia)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Freight)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ShipName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ShipAddress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ShipPhone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RequestRefundTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RequestRefund)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedTime)
+                </td>
+                <td>
+                    <input type="hidden" value="@item.Member_id" name="members[@i].Member_id" />
+                    <select name="members[@i].Status">
+                        <option value="@item.Status">@item.Status</option>
+                        <option value="已結案">已結案</option>
+                        <option value="已取消">已取消</option>
+                    </select>
+                </td>
+            </tr>
+            i++;
+        }
+    </table>
+</form>

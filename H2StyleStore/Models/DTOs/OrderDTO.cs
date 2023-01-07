@@ -14,7 +14,7 @@ namespace H2StyleStore.Models.DTOs
 
 		public int Member_id { get; set; }
 
-		public int Employee_id { get; set; }
+		public int? Employee_id { get; set; }
 
 		public int Total { get; set; }
 

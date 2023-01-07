@@ -13,7 +13,7 @@ namespace H2StyleStore.Models.EFModels
 
         public int Member_id { get; set; }
 
-        public int Employee_id { get; set; }
+        public int? Employee_id { get; set; }
 
         public int Total { get; set; }
 

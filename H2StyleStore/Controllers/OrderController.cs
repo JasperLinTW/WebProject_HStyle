@@ -1,6 +1,5 @@
 ﻿using H2StyleStore.Models.DTOs;
 using H2StyleStore.Models.EFModels;
-using H2StyleStore.Models.Infrastructures.Extensions;
 using H2StyleStore.Models.Infrastructures.Repositories;
 using H2StyleStore.Models.Services;
 using H2StyleStore.Models.Services.Interfaces;
@@ -15,7 +14,7 @@ using System.Web.Mvc;
 
 namespace H2StyleStore.Controllers
 {
-    public class OrderController : Controller
+	public class OrderController : Controller
     {
         private OrderService orderService;
 
@@ -56,5 +55,25 @@ namespace H2StyleStore.Controllers
 
 			return View(data);
         }
-    }
+
+		public ActionResult Update()
+		{
+			var data = orderService.Load()
+					   .Select(x => x.ToVM());
+			data.OrderBy(x => x.CreatedTime);
+			return View(data);
+		}
+
+        [HttpPost]
+        public ActionResult Update(OrderVM[] orders)
+        {
+            int orderId;
+            for (int i = 0; i < orders.Length; i++)
+            {
+                orderId = orders[i].Order_id;
+                orderService.Update(orders[orderId].ToDTO());
+			}
+            return RedirectToAction("Index");
+        }
+	}
 }
