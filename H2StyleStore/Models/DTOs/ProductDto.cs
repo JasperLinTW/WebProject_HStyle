@@ -17,20 +17,18 @@ namespace H2StyleStore.Models.DTOs
 
 		public string Description { get; set; }
 
-		public int Stock { get; set; }
-
 		public DateTime Create_at { get; set; }
 
 		public bool Discontinued { get; set; }
 
 		public int DisplayOrder { get; set; }
 
-		public PCategoryDto PCategory { get; set; }
+		public string PCategoryName { get; set; }
 
-		public IEnumerable<ImageDto> imgs { get; set; }
+		public IEnumerable<string> imgs { get; set; }
 
 		public IEnumerable<SpecDto> specs { get; set; }
-		public IEnumerable<TagDto> tags { get; set; }
+		public IEnumerable<string> tags { get; set; }
 	}
 
 	public static class ProductExts
@@ -45,7 +43,7 @@ namespace H2StyleStore.Models.DTOs
 			Create_at = source.Create_at,
 			Discontinued = source.Discontinued,
 			DisplayOrder = source.DisplayOrder,
-			PCategory = source.PCategory.ToDto(),
+			PCategoryName = source.PCategory.ToDto(),
 			imgs = source.Images.Select(x => x.ToDto()),
 			specs = source.Specs.Select(x => x.ToDto()),
 			tags = source.Tags.Select(x => x.ToDto()),

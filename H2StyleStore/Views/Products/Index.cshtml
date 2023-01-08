@@ -7,7 +7,7 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("新增商品", "CreateProduct")
 </p>
 <table class="table">
     <tr>
@@ -61,7 +61,7 @@
             @Html.DisplayFor(modelItem => item.PCategoryName)
         </td>
         <td> 
-            @("#"+string.Join(" #",item.tags.Select(x => x.TagName)))
+            @("#"+string.Join(" #",item.tags))
         </td>
         <td>
             <table class="table table-bordered">

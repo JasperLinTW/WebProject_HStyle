@@ -2,22 +2,22 @@
 
 @{
     ViewBag.Title = "CreateProduct";
-    var pCategories = ViewBag.PCategories as IEnumerable<SelectListItem>;
+    var pCategories = ViewBag.PCategoryItems as IEnumerable<SelectListItem>;
 }
 
 <h2>新增商品</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
 <div class="form-horizontal">
     <h4>ProductVM</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @*@Html.HiddenFor(model => model.Product_Id)
-    @Html.HiddenFor(model => model.Create_at)*@
+        @Html.HiddenFor(model => model.Create_at)*@
 
 
     <div class="form-group">
@@ -57,16 +57,45 @@
     <div class="form-group">
         @Html.LabelFor(model => model.PCategoryName, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownListFor(x => x.PCategoryName, pCategories , new { @class = "form-control" })
+            @*@Html.DropDownListFor(x => x.PCategoryName, pCategories, new { @class = "form-control" })*@
+            @Html.DropDownListFor(x => x.PCategoryName, pCategories, new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.PCategoryName, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
+        <label class="control-label col-md-2" for="tags">標籤</label>
+        <div class="col-md-10">
+            <input class="form-control text-box" id="tags" name="TagName" type="text" value="">
         </div>
     </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2" for="specs">規格1</label>
+        <div class="col-md-10 input-group specs">
+            <input class="form-control text-box" id="Color1" name="Color" type="text" value="">
+            <input class="form-control text-box" id="Size1" name="Size" type="text" value="">
+            <input class="form-control text-box" id="Stock1" name="Stock" type="number" value="">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2" for="specs">規格2</label>
+        <div class="col-md-10 input-group specs">
+            <input class="form-control text-box" id="Color2" name="Color" type="text" value="">
+            <input class="form-control text-box" id="Size2" name="Size" type="text" value="">
+            <input class="form-control text-box" id="Stock2" name="Stock" type="number" value="">
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input id="test" type="submit" value="Create" class="btn btn-default" />
+            @*<button id="test" class="btn btn-default">測試</button>*@
+        </div>
+    </div>
+
 </div>
 }
 
@@ -76,4 +105,34 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $("#test").on("click", function () {
+
+                var specs = [
+                    { Color: $("#Color1").val(), Size: $("#Size1").val() },
+                    { Color: $("#Color2").val(), Size: $("#Size2").val() },
+            ];
+                var tags = $("#tags").val().split(",").map((tag) => tag.trim());
+            
+                let product = {
+                    Product_Name: $("#Product_Name").val(),
+                    UnitPrice: $("#UnitPrice").val(),
+                    Description: $("#Description").val(),
+                    Discontinued: $("#Discontinued").val(),
+                    PCategory: $("#PCategory").val(),
+                    specs: specs,
+                    tags: tags,
+
+
+                };
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("CreateProduct", "Products")',
+                    contentType: "application/json",
+                    data: JSON.stringify({ product })
+                })
+            });
+
+    </script>
 }

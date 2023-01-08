@@ -40,5 +40,35 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			}
 			
 		}
+
+		public bool IsExist(string productName)
+		{
+			var product = _db.Products.SingleOrDefault(x => x.Product_Name == productName);
+			return (product != null);
+		}
+
+		public void Create(ProductDto dto)
+		{
+			int.TryParse(dto.PCategoryName, out int catgoryId);
+			Product product = new Product
+			{
+				Product_Name = dto.Product_Name,
+				UnitPrice = dto.UnitPrice,
+				Description = dto.Description,
+				Create_at = DateTime.Now,
+				Discontinued = dto.Discontinued,
+				DisplayOrder = dto.DisplayOrder,
+				Category_Id = catgoryId,
+			};
+			_db.Products.Add(product);
+			
+
+			
+			//b.Images.Add();
+			//_db.Tags.Add()
+			_db.SaveChanges();
+
+
+		}
 	}
 }

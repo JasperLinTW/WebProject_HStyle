@@ -8,9 +8,8 @@ using System.Web;
 
 namespace H2StyleStore.Models.ViewModels
 {
-	public class ProductVM
+	public class CreateProductVM
 	{
-		public int Product_Id { get; set; }
 
 		[Display(Name = "商品名稱")]
 		public string Product_Name { get; set; }
@@ -31,14 +30,14 @@ namespace H2StyleStore.Models.ViewModels
 		[Display(Name = "類別名稱")]
 		public string PCategoryName { get; set; }
 
-		[Display(Name = "照片")]
-		public IEnumerable<string> images { get; set; }
+		//[Display(Name = "照片")]
+		//public IEnumerable<string> images { get; set; }
 
-		[Display(Name = "規格")]
-		public List<SpecVm> specs { get; set; }
+		//[Display(Name = "規格")]
+		//public List<SpecVm> specs { get; set; }
 
-		[Display(Name = "標籤")]
-		public List<string> tags { get; set; }
+		//[Display(Name = "標籤")]
+		//public List<string> tags { get; set; }
 	}
 
 

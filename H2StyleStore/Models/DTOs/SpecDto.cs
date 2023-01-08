@@ -1,4 +1,5 @@
 ﻿using H2StyleStore.Models.EFModels;
+using H2StyleStore.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -27,11 +28,17 @@ namespace H2StyleStore.Models.DTOs
 		public static SpecDto ToDto(this Spec source)
 		=> new SpecDto
 		{
-			Id= source.Id,
-			Product_Id= source.Product_Id,
 			Color= source.Color,
 			Size= source.Size,
 			Stock= source.Stock,
+		};
+
+		public static SpecDto ToDto(this SpecVm source)
+		=> new SpecDto
+		{
+			Color = source.Color,
+			Size = source.Size,
+			Stock = source.Stock,
 		};
 	}
 }

@@ -20,6 +20,17 @@ namespace H2StyleStore.Models.Services
 			return _repository.GetProducts();
 		}
 
-		
+		public (bool, string ) Create(ProductDto dto)
+		{
+			if (_repository.IsExist(dto.Product_Name))
+			{
+				return (false, "商品名稱已使用，請更改名稱");
+			}
+
+			_repository.Create(dto);
+
+			return (true, null);
+
+		}
 	}
 }

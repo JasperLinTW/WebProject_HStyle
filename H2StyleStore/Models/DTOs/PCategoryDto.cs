@@ -18,12 +18,13 @@ namespace H2StyleStore.Models.DTOs
 
 	public static class PCategoryExts
 	{
-		public static PCategoryDto ToDto(this PCategory source)
-		=> new PCategoryDto
+		public static string ToDto(this PCategory source)
+		//=> new PCategoryDto
 		{
-			PCategory_Id = source.PCategory_Id,
-			PCategoryName = source.PCategoryName,
-			PCategory_Description = source.PCategory_Description,
-		};
+			return source.PCategoryName;
+			//PCategory_Id = source.PCategory_Id,
+			//PCategoryName = source.PCategoryName,
+			//PCategory_Description = source.PCategory_Description,
+		}//;
 	}
 }

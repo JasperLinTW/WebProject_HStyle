@@ -16,11 +16,9 @@ namespace H2StyleStore.Models.DTOs
 
     public static class ImageExts
     {
-        public static ImageDto ToDto(this Image source)
-        => new ImageDto
+        public static string ToDto(this Image source)
         {
-            Image_Id= source.Image_Id,
-            Path = source.Path,
-        };
+            return source.Path;
+        }
     }
 }
