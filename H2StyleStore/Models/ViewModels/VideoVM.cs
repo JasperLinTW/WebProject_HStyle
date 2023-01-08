@@ -12,7 +12,7 @@ namespace H2StyleStore.Models.ViewModels
     {
         public int Id { get; set; }
 
-        public virtual Image Image { get; set; }
+        //public virtual Image Image { get; set; }
 
         [Display(Name ="影片名稱")]
         [Required]
@@ -20,27 +20,24 @@ namespace H2StyleStore.Models.ViewModels
         public string Title { get; set; }
 
         [Display(Name = "影片說明")]
-        [StringLength(200)]
         public string Description { get; set; }
 
-        //[Required]
-        //[StringLength(100)]
-        //public string FilePath { get; set; }
+        //public int ImageId { get; set; }
 
-        //public int CategoryId { get; set; }
+		[Display(Name = "上架時間")]
+		public DateTime? OnShelffTime { get; set; }
 
-        public int ImageId { get; set; }
+		[Display(Name = "下架時間")]
+		public DateTime? OffShelffTime { get; set; }
 
-        public DateTime? OnShelffTime { get; set; }
+		[Display(Name = "標籤")]
+		public IEnumerable<TagVM> Tags { get; set; }
 
-        public DateTime? OffShelffTime { get; set; }
+		[Display(Name = "影片類別")]
+		public VideoDto CategoryName { get; set; }
 
-        public IEnumerable<TagVM> tags { get; set; }
-
-        public virtual VideoCategory VideoCategory { get; set; }
-
-        public string images { get; set; }
-    }
+		public string Image { get; set; }
+	}
 
     public static class VideoExts
     {
@@ -51,13 +48,13 @@ namespace H2StyleStore.Models.ViewModels
                 Id = source.Id,
                 Title = source.Title,
                 Description = source.Description,
-                ImageId = source.ImageId,
+                //ImageId = source.ImageId,
                 OnShelffTime = source.OnShelffTime,
                 OffShelffTime = source.OffShelffTime,
-                images = source.Image.Path,
-                tags = source.tags.Select(v => v.ToVM()),
-                //VideoCategory= source.videoCategory,
+                Image = source.Image.Path,
+                Tags = source.Tags.Select(v => v.ToVM()),
+                CategoryName=source.VideoCategory
             };
         }
     }
-}
+} 

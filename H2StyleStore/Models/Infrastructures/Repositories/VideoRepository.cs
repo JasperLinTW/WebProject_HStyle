@@ -1,5 +1,6 @@
 ﻿using H2StyleStore.Models.DTOs;
 using H2StyleStore.Models.EFModels;
+using H2StyleStore.Models.ViewModels;
 using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,22 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
         {
             IEnumerable<Video> query = _db.Videos;
             return query.Select(v => v.ToDto());
+        }
+
+        public void CreateVideo(VideoDto dto)
+        {
+            var video = new Video()
+            {
+                Id = dto.Id,
+                Title = dto.Title,
+                Description=dto.Description,
+                FilePath = dto.FilePath,
+                ImageId=dto.ImageId,
+                OnShelffTime=dto.OnShelffTime,
+                OffShelffTime= dto.OffShelffTime,
+            };
+            _db.Videos.Add(video);
+            _db.SaveChanges();
         }
     }
 }

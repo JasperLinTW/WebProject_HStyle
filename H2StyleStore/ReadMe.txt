@@ -7,3 +7,6 @@
 [V] add Exts/ToVM/ToDto(Tags/Video)
 [V] VideoIndex資訊及圖片顯示
 [working on] 調整圖片大小
+
+===============新增影片功能====================
+[working on] 

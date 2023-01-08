@@ -1,6 +1,5 @@
 namespace H2StyleStore.Models.EFModels
 {
-    using H2StyleStore.Models.DTOs;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -13,7 +12,8 @@ namespace H2StyleStore.Models.EFModels
         public Video()
         {
             Tags = new HashSet<Tag>();
-            Image = new Image();
+            //VideoCategory=new VideoCategory();
+            //Image=new Image();
         }
 
         public int Id { get; set; }
@@ -22,7 +22,6 @@ namespace H2StyleStore.Models.EFModels
         [StringLength(50)]
         public string Title { get; set; }
 
-        [StringLength(200)]
         public string Description { get; set; }
 
         [Required]
@@ -36,6 +35,8 @@ namespace H2StyleStore.Models.EFModels
         public DateTime? OnShelffTime { get; set; }
 
         public DateTime? OffShelffTime { get; set; }
+
+        public DateTime CreatedTime { get; set; }
 
         public virtual Image Image { get; set; }
 

@@ -1,6 +1,7 @@
 ﻿using H2StyleStore.Models.DTOs;
 using H2StyleStore.Models.EFModels;
 using H2StyleStore.Models.Infrastructures.Repositories;
+using H2StyleStore.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations.Model;
@@ -20,6 +21,11 @@ namespace H2StyleStore.Models.Services
         public IEnumerable<VideoDto> GetVideos()
         {
             return _repository.GetVideos();
+        }
+
+        public void CreateVideo()
+        {
+            
         }
     }
 }

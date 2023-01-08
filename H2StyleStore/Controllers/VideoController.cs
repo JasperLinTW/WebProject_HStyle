@@ -27,5 +27,10 @@ namespace H2StyleStore.Controllers
             var data = _videoService.GetVideos().Select(v => v.ToVM());
             return View(data);
         }
+
+        public ActionResult CreateVideo()
+        {
+            return View();
+        }
     }
 }
