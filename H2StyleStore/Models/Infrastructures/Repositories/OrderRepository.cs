@@ -44,9 +44,10 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 
 			Dictionary<int, string> source = new Dictionary<int, string>();
 			source.Add(0, "待處理");
-			source.Add(1, "處理中");
-			source.Add(2, "已結案");
-			source.Add(3, "已取消");
+			source.Add(1, "備貨中");
+			source.Add(2, "已出貨");
+			source.Add(3, "已結案");
+			source.Add(4, "已取消");
 			var items = source.Select(x => new SelectListItem
 			{
 				Value = x.Value,
@@ -66,11 +67,5 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			return data;
 		}
 
-		public OrderDTO GetById(int id)
-		{
-			return _db.Orders
-				.SingleOrDefault(x => x.Order_id == id)
-				.ToDTO();
-		}
 	}
 }

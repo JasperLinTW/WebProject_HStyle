@@ -61,17 +61,15 @@ namespace H2StyleStore.Controllers
 			var data = orderService.Load()
 					   .Select(x => x.ToVM());
 			data.OrderBy(x => x.CreatedTime);
-			return View(data);
+			return View(data.ToArray());
 		}
 
         [HttpPost]
         public ActionResult Update(OrderVM[] orders)
         {
-            int orderId;
             for (int i = 0; i < orders.Length; i++)
             {
-                orderId = orders[i].Order_id;
-                orderService.Update(orders[orderId].ToDTO());
+                orderService.Update(orders[i].ToDTO());
 			}
             return RedirectToAction("Index");
         }
