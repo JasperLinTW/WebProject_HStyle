@@ -4,8 +4,19 @@
     ViewBag.Title = "Details";
 }
 
+<style>
+    @@media print {
+        .donotprint {
+            visibility: hidden;
+        }
+    }
+</style>
+
 <h2>訂單詳情</h2>
 
+<p>
+    <input name="print" type="button" value="列印檢貨單" class="donotprint btn btn-secondary" onClick="doprint()">
+</p>
 <table class="table">
     <tr>
         <th>
@@ -29,27 +40,39 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Product_id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProductName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UnitPrice)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SubTotal)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Quantity)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Discount)
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product_id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UnitPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubTotal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Discount)
+            </td>
+        </tr>
+    }
 
 </table>
+
+@section Scripts{
+    <script>
+        function doprint() {
+            var text = document;
+            print(text);
+        };
+    </script>
+}
+
+
