@@ -27,51 +27,38 @@ namespace H2StyleStore.Models.ViewModels
 		[Display(Name = "已下架")]
 		public bool Discontinued { get; set; }
 
-		[Display(Name = "類別名稱")]
-		public string PCategoryName { get; set; }
+		[Display(Name = "類別")]
+		public int Category_Id { get; set; }
+		[Display(Name = "排序")]
+		public int DisplayOrder { get; set; }
 
-		//[Display(Name = "照片")]
-		//public IEnumerable<string> images { get; set; }
+		[Display(Name = "照片")]
+		public List<string> images { get; set; }
 
-		//[Display(Name = "規格")]
-		//public List<SpecVm> specs { get; set; }
+		[Display(Name = "規格")]
+		public List<SpecVm> specs { get; set; }
 
-		//[Display(Name = "標籤")]
-		//public List<string> tags { get; set; }
+		[Display(Name = "標籤")]
+		public string tags { get; set; }
 	}
 
 
-	public static class ProductDtoExts
+	public static class CreateProductVMExts
 	{
-		public static ProductVM ToVM(this ProductDto source)
-		=> new ProductVM
-		{
-			Product_Id = source.Product_Id,
-			Product_Name = source.Product_Name,
-			UnitPrice = source.UnitPrice,
-			Description = source.Description,
-			Create_at = source.Create_at,
-			Discontinued = source.Discontinued,
-			PCategoryName = source.PCategoryName,
-			images = source.imgs,
-			specs = source.specs.Select(x => x.ToVM()).ToList(),
-			tags = source.tags.ToList(),
-		};
 
-		public static ProductDto ToDto(this ProductVM source)
-		=> new ProductDto
+		public static CreateProductDto ToCreateDto(this CreateProductVM source)
+		=> new CreateProductDto
 		{
-			Product_Id = source.Product_Id,
 			Product_Name = source.Product_Name,
 			UnitPrice = source.UnitPrice,
 			Description = source.Description,
 			Create_at = source.Create_at,
 			Discontinued = source.Discontinued,
-			//DisplayOrder = source.DisplayOrder,
-			PCategoryName = source.PCategoryName,
-			//imgs = source.Images.Select(x => x.ToDto()),
-			specs = source.specs.Select(x => x.ToDto()),
-			tags = source.tags,
+			DisplayOrder = source.DisplayOrder,
+			Category_Id = source.Category_Id,
+			images = source.images,
+			specs = source.specs.Where(s => string.IsNullOrEmpty(s.Color) == false).Select(x => x.ToDto()).ToList(),
+			tags = source.tags.Split(',').Select(x => x.Trim()).ToList(),
 
 		};
 	}

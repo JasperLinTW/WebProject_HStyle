@@ -1,4 +1,6 @@
 ﻿using H2StyleStore.Models.DTOs;
+using H2StyleStore.Models.Infrastructures;
+using H2StyleStore.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,5 +34,22 @@ namespace H2StyleStore.Models.Services
 			return (true, null);
 
 		}
+
+		public (bool, string) Create(CreateProductDto dto)
+		{
+			if (_repository.IsExist(dto.Product_Name))
+			{
+				return (false, "商品名稱已使用，請更改名稱");
+			}
+
+
+
+			_repository.Create(dto);
+
+			return (true, null);
+
+		}
+
+		
 	}
 }

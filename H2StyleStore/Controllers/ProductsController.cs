@@ -1,4 +1,5 @@
 ﻿using H2StyleStore.Models.EFModels;
+using H2StyleStore.Models.Infrastructures;
 using H2StyleStore.Models.Infrastructures.Repositories;
 using H2StyleStore.Models.Services;
 using H2StyleStore.Models.ViewModels;
@@ -34,22 +35,78 @@ namespace H2StyleStore.Controllers
             return View(data);
         }
 
-        public ActionResult CreateProduct()
-        {
+  //      public ActionResult CreateProduct()
+  //      {
 	
-			//todo直接呼叫要改成三層式
-			ViewBag.PCategoryItems = new ProductRepository(new AppDbContext()).GetCategories();
-            return View();
-        }
-		[HttpPost]
-		public ActionResult CreateProduct(ProductVM product)
+		//	//todo直接呼叫要改成三層式
+		//	ViewBag.PCategoryItems = new ProductRepository(new AppDbContext()).GetCategories();
+  //          return View();
+  //      }
+		//[HttpPost]
+		//public ActionResult CreateProduct(ProductVM product)
+		//{
+		//	ViewBag.PCategoryItems = new ProductRepository(new AppDbContext()).GetCategories();
+		//	try
+		//	{
+		//		var productDto = product.ToDto();
+
+
+		//		(bool IsSuccess, string ErrorMessage) result = productService.Create(productDto);
+		//	}
+		//	catch (Exception ex)
+		//	{
+		//		ModelState.AddModelError(string.Empty, ex.Message);
+		//	}
+
+
+		//	if (ModelState.IsValid)
+		//	{
+
+		//		return RedirectToAction("Index");
+		//	}
+
+		//	return View(product);
+
+			
+		//}
+
+		public ActionResult NewProduct()
 		{
 			ViewBag.PCategoryItems = new ProductRepository(new AppDbContext()).GetCategories();
+			return View();
+		}
+		[HttpPost]
+		public ActionResult NewProduct(CreateProductVM model, HttpPostedFileBase[] files)
+		{
+
+			ViewBag.PCategoryItems = new ProductRepository(new AppDbContext()).GetCategories();
+
+			string path = Server.MapPath("/Images/ProductImages");
+			var helper = new UploadFileHelper();
+
+			model.images = new List<string>();
+			
+			foreach (var file in files)
+			{
+				try
+				{
+					string result = helper.SaveAs(path, file);
+					//string OriginalFileName = System.IO.Path.GetFileName(file.FileName);
+					string FileName = result;
+					
+					model.images.Add(FileName);
+				}
+				catch (Exception ex)
+				{
+					ModelState.AddModelError(string.Empty, "上傳檔案失敗: " + ex.Message);
+
+				}
+			}
+			
+
 			try
 			{
-				var productDto = product.ToDto();
-
-
+				var productDto = model.ToCreateDto();
 				(bool IsSuccess, string ErrorMessage) result = productService.Create(productDto);
 			}
 			catch (Exception ex)
@@ -60,14 +117,17 @@ namespace H2StyleStore.Controllers
 
 			if (ModelState.IsValid)
 			{
-
 				return RedirectToAction("Index");
 			}
 
-			return View(product);
 
-			
+			return View(model);
 		}
+
+	}
+
+	public class Methods
+	{
 		
 	}
 }

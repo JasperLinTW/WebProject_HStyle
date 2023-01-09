@@ -1,4 +1,5 @@
 ﻿using H2StyleStore.Models.DTOs;
+using H2StyleStore.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,7 @@ namespace H2StyleStore.Models.Services
 		bool IsExist(string productName);
 
 		void Create(ProductDto product);
+
+		void Create(CreateProductDto product);
 	}
 }
