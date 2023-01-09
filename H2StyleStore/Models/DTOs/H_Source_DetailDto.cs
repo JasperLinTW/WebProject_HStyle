@@ -14,18 +14,18 @@ namespace H2StyleStore.Models.DTOs
 		public int Member_Id { get; set; }
 
 		public int Activity_Id { get; set; }
-		
+
 		public string H_Activity_Name { get; set; }
 
 		public int Difference_H { get; set; }
 
-		public DateTime Event_Time { get; set; }		
+		public DateTime Event_Time { get; set; }
 
 	}
 	public static class HSourceDetailExts
 	{
 		public static H_Source_DetailDto ToDto(this H_Source_Details source)
-		{			
+		{
 			return new H_Source_DetailDto
 			{
 				Source_H_Id = source.Source_H_Id,

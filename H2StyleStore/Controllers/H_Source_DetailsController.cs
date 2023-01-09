@@ -13,22 +13,22 @@ using System.Web.Mvc;
 
 namespace H2StyleStore.Controllers
 {
-	public class H_Source_DetailsController : Controller
-	{
+    public class H_Source_DetailsController : Controller
+    {
 		private H_Source_DetailService detailService;
 		public H_Source_DetailsController()
-		{
+        {
 			var db = new AppDbContext();
 			IH_Source_DetailRepository repo = new H_Source_DetailRepository(db);
 			this.detailService = new H_Source_DetailService(repo);
 
-		}
+        }
 
-		// GET: H_Source_Details
-		public ActionResult Index()
-		{
+        // GET: H_Source_Details
+        public ActionResult Index()
+        {
 			var data = detailService.GetSource().Select(x => x.TovM());
-			return View(data);
-		}
-	}
+            return View(data);
+        }
+    }
 }
