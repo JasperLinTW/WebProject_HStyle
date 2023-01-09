@@ -134,20 +134,27 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DTOs\CategoryDTO.cs" />
+    <Compile Include="Models\DTOs\CreateEssayDTO.cs" />
     <Compile Include="Models\DTOs\EssayDTO.cs" />
+    <Compile Include="Models\DTOs\ImaageDTO.cs" />
+    <Compile Include="Models\DTOs\TagDTO.cs" />
     <Compile Include="Models\EFModels\AppDbContext.cs" />
     <Compile Include="Models\EFModels\Eassy_Follows.cs" />
     <Compile Include="Models\EFModels\EComments_Likes.cs" />
-    <Compile Include="Models\EFModels\Elikes.cs" />
-    <Compile Include="Models\EFModels\Employees.cs" />
-    <Compile Include="Models\EFModels\Essays.cs" />
+    <Compile Include="Models\EFModels\Elike.cs" />
+    <Compile Include="Models\EFModels\Employee.cs" />
+    <Compile Include="Models\EFModels\Essay.cs" />
     <Compile Include="Models\EFModels\Essays_Comments.cs" />
-    <Compile Include="Models\EFModels\Essays_Tags.cs" />
-    <Compile Include="Models\EFModels\Images.cs" />
+    <Compile Include="Models\EFModels\Image.cs" />
+    <Compile Include="Models\EFModels\Tag.cs" />
+    <Compile Include="Models\EFModels\VideoCategory.cs" />
     <Compile Include="Models\Infrastructures\Repositories\EssayRepository.cs" />
+    <Compile Include="Models\Infrastructures\UploadFileHelper.cs" />
     <Compile Include="Models\Services\EssayService.cs" />
     <Compile Include="Models\Services\Interfaces\IEssayRepository.cs" />
     <Compile Include="Models\ViewModels\EssayVM.cs" />
+    <Compile Include="Models\ViewModels\TagVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -188,6 +195,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Essays\Index.cshtml" />
     <Content Include="Views\uploadEssays\Register.cshtml" />
+    <Content Include="Views\Essays\NewEssay.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

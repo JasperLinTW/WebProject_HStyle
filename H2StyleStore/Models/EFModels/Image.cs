@@ -6,12 +6,12 @@ namespace H2StyleStore.Models.EFModels
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Images
+    public partial class Image
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Images()
+        public Image()
         {
-            Essays = new HashSet<Essays>();
+            Essays = new HashSet<Essay>();
         }
 
         [Key]
@@ -22,6 +22,6 @@ namespace H2StyleStore.Models.EFModels
         public string Path { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Essays> Essays { get; set; }
+        public virtual ICollection<Essay> Essays { get; set; }
     }
 }

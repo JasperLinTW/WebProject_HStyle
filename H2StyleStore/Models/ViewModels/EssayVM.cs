@@ -1,4 +1,5 @@
 ﻿using H2StyleStore.Models.DTOs;
+using H2StyleStore.Models.EFModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -28,20 +29,34 @@ namespace H2StyleStore.Models.ViewModels
 
 		public DateTime Removed { get; set; }
 
+		public List<string> images { get; set; }
+
 
 	}
 	public static class EssayDtoExts
 	{
-		public static EssayDTO ToVM(this EssayVM source)
-		=> new EssayDTO
+		public static EssayVM ToVM(this EssayDTO source)
+		=> new EssayVM
 		{
 			Essay_Id = source.Essay_Id,
 			Influencer_Id = source.Influencer_Id,
 			UplodTime = source.UplodTime,
 			ETitle = source.ETitle,
 			EContent = source.EContent,
-			UpLoad= source.UpLoad,
+			UpLoad = source.UpLoad,
 			Removed = source.Removed,
 		};
+
+		public static EssayDTO ToDto(this EssayVM source)
+	=> new EssayDTO
+	{
+		Essay_Id = source.Essay_Id,
+		Influencer_Id = source.Influencer_Id,
+		UplodTime = source.UplodTime,
+		ETitle = source.ETitle,
+		EContent = source.EContent,
+		UpLoad = source.UpLoad,
+		Removed = source.Removed,
+	};
 	}
 }

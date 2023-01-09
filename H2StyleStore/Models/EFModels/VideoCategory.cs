@@ -6,30 +6,24 @@ namespace H2StyleStore.Models.EFModels
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Essays_Comments
+    public partial class VideoCategory
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Essays_Comments()
+        public VideoCategory()
         {
-            EComments_Likes = new HashSet<EComments_Likes>();
+            Essays = new HashSet<Essay>();
         }
 
-        [Key]
-        public int Comment_Id { get; set; }
-
-        public int Member_Id { get; set; }
-
-        public int Essay_Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
-        [StringLength(50)]
-        public string CComment { get; set; }
+        [StringLength(20)]
+        public string CategoryName { get; set; }
 
-        public DateTime CTime { get; set; }
+        [StringLength(200)]
+        public string CategoryDescription { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EComments_Likes> EComments_Likes { get; set; }
-
-        public virtual Essay Essay { get; set; }
+        public virtual ICollection<Essay> Essays { get; set; }
     }
 }

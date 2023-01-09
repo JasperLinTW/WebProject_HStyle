@@ -6,7 +6,7 @@ namespace H2StyleStore.Models.EFModels
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Employees
+    public partial class Employee
     {
         [Key]
         public int Employee_id { get; set; }

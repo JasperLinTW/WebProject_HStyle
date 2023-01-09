@@ -11,8 +11,9 @@ namespace H2StyleStore.Models.Services.Interfaces
 	{
 		IEnumerable<EssayDTO> GetEssays();
 
-		bool IsExist(string account);
-		void Create(EssayDTO dto);
+		bool IsExist(string ETiltle);
+		void Create(EssayDTO essay);
+		void Create(CreateEssayDTO essay);
 
 		//EssayDTO Load(int memberId);
 		//EssayDTO GetByAccount(string account);

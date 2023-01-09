@@ -17,30 +17,40 @@ namespace H2StyleStore.Models.Services
 			_repository = repository;
 		}
 
-		public (bool IsSuccess, string ErrorMessage) CreateNewEssay(EssayDTO dto)
-		{
-			// todo 判斷各欄位是否正確
 
-			// 判斷帳號是否已存在
-			if (_repository.IsExist(dto.ETitle))
-			{
-				return (false, "帳號已存在");                                                                                        
-			}
-
-			#region 建立一個會員記錄
-
-			//	 建立 ConfirmCode
-			dto.ConfirmCode = Guid.NewGuid().ToString("N");
-
-			_repository.Create(dto);
-
-			#endregion
-
-			return (true, null);
-		}
 		public IEnumerable<EssayDTO> GetEssays()
 		{
 			return _repository.GetEssays();
+		}
+
+		
+
+		public (bool, string) Create(EssayDTO dto)
+		{
+			if (_repository.IsExist(dto.ETitle))
+			{
+				return (false, "標題名稱已使用，請更改名稱");
+			}
+
+			_repository.Create(dto);
+
+			return (true, null);
+
+		}
+
+		public (bool, string) Create(CreateEssayDTO dto)
+		{
+			if (_repository.IsExist(dto.ETitle))
+			{
+				return (false, "標題名稱已使用，請更改名稱");
+			}
+
+
+
+			_repository.Create(dto);
+
+			return (true, null);
+
 		}
 	}
 }

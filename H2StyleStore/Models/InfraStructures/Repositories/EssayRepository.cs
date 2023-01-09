@@ -1,34 +1,18 @@
 ﻿using H2StyleStore.Models.DTOs;
 using H2StyleStore.Models.EFModels;
 using H2StyleStore.Models.Services.Interfaces;
+using H2StyleStore.Models.ViewModels;
 using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace H2StyleStore.Models.Infrastructures.Repositories
 {
 	public class EssayRepository : IEssayRepository
 	{
-		private AppDbContext db = new AppDbContext();
-		public void Create(EssayDTO dto)
-		{
-			Essays essays = new Essays
-			{
-				Essay_Id = dto.Essay_Id,
-				Influencer_Id = dto.Influencer_Id,
-				UplodTime = dto.UplodTime,
-				ETitle = dto.ETitle,
-				EContent = dto.EContent,
-				UpLoad = dto.UpLoad,
-				IsConfirmed = false, //預設是未確認的會員
-				Removed = dto.Removed,
-			};
-
-			db.Essays.Add(essays);
-			db.SaveChanges();
-		}
 		private readonly AppDbContext _db;
 		public EssayRepository(AppDbContext db)
 		{
@@ -37,54 +21,86 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 
 		public IEnumerable<EssayDTO> GetEssays()
 		{
-			IEnumerable<Essays> query = _db.Essays;
+			IEnumerable<Essay> query = _db.Essays;
 			//.Include("PCategory");
 
 			query = query.OrderBy(x => x.Essay_Id);
 
 			return query.Select(x => x.ToDto());
 		}
+
+		public IEnumerable<SelectListItem> GetCategories()
+		{
+			var data = _db.VideoCategories;
+
+
+			foreach (var item in data)
+			{
+				yield return new SelectListItem { Value = item.Id.ToString(), Text = item.CategoryName };
+
+			}
+
+		}
 		public bool IsExist(string etitle)
 		{
-			var entity = db.Essays.SingleOrDefault(x => x.ETitle == etitle);
-
-			return (entity != null);
+			var essays = _db.Essays.SingleOrDefault(x => x.ETitle == etitle);
+			return (essays != null);
 		}
-		public void ActiveRegister(int Id)
+
+		private AppDbContext db = new AppDbContext();
+		public void Create(EssayDTO dto)
 		{
-			var member = db.Essays.Find(Id);
-			member.IsConfirmed = true;
-			member.ConfirmCode = null;
+			Essay essays = new Essay
+			{
+				Essay_Id = dto.Essay_Id,
+				Influencer_Id = dto.Influencer_Id,
+				UplodTime = dto.UplodTime,
+				ETitle = dto.ETitle,
+				EContent = dto.EContent,
+				UpLoad = dto.UpLoad,
+				Removed = dto.Removed,
+			};
+
+			_db.Essays.Add(essays);
 			db.SaveChanges();
 		}
 
-		/// <summary>
-		/// 更新記錄,本method不會更新密碼
-		/// </summary>
-		/// <param name="entity"></param>
-		public void Update(EssayDTO entity)
+		public void Create(CreateEssayDTO dto)
 		{
-			Essays essays = db.Essays.Find(entity.Essay_Id);
+			Essay essays = new Essay
+			{
+				Essay_Id = dto.Essay_Id,
+				Influencer_Id = dto.Influencer_Id,
+				UplodTime = dto.UplodTime,
+				ETitle = dto.ETitle,
+				EContent = dto.EContent,
+				UpLoad = dto.UpLoad,
+				Removed = dto.Removed,
+			};
+			_db.Essays.Add(essays);
 
-			essays.Essay_Id = entity.Essay_Id;
-			essays.Influencer_Id = entity.Influencer_Id;
-			essays.UplodTime = entity.UplodTime;
-			// 在忘記密碼時, 使用者請求重設密碼, 會叫用本method,所以以下二個屬性也要更新
-			essays.ETitle = entity.ETitle;
-			essays.EContent = entity.EContent;
-			essays.UpLoad = entity.UpLoad;
-			essays.Removed = entity.Removed; 
+			foreach (string tag in dto.tags)
+			{
+				var tags = _db.Tags.Select(x => x.TagName).ToList();
+				if (tags.Contains(tag) == false)
+				{
+					Tag newTag = new Tag { TagName = tag };
+					essays.Tags.Add(newTag);
+				}
+				else
+				{
+					Tag oldTag = _db.Tags.Where(x => x.TagName == tag).FirstOrDefault();
+					essays.Tags.Add(oldTag);
+				}
+			}
 
-		
+			foreach (string path in dto.images)
+			{
+				Image image = new Image { Path = path, };
+				essays.Images.Add(image);
+			}
 
-			db.SaveChanges();
-		}
-
-		public void UpdatePassword(int Id, string newEncryptedPassword)
-		{
-			var member = db.Essays.Find(Id);
-		    
-			db.SaveChanges();
+			_db.SaveChanges();
 		}
 	}
 }

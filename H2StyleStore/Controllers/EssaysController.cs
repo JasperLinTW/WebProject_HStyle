@@ -1,4 +1,5 @@
 ﻿using H2StyleStore.Models;
+using H2StyleStore.Models.DTOs;
 using H2StyleStore.Models.EFModels;
 using H2StyleStore.Models.Infrastructures.Repositories;
 using H2StyleStore.Models.Services;
@@ -17,7 +18,7 @@ namespace H2StyleStore.Controllers
 {
     public class EssaysController : Controller
     {
-		private IEssayRepository repo;
+		//private IEssayRepository repo;
 		private EssayService essayService;
 
 		public EssaysController()
@@ -29,255 +30,78 @@ namespace H2StyleStore.Controllers
 		// GET: Products
 		public ActionResult Index()
 		{
-			//var data = essayService.GetEssays()
-			//	.Select(x => x.ToVM());
+			var data = essayService.GetEssays()
+				.Select(x => x.ToVM());
 
-			return View();
+			return View(data);
 		}
-		public ActionResult Register()
+
+		//public ActionResult UploadEssay()
+		//{
+		//	ViewBag.PCategoryItems = new EssayRepository(new AppDbContext()).GetCategories();
+		//	return View();
+		//}
+
+		/// <summary>
+		/// create essay
+		/// </summary>
+		/// <returns></returns>
+		public ActionResult NewEssay()
 		{
+			ViewBag.PCategoryItems = new EssayRepository(new AppDbContext()).GetCategories();
 			return View();
 		}
-		public ActionResult Uploadblog()
-        {
-            return View();
-        }
 		[HttpPost]
-		public ActionResult Register(EssayVM model)
+		public ActionResult NewEssay(EssayVM model, HttpPostedFileBase[] files)
 		{
-			if (!ModelState.IsValid)
+
+			ViewBag.PCategoryItems = new EssayRepository(new AppDbContext()).GetCategories();
+
+			string path = Server.MapPath("/Images/EssayImages");
+			var helper = new UploadFileHelper();
+
+			model.images = new List<string>();
+
+			foreach (var file in files)
 			{
-				return View(model);
+				try
+				{
+					string result = helper.SaveAs(path, file);
+					//string OriginalFileName = System.IO.Path.GetFileName(file.FileName);
+					string FileName = result;
+
+					model.images.Add(FileName);
+				}
+				catch (Exception ex)
+				{
+					ModelState.AddModelError(string.Empty, "上傳檔案失敗: " + ex.Message);
+
+				}
 			}
-
-			var service = new EssayService(repo);
-
-			(bool IsSuccess, string ErrorMessage) response =
-				service.CreateNewEssay(model.ToVM());
-
-			if (response.IsSuccess)
-			{
-				// 建檔成功 redirect to confirm page
-				return View("RegisterConfirm");
-			}
-			else
-			{
-				ModelState.AddModelError(string.Empty, response.ErrorMessage);
-				return View(model);
-			}
-		}
-
-		//==========================================================================================
-		public ActionResult ActiveRegister(int memberId, string confirmCode)
-		{
-			// var service = new MemberService(repository);
-			service.ActiveRegister(memberId, confirmCode);
-			return View();
-		}
-
-		public ActionResult Login()
-		{
-			return View();
-		}
-
-		[HttpPost]
-		public ActionResult Login(LoginVM model)
-		{
-			// var service = new MemberService(repository);
-			(bool IsSuccess, string ErrorMessage) response =
-				service.Login(model.Account, model.Password);
-
-			if (response.IsSuccess)
-			{
-				// 記住登入成功的會員
-				var rememberMe = false;
-
-				string returnUrl = ProcessLogin(model.Account, rememberMe, out HttpCookie cookie);
-
-				Response.Cookies.Add(cookie);
-
-				return Redirect(returnUrl);
-			}
-
-			ModelState.AddModelError(string.Empty, response.ErrorMessage);
-
-			return this.View(model);
-		}
-		public ActionResult Logout()
-		{
-			Session.Abandon();
-			FormsAuthentication.SignOut();
-			return Redirect("/Members/Login");
-		}
-
-		public ActionResult EditProfile()
-		{
-			string currentUserAccount = User.Identity.Name;
-
-			MemberDto entity = repository.GetByAccount(currentUserAccount);
-			EditProfileVM model = entity.ToEditProfileVM();
-
-			return View(model);
-		}
-
-		[HttpPost]
-		public ActionResult EditProfile(EditProfileVM model)
-		{
-			string currentUserAccount = User.Identity.Name;
-
-			if (ModelState.IsValid == false)
-			{
-				return View(model);
-			}
-
-			UpdateProfileDto request = model.ToDto(currentUserAccount);
 			try
 			{
-				service.UpdateProfile(request);
+				EssayDTO essayDTO = model.ToDto();
+				(bool IsSuccess, string ErrorMessage) result = essayService.Create(essayDTO);
 			}
 			catch (Exception ex)
 			{
 				ModelState.AddModelError(string.Empty, ex.Message);
 			}
-
-			if (ModelState.IsValid == true)
+			if (ModelState.IsValid)
 			{
 				return RedirectToAction("Index");
 			}
-			else
-			{
-				return View(model);
-			}
-		}
 
-		[Authorize]
-		public ActionResult EditPassword()
-		{
-			return View();
-		}
-
-		[Authorize]
-		[HttpPost]
-		public ActionResult EditPassword(EditPasswordVM model)
-		{
-			string currentUserAccount = User.Identity.Name;
-
-			if (ModelState.IsValid == false)
-			{
-				return View(model);
-			}
-
-			ChangePasswordRequest request = model.ToRequest(currentUserAccount);
-			try
-			{
-				service.ChangePassword(request);
-			}
-			catch (Exception ex)
-			{
-				ModelState.AddModelError(string.Empty, ex.Message);
-			}
-
-			if (ModelState.IsValid == true)
-			{
-				return RedirectToAction("Index");
-			}
-			else
-			{
-				return View(model);
-			}
-		}
-
-		public ActionResult ForgetPassword()
-		{
-			return View();
-		}
-
-		[HttpPost]
-		public ActionResult ForgetPassword(ForgetPasswordVM model)
-		{
-			if (ModelState.IsValid == false)
-			{
-				return View(model);
-			}
-
-			try
-			{
-				string urlTemplate = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/") + "Members/ResetPassword?memberid={0}&confirmCode={1}";
-
-				service.RequestResetPassword(model.Account, model.Email, urlTemplate);
-
-				return View("ConfirmForgetPassword");
-			}
-			catch (Exception ex)
-			{
-				ModelState.AddModelError(string.Empty, ex.Message);
-			}
 
 			return View(model);
-		}
-
-		public ActionResult ResetPassword(int memberId, string confirmCode)
-		{
-			// 在 httpPost的action裡,會判斷memberid, confirmCode 是否正確
-
-			return View();
-		}
-
-		[HttpPost]
-		public ActionResult ResetPassword(int memberId, string confirmCode, ResetPasswordVM model)
-		{
-			if (ModelState.IsValid == false)
-			{
-				return View(model);
-			}
-
-			try
-			{
-				service.ResetPassword(memberId, confirmCode, model.Password);
-			}
-			catch (Exception ex)
-			{
-				ModelState.AddModelError(string.Empty, ex.Message);
-			}
-
-			if (ModelState.IsValid == false)
-			{
-				return View(model);
-			}
-			else
-			{
-				return View("ResetPasswordConfirm");
-			}
-
-		}
-
-		private string ProcessLogin(string account, bool rememberMe, out HttpCookie cookie)
-		{
-			var member = repository.GetByAccount(account);
-			string roles = String.Empty; // 在本範例, 沒有用到角色權限,所以存入空白
-
-			// 建立一張認證票
-			FormsAuthenticationTicket ticket =
-				new FormsAuthenticationTicket(
-					1,          // 版本別, 沒特別用處
-					account,
-					DateTime.Now,   // 發行日
-					DateTime.Now.AddDays(2), // 到期日
-					rememberMe,     // 是否續存
-					roles,          // userdata
-					"/" // cookie位置
-				);
-
-			// 將它加密
-			string value = FormsAuthentication.Encrypt(ticket);
-
-			// 存入cookie
-			cookie = new HttpCookie(FormsAuthentication.FormsCookieName, value);
-
-			// 取得return url
-			string url = FormsAuthentication.GetRedirectUrl(account, true); //第二個引數沒有用處
-
-			return url;
 		}
 	}
+		//[HttpPost]
+		//public ActionResult Uploadblog(EssayVM model, HttpPostedFileBase[] files)
+		//{
+		//
+
+		//}
+
+		
 }
