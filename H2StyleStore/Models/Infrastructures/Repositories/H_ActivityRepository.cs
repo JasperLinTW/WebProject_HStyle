@@ -23,14 +23,35 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 
 			return data;
 		}
-		public IEnumerable<H_ActivityDto> GetHActivityItem(int id)
-		{
-			IEnumerable<H_Activities> activity = _db.H_Activities
-				.Where(a => a.H_Activity_Id == id)
-				.ToList();
-			var data = activity.Select(a => a.ToDto());
 
+		public H_ActivityDto GetHActivityById(int id)
+		{
+			var data = _db.H_Activities.SingleOrDefault(x => x.H_Activity_Id == id).ToDto();
 			return data;
 		}
+		public void Update(H_ActivityDto dto)
+		{
+			H_Activities activity = _db.H_Activities.Find(dto.H_Activity_Id);
+
+			activity.Activity_Name = dto.Activity_Name;
+			activity.Activity_Describe = dto.Activity_Describe;
+			activity.H_Activity_Id = dto.H_Activity_Id;
+
+			_db.SaveChanges();
+		}
+
+
+		public void Create(H_ActivityDto dto)
+		{
+			H_Activities activity = new H_Activities
+			{
+				Activity_Name = dto.Activity_Name,
+				Activity_Describe = dto.Activity_Describe,
+				H_Value = dto.H_Value,
+			};
+			_db.H_Activities.Add(activity);
+			_db.SaveChanges();
+		}
+
 	}
 }

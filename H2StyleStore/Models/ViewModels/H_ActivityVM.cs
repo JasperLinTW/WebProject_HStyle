@@ -39,5 +39,16 @@ namespace H2StyleStore.Models.ViewModels
 				H_Value = dto.H_Value
 			};
 		}
+
+		public static H_ActivityDto ToDto(this H_ActivityVM vm)
+		{
+			return new H_ActivityDto
+			{
+				H_Activity_Id = vm.H_Activity_Id,
+				Activity_Name = vm.Activity_Name,
+				Activity_Describe = vm.Activity_Describe,
+				H_Value = vm.H_Value
+			};
+		}
 	}
 }

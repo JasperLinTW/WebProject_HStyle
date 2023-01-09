@@ -12,6 +12,10 @@ namespace H2StyleStore.Models.Services.Interfaces
 	{
 		IEnumerable<H_ActivityDto> GetHActivity();
 
-		IEnumerable<H_ActivityDto> GetHActivityItem(int id);
+		void Create(H_ActivityDto dto);
+
+		H_ActivityDto GetHActivityById(int id);
+
+		void Update(H_ActivityDto dto);
 	}
 }

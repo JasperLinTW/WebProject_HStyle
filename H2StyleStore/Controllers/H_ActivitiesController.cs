@@ -6,7 +6,10 @@ using H2StyleStore.Models.Services.Interfaces;
 using H2StyleStore.Models.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Net;
+using System.Runtime.Remoting.Messaging;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -16,13 +19,14 @@ namespace H2StyleStore.Controllers
 {
 	public class H_ActivitiesController : Controller
 	{
-		private H_ActivityService _hActivitiesService;
+		private H_ActivityService _hActivityService;
+		private IH_ActivityRepository _repository;
 
 		public H_ActivitiesController()
 		{
 			var db = new AppDbContext();
 			IH_ActivityRepository repo = new H_ActivityRepository(db);
-			_hActivitiesService = new H_ActivityService(repo);
+			_hActivityService = new H_ActivityService(repo);
 		}
 
 		// GET: H_Activities
@@ -30,25 +34,76 @@ namespace H2StyleStore.Controllers
 		{
 			ViewBag.ActivityName = activityName;
 
-			var data = _hActivitiesService.GetHActivity().Select(a => a.ToVM());
+			var data = _hActivityService.GetHActivity().Select(a => a.ToVM());
+
+			// Search
 			if (string.IsNullOrEmpty(activityName) == false) data = data
 					.Where(a => a.Activity_Name
 					.Contains(activityName));
 
 			return View(data);
 		}
-		
-		//[HttpPut]
-		//public async Task<string> PutActivity(int id, H_ActivityDto hDto)
-		//{
-		//	if (id != hDto.H_Activity_Id) return "欲修改的活動紀錄不存在";
 
-		//	//H_ActivityDto activity = _hActivitiesService.GetHActivity()
-		//	//	.Where(a => a.H_Activity_Id == id);
+		public ActionResult Create()
+		{
+			return View();
+		}
 
+		[HttpPost]
+		public ActionResult Create(H_ActivityVM model)
+		{
+			if (!ModelState.IsValid)
+			{
+				return View(model);
+			}
 
+			var service = new H_ActivityService(_repository);
 
-		//	return View();
-		//}
+			try
+			{
+				string create = _hActivityService.CreateNewActivity(model.ToDto());
+				return View("Index");
+			}
+			catch (Exception ex)
+			{
+				ModelState.AddModelError(string.Empty, ex);
+				return View(model);
+			}
+		}
+
+		[HttpGet]
+		public ActionResult GetHActivityItem(int id)
+		{
+			var activity = _repository.GetHActivityById(id).ToVM();
+
+			if (activity == null) return HttpNotFound();
+
+			return View(activity);
+		}
+
+		[HttpPost]
+		public ActionResult GetHActivityItem(H_ActivityVM model)
+		{
+			if (!ModelState.IsValid)
+			{
+				return View(model);
+			}
+
+			H_ActivityDto request = model.ToDto();
+
+			try
+			{
+				_hActivityService.UpdateActivity(request);
+			}
+			catch (Exception ex)
+			{
+				ModelState.AddModelError(string.Empty, ex.Message);
+			}
+			if (ModelState.IsValid)
+			{
+				return RedirectToAction("Index");
+			}
+			else { return View(model); }
+		}
 	}
 }
