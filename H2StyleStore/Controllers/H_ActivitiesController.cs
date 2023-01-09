@@ -37,11 +37,7 @@ namespace H2StyleStore.Controllers
 
 			return View(data);
 		}
-		public ActionResult Describe()
-		{
-			return View();
-		}
-
+		
 		//[HttpPut]
 		//public async Task<string> PutActivity(int id, H_ActivityDto hDto)
 		//{

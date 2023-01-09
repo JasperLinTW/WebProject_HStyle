@@ -7,7 +7,7 @@ using System.Linq;
 using System.Web;
 
 namespace H2StyleStore.Models.Infrastructures.Repositories
-{
+{	
 	public class H_Source_DetailRepository : IH_Source_DetailRepository
 	{
 		private AppDbContext _db;
