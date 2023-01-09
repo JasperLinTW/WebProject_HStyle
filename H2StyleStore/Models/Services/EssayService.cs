@@ -17,7 +17,7 @@ namespace H2StyleStore.Models.Services
 			_repository = repository;
 		}
 
-		public (bool IsSuccess, string ErrorMessage) CreateNewMember(EssayDTO dto)
+		public (bool IsSuccess, string ErrorMessage) CreateNewEssay(EssayDTO dto)
 		{
 			// todo 判斷各欄位是否正確
 

@@ -32,8 +32,8 @@ namespace H2StyleStore.Models.ViewModels
 	}
 	public static class EssayDtoExts
 	{
-		public static EssayVM ToVM(this EssayDTO source)
-		=> new EssayVM
+		public static EssayDTO ToVM(this EssayVM source)
+		=> new EssayDTO
 		{
 			Essay_Id = source.Essay_Id,
 			Influencer_Id = source.Influencer_Id,

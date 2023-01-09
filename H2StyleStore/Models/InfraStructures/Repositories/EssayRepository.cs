@@ -83,9 +83,7 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 		public void UpdatePassword(int Id, string newEncryptedPassword)
 		{
 			var member = db.Essays.Find(Id);
-
-			member.EncryptedPassword = newEncryptedPassword;
-
+		    
 			db.SaveChanges();
 		}
 	}
