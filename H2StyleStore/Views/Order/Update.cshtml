@@ -66,11 +66,13 @@
         </tr>
 
         @{int i = 0;}
+        @{ string shippedDate = null;} 
 
         @foreach (var item in Model)
         {
-            @{
-                var shippedDate = item.ShippedDate.Value.ToString("yyyy-MM-ddTHH:mm:ss");
+            if (item.ShippedDate.HasValue == true)
+            {
+                shippedDate = item.ShippedDate.Value.ToString("yyyy-MM-ddTHH:mm:ss");
             }
             <tr>
                 <td>
@@ -143,6 +145,7 @@
                 </td>
             </tr>
             i++;
+            shippedDate = null;
         }
     </table>
 </form>

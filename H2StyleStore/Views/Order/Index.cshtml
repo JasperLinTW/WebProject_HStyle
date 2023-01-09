@@ -117,7 +117,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.CreatedTime)
             </td>
-            <td  id="Status">
+            <td id="@item.Status">
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
@@ -133,12 +133,11 @@
             window.location.href = "https://localhost:44313/Order/Details/" + $(this).children('#Order_id').text().trim();
         });
 
-        let status = $('.orderrow').children('#Status').text().trim();
         let content = `<br />
-                <span class="label label-success" style="border: 2px solid #5cb85c; border-radius: 30px;">已結案</span>`;
-        if (status ==="已結案") {
-            $(this).children('#Order_id').append(content);
-        }
+                    <span class="label label-success" style="border: 2px solid #5cb85c; border-radius: 30px;">已結案</span>`;
+
+        $(this).children('#Order_id').append(content);
+
     </script>
 
 }
