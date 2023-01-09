@@ -6,13 +6,7 @@
 }
 
 @{
-
-    Dictionary<int, string> statusSource = new Dictionary<int, string>();
-    statusSource.Add(0, "待處理");
-    statusSource.Add(1, "備貨中");
-    statusSource.Add(2, "已出貨");
-    statusSource.Add(3, "已結案");
-    statusSource.Add(4, "已取消");
+    var statusSource = ViewBag.Status;
 }
 
 

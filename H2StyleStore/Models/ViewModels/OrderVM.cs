@@ -16,6 +16,9 @@ namespace H2StyleStore.Models.ViewModels
 		[DisplayName("會員編號")]
 		public int Member_id { get; set; }
 
+		[DisplayName("會員名稱")]
+		public string MemberName { get; set; }
+
 		[DisplayName("員工編號")]
 		public int? Employee_id { get; set; }
 
@@ -55,7 +58,7 @@ namespace H2StyleStore.Models.ViewModels
 		[DisplayName("退貨")]
 		public bool RequestRefund { get; set; }
 
-		[DisplayName("訂單日期")]
+		[DisplayName("訂單成立日期")]
 		public DateTime CreatedTime { get; set; }
 		[DisplayName("訂單狀態")]
 		public string Status { get; set; }
@@ -72,6 +75,7 @@ namespace H2StyleStore.Models.ViewModels
 			{
 				Order_id = source.Order_id,
 				Member_id = source.Member_id,
+				MemberName = source.MemberName,
 				Employee_id = source.Employee_id,
 				Total = source.Total,
 				Payment = source.Payment,

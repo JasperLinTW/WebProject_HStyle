@@ -48,5 +48,9 @@ namespace H2StyleStore.Models.EFModels
         [Required]
         [StringLength(50)]
         public string Status { get; set; }
+
+        public virtual Employee Employee { get; set; }
+
+        public virtual Member Member { get; set; }
     }
 }

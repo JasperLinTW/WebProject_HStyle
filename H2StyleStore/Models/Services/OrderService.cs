@@ -40,5 +40,9 @@ namespace H2StyleStore.Models.Services
 			_repository.Update(entity);
 		}
 
+		public OrderDTO GetOrderbyId(int id)
+		{
+			return _repository.GetOrderbyId(id);
+		}
 	}
 }

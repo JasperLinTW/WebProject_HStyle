@@ -5,14 +5,26 @@
 }
 
 <style>
+    .title {
+        visibility: hidden;
+    }
+
     @@media print {
         .donotprint {
             visibility: hidden;
         }
+
+        .title {
+            visibility: visible;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
     }
 </style>
 
-<h2>訂單詳情</h2>
+<h2 class="donotprint">訂單詳情</h2>
+<h4 class="title">撿貨單</h4>
 
 <p>
     <input name="print" type="button" value="列印檢貨單" class="donotprint btn btn-secondary" onClick="doprint()">
@@ -29,15 +41,14 @@
             @Html.DisplayNameFor(model => model.UnitPrice)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SubTotal)
+            @Html.DisplayNameFor(model => model.Quantity)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Quantity)
+            @Html.DisplayNameFor(model => model.SubTotal)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Discount)
         </th>
-        <th></th>
     </tr>
 
     @foreach (var item in Model)
@@ -53,18 +64,26 @@
                 @Html.DisplayFor(modelItem => item.UnitPrice)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.SubTotal)
+                @Html.DisplayFor(modelItem => item.Quantity)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
+                @Html.DisplayFor(modelItem => item.SubTotal)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Discount)
             </td>
         </tr>
     }
-
 </table>
+
+@{ int total = 0;}
+@foreach (var item in Model)
+{
+    total += (@item.SubTotal-@item.Discount.Value);
+}
+
+<div class="pull-right" style="margin:20px; padding-right:20px ; font-weight:bold ;" >合計:@total 元</div>
+
 
 @section Scripts{
     <script>

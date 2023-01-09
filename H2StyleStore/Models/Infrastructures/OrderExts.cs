@@ -17,6 +17,7 @@ namespace H2StyleStore.Models.Infrastructures
 				{
 					Order_id = entity.Order_id,
 					Member_id = entity.Member_id,
+					MemberName = entity.Member.Name,
 					Employee_id = entity.Employee_id,
 					Total = entity.Total,
 					Payment = entity.Payment,

@@ -67,5 +67,11 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			return data;
 		}
 
+		public OrderDTO GetOrderbyId(int id)
+		{
+			OrderDTO order = _db.Orders.Find(id).ToDTO();
+
+			return order;
+		}
 	}
 }

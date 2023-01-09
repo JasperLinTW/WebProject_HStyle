@@ -14,6 +14,8 @@ namespace H2StyleStore.Models.DTOs
 
 		public int Member_id { get; set; }
 
+		public string MemberName { get; set; }
+
 		public int? Employee_id { get; set; }
 
 		public int Total { get; set; }
@@ -49,6 +51,7 @@ namespace H2StyleStore.Models.DTOs
 			{
 				Order_id = source.Order_id,
 				Member_id = source.Member_id,
+				MemberName = source.Member.Name,
 				Employee_id = source.Employee_id,
 				Total = source.Total,
 				Payment = source.Payment,
