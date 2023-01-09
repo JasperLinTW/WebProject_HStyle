@@ -30,10 +30,10 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.MemberName)
+            @Html.DisplayNameFor(model => model.Order_id)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Order_id)
+            @Html.DisplayNameFor(model => model.MemberName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Total)
@@ -74,16 +74,15 @@
         <th></th>
     </tr>
 
-    @{int id = 1;}
 
     @foreach (var item in Model)
     {
-        <tr id="@id" class="orderrow">
-            <td>
-                @Html.DisplayFor(modelItem => item.MemberName)
+        <tr class="orderrow" style="cursor:pointer">
+            <td id="Order_id">
+                @Html.DisplayFor(modelItem => item.Order_id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Order_id)
+                @Html.DisplayFor(modelItem => item.MemberName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Total)
@@ -118,25 +117,28 @@
             <td>
                 @Html.DisplayFor(modelItem => item.CreatedTime)
             </td>
-            <td>
+            <td  id="Status">
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
-                @Html.ActionLink("詳情", "Details", new { id = item.Order_id }, new { @class = "btn btn-default" })
-                <br />
-                @Html.ActionLink("修改", "Edit", new { id = item.Order_id }, new { @class = "btn btn-default"})
+                @Html.ActionLink("修改", "Edit", new { id = item.Order_id }, new { @class = "btn btn-default" })
             </td>
         </tr>
-        id++;
     }
 </table>
 
 @section Scripts{
     <script>
         $('.orderrow').on('click', function (event) {
-            var orderId = $(this).attr("id");
+            window.location.href = "https://localhost:44313/Order/Details/" + $(this).children('#Order_id').text().trim();
         });
 
+        let status = $('.orderrow').children('#Status').text().trim();
+        let content = `<br />
+                <span class="label label-success" style="border: 2px solid #5cb85c; border-radius: 30px;">已結案</span>`;
+        if (status ==="已結案") {
+            $(this).children('#Order_id').append(content);
+        }
     </script>
 
 }

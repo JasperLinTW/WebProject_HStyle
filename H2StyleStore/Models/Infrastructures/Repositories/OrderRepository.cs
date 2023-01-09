@@ -47,7 +47,8 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			source.Add(1, "備貨中");
 			source.Add(2, "已出貨");
 			source.Add(3, "已結案");
-			source.Add(4, "已取消");
+			source.Add(4, "退貨處理中");
+			source.Add(5, "已取消");
 			var items = source.Select(x => new SelectListItem
 			{
 				Value = x.Value,

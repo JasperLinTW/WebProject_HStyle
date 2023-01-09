@@ -69,6 +69,9 @@
 
         @foreach (var item in Model)
         {
+            @{
+                var shippedDate = item.ShippedDate.Value.ToString("yyyy-MM-ddTHH:mm:ss");
+            }
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Order_id)
@@ -91,7 +94,7 @@
                     <input type="hidden" value="@item.Payment" name="orders[@i].Payment" />
                 </td>
                 <td>
-                    <input type="datetime-local" value="@item.ShippedDate" name="orders[@i].ShippedDate" />
+                    <input type="datetime-local" value="@shippedDate" name="orders[@i].ShippedDate" />
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.ShipVia)
