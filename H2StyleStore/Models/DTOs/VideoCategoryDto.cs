@@ -1,4 +1,5 @@
 ﻿using H2StyleStore.Models.EFModels;
+using H2StyleStore.Models.ViewModels;
 using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,16 @@ namespace H2StyleStore.Models.DTOs
 			return new VideoCategoryDto()
 			{
 				Id = source.Id, 
+				CategoryName = source.CategoryName,
+				CategoryDescription = source.CategoryDescription
+			};
+		}
+
+		public static VideoCategoryDto ToDto(this VideoCategoryVM source)
+		{
+			return new VideoCategoryDto()
+			{
+				Id = source.Id,
 				CategoryName = source.CategoryName,
 				CategoryDescription = source.CategoryDescription
 			};

@@ -23,9 +23,10 @@ namespace H2StyleStore.Models.Services
             return _repository.GetVideos();
         }
 
-        public void CreateVideo()
+        public (bool IsSuccess,string ErrorMessage) CreateVideo(VideoDto dto)
         {
-            
+            _repository.CreateVideo(dto);
+            return (true, null);
         }
     }
 }

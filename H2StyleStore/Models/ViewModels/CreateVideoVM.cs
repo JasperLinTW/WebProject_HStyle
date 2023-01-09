@@ -31,13 +31,13 @@ namespace H2StyleStore.Models.ViewModels
 
 		[Display(Name = "影片縮圖")]
 		[Required]
-		public string Image { get; set; }
+		public Image Image { get; set; }
 
 		[Display(Name = "標籤")]
 		public IEnumerable<TagVM> Tags { get; set; }
 
 		[Display(Name = "影片類別")]
 		[Required]
-		public VideoCategory VideoCategory { get; set; }
+		public VideoCategoryVM CategoryName{ get; set; }
 	}
 }

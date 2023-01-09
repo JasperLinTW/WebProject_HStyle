@@ -34,7 +34,7 @@ namespace H2StyleStore.Models.ViewModels
 		public IEnumerable<TagVM> Tags { get; set; }
 
 		[Display(Name = "影片類別")]
-		public VideoDto CategoryName { get; set; }
+		public string CategoryName { get; set; }
 
 		public string Image { get; set; }
 	}
@@ -52,8 +52,8 @@ namespace H2StyleStore.Models.ViewModels
                 OnShelffTime = source.OnShelffTime,
                 OffShelffTime = source.OffShelffTime,
                 Image = source.Image.Path,
-                Tags = source.Tags.Select(v => v.ToVM()),
-                CategoryName=source.VideoCategory
+                Tags = source.Tags.Select(v => v.ToVM()), 
+                CategoryName=source.CategoryName
             };
         }
     }

@@ -21,7 +21,7 @@ namespace H2StyleStore.Models.DTOs
 
 		public int CategoryId { get; set; }
 
-		 public int ImageId { get; set; }
+		public int ImageId { get; set; }
 
 		public DateTime? OnShelffTime { get; set; }
 
@@ -33,7 +33,7 @@ namespace H2StyleStore.Models.DTOs
 
 		public IEnumerable<TagDto> Tags { get; set; }
 
-		public VideoDto VideoCategory { get; set; }
+		public string CategoryName { get; set; }
 	}
 
 	public static class VideoExts
@@ -45,7 +45,8 @@ namespace H2StyleStore.Models.DTOs
 				Id = source.Id,
 				Title = source.Title,
 				Description = source.Description,
-				CategoryId = source.CategoryId,
+				//CategoryId = source.CategoryId,
+				CategoryName=source.VideoCategory.CategoryName,
 				ImageId = source.ImageId,
 				OnShelffTime = source.OnShelffTime,
 				OffShelffTime = source.OffShelffTime,
@@ -55,7 +56,7 @@ namespace H2StyleStore.Models.DTOs
 			};
 		}
 
-		public static VideoDto ToDto(this CreateVideoVM source)
+		public static VideoDto VMToDto(this CreateVideoVM source)
 		{
 			return new VideoDto
 			{
@@ -65,7 +66,9 @@ namespace H2StyleStore.Models.DTOs
 				FilePath = source.FilePath,
 				OnShelffTime = source.OnShelffTime,
 				OffShelffTime = source.OffShelffTime,
-				Tags = source.Tags.Select(x=>x.ToDto())
+				Image = source.Image.ToDto(),
+				Tags = source.Tags.Select(x => x.ToDto()),
+				CategoryName = source.CategoryName.ToString()
 			};
 		}
 	}
