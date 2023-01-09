@@ -12,100 +12,100 @@
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(model => model.Product_Name, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Product_Name, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Product_Name, "", new { @class = "text-danger" })
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Product_Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Product_Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Product_Name, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.UnitPrice, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.UnitPrice, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.UnitPrice, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.UnitPrice, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UnitPrice, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UnitPrice, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.tags, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.tags, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.tags, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.tags, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.tags, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.tags, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Create_at, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Create_at, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Create_at, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Create_at, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Create_at, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Create_at, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Discontinued, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <div class="checkbox">
-                @Html.EditorFor(model => model.Discontinued)
-                @Html.ValidationMessageFor(model => model.Discontinued, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Discontinued, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.Discontinued)
+                    @Html.ValidationMessageFor(model => model.Discontinued, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DisplayOrder, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DisplayOrder, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DisplayOrder, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Category_Id, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(x => x.Category_Id, pCategories, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Category_Id, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="File">上傳檔案</label>
+            <div class="col-md-10">
+                <input type="file" name="files" clss="form-control" multiple="multiple" />
+            </div>
+        </div>
+
+        <div id="specsArea">
+            <div class="form-group">
+                <label class="control-label col-md-2" for="specs">規格1</label>
+                <div class="col-md-10 input-group specs">
+                    <input class="form-control text-box" id="Specs[0].Color" name="Specs[0].Color" type="text" value="" placeholder="顏色">
+                    <input class="form-control text-box" id="Specs[0].Size" name="Specs[0].Size" type="text" value="" placeholder="尺寸">
+                    <input class="form-control text-box" id="Specs[0].Stock" name="Specs[0].Stock" type="number" value="" placeholder="庫存">
+                    <button type="button" id="addSpecBtn" class="btn btn-default">新增規格</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </div>
     </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.DisplayOrder, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.DisplayOrder, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.DisplayOrder, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Category_Id, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(x => x.Category_Id, pCategories, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.Category_Id, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="control-label col-md-2" for="File">上傳檔案</label>
-        <div class="col-md-10">
-            <input type="file" name="files" clss="form-control" multiple = "multiple" />
-        </div>
-    </div>
-
-<div id="specsArea">
-    <div class="form-group">
-        <label class="control-label col-md-2" for="specs">規格1</label>
-        <div class="col-md-10 input-group specs">
-            <input class="form-control text-box" id="Specs[0].Color" name="Specs[0].Color" type="text" value="" placeholder="顏色">
-            <input class="form-control text-box" id="Specs[0].Size" name="Specs[0].Size" type="text" value="" placeholder="尺寸">
-            <input class="form-control text-box" id="Specs[0].Stock" name="Specs[0].Stock" type="number" value="" placeholder="庫存">
-            <button id="addSpecBtn" class="btn btn-default ">新增規格</button>
-        </div>
-    </div>
-</div>
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
-        </div>
-    </div>
-</div>
 }
 
 <div>
@@ -115,15 +115,29 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 
-    <script>
-
+<script>
+        var i = 1;
         $("#addSpecBtn").on("click", function () {
-            console.log(this);
+            let template =
+                `<label class="control-label col-md-2" for="specs">規格${i+1}</label>
+                   <div class="col-md-10 input-group specs">
+                   <input class="form-control text-box" id="Specs[${i}].Color" name="Specs[${i}].Color" type="text" value="" placeholder="顏色">
+                   <input class="form-control text-box" id="Specs[${i}].Size" name="Specs[${i}].Size" type="text" value="" placeholder="尺寸">
+                   <input class="form-control text-box" id="Specs[${i}].Stock" name="Specs[${i}].Stock" type="number" value="" placeholder="庫存">
+                   <button type="button" sepcNum="${i}" class="btn btn-default delSpecBtn">刪除</button>
+                </div>`;
+            const dom = document.createElement("div");
+            dom.setAttribute('class', "form-group");
+            dom.innerHTML = template;
+            $("#specsArea").append(dom);
+            i++;
         });
-        //$("#addSpecBtn").onclick(function () {
-        //    console.log(this);
-        //});
 
-    </script>
+        $(".delSpecBtn").on("click", function () {
+            //todo
+        });
+            
+
+</script>
 }
 
