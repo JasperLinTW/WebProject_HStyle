@@ -8,6 +8,7 @@ using H2StyleStore.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -16,10 +17,11 @@ using System.Web.UI.WebControls;
 
 namespace H2StyleStore.Controllers
 {
-    public class EssaysController : Controller
-    {
-		//private IEssayRepository repo;
+	public class EssaysController : Controller
+	{
+
 		private EssayService essayService;
+		private IEssayRepository essayRepository;
 
 		public EssaysController()
 		{
@@ -30,6 +32,7 @@ namespace H2StyleStore.Controllers
 		// GET: Products
 		public ActionResult Index()
 		{
+
 			var data = essayService.GetEssays()
 				.Select(x => x.ToVM());
 
@@ -48,60 +51,60 @@ namespace H2StyleStore.Controllers
 		/// <returns></returns>
 		public ActionResult NewEssay()
 		{
-			ViewBag.PCategoryItems = new EssayRepository(new AppDbContext()).GetCategories();
+			ViewBag.VideoCategoriesItems = new EssayRepository(new AppDbContext()).GetCategories();
 			return View();
 		}
+
 		[HttpPost]
-		public ActionResult NewEssay(EssayVM model, HttpPostedFileBase[] files)
+		public ActionResult NewEssay(CreateEssayVM model, HttpPostedFileBase[] files)
 		{
 
-			ViewBag.PCategoryItems = new EssayRepository(new AppDbContext()).GetCategories();
+			ViewBag.VideoCategoriesItems = new EssayRepository(new AppDbContext()).GetCategories();
 
-			string path = Server.MapPath("/Images/EssayImages");
-			var helper = new UploadFileHelper();
-
-			model.images = new List<string>();
-
-			foreach (var file in files)
+			if (files[0] != null)
 			{
-				try
-				{
-					string result = helper.SaveAs(path, file);
-					//string OriginalFileName = System.IO.Path.GetFileName(file.FileName);
-					string FileName = result;
+				string path = Server.MapPath("/Images/EssayImages");
+				var helper = new UploadFileHelper();
 
-					model.images.Add(FileName);
-				}
-				catch (Exception ex)
-				{
-					ModelState.AddModelError(string.Empty, "上傳檔案失敗: " + ex.Message);
 
+				foreach (var file in files)
+				{
+					try
+					{
+						string result = helper.SaveAs(path, file);
+						//string OriginalFileName = System.IO.Path.GetFileName(file.FileName);
+						string FileName = result;
+
+					  model.Images.Add(FileName);
+					}
+					catch (Exception ex)
+					{
+						ModelState.AddModelError(string.Empty, "上傳檔案失敗: " + ex.Message);
+
+					}
 				}
 			}
+
 			try
 			{
-				EssayDTO essayDTO = model.ToDto();
+				CreateEssayDTO essayDTO = model.ToCreateDTO();
 				(bool IsSuccess, string ErrorMessage) result = essayService.Create(essayDTO);
 			}
 			catch (Exception ex)
 			{
 				ModelState.AddModelError(string.Empty, ex.Message);
 			}
+
 			if (ModelState.IsValid)
 			{
 				return RedirectToAction("Index");
 			}
 
 
+			ViewBag.message = "Blog Datails Are Successfully..!";
+
 			return View(model);
 		}
+
 	}
-		//[HttpPost]
-		//public ActionResult Uploadblog(EssayVM model, HttpPostedFileBase[] files)
-		//{
-		//
-
-		//}
-
-		
 }

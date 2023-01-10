@@ -23,7 +23,18 @@ namespace H2StyleStore.Models.Services
 			return _repository.GetEssays();
 		}
 
-		
+
+		//public (bool IsSuccess, string ErrorMessage) CreateVideo(CreateEssayDTO dto)
+		//{
+		//	if (_repository.IsExist(dto.Image, dto.FilePath))
+		//	{
+		//		return (false, "這部影片已經上傳過了");
+		//	}
+
+		//	_repository.Create(dto);
+		//	return (true, null);
+		//}
+
 
 		public (bool, string) Create(EssayDTO dto)
 		{

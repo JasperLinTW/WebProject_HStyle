@@ -1,4 +1,5 @@
 ﻿using H2StyleStore.Models.EFModels;
+using H2StyleStore.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,8 +17,16 @@ namespace H2StyleStore.Models.DTOs
 	{
 		public static string ToDto(this Tag source)
 		{
-
 			return source.TagName;
+		}
+
+		public static TagDTO ToDto(this TagVM source)
+		{
+			return new TagDTO()
+			{
+				Id = source.Id,
+				TagName = source.TagName
+			};
 		}
 	}
 }

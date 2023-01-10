@@ -1,24 +1,22 @@
 ﻿using H2StyleStore.Models.DTOs;
-using H2StyleStore.Models.EFModels;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
+using System.Xml.Linq;
 
 namespace H2StyleStore.Models.ViewModels
 {
-	public class EssayVM
+	public class CreateEssayVM
 	{
 		[Key]
 		public int Essay_Id { get; set; }
 
+		// todo 登入自動輸入
 		[Display(Name = "員工賬號ID")]
 		public string Influencer_Name { get; set; }
-
-		[Display(Name = "發佈時間")]
-		public DateTime UplodTime { get; set; }
 
 		[Required]
 		[StringLength(10)]
@@ -28,10 +26,13 @@ namespace H2StyleStore.Models.ViewModels
 		[Required]
 		[StringLength(50)]
 		[Display(Name = "内文")] // 修改Html加入...
-		public string EContent { get; set; }		
-
+		public string EContent { get; set; }
+		[Display(Name = "檔案上傳")]
+		[Required]
+		public string FilePath { get; set; }
+		// 下拉
 		[Display(Name = "類別名稱")]
-		public string CategoryName { get; set; }
+		public int CategoryId { get; set; }
 
 		[Display(Name = "設定發佈時間")]
 		public DateTime UpLoad { get; set; }
@@ -40,40 +41,25 @@ namespace H2StyleStore.Models.ViewModels
 		public DateTime Removed { get; set; }
 
 		[Display(Name = "圖片")]
-		public IEnumerable<string> Images { get; set; }
+		public List<string> Images { get; set; }
 
 		[Display(Name = "標籤")]
 		public IEnumerable<string> Tags { get; set; }
-
-
 	}
-	public static class EssayDtoExts
-	{
-		public static EssayVM ToVM(this EssayDTO source)
-			=> new EssayVM
-			{
-				Essay_Id = source.Essay_Id,
-				Influencer_Name = source.Influencer_Name,
-				UplodTime = source.UplodTime,
-				ETitle = source.ETitle,
-				EContent = source.EContent,
-				CategoryName = source.CategoryName,
-				UpLoad = source.UpLoad,
-				Removed = source.Removed,
-				Images = source.images,
-				Tags = source.Tags
-			};
 
-		public static EssayDTO ToDto(this EssayVM source)
-			=> new EssayDTO
+	public static class CreateEssayDTOExts
+	{
+		public static CreateEssayDTO ToCreateDTO(this CreateEssayVM source)
+		{
+			return new CreateEssayDTO
 			{
 				Essay_Id = source.Essay_Id,
-				UplodTime = source.UplodTime,
 				ETitle = source.ETitle,
 				EContent = source.EContent,
-				CategoryName = source.CategoryName,
 				UpLoad = source.UpLoad,
 				Removed = source.Removed,
+				CategoryId = source.CategoryId,
 			};
+		}
 	}
 }

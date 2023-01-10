@@ -8,6 +8,7 @@ namespace H2StyleStore.Models.ViewModels
 {
 	public class TagVM
 	{
+		public int Id { get; set; }
 		public string TagName { get; set; }
 	}
 
@@ -17,6 +18,7 @@ namespace H2StyleStore.Models.ViewModels
 		{
 			return new TagVM
 			{
+				Id = source.Id,
 				TagName = source.TagName,
 			};
 		}

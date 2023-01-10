@@ -22,10 +22,6 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 		public IEnumerable<EssayDTO> GetEssays()
 		{
 			IEnumerable<Essay> query = _db.Essays;
-			//.Include("PCategory");
-
-			query = query.OrderBy(x => x.Essay_Id);
-
 			return query.Select(x => x.ToDto());
 		}
 
@@ -50,7 +46,7 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 		private AppDbContext db = new AppDbContext();
 		public void Create(EssayDTO dto)
 		{
-			int.TryParse(dto.VideoCategory, out int catgoryId);
+			int.TryParse(dto.CategoryName, out int catgoryId);
 			Essay essays = new Essay
 			{
 				Essay_Id = dto.Essay_Id,
@@ -69,16 +65,17 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 
 		public void Create(CreateEssayDTO dto)
 		{
+			//int.TryParse(dto.CategoryName, out int catgoryId);
 			Essay essays = new Essay
 			{
 				Essay_Id = dto.Essay_Id,
-				Influencer_Id = dto.Influencer_Id,
-				UplodTime = dto.UplodTime,
+				//Influencer_Id = dto.Influencer_Id,
+				UplodTime = DateTime.Now,
 				ETitle = dto.ETitle,
 				EContent = dto.EContent,
 				UpLoad = dto.UpLoad,
 				Removed = dto.Removed,
-				CategoryId = catgoryId,
+				CategoryId = dto.CategoryId,
 			};
 			_db.Essays.Add(essays);
 
@@ -105,5 +102,6 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 
 			_db.SaveChanges();
 		}
+
 	}
 }

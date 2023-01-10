@@ -11,7 +11,7 @@ namespace H2StyleStore.Models.EFModels
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Essays_Comments()
         {
-            EComments_Likes = new HashSet<EComments_Likes>();
+            Members = new HashSet<Member>();
         }
 
         [Key]
@@ -27,9 +27,11 @@ namespace H2StyleStore.Models.EFModels
 
         public DateTime CTime { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EComments_Likes> EComments_Likes { get; set; }
-
         public virtual Essay Essay { get; set; }
+
+        public virtual Member Member { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Member> Members { get; set; }
     }
 }

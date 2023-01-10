@@ -15,6 +15,8 @@ namespace H2StyleStore.Models.DTOs
 
 		public int Influencer_Id { get; set; }
 
+		public string Influencer_Name { get; set; }
+
 		public DateTime UplodTime { get; set; }
 
 		[Required]
@@ -23,14 +25,19 @@ namespace H2StyleStore.Models.DTOs
 
 		[Required]
 		[StringLength(1000)]
-		public string EContent { get; set; }
+		public string EContent { get; set; }		
 
-		public  List<string> images { get; set; }
+		public int CategoryId { get; set; }
+
+		public string CategoryName { get; set; }
 
 		public DateTime UpLoad { get; set; }
 
-		public DateTime Removed { get; set; }
-		public string ConfirmCode { get;  set; }
+		public DateTime Removed { get; set; } 
+
+		public IEnumerable<string> images { get; set; }
+
+		public IEnumerable<string> Tags { get;  set; }
 	}
 
 
@@ -41,11 +48,16 @@ namespace H2StyleStore.Models.DTOs
 		{
 			Essay_Id = source.Essay_Id,
 			Influencer_Id = source.Influencer_Id,
+			Influencer_Name = source.Employee.Account,
 			UplodTime = source.UplodTime,
 			ETitle = source.ETitle,
 			EContent = source.EContent,
+			CategoryId = source.CategoryId,
+			CategoryName = source.VideoCategory.CategoryName,
 			UpLoad = source.UpLoad,
 			Removed = source.Removed,
+			images = source.Images.Select(i=>i.ToDto()),
+			Tags = source.Tags.Select(i=>i.ToDto())
 		};
 
 		public static Essay ToDb(this EssayDTO source)
