@@ -91,7 +91,7 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar main-sidebar-custom sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="../../index3.html" class="brand-link" style="display:flex; align-content:center; justify-content:center; height:75px">
+            <a href="../../index3.html" class="brand-link" style="display:flex; align-content:center; justify-content:center; height:55px">
                 <img src="../../Photos/Logo-small.png">
             </a>
             <!-- Sidebar -->
@@ -115,7 +115,7 @@
                              with font-awesome or any other icon font library -->
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <i class="nav-icon fa-solid fa-user"></i>
                                 <p>
                                     會員管理
                                     <i class="right fas fa-angle-left"></i>
@@ -143,18 +143,10 @@
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a href="../widgets.html" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fa-sharp fa-solid fa-bag-shopping"></i>
                                 <p>
                                     商品管理
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-chart-pie"></i>
-                                <p>
-                                    訂單管理
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
@@ -185,9 +177,19 @@
                                 </li>
                             </ul>
                         </li>
+                       
+
+                        <li class="nav-item">
+                            <a href="https://localhost:44313/Order/Index" class="nav-link">
+                                <i class="nav-icon fa-solid fa-list"></i>
+                                <p>
+                                    訂單管理
+                                </p>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-tree"></i>
+                                <i class="nav-icon fa-brands fa-hire-a-helper"></i>
                                 <p>
                                     優惠管理
                                     <i class="fas fa-angle-left right"></i>
@@ -281,7 +283,7 @@
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-table"></i>
+                                <i class="nav-icon fa-solid fa-film"></i>
                                 <p>
                                     部落格影片管理
                                     <i class="fas fa-angle-left right"></i>
@@ -308,13 +310,16 @@
                                 </li>
                             </ul>
                         </li>
-                <!-- /.sidebar-menu -->
+                    </ul>
+                </nav>  
+                        <!-- /.sidebar-menu -->
             </div>
             <!-- /.sidebar -->
             <div class="sidebar-custom" style="align-content: center; justify-content: center ; display:flex;">
                 <a href="#" class="mt-3 btn btn-secondary hide-on-collapse" style="align-content:center; justify-content:center">
-                    <i class="fa-solid fa-right-from-bracket mr-3 mt-1"></i>
-                登出</a>
+                    <i class="fa-solid fa-right-from-bracket mt-1" style="margin-right:13.5px"></i>
+                    登出
+                </a>
             </div>
             <!-- /.sidebar-custom -->
         </aside>
@@ -327,13 +332,6 @@
                     <div class="row mb-2">
                         <div class="col-sm-6">
                             <h1>Fixed Layout</h1>
-                        </div>
-                        <div class="col-sm-6">
-                            <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item"><a href="#">Layout</a></li>
-                                <li class="breadcrumb-item active">Fixed Layout</li>
-                            </ol>
                         </div>
                     </div>
                 </div><!-- /.container-fluid -->
@@ -373,6 +371,8 @@
                     </div>
                 </div>
             </section>
+            @Scripts.Render("~/bundles/jquery")
+            @RenderSection("scripts", required: false)
             <!-- /.content -->
         </div>
         <!-- /.content-wrapper -->
