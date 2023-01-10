@@ -19,6 +19,7 @@ namespace H2StyleStore.Models.Services
 		public IEnumerable<H_Source_DetailDto> GetSource()
 			=> _repository.GetSource();
 
-
+		public IEnumerable<H_CheckInDto> GetCheckIn()
+			=> _repository.GetCheckIn();
 	}
 }

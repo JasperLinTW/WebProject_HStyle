@@ -130,13 +130,13 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\H_Activities1Controller.cs" />
     <Compile Include="Controllers\H_ActivitiesController.cs" />
     <Compile Include="Controllers\H_Source_DetailsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\DTOs\H_ActivityDto.cs" />
+    <Compile Include="Models\DTOs\H_CheckInDto.cs" />
     <Compile Include="Models\DTOs\H_Source_DetailDto.cs" />
     <Compile Include="Models\EFModels\AppDbContext.cs" />
     <Compile Include="Models\EFModels\H_Activities.cs" />
@@ -150,6 +150,7 @@
     <Compile Include="Models\Services\Interfaces\IH_ActivityRepository.cs" />
     <Compile Include="Models\Services\Interfaces\IH_Source_DetailRepository.cs" />
     <Compile Include="Models\ViewModels\H_ActivityVM.cs" />
+    <Compile Include="Models\ViewModels\H_CheckInVM.cs" />
     <Compile Include="Models\ViewModels\H_Source_DetailVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -190,14 +191,10 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\H_Activities\Index.cshtml" />
-    <Content Include="Views\H_Source_Details\Index.cshtml" />
-    <Content Include="Views\H_Activities1\Create.cshtml" />
-    <Content Include="Views\H_Activities1\Delete.cshtml" />
-    <Content Include="Views\H_Activities1\Details.cshtml" />
-    <Content Include="Views\H_Activities1\Edit.cshtml" />
-    <Content Include="Views\H_Activities1\Index.cshtml" />
-    <Content Include="Views\H_Activities\Create.cshtml" />
+    <Content Include="Views\H_Activities\CreateActivity.cshtml" />
     <Content Include="Views\H_Activities\EditActivity.cshtml" />
+    <Content Include="Views\H_Source_Details\HDetail.cshtml" />
+    <Content Include="Views\H_Source_Details\CheckIn.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

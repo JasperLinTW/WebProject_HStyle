@@ -3,29 +3,9 @@
 @{
     ViewBag.Title = "Index";
     var activityName = ViewBag.ActivityName as string;
-    var allActivuty = ViewBag.AllActivity;
 }
 
 <h2>H coin Activity</h2>
-@*<div>
-    <form>
-        @foreach (var item in Model)
-        {
-            <label for="exampleInputEmail1">
-                消費者 @Html.DisplayFor(modelItem => item.Activity_Name)
-            </label>
-            <span id="ad_@item.H_Activity_Id" style="display:none">@Html.DisplayFor(modelItem => item.Activity_Describe)</span>
-            <input type="text" class="form-control" id="h_@item.H_Activity_Id" name="@item.Activity_Name" value="@Html.DisplayFor(modelItem => item.H_Value)" />
-            }
-
-        @*<label for="exampleInputEmail1">消費者 @allActivuty[0].Activity_Name </label>
-        <input type="text" class="form-control" id="registerH" value="@allActivuty[0].H_Value">
-        
-
-        <button id="modify" class="btn btn-success" onclick="">修改</button>
-    </form>
-</div>*@
-
 
 <form>
     <div class="row">
@@ -47,7 +27,7 @@
 </form>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("新增活動", "CreateActivity", "H_Activities")
 </p>
 <table class="table">
     <tr>
@@ -65,10 +45,7 @@
 
     @foreach (var item in Model)
     {
-        <tr id="activity" style="cursor:pointer">
-            <td id="activity_id" style="display:none">
-                @Html.DisplayFor(modelItem => item.H_Activity_Id)
-            </td>
+        <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Activity_Name)
             </td>
@@ -80,6 +57,7 @@
             </td>
             <td>
                 @Html.ActionLink("修改", "EditActivity", new { id = item.H_Activity_Id }, new { @class = "btn btn-default" })
+                @Html.ActionLink("刪除", "DeleteActivity", new { id = item.H_Activity_Id }, new { @class = "btn btn-danger" })
             </td>
         </tr>
     }
@@ -87,22 +65,24 @@
 </table>
 
 
+
+
+<!-- Button trigger modal -->
+<!--<button type="button" id="createA" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+    新增活動
+</button>
+
+
 @section Scripts
 {
     <script>
         $("#activity").on("click", function () {
-
-            window.location.href = "../H_Activities/EditActivity?id=" + $(this).children('#activity_id').text().trim();
-
-            @*$.ajax({
-                type: "PUT",
-                url:"../H_Activities/EditActivity?id="+ h_@item.H_Activity_Id
-            }).done(function () {
-                alert($("#a_1").val());
-            }).fail(function (err) {
-                alert(err.statusText);
-            });*@
+            window.location.href = "../H_Activities/EditActivity?id=" + $(this).children('#activity_id').text();
         })
 
-    </script>
+        $("#createA").on("click", function () {
+            window.location.href = "../H_Activities/CreateActivity";
+        })
+
+    </script>-->
 }

@@ -8,7 +8,7 @@ namespace H2StyleStore.Models.EFModels
 	public partial class AppDbContext : DbContext
 	{
 		public AppDbContext()
-			: base("name=AppDbConn")
+			: base("name=AppDbContext")
 		{
 		}
 
@@ -20,8 +20,10 @@ namespace H2StyleStore.Models.EFModels
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
 			modelBuilder.Entity<H_Activities>()
-				.HasOptional(e => e.H_CheckIns)
-				.WithRequired(e => e.H_Activities);
+				.HasMany(e => e.H_CheckIns)
+				.WithRequired(e => e.H_Activities)
+				.HasForeignKey(e => e.Activity_Id)
+				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<H_Activities>()
 				.HasMany(e => e.H_Source_Details)
@@ -53,5 +55,7 @@ namespace H2StyleStore.Models.EFModels
 				.HasForeignKey(e => e.Member_Id)
 				.WillCascadeOnDelete(false);
 		}
-	}
+
+        public System.Data.Entity.DbSet<H2StyleStore.Models.ViewModels.H_ActivityVM> H_ActivityVM { get; set; }
+    }
 }

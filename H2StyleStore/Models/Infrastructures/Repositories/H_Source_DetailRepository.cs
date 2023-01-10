@@ -26,5 +26,15 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 
 			return data;
 		}
+
+		public IEnumerable<H_CheckInDto> GetCheckIn()
+		{
+			IEnumerable<H_CheckIns> checkIns= _db.H_CheckIns
+				.OrderBy(c=>c.Last_Time)
+				.ToList();
+			var data = checkIns.Select(d => d.ToDto());
+
+			return data;
+		}
 	}
 }

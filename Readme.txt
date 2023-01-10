@@ -28,3 +28,11 @@
 -- add H_Source_DetailsController, H_Source_DetailVM, H_Source_DetailService,H_Source_DetailDto
        IH_Source_DetailRepository, H_Source_DetailRepository
 	   並建立與H_Activity的關聯
+
+-- add EFModel/Member, Create H_Activity, Edit  H_Activity
+   並建立與Member的關聯
+[V] H_Activities/Create.html, H_Activities/Create.html
+[V] Index.cshtml add button to CreateActivity.cshtml
+[V] add CheckIn to display from HDetail.cshtml
+[modify] ActivityController/CreateActivity{return "View"=>"RedirectToAction"}
+[working] add ActivityController/DeleteActivity

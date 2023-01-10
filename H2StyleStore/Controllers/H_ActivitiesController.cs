@@ -24,10 +24,10 @@ namespace H2StyleStore.Controllers
 
 		public H_ActivitiesController()
 		{
-			var db = new AppDbContext();
-			IH_ActivityRepository repo = new H_ActivityRepository(db);
+			var _db = new AppDbContext();
+			IH_ActivityRepository repo = new H_ActivityRepository(_db);
 			_hActivityService = new H_ActivityService(repo);
-			_repository = new H_ActivityRepository(db);
+			_repository = new H_ActivityRepository(_db);
 		}
 
 		// GET: H_Activities
@@ -36,36 +36,33 @@ namespace H2StyleStore.Controllers
 			ViewBag.ActivityName = activityName;
 
 			IEnumerable<H_ActivityVM> data = _hActivityService.GetHActivity().Select(a => a.ToVM());
-
-			ViewBag.AllActivity = data.ToList();
-
 			// Search
-			if (string.IsNullOrEmpty(activityName) == false) data = data
+			if (string.IsNullOrEmpty(activityName) == false)
+			{
+				data = data
 					.Where(a => a.Activity_Name
 					.Contains(activityName));
-
+			}
 			return View(data);
 		}
 
-		public ActionResult Create()
+		public ActionResult CreateActivity()
 		{
 			return View();
 		}
 
 		[HttpPost]
-		public ActionResult Create(H_ActivityVM model)
+		public ActionResult CreateActivity(H_ActivityVM model)
 		{
 			if (!ModelState.IsValid)
 			{
 				return View(model);
 			}
 
-			var service = new H_ActivityService(_repository);
-
 			try
 			{
 				string create = _hActivityService.CreateNewActivity(model.ToDto());
-				return View("Index");
+				return RedirectToAction("Index");
 			}
 			catch (Exception ex)
 			{
@@ -76,8 +73,8 @@ namespace H2StyleStore.Controllers
 
 		[HttpGet]
 		public ActionResult EditActivity(int id)
-		{			
-			
+		{
+
 			H_ActivityVM activity = _repository.GetHActivityById(id).ToVM();
 
 			if (activity == null) return HttpNotFound();
@@ -103,11 +100,38 @@ namespace H2StyleStore.Controllers
 			{
 				ModelState.AddModelError(string.Empty, ex.Message);
 			}
+
 			if (ModelState.IsValid)
 			{
 				return RedirectToAction("Index");
 			}
 			else { return View(model); }
 		}
+
+		// GET: H_Activities1/Delete/5
+		//public ActionResult DeleteActivity(int? id)
+		//{
+		//	if (id == null)
+		//	{
+		//		return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+		//	}
+		//	H_Activities h_Activities = db.H_Activities.Find(id);
+		//	if (h_Activities == null)
+		//	{
+		//		return HttpNotFound();
+		//	}
+		//	return View(h_Activities);
+		//}
+
+		//// POST: H_Activities1/Delete/5
+		//[HttpPost, ActionName("DeleteActivity")]
+		//[ValidateAntiForgeryToken]
+		//public ActionResult DeleteConfirmed(int id)
+		//{
+		//	H_Activities h_Activities = _db.H_Activities.Find(id);
+		//	_db.H_Activities.Remove(h_Activities);
+		//	_db.SaveChanges();
+		//	return RedirectToAction("Index");
+		//}
 	}
 }
