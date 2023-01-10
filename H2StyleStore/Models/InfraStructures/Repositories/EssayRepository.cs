@@ -50,6 +50,7 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 		private AppDbContext db = new AppDbContext();
 		public void Create(EssayDTO dto)
 		{
+			int.TryParse(dto.VideoCategory, out int catgoryId);
 			Essay essays = new Essay
 			{
 				Essay_Id = dto.Essay_Id,
@@ -59,6 +60,7 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 				EContent = dto.EContent,
 				UpLoad = dto.UpLoad,
 				Removed = dto.Removed,
+				CategoryId = catgoryId,
 			};
 
 			_db.Essays.Add(essays);
@@ -76,6 +78,7 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 				EContent = dto.EContent,
 				UpLoad = dto.UpLoad,
 				Removed = dto.Removed,
+				CategoryId = catgoryId,
 			};
 			_db.Essays.Add(essays);
 
