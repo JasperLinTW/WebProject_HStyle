@@ -83,10 +83,10 @@
             <td id="Order_id">
                 @Html.DisplayFor(modelItem => item.Order_id)
                 @{
-                    if (item.Status == "已結案")
+                    if (item.Status == "已完成")
                     {
                         <br />
-                        <span class="label label-success" style="border: 2px solid #5cb85c; border-radius: 30px;">已結案</span>
+                        <span class="label label-success" style="border: 2px solid #5cb85c; border-radius: 30px;">已完成</span>
                     }
                 }
             </td>
