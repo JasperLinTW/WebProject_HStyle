@@ -45,12 +45,14 @@ namespace H2StyleStore.Models.EFModels
 
         public DateTime CreatedTime { get; set; }
 
-        [Required]
-        [StringLength(50)]
-        public string Status { get; set; }
+        public int Status_id { get; set; }
+
+        public int? Status_Description_id { get; set; }
 
         public virtual Employee Employee { get; set; }
 
         public virtual Member Member { get; set; }
+
+        public virtual Order_Status Order_Status { get; set; }
     }
 }

@@ -6,15 +6,15 @@
 }
 
 @{
-    var statusSource = ViewBag.Status;
+    IEnumerable<SelectListItem> status = ViewBag.Status;
+    var statusInDb= status.ToList();
 }
-
 
 <h2>批次更新</h2>
 
 <form action="@Url.Action("Update")" method="post">
-    <p>
-        <input type="submit" value="整批修改" class="btn btn-info" onclick="return confirm('確定修改?')" />
+    <p >
+        <input type="submit" value="確定修改" class="btn btn-info pull-right" style="margin-top: 10px; margin-bottom: 10px; padding-left: 15px" onclick="return confirm('確定修改?')" />
     </p>
     <table class="table">
         <tr>
@@ -22,10 +22,7 @@
                 @Html.DisplayNameFor(model => model.Order_id)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Member_id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Employee_id)
+                @Html.DisplayNameFor(model => model.EmployeeAccount)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Total)
@@ -80,12 +77,8 @@
                     <input type="hidden" value="@item.Order_id" name="orders[@i].Order_id" />
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Member_id)
-                    <input type="hidden" value="@item.Member_id" name="orders[@i].Member_id" />
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Employee_id)
-                    <input type="hidden" value="@item.Employee_id" name="orders[@i].Employee_id" />
+                    @Html.DisplayFor(modelItem => item.EmployeeAccount)
+                    <input type="hidden" value="@item.EmployeeAccount" name="orders[@i].Employee_id" />
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Total)
@@ -134,11 +127,11 @@
                     <select name="orders[@i].Status">
                         <option value="@item.Status">@item.Status</option>
 
-                        @for (int k = 0; k < statusSource.Count; k++)
+                        @for (int k = 0; k < statusInDb.Count ; k++)
                         {
-                            if (statusSource[k] != @item.Status)
+                            if (statusInDb[k].Text != @item.Status)
                             {
-                                <option value="@statusSource[k]">@statusSource[k]</option>
+                                <option value="@statusInDb[k].Text">@statusInDb[k].Text</option>
                             }
                         }
                     </select>

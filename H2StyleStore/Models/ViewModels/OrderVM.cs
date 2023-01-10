@@ -13,14 +13,11 @@ namespace H2StyleStore.Models.ViewModels
 		[DisplayName("訂單編號")]
 		public int Order_id { get; set; }
 
-		[DisplayName("會員編號")]
-		public int Member_id { get; set; }
-
 		[DisplayName("會員名稱")]
 		public string MemberName { get; set; }
 
-		[DisplayName("員工編號")]
-		public int? Employee_id { get; set; }
+		[DisplayName("員工帳號")]
+		public string EmployeeAccount { get; set; }
 
 		[DisplayName("總額")]
 		public int Total { get; set; }
@@ -60,8 +57,13 @@ namespace H2StyleStore.Models.ViewModels
 
 		[DisplayName("訂單成立日期")]
 		public DateTime CreatedTime { get; set; }
+		
+
 		[DisplayName("訂單狀態")]
 		public string Status { get; set; }
+
+		[DisplayName("訂單描述")]
+		public string Status_Description{ get; set; }
 
 		public IEnumerable<Order_DetailsVM> Order_Details { get; set; }
 
@@ -74,9 +76,8 @@ namespace H2StyleStore.Models.ViewModels
 			return new OrderVM
 			{
 				Order_id = source.Order_id,
-				Member_id = source.Member_id,
 				MemberName = source.MemberName,
-				Employee_id = source.Employee_id,
+				EmployeeAccount = source.EmployeeAccount,
 				Total = source.Total,
 				Payment = source.Payment,
 				ShippedDate = source.ShippedDate,
@@ -89,6 +90,7 @@ namespace H2StyleStore.Models.ViewModels
 				RequestRefund = source.RequestRefund,
 				CreatedTime = source.CreatedTime,
 				Status = source.Status,
+				Status_Description = source.Status_Description,
 			};
 		}
 	}
@@ -100,8 +102,7 @@ namespace H2StyleStore.Models.ViewModels
 			return new OrderDTO
 			{
 				Order_id = source.Order_id,
-				Member_id = source.Member_id,
-				Employee_id = source.Employee_id,
+				EmployeeAccount = source.EmployeeAccount,
 				Total = source.Total,
 				Payment = source.Payment,
 				ShippedDate = source.ShippedDate,
@@ -114,6 +115,7 @@ namespace H2StyleStore.Models.ViewModels
 				RequestRefund = source.RequestRefund,
 				CreatedTime = source.CreatedTime,
 				Status = source.Status,
+				Status_Description = source.Status_Description,
 			};
 		}
 	}

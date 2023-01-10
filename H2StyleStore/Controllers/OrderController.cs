@@ -26,29 +26,28 @@ namespace H2StyleStore.Controllers
         }
 
         // GET: Order
-        public ActionResult Index(string status, string value)
+        public ActionResult Index(int? status_id, string value)
         {
-            ViewBag.Status = orderService.GetStatus();
+            ViewBag.Status = orderService.GetStatus(status_id);
 			ViewBag.Value = value;
 
-			var data = orderService.Load()
-                       .Select(x => x.ToVM());
+			var data = orderService.Load();
 
             //依訂單成立時間排序
             data.OrderBy(x => x.CreatedTime);
 
             //可篩選
-			if (string.IsNullOrEmpty(status) == false)
+			if (status_id.HasValue)
             {
-				data = data.Where(s => s.Status == status);
+				data = data.Where(s => s.Status_id == status_id.Value);
 			}
 			//可搜尋
 			if (string.IsNullOrEmpty(value) == false)
 			{
 				data = data.Where(n => n.MemberName.Contains(value) || n.Order_id.ToString().Contains(value));
 			}
-
-			return View(data);
+			var list = data.Select(x => x.ToVM()).ToList();
+			return View(list);
         }
 
         public ActionResult Details(int? id)
@@ -64,7 +63,7 @@ namespace H2StyleStore.Controllers
 
 		public ActionResult Update()
 		{
-			ViewBag.Status = statusSource();
+			ViewBag.Status = orderService.GetStatus();
 
 			var data = orderService.Load()
 					   .Select(x => x.ToVM());
@@ -84,7 +83,7 @@ namespace H2StyleStore.Controllers
 
 		public ActionResult Edit(int id)
 		{
-			ViewBag.Status = statusSource();
+			ViewBag.Status = orderService.GetStatus();
 			var data = orderService.GetOrderbyId(id).ToVM();
 			
 
@@ -98,16 +97,5 @@ namespace H2StyleStore.Controllers
 			return RedirectToAction("Index");
 		}
 
-		public Dictionary<int, string> statusSource()
-		{
-			return new Dictionary<int, string>(){
-				{ 0, "待處理" },
-				{ 1, "備貨中" },
-				{ 2, "已出貨" },
-				{ 3, "已結案" },
-				{ 4, "退貨處理中" },
-				{ 5, "已取消" }
-			};
-		}
 	}
 }

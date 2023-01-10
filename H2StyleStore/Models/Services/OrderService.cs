@@ -23,9 +23,9 @@ namespace H2StyleStore.Models.Services
 			return _repository.Load();
 		}
 
-		public IEnumerable<SelectListItem> GetStatus()
+		public IEnumerable<SelectListItem> GetStatus(int? status)
 		{
-			return _repository.GetStatus();
+			return _repository.GetStatus(status);
 		}
 
 		public IEnumerable<Order_DetailDTO> FindById(int? id)
@@ -43,6 +43,11 @@ namespace H2StyleStore.Models.Services
 		public OrderDTO GetOrderbyId(int id)
 		{
 			return _repository.GetOrderbyId(id);
+		}
+
+		public IEnumerable<SelectListItem> GetStatus()
+		{
+			return _repository.GetStatus();
 		}
 	}
 }

@@ -14,7 +14,6 @@ namespace H2StyleStore.Models.EFModels
             Orders = new HashSet<Order>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
 
         [Required]

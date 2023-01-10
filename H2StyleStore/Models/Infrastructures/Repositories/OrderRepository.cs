@@ -25,7 +25,7 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 		{
 			Order order = _db.Orders.Find(entity.Order_id);
 
-			order.Status = entity.Status;
+			order.Status_id = entity.Status_id;
 			order.ShippedDate = entity.ShippedDate;
 
 			_db.SaveChanges();
@@ -39,20 +39,13 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			return data;
 		}
 
-		public IEnumerable<SelectListItem> GetStatus()
+		public IEnumerable<SelectListItem> GetStatus(int? status)
 		{
-
-			Dictionary<int, string> source = new Dictionary<int, string>();
-			source.Add(0, "待處理");
-			source.Add(1, "備貨中");
-			source.Add(2, "已出貨");
-			source.Add(3, "已結案");
-			source.Add(4, "退貨處理中");
-			source.Add(5, "已取消");
-			var items = source.Select(x => new SelectListItem
+			var items = _db.Order_Status.Select(x => new SelectListItem
 			{
-				Value = x.Value,
-				Text = x.Value,
+				Value = x.Status_id.ToString(),
+				Text = x.Status,
+				Selected = (status.HasValue && x.Status_id == status.Value)
 			})
 			.ToList()
 			.Prepend(new SelectListItem { Value = string.Empty, Text = "所有" });
@@ -73,6 +66,18 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			OrderDTO order = _db.Orders.Find(id).ToDTO();
 
 			return order;
+		}
+
+		public IEnumerable<SelectListItem> GetStatus()
+		{
+			var items = _db.Order_Status.Select(x => new SelectListItem
+			{
+				Value = x.Status_id.ToString(),
+				Text = x.Status,
+			})
+			.ToList();
+
+			return items;
 		}
 	}
 }

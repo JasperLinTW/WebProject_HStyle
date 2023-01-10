@@ -15,11 +15,12 @@ namespace H2StyleStore.Models.Services.Interfaces
 	{
 		IEnumerable<OrderDTO> Load();
 
-		IEnumerable<SelectListItem> GetStatus();
+		IEnumerable<SelectListItem> GetStatus(int? status);
 
 		IEnumerable<Order_DetailDTO> FindById(int? id);
 
 		void Update(OrderDTO entity);
 		OrderDTO GetOrderbyId(int id);
+		IEnumerable<SelectListItem> GetStatus();
 	}
 }

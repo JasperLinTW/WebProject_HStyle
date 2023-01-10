@@ -18,6 +18,8 @@ namespace H2StyleStore.Models.DTOs
 
 		public int? Employee_id { get; set; }
 
+		public string EmployeeAccount { get; set; }
+
 		public int Total { get; set; }
 
 		public int Payment { get; set; }
@@ -40,7 +42,12 @@ namespace H2StyleStore.Models.DTOs
 
 		public DateTime CreatedTime { get; set; }
 
+		public int Status_id { get; set; }
+
+		public int? Status_Description_id { get; set; }
 		public string Status { get; set; }
+
+		public string Status_Description{ get; set; }
 	}
 
 	public static class OrderExts
@@ -53,6 +60,7 @@ namespace H2StyleStore.Models.DTOs
 				Member_id = source.Member_id,
 				MemberName = source.Member.Name,
 				Employee_id = source.Employee_id,
+				EmployeeAccount = source.Employee.Account,
 				Total = source.Total,
 				Payment = source.Payment,
 				ShippedDate = source.ShippedDate,
@@ -64,7 +72,10 @@ namespace H2StyleStore.Models.DTOs
 				RequestRefundTime = source.RequestRefundTime,
 				RequestRefund = source.RequestRefund,
 				CreatedTime = source.CreatedTime,
-				Status = source.Status,
+				Status_id = source.Status_id,
+				Status = source.Order_Status.Status,
+				Status_Description_id= source.Status_Description_id,
+				Status_Description = source.Order_Status.Order_StatusDescription.Description
 			};
 		}
 	}

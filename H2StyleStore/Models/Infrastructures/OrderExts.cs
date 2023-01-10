@@ -30,7 +30,10 @@ namespace H2StyleStore.Models.Infrastructures
 					RequestRefund = entity.RequestRefund,
 					RequestRefundTime = entity.RequestRefundTime,
 					CreatedTime = entity.CreatedTime,
-					Status = entity.Status,
+					Status_id = entity.Status_id,
+					Status = entity.Order_Status.Status,
+					Status_Description_id = entity.Status_Description_id,
+					Status_Description = entity.Order_Status.Order_StatusDescription.Description
 				};
 		}
 	}
