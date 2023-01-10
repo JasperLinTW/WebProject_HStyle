@@ -22,6 +22,11 @@ namespace H2StyleStore.Models.Services
 			return _repository.GetProducts();
 		}
 
+		public CreateProductDto GetProduct(int productId)
+		{
+			return _repository.GetProduct(productId);
+		}
+
 		public (bool, string ) Create(ProductDto dto)
 		{
 			if (_repository.IsExist(dto.Product_Name))
@@ -50,6 +55,21 @@ namespace H2StyleStore.Models.Services
 
 		}
 
-		
+		public (bool, string) Edit(CreateProductDto dto)
+		{
+			if (_repository.EditIsExist(dto.Product_Name, dto.ProductID))
+			{
+				return (false, "商品名稱已使用，請更改名稱");
+			}
+
+
+
+			_repository.Edit(dto);
+
+			return (true, null);
+
+		}
+
+
 	}
 }

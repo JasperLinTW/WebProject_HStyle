@@ -11,11 +11,15 @@ namespace H2StyleStore.Models.Services
 	public interface IProductRepository
 	{
 		IEnumerable<ProductDto> GetProducts();
+		CreateProductDto GetProduct(int id);
 
 		bool IsExist(string productName);
+		bool EditIsExist(string productName, int id);
 
 		void Create(ProductDto product);
 
 		void Create(CreateProductDto product);
+
+		void Edit(CreateProductDto dto);
 	}
 }

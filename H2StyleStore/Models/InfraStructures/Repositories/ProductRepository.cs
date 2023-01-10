@@ -29,14 +29,28 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			return query.Select(x => x.ToDto());
 		}
 
-		public IEnumerable<SelectListItem> GetCategories()
+		public CreateProductDto GetProduct(int id)
+		{
+			IEnumerable<Product> query = _db.Products;
+			//.Include("PCategory");
+			var item = query.FirstOrDefault(x => x.Product_Id == id).ToCreateDto();
+
+
+			return item;
+		}
+
+		public IEnumerable<SelectListItem> GetCategories(int? categoryId)
 		{
 			var data = _db.PCategories;
 
 			
 			foreach (var item in data)
 			{
-				yield return new SelectListItem { Value = item.PCategory_Id.ToString(), Text = item.PCategoryName };
+				yield return new SelectListItem { 
+					Value = item.PCategory_Id.ToString(),
+					Text = item.PCategoryName,
+					Selected= (categoryId.HasValue && item.PCategory_Id == categoryId)
+				};
 				
 			}
 			
@@ -45,6 +59,12 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 		public bool IsExist(string productName)
 		{
 			var product = _db.Products.SingleOrDefault(x => x.Product_Name == productName);
+			return (product != null);
+		}
+
+		public bool EditIsExist(string productName, int id)
+		{
+			var product = _db.Products.Where(x => x.Product_Id != id).SingleOrDefault(x => x.Product_Name == productName);
 			return (product != null);
 		}
 
@@ -134,6 +154,43 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			//_db.Tags.Add()
 			
 
+
+		}
+
+		public void Edit(CreateProductDto dto)
+		{
+			var product = _db.Products.Find(dto.ProductID);
+			product.Product_Name = dto.Product_Name;
+			product.Product_Id = dto.ProductID;
+			product.UnitPrice = dto.UnitPrice;
+			product.Description = dto.Description;
+			product.Discontinued = dto.Discontinued;
+			product.DisplayOrder = dto.DisplayOrder;
+			//product.Images = dto.images;
+		
+			foreach (var dbTag in product.Tags.ToArray())
+			{
+				product.Tags.Remove(dbTag);
+			}
+
+			foreach (string tag in dto.tags)
+			{
+				var tags = _db.Tags.Select(x => x.TagName).ToList();
+				if (tags.Contains(tag) == false)
+				{
+					Tag newTag = new Tag { TagName = tag };
+					product.Tags.Add(newTag);
+				}
+				else
+				{
+					Tag oldTag = _db.Tags.Where(x => x.TagName == tag).FirstOrDefault();
+					product.Tags.Add(oldTag);
+				}
+			}
+
+
+
+			_db.SaveChanges();
 
 		}
 	}

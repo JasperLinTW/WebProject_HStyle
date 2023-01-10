@@ -43,7 +43,7 @@
             @Html.DisplayFor(modelItem => item.Product_Id)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Product_Name)
+            @Html.ActionLink(item.Product_Name, "EditProduct", new { id = item.Product_Id })
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.UnitPrice)

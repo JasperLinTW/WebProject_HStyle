@@ -10,6 +10,7 @@ namespace H2StyleStore.Models.ViewModels
 {
 	public class CreateProductVM
 	{
+		public int ProductId { get; set; }
 
 		[Display(Name = "商品名稱")]
 		public string Product_Name { get; set; }
@@ -49,6 +50,7 @@ namespace H2StyleStore.Models.ViewModels
 		public static CreateProductDto ToCreateDto(this CreateProductVM source)
 		=> new CreateProductDto
 		{
+			ProductID = source.ProductId,
 			Product_Name = source.Product_Name,
 			UnitPrice = source.UnitPrice,
 			Description = source.Description,
@@ -61,5 +63,40 @@ namespace H2StyleStore.Models.ViewModels
 			tags = source.tags.Split(',').Select(x => x.Trim()).ToList(),
 
 		};
+
+		public static CreateProductDto ToCreateDto(this Product source)
+		=> new CreateProductDto
+		{
+			ProductID = source.Product_Id,
+			Product_Name = source.Product_Name,
+			UnitPrice = source.UnitPrice,
+			Description = source.Description,
+			Create_at = source.Create_at,
+			Discontinued = source.Discontinued,
+			DisplayOrder = source.DisplayOrder,
+			Category_Id = source.Category_Id,
+			images = source.Images.Select(x => x.Path).ToList(),
+			specs = source.Specs.Select(x => x.ToDto()).ToList(),
+			tags = source.Tags.Select(x => x.TagName).ToList(),
+
+		};
+		public static CreateProductVM ToCreateVM(this CreateProductDto source)
+		=> new CreateProductVM
+		{
+			ProductId = source.ProductID,
+			Product_Name = source.Product_Name,
+			UnitPrice = source.UnitPrice,
+			Description = source.Description,
+			Create_at = source.Create_at,
+			Discontinued = source.Discontinued,
+			DisplayOrder = source.DisplayOrder,
+			Category_Id = source.Category_Id,
+			images = source.images,
+			specs = source.specs.Select(x => x.ToVM()).ToList(),
+			tags = string.Join(", ", source.tags),
+
+		};
+
+
 	}
 }
