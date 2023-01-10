@@ -11,6 +11,8 @@ namespace H2StyleStore.Models.DTOs
 	{
 		public int Source_H_Id { get; set; }
 
+		public string Member_Name{ get; set; }
+
 		public int Member_Id { get; set; }
 
 		public int Activity_Id { get; set; }
@@ -30,6 +32,7 @@ namespace H2StyleStore.Models.DTOs
 			{
 				Source_H_Id = source.Source_H_Id,
 				Member_Id = source.Member_Id,
+				Member_Name= source.Member.Name,
 				Activity_Id = source.Activity_Id,
 				H_Activity_Name = source.H_Activities.Activity_Name,
 				Difference_H = source.Difference_H,

@@ -3,18 +3,28 @@
 @{
     ViewBag.Title = "Index";
     var activityName = ViewBag.ActivityName as string;
+    var allActivuty = ViewBag.AllActivity;
 }
 
 <h2>H coin Activity</h2>
-<div>
-    @foreach (var item in Model)
-    {
-        <span id="registerDes">消費者 @Html.DisplayFor(modelItem => item.Activity_Name):
-    贈送 <input type="text" id="@Html.DisplayFor(modelItem => item.H_Activity_Id)" value="@Html.DisplayFor(modelItem => item.H_Value)" /> H coins</span><br />
-    }
+@*<div>
+    <form>
+        @foreach (var item in Model)
+        {
+            <label for="exampleInputEmail1">
+                消費者 @Html.DisplayFor(modelItem => item.Activity_Name)
+            </label>
+            <span id="ad_@item.H_Activity_Id" style="display:none">@Html.DisplayFor(modelItem => item.Activity_Describe)</span>
+            <input type="text" class="form-control" id="h_@item.H_Activity_Id" name="@item.Activity_Name" value="@Html.DisplayFor(modelItem => item.H_Value)" />
+            }
 
-    <button id="modify" class="btn btn-success" onclick="">修改</button>
-</div>
+        @*<label for="exampleInputEmail1">消費者 @allActivuty[0].Activity_Name </label>
+        <input type="text" class="form-control" id="registerH" value="@allActivuty[0].H_Value">
+        
+
+        <button id="modify" class="btn btn-success" onclick="">修改</button>
+    </form>
+</div>*@
 
 
 <form>
@@ -55,7 +65,10 @@
 
     @foreach (var item in Model)
     {
-        <tr id="activityItem">
+        <tr id="activity" style="cursor:pointer">
+            <td id="activity_id" style="display:none">
+                @Html.DisplayFor(modelItem => item.H_Activity_Id)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Activity_Name)
             </td>
@@ -65,6 +78,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.H_Value)
             </td>
+            <td>
+                @Html.ActionLink("修改", "EditActivity", new { id = item.H_Activity_Id }, new { @class = "btn btn-default" })
+            </td>
         </tr>
     }
 
@@ -73,18 +89,19 @@
 
 @section Scripts
 {
-    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
     <script>
-        $("#activityItem").on("click", function () {
-            
-            $.ajax({
+        $("#activity").on("click", function () {
+
+            window.location.href = "../H_Activities/EditActivity?id=" + $(this).children('#activity_id').text().trim();
+
+            @*$.ajax({
                 type: "PUT",
-                url: `https://localhost:44313/H_Activities/GetHActivity/id=${$("#register").val()}`
-            }).done(function (data) {
-                alert(JSON.stringify(data));
+                url:"../H_Activities/EditActivity?id="+ h_@item.H_Activity_Id
+            }).done(function () {
+                alert($("#a_1").val());
             }).fail(function (err) {
                 alert(err.statusText);
-            });
+            });*@
         })
 
     </script>

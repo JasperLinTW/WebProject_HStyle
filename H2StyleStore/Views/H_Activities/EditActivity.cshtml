@@ -1,10 +1,10 @@
 ﻿@model H2StyleStore.Models.ViewModels.H_ActivityVM
 
 @{
-    ViewBag.Title = "GetHActivityItem";
+    ViewBag.Title = "EditActivity";
 }
 
-<h2>GetHActivityItem</h2>
+<h2>EditActivity</h2>
 
 
 @using (Html.BeginForm())
@@ -28,7 +28,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Activity_Describe, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Activity_Describe, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextAreaFor(model => model.Activity_Describe, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Activity_Describe, "", new { @class = "text-danger" })
             </div>
         </div>

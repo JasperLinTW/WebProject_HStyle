@@ -19,7 +19,7 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 		public IEnumerable<H_Source_DetailDto> GetSource()
 		{
 			IEnumerable<H_Source_Details> detail = _db.H_Source_Details
-				//.Include(d => d.H_Activities)
+				//.Include(d => d.Member)
 				.OrderBy(d => d.Source_H_Id)
 				.ToList();
 			var data = detail.Select(d => d.ToDto());

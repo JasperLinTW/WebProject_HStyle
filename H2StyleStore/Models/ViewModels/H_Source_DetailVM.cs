@@ -15,7 +15,7 @@ namespace H2StyleStore.Models.ViewModels
 		public int Source_H_Id { get; set; }
 
 		[DisplayName("會員")]
-		public int Member_Id { get; set; }
+		public string Member_Name { get; set; }
 
 		[DisplayName("活動名稱")]
 		public string H_Activity_Name { get; set; }
@@ -24,9 +24,7 @@ namespace H2StyleStore.Models.ViewModels
 		public int Difference_H { get; set; }
 
 		[DisplayName("取得時間")]
-		public DateTime Event_Time { get; set; }
-
-		
+		public DateTime Event_Time { get; set; }		
 
 	}
 	public static class HSourceDetailExts
@@ -36,7 +34,8 @@ namespace H2StyleStore.Models.ViewModels
 			return new H_Source_DetailVM
 			{
 				Source_H_Id = source.Source_H_Id,
-				Member_Id = source.Member_Id,
+				Member_Name = source.Member_Name,
+				//Member_Id = source.Member_Id,
 				//Activity_Id = source.Activity_Id,
 				H_Activity_Name = source.H_Activity_Name,
 				Difference_H = source.Difference_H,

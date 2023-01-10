@@ -26,7 +26,7 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 
 		public H_ActivityDto GetHActivityById(int id)
 		{
-			var data = _db.H_Activities.SingleOrDefault(x => x.H_Activity_Id == id).ToDto();
+			var data = _db.H_Activities.Find(id).ToDto();
 			return data;
 		}
 		public void Update(H_ActivityDto dto)

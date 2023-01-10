@@ -27,6 +27,7 @@ namespace H2StyleStore.Controllers
 			var db = new AppDbContext();
 			IH_ActivityRepository repo = new H_ActivityRepository(db);
 			_hActivityService = new H_ActivityService(repo);
+			_repository = new H_ActivityRepository(db);
 		}
 
 		// GET: H_Activities
@@ -34,7 +35,9 @@ namespace H2StyleStore.Controllers
 		{
 			ViewBag.ActivityName = activityName;
 
-			var data = _hActivityService.GetHActivity().Select(a => a.ToVM());
+			IEnumerable<H_ActivityVM> data = _hActivityService.GetHActivity().Select(a => a.ToVM());
+
+			ViewBag.AllActivity = data.ToList();
 
 			// Search
 			if (string.IsNullOrEmpty(activityName) == false) data = data
@@ -72,9 +75,10 @@ namespace H2StyleStore.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult GetHActivityItem(int id)
-		{
-			var activity = _repository.GetHActivityById(id).ToVM();
+		public ActionResult EditActivity(int id)
+		{			
+			
+			H_ActivityVM activity = _repository.GetHActivityById(id).ToVM();
 
 			if (activity == null) return HttpNotFound();
 
@@ -82,7 +86,7 @@ namespace H2StyleStore.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult GetHActivityItem(H_ActivityVM model)
+		public ActionResult EditActivity(H_ActivityVM model)
 		{
 			if (!ModelState.IsValid)
 			{
