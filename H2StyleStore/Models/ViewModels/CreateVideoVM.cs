@@ -13,8 +13,10 @@ namespace H2StyleStore.Models.ViewModels
 		public int Id { get; set; }
 
 		[Display(Name = "影片名稱")]
-		[ Required ]
+		[Required]
 		public string Title { get; set; }
+
+		//public int CategoryId{ get; set; }
 
 		[Display(Name = "影片說明")]
 		public string Description { get; set; }
@@ -23,7 +25,7 @@ namespace H2StyleStore.Models.ViewModels
 		[Required]
 		public string FilePath { get; set; }
 
-		[Display(Name = "上架時間")]		
+		[Display(Name = "上架時間")]
 		public DateTime? OnShelffTime { get; set; }
 
 		[Display(Name = "下架時間")]
@@ -31,13 +33,36 @@ namespace H2StyleStore.Models.ViewModels
 
 		[Display(Name = "影片縮圖")]
 		[Required]
-		public Image Image { get; set; }
-
-		[Display(Name = "標籤")]
-		public IEnumerable<TagVM> Tags { get; set; }
+		[FileExtensions(ErrorMessage ="只能上傳圖檔")]
+		public string Image { get; set; }
 
 		[Display(Name = "影片類別")]
 		[Required]
-		public VideoCategoryVM CategoryName{ get; set; }
+		public int CategoryId{ get; set; }
+
+		[Display(Name = "標籤")]
+		public string Tags { get; set; }
+
+		//public VideoCategoryVM CategoryName { get; set; }
+	}
+
+	public static class CreateVideoDtoExts
+	{
+		public static CreateVideoDto ToCreateDto(this CreateVideoVM source)
+		{
+			return new CreateVideoDto
+			{
+				Id = source.Id,
+				Title = source.Title,
+				Description = source.Description,
+				FilePath = source.FilePath,
+				OnShelffTime = source.OnShelffTime,
+				OffShelffTime = source.OffShelffTime,
+				Image= source.Image,
+				Tags=source.Tags.Split(',').ToList(),
+				CategoryId=source.CategoryId,
+				//VideoCategory=source.CategoryName.ToDto().ToString(),
+			};
+		}
 	}
 }

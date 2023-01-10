@@ -23,9 +23,14 @@ namespace H2StyleStore.Models.Services
             return _repository.GetVideos();
         }
 
-        public (bool IsSuccess,string ErrorMessage) CreateVideo(VideoDto dto)
+        public (bool IsSuccess,string ErrorMessage) CreateVideo(CreateVideoDto dto)
         {
-            _repository.CreateVideo(dto);
+			if (_repository.IsExist(dto.Image,dto.FilePath))
+			{
+				return (false, "這部影片已經上傳過了");
+			}
+
+			_repository.CreateVideo(dto);
             return (true, null);
         }
     }

@@ -31,7 +31,7 @@ namespace H2StyleStore.Models.ViewModels
 		public DateTime? OffShelffTime { get; set; }
 
 		[Display(Name = "標籤")]
-		public IEnumerable<TagVM> Tags { get; set; }
+		public IEnumerable<string> Tags { get; set; }
 
 		[Display(Name = "影片類別")]
 		public string CategoryName { get; set; }
@@ -52,7 +52,7 @@ namespace H2StyleStore.Models.ViewModels
                 OnShelffTime = source.OnShelffTime,
                 OffShelffTime = source.OffShelffTime,
                 Image = source.Image.Path,
-                Tags = source.Tags.Select(v => v.ToVM()), 
+                Tags = source.Tags.Select(x=>x.TagName), 
                 CategoryName=source.CategoryName
             };
         }

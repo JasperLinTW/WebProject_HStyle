@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace H2StyleStore.Models.Infrastructures.Repositories
 {
@@ -23,38 +24,58 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			return query.Select(v => v.ToDto());
 		}
 
-		public void CreateVideo(VideoDto dto)
+		public void CreateVideo(CreateVideoDto dto)
 		{
-			var video = new Video()
+			int.TryParse(dto.VideoCategory, out int catgoryId);
+			Video video = new Video()
 			{
-				Id = dto.Id,
 				Title = dto.Title,
 				Description = dto.Description,
 				FilePath = dto.FilePath,
-				ImageId = dto.ImageId,
 				OnShelffTime = dto.OnShelffTime,
 				OffShelffTime = dto.OffShelffTime,
+				CreatedTime= DateTime.Now,
+				CategoryId = catgoryId
 			};
-
 			_db.Videos.Add(video);
 
-			var db = new AppDbContext();
-			Tag insertTag = db.Tags.FirstOrDefault(t => t.TagName);
-
-			foreach ()
+			foreach (string tag in dto.Tags)
 			{
-				if (insertTag.IsExist)
+				var tags = _db.Tags.Select(t => t.TagName).ToList();
+				if (tags.Contains(tag) == true)
 				{
-					Tag oldTag =
+					Tag oldTag = _db.Tags.Where(t => t.TagName == tag).FirstOrDefault();
+					_db.Tags.Add(oldTag);
 				}
 				else
 				{
-					Tag newTag =
+					Tag newTag = new Tag { TagName = tag };
+					_db.Tags.Add(newTag);
 				}
 			}
 
-			_db.Videos.Add(video);
+			string path = dto.Image;
+			Image image = new Image { Path = path };
+			_db.Images.Add(image);
+
 			_db.SaveChanges();
+		}
+
+		public IEnumerable<SelectListItem> GetVideoCategories()
+		{
+			var data = _db.VideoCategories;
+
+			foreach (var item in data)
+			{
+				yield return new SelectListItem { Value = item.Id.ToString(), Text = item.CategoryName };
+			}
+		}
+
+		public bool IsExist(string image,string filePath)
+		{
+			var video = _db.Videos.SingleOrDefault(x => x.Image.Path == image);
+			video = _db.Videos.SingleOrDefault(x => x.FilePath == filePath);
+			return (video != null);
 		}
 	}
 }

@@ -6,7 +6,14 @@
 [V] add TagVM/VideoVM
 [V] add Exts/ToVM/ToDto(Tags/Video)
 [V] VideoIndex資訊及圖片顯示
-[working on] 調整圖片大小
+[] 調整圖片大小
 
 ===============新增影片功能====================
-[working on] 
+[V] 上傳檔案驗證
+[V] 新增影片驗證
+
+待測試:
+[working on] Create video 測試存取資料庫(只有tag存入)
+[working on] 上傳檔案
+[working on] Category下拉選單
+

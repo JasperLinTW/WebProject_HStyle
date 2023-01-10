@@ -134,6 +134,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DTOs\CreateVideoDto.cs" />
     <Compile Include="Models\DTOs\VideoCategoryDto.cs" />
     <Compile Include="Models\DTOs\ImageDto.cs" />
     <Compile Include="Models\DTOs\TagDto.cs" />
@@ -143,6 +144,7 @@
     <Compile Include="Models\EFModels\Tag.cs" />
     <Compile Include="Models\EFModels\Video.cs" />
     <Compile Include="Models\EFModels\VideoCategory.cs" />
+    <Compile Include="Models\Infrastructures\UploadFileHelper.cs" />
     <Compile Include="Models\Services\Interfaces\IVideoRepository.cs" />
     <Compile Include="Models\Infrastructures\Repositories\VideoRepository.cs" />
     <Compile Include="Models\Services\VideoService.cs" />

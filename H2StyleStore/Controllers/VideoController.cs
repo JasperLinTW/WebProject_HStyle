@@ -1,5 +1,6 @@
 ﻿using H2StyleStore.Models.DTOs;
 using H2StyleStore.Models.EFModels;
+using H2StyleStore.Models.Infrastructures;
 using H2StyleStore.Models.Infrastructures.Repositories;
 using H2StyleStore.Models.Services;
 using H2StyleStore.Models.ViewModels;
@@ -32,24 +33,45 @@ namespace H2StyleStore.Controllers
 
 		public ActionResult CreateVideo()
 		{
+			ViewBag.VideoCategoryItems = new VideoRepository(new AppDbContext()).GetVideoCategories();
 			return View();
 		}
 
 		[HttpPost]
-		public ActionResult CreateVideo(CreateVideoVM model)
+		public ActionResult CreateVideo(CreateVideoVM model, HttpPostedFileBase file)
 		{
-			if (!ModelState.IsValid) return View(model);
-			(bool IsSuccess, string ErrorMessage) response = _videoService.CreateVideo(model.VMToDto());
+			ViewBag.VidoeCategoryItems = new VideoRepository(new AppDbContext()).GetVideoCategories();
 
-			if (response.IsSuccess)
+
+			if (file == null || string.IsNullOrEmpty(file.FileName) || file.ContentLength == 0)
 			{
-				return View("新增成功");
+				model.Image = string.Empty;
 			}
-			else
+			
+			var path = Server.MapPath("/Images/VideoImages");
+			var helper = new UploadFileHelper();
+			
+			try
 			{
-				ModelState.AddModelError(string.Empty, response.ErrorMessage);
-				return View(model);
+				string result = helper.SaveAs(path, file);
+				model.Image=result;
 			}
+			catch (Exception ex)
+			{
+				ModelState.AddModelError(string.Empty, "上傳失敗: " + ex.Message);
+			}
+
+			try
+			{
+				(bool IsSuccess, string ErrorMessage) response = _videoService.CreateVideo(model.ToCreateDto());
+			}
+			catch (Exception ex)
+			{
+				ModelState.AddModelError(string.Empty, ex.Message);
+			}
+
+			if (ModelState.IsValid) return RedirectToAction("Index");
+			return View(model);
 		}
 	}
 }

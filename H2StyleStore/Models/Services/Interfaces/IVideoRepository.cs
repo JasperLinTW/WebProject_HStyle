@@ -6,7 +6,7 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
     public interface IVideoRepository
     {
         IEnumerable<VideoDto> GetVideos();
-        void CreateVideo(VideoDto dto);
-
+        void CreateVideo(CreateVideoDto dto);
+        bool IsExist(string image, string filePath);
 	}
 }
