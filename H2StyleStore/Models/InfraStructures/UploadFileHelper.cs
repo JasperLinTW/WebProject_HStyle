@@ -27,7 +27,7 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 
 			file.SaveAs(fullPath);
 
-			return $"../../Images/ProductImages/{newFileName}";
+			return $"../../images/Essaysimage/{newFileName}";
 		}
 	}
 

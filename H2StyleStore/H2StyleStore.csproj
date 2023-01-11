@@ -196,6 +196,7 @@
     <Content Include="Views\uploadEssays\Register.cshtml" />
     <Content Include="Views\Essays\NewEssay.cshtml" />
     <Content Include="Views\Essays\Index.cshtml" />
+    <Content Include="Views\Essays\EditEssays.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,165 @@
+﻿@model H2StyleStore.Models.ViewModels.CreateEssayVM
+
+@{
+    ViewBag.Title = "EditEssays";
+    var VideoCategories = ViewBag.VideoCategoriesItems as IEnumerable<SelectListItem>;
+}
+
+<h2>EditEssays</h2>
+<hr />
+
+@using (Html.BeginForm("EditEssays", "Essays", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Essay_Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Influencer_Id, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Influencer_Id, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Influencer_Id, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.UplodTime, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.UplodTime, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.UplodTime, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ETitle, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ETitle, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ETitle, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EContent, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.EContent, 8, 100, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.EContent, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CategoryId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CategoryId, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="File">上傳檔案</label>
+            <div class="col-md-10">
+                <input type="file" name="files" clss="form-control" multiple="multiple" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Images, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div id="imgs" class="col-md-10">
+                @foreach (var img in Model.Images)
+                {
+                    <div class="imgCard">
+                        <img class="img" src="@img" style="width:100px ; height:100%;" />
+                        <button type="button" class="btn btn-default">刪除</button>
+                        <input name="Images" hidden value="@img" />
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Tags, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Tags, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Tags, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UpLoad, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UpLoad, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UpLoad, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Removed, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Removed, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Removed, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>$("#addSpecBtn").on("click", function () {
+            let template =
+                `<label class="control-label col-md-2" for="specs">規格</label>
+                       <div class="col-md-10 input-group specs">
+                       <input class="form-control text-box Color" id="" name="" type="text" value="" placeholder="顏色">
+                       <input class="form-control text-box Size" id="" name="" type="text" value="" placeholder="尺寸">
+                       <input class="form-control text-box Stock " id="" name="" type="number" value="" placeholder="庫存">
+                       <button type="button" class="btn btn-default delSpecBtn">刪除</button>
+                    </div>`;
+            const dom = document.createElement("div");
+            dom.setAttribute('class', `form-group`);
+            dom.innerHTML = template;
+            $("#specsArea").append(dom);
+
+        });
+
+        $("#specsArea").on("click", "[type = button]", function () {
+            if ($(this).attr("id") != "addSpecBtn") {
+                $(this).parent().parent().remove();
+            }
+
+        });
+
+        $("#submit").on("click", function () {
+            var i = 0;
+            $(".Color").each(function () {
+                $(this).attr('name', `Specs[${i}].Color`);
+                i++;
+            });
+            var j = 0;
+            $(".Size").each(function () {
+                $(this).attr('name', `Specs[${j}].Size`);
+                j++;
+            });
+            var k = 0;
+            $(".Stock").each(function () {
+                $(this).attr('name', `Specs[${k}].Stock`);
+                k++;
+            });
+
+        });
+
+        $("#imgs").on("click", "[type = button]", function () {
+            $(this).parent().remove();
+        });</script>
+}

@@ -23,18 +23,10 @@ namespace H2StyleStore.Models.Services
 			return _repository.GetEssays();
 		}
 
-
-		//public (bool IsSuccess, string ErrorMessage) CreateVideo(CreateEssayDTO dto)
-		//{
-		//	if (_repository.IsExist(dto.Image, dto.FilePath))
-		//	{
-		//		return (false, "這部影片已經上傳過了");
-		//	}
-
-		//	_repository.Create(dto);
-		//	return (true, null);
-		//}
-
+		public CreateEssayDTO GetEssay(int essayId)
+		{
+			return _repository.GetEssay(essayId);
+		}
 
 		public (bool, string) Create(EssayDTO dto)
 		{
@@ -62,6 +54,17 @@ namespace H2StyleStore.Models.Services
 
 			return (true, null);
 
+		}
+
+		public (bool, string) Edit(CreateEssayDTO dTO)
+		{
+			if(_repository.EditIsExist(dTO.ETitle, dTO.Essay_Id))
+			{
+				return (false, "標題名稱已使用，請更改名稱");
+			}
+
+			_repository.Edit(dTO);
+			return (true, null);
 		}
 	}
 }

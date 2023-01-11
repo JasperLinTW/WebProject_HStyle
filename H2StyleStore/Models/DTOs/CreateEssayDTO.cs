@@ -11,7 +11,7 @@ namespace H2StyleStore.Models.DTOs
 	{
 		public int Essay_Id { get; set; }
 
-		public int Influencer_Name { get; set; }
+		public int Influencer_Id { get; set; }
 
 		[Required]
 		[StringLength(1000)]
@@ -29,13 +29,9 @@ namespace H2StyleStore.Models.DTOs
 
 		public string FilePath { get; set; }
 
+		public List<string> Images { get;  set; }
 
-		public List<string> images { get; set; }
-
-
-		public List<string> tags { get; set; }
-
-
+		public List<string> Tags { get;  set; }
 	}
 
 }

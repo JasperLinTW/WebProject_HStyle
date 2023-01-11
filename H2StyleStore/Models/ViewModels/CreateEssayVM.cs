@@ -1,4 +1,5 @@
 ﻿using H2StyleStore.Models.DTOs;
+using H2StyleStore.Models.EFModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -16,20 +17,17 @@ namespace H2StyleStore.Models.ViewModels
 
 		// todo 登入自動輸入
 		[Display(Name = "員工賬號ID")]
-		public string Influencer_Name { get; set; }
+		public int Influencer_Id { get; set; }
 
 		[Required]
-		[StringLength(10)]
+		[StringLength(500)]
 		[Display(Name = "標題名稱")]
 		public string ETitle { get; set; }
 
 		[Required]
-		[StringLength(50)]
-		[Display(Name = "内文")] // 修改Html加入...
+		[Display(Name = "摘要")] // 修改Html加入...
 		public string EContent { get; set; }
-		[Display(Name = "檔案上傳")]
-		[Required]
-		public string FilePath { get; set; }
+
 		// 下拉
 		[Display(Name = "類別名稱")]
 		public int CategoryId { get; set; }
@@ -44,7 +42,7 @@ namespace H2StyleStore.Models.ViewModels
 		public List<string> Images { get; set; }
 
 		[Display(Name = "標籤")]
-		public IEnumerable<string> Tags { get; set; }
+		public string Tags { get; set; }
 	}
 
 	public static class CreateEssayDTOExts
@@ -54,12 +52,42 @@ namespace H2StyleStore.Models.ViewModels
 			return new CreateEssayDTO
 			{
 				Essay_Id = source.Essay_Id,
+				Influencer_Id = 3,
 				ETitle = source.ETitle,
 				EContent = source.EContent,
 				UpLoad = source.UpLoad,
 				Removed = source.Removed,
 				CategoryId = source.CategoryId,
+				Images = source.Images,
+				Tags = source.Tags.Split(',').Select(x => x.Trim()).ToList(),
 			};
 		}
+		public static CreateEssayDTO ToCreateDTO(this Essay source)
+		=> new CreateEssayDTO
+		{
+			Essay_Id = source.Essay_Id,
+			Influencer_Id = 3,
+			ETitle = source.ETitle,
+			EContent = source.EContent,
+			UpLoad = source.UpLoad,
+			Removed = source.Removed,
+			CategoryId = source.CategoryId,
+			Images = source.Images.Select(x => x.Path).ToList(),
+			Tags = source.Tags.Select(x => x.TagName).ToList(),
+
+		};
+		public static CreateEssayVM ToCreateVM(this CreateEssayDTO source)
+			=> new CreateEssayVM
+			{
+				Essay_Id = source.Essay_Id,
+				Influencer_Id = 3,
+				ETitle = source.ETitle,
+				EContent = source.EContent,
+				UpLoad = source.UpLoad,
+				Removed = source.Removed,
+				CategoryId = source.CategoryId,
+				Images = source.Images,
+				Tags = string.Join(",", source.Tags),
+			};
 	}
 }

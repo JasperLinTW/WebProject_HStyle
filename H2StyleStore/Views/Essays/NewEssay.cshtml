@@ -5,22 +5,21 @@
     var VideoCategories = ViewBag.VideoCategoriesItems as IEnumerable<SelectListItem>;
 }
 
-<h2>Add New Blog Details</h2>
+<h2>添加新文章詳細信息</h2>
 <hr />
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("NewEssay", "Essays", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     
 <div class="form-horizontal">
-    <h4>CreateEssayVM</h4>
-    <hr />
+  
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
-        @Html.LabelFor(model => model.Influencer_Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Influencer_Id, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Influencer_Name, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Influencer_Name, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.Influencer_Id, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Influencer_Id, "", new { @class = "text-danger" })
         </div>
     </div>
 
@@ -35,18 +34,11 @@
     <div class="form-group">
         @Html.LabelFor(model => model.EContent, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.EContent, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.TextAreaFor(model => model.EContent,8,100, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.EContent, "", new { @class = "text-danger" })
         </div>
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.FilePath, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.FilePath, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.FilePath, "", new { @class = "text-danger" })
-        </div>
-    </div>
 
     <div class="form-group">
         @Html.LabelFor(model => model.CategoryId, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -55,6 +47,23 @@
             @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
         </div>
     </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2" for="File">上傳檔案</label>
+        <div class="col-md-10">
+            <input type="file" name="files" clss="form-control" multiple="multiple" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Tags, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Tags, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Tags, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+   
 
     <div class="form-group">
         @Html.LabelFor(model => model.UpLoad, htmlAttributes: new { @class = "control-label col-md-2" })

@@ -12,10 +12,15 @@ namespace H2StyleStore.Models.Services.Interfaces
 	{
 		IEnumerable<EssayDTO> GetEssays();
 
+		CreateEssayDTO GetEssay(int id);
 		bool IsExist(string ETiltle);
+
+		bool EditIsExist(string ETiltle, int id);
 		void Create(EssayDTO essay);
 		void Create(CreateEssayDTO essay);
-		IEnumerable<SelectListItem> GetCategories();
+		IEnumerable<SelectListItem> GetCategories(int? categoryId);
+
+		void Edit(CreateEssayDTO dTO);
 
 		//EssayDTO Load(int memberId);
 		//EssayDTO GetByAccount(string account);
