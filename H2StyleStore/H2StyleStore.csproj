@@ -138,6 +138,7 @@
     <Compile Include="Models\DTOs\H_ActivityDto.cs" />
     <Compile Include="Models\DTOs\H_CheckInDto.cs" />
     <Compile Include="Models\DTOs\H_Source_DetailDto.cs" />
+    <Compile Include="Models\DTOs\MemberInBirthDto.cs" />
     <Compile Include="Models\EFModels\AppDbContext.cs" />
     <Compile Include="Models\EFModels\H_Activities.cs" />
     <Compile Include="Models\EFModels\H_CheckIns.cs" />
@@ -195,6 +196,7 @@
     <Content Include="Views\H_Activities\EditActivity.cshtml" />
     <Content Include="Views\H_Source_Details\HDetail.cshtml" />
     <Content Include="Views\H_Source_Details\CheckIn.cshtml" />
+    <Content Include="Views\H_Activities\DeleteActivity.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

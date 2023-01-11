@@ -29,10 +29,29 @@
        IH_Source_DetailRepository, H_Source_DetailRepository
 	   並建立與H_Activity的關聯
 
--- add EFModel/Member, Create H_Activity, Edit  H_Activity
-   並建立與Member的關聯
+-- 建立與Member的關聯
+   並 add EFModel/Member, Create H_Activity, Edit  H_Activity   
 [V] H_Activities/Create.html, H_Activities/Create.html
 [V] Index.cshtml add button to CreateActivity.cshtml
 [V] add CheckIn to display from HDetail.cshtml
-[modify] ActivityController/CreateActivity{return "View"=>"RedirectToAction"}
-[working] add ActivityController/DeleteActivity
+[V] modify ActivityController/CreateActivity{return "View"=>"RedirectToAction"}
+
+-- add ActivityController/DeleteActivity, H_Source_DetailsController/DeleteDetail
+
+-- 實作註冊活動功能
+[V?] add H_ActivityService/HcoinRegister
+[V?] add H_Source_DetailService/CreateDetail, 
+                 IH_Source_DetailRepository/CreateHDetail,
+				 H_Source_DetailService/CreateHDetail
+
+-- 實作購物滿額送H幣
+[V?] add H_ActivityService/HcoinOrderPrice
+[V?] use H_Source_DetailService/CreateDetail, 
+                 IH_Source_DetailRepository/CreateHDetail,
+				 H_Source_DetailService/CreateHDetail
+
+-- add H_Source_Detail Searchs
+
+-- 實作生日送H幣活動
+
+-- 計算ToTal Hcoin，傳入Member Table 的 H_value欄位

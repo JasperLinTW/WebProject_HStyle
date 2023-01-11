@@ -108,30 +108,25 @@ namespace H2StyleStore.Controllers
 			else { return View(model); }
 		}
 
-		// GET: H_Activities1/Delete/5
-		//public ActionResult DeleteActivity(int? id)
-		//{
-		//	if (id == null)
-		//	{
-		//		return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-		//	}
-		//	H_Activities h_Activities = db.H_Activities.Find(id);
-		//	if (h_Activities == null)
-		//	{
-		//		return HttpNotFound();
-		//	}
-		//	return View(h_Activities);
-		//}
+		//GET: H_Activities1/Delete/5
+		public ActionResult DeleteActivity(int? id)
+		{
+			if (id == null) return View("Index");
 
-		//// POST: H_Activities1/Delete/5
-		//[HttpPost, ActionName("DeleteActivity")]
-		//[ValidateAntiForgeryToken]
-		//public ActionResult DeleteConfirmed(int id)
-		//{
-		//	H_Activities h_Activities = _db.H_Activities.Find(id);
-		//	_db.H_Activities.Remove(h_Activities);
-		//	_db.SaveChanges();
-		//	return RedirectToAction("Index");
-		//}
+			H_ActivityVM hActivity = _repository.FindActivity(id).ToVM();
+
+			if (hActivity == null) return HttpNotFound();
+
+			return View(hActivity);
+		}
+
+		// POST: H_Activities1/Delete/5
+		[HttpPost, ActionName("DeleteActivity")]
+		[ValidateAntiForgeryToken]
+		public ActionResult DeleteConfirmed(int id)
+		{
+			_repository.DeleteActivity(id);
+			return RedirectToAction("Index");
+		}
 	}
 }

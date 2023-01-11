@@ -6,9 +6,6 @@
 
 <h2>HDetail</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
@@ -42,12 +39,10 @@
                 @Html.DisplayFor(modelItem => item.Event_Time)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Source_H_Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Source_H_Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Source_H_Id })
+                @Html.ActionLink("Delete", "DeleteDetail", new { id = item.Source_H_Id }, new { @class = "btn btn-default" })
             </td>
         </tr>
     }
 </table>
 
-@Html.ActionLink("Check In", "CheckIn", "H_Source_Details") |
+@Html.ActionLink("Check In", "CheckIn", "H_Source_Details") 

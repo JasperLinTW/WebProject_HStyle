@@ -17,21 +17,30 @@ namespace H2StyleStore.Controllers
 	public class H_Source_DetailsController : Controller
 	{
 		private H_Source_DetailService _detailService;
+		private IH_Source_DetailRepository _repository;
 
 		public H_Source_DetailsController()
 		{
 			var db = new AppDbContext();
-			IH_Source_DetailRepository repo = new H_Source_DetailRepository(db);
-			this._detailService = new H_Source_DetailService(repo);
-
+			_repository = new H_Source_DetailRepository(db);
+			this._detailService = new H_Source_DetailService(_repository);
 		}
 
 		// GET: H_Source_Details
 		public ActionResult HDetail()
+			//(int? activityId, string activityName, int pageNumber = 1)
 		{
-			var data = _detailService.GetSource().Select(x => x.TovM());
+			//pageNumber = pageNumber > 0 ? pageNumber : 1;                                                                                                                                                                                                                                                                                                                                                                                                                            
+			// 將篩選條件放在ViewBag,稍後在 view page取回
+			//ViewBag.Activities = _detailService.GetActivities(activityId);
+			//ViewBag.ActivityName = activityName;
+			//ViewBag.ActivityId = activityId;
+
+			var data = _detailService.GetSource().Select(x => x.ToVM());
 			return View(data);
 		}
+
+		
 
 		public ActionResult CheckIn()
 		{
@@ -39,6 +48,24 @@ namespace H2StyleStore.Controllers
 			return View(data);
 		}	
 
-		
+		public ActionResult DeleteDetail(int? id)
+		{
+			if (id == null) return View("Index");
+
+			H_Source_DetailVM hDetail = _repository.FindDetail(id).ToVM();
+			
+			if (hDetail == null) return HttpNotFound();
+
+			return View(hDetail);
+		}
+
+		// POST: H_Activities1/Delete/5
+		[HttpPost, ActionName("DeleteActivity")]
+		[ValidateAntiForgeryToken]
+		public ActionResult DeleteConfirmed(int id)
+		{
+			_repository.DeleteDetail(id);
+			return RedirectToAction("Index");
+		}
 	}
 }

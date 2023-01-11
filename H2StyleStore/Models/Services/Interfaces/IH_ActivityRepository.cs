@@ -17,5 +17,9 @@ namespace H2StyleStore.Models.Services.Interfaces
 		H_ActivityDto GetHActivityById(int id);
 
 		void Update(H_ActivityDto dto);
+
+		H_ActivityDto FindActivity(int? id);
+
+		void DeleteActivity(int id);
 	}
 }

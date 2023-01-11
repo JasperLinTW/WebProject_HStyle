@@ -11,12 +11,14 @@ namespace H2StyleStore.Models.DTOs
 	{
 		public int Source_H_Id { get; set; }
 
+		// from Member
 		public string Member_Name{ get; set; }
 
 		public int Member_Id { get; set; }
 
 		public int Activity_Id { get; set; }
 
+		// from Activity
 		public string H_Activity_Name { get; set; }
 
 		public int Difference_H { get; set; }

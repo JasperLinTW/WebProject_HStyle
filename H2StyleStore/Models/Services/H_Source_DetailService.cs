@@ -21,5 +21,15 @@ namespace H2StyleStore.Models.Services
 
 		public IEnumerable<H_CheckInDto> GetCheckIn()
 			=> _repository.GetCheckIn();
+
+		public string CreateHDetail(H_Source_DetailDto dto)
+		{
+			try
+			{
+				_repository.CreateHDetail(dto);
+				return "新增成功";
+			}
+			catch (Exception ex) { return ex.Message; }
+		}
 	}
 }

@@ -29,7 +29,7 @@ namespace H2StyleStore.Models.ViewModels
 	}
 	public static class HSourceDetailExts
 	{
-		public static H_Source_DetailVM TovM(this H_Source_DetailDto source)
+		public static H_Source_DetailVM ToVM(this H_Source_DetailDto source)
 		{
 			return new H_Source_DetailVM
 			{

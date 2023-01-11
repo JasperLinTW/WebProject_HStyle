@@ -40,7 +40,6 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			_db.SaveChanges();
 		}
 
-
 		public void Create(H_ActivityDto dto)
 		{
 			H_Activities activity = new H_Activities
@@ -50,6 +49,22 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 				H_Value = dto.H_Value,
 			};
 			_db.H_Activities.Add(activity);
+			_db.SaveChanges();
+		}
+
+		public H_ActivityDto FindActivity(int? id)
+		{
+			if (id == null) return null;
+
+			H_ActivityDto activity = _db.H_Activities.Find(id).ToDto();
+			return activity;
+		}
+
+		public void DeleteActivity(int id)
+		{
+			H_Activities activity = _db.H_Activities.SingleOrDefault(a => a.H_Activity_Id == id);
+
+			_db.H_Activities.Remove(activity);
 			_db.SaveChanges();
 		}
 
