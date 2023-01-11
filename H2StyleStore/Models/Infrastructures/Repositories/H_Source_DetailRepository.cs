@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using System.Web.Security;
 
 namespace H2StyleStore.Models.Infrastructures.Repositories
@@ -20,7 +21,6 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 		public IEnumerable<H_Source_DetailDto> GetSource()
 		{
 			IEnumerable<H_Source_Details> detail = _db.H_Source_Details
-				//.Include(d => d.Member)
 				.OrderBy(d => d.Source_H_Id)
 				.ToList();
 			var data = detail.Select(d => d.ToDto());
@@ -81,6 +81,17 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 				.Where(d => d.Member_Id == id).ToList();
 
 			return detail.Select(d => d.ToDto());
+		}
+
+		public IEnumerable<SelectListItem> GetActivities(int? activityId)
+		{
+			var items = _db.H_Activities
+				.Select(a => new SelectListItem
+				{ Value = a.H_Activity_Id.ToString(), Text = a.Activity_Name, Selected = (activityId.HasValue && a.H_Activity_Id == activityId.Value) })
+				.ToList()
+				.Prepend(new SelectListItem { Value = string.Empty, Text = "請選擇" });
+			
+			return items;
 		}
 
 		/// <summary>

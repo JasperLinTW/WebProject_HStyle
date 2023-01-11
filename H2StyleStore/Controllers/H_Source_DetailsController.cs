@@ -27,16 +27,23 @@ namespace H2StyleStore.Controllers
 		}
 
 		// GET: H_Source_Details
-		public ActionResult HDetail()
-			//(int? activityId, string activityName, int pageNumber = 1)
+		public ActionResult HDetail(int? activityId, string memberName)
 		{
-			//pageNumber = pageNumber > 0 ? pageNumber : 1;                                                                                                                                                                                                                                                                                                                                                                                                                            
 			// 將篩選條件放在ViewBag,稍後在 view page取回
-			//ViewBag.Activities = _detailService.GetActivities(activityId);
-			//ViewBag.ActivityName = activityName;
-			//ViewBag.ActivityId = activityId;
+			ViewBag.Activities = _repository.GetActivities(activityId);
+			ViewBag.MemberName = memberName;
 
 			var data = _detailService.GetSource().Select(x => x.ToVM());
+
+			// 若有篩選categoryid
+			//if (activityId.HasValue) data = data.Where(m => m.Member_Id == activityId.Value);
+			// 若有篩選 productName
+			if (string.IsNullOrEmpty(memberName) == false)
+			{
+				data = data
+					.Where(a => a.Member_Name.Contains(memberName));
+			}
+
 			return View(data);
 		}
 

@@ -50,8 +50,13 @@
                  IH_Source_DetailRepository/CreateHDetail,
 				 H_Source_DetailService/CreateHDetail
 
--- add H_Source_Detail Searchs
+-- 更改版面
+   [V] modify _Layout
+   [V] add css file and js file
 
--- 實作生日送H幣活動
+-/- add H_Source_Detail Searchs
+   [X] SelectListItem  
 
--- 計算ToTal Hcoin，傳入Member Table 的 H_value欄位
+-/- 實作生日送H幣活動
+
+-/- 計算ToTal Hcoin，傳入Member Table 的 H_value欄位

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace H2StyleStore.Models.Services.Interfaces
 {
@@ -54,6 +55,13 @@ namespace H2StyleStore.Models.Services.Interfaces
 		/// <param name="id"></param>
 		/// <returns></returns>
 		IEnumerable<H_Source_DetailDto> GetTotalDetail(int id);
+
+		/// <summary>
+		/// 傳回活動選單
+		/// </summary>
+		/// <param name="activityId"></param>
+		/// <returns></returns>
+		IEnumerable<SelectListItem> GetActivities(int? activityId);		
 
 		/// <summary>
 		/// 傳入所有 H_Value

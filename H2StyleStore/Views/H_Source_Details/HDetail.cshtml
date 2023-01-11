@@ -1,24 +1,41 @@
-﻿@model IEnumerable<H2StyleStore.Models.ViewModels.H_Source_DetailVM>
+﻿@model IEnumerable<H2StyleStore.Models.ViewModels.H_ActivityVM>
 
 @{
     ViewBag.Title = "HDetail";
+    var activities = ViewBag.Activities as IEnumerable<SelectListItem>;
+    var memberName = ViewBag.MemberName as string;
 }
 
 <h2>HDetail</h2>
 
+<form>
+    <div class="row">
+        <div class="col caption">
+            <h5>活動</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <div class="col-md-4">分類:@Html.DropDownList("activityId", activities, new { @class = "form-control" })</div>
+            <div class="col-md-4">會員名稱:<input type="text" name="memberName" class="form-control" value="@memberName"></div>
+        </div>
+        <div class="col-4">
+            <input type="submit" class="btn btn-success" value="Search" />
+        </div>
+    </div>
+</form>
+
+
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Member_Name)
+            @Html.DisplayNameFor(model => model.Activity_Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.H_Activity_Name)
+            @Html.DisplayNameFor(model => model.Activity_Describe)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Difference_H)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Event_Time)
+            @Html.DisplayNameFor(model => model.H_Value)
         </th>
         <th></th>
     </tr>
@@ -27,22 +44,20 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Member_Name)
+                @Html.DisplayFor(modelItem => item.Activity_Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.H_Activity_Name)
+                @Html.DisplayFor(modelItem => item.Activity_Describe)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Difference_H)
+                @Html.DisplayFor(modelItem => item.H_Value)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Event_Time)
-            </td>
-            <td>
-                @Html.ActionLink("Delete", "DeleteDetail", new { id = item.Source_H_Id }, new { @class = "btn btn-default" })
+                @Html.ActionLink("Edit", "Edit", new { id = item.H_Activity_Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.H_Activity_Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.H_Activity_Id })
             </td>
         </tr>
     }
-</table>
 
-@Html.ActionLink("Check In", "CheckIn", "H_Source_Details") 
+</table>

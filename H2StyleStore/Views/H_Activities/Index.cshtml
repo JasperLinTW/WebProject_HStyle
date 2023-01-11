@@ -5,29 +5,27 @@
     var activityName = ViewBag.ActivityName as string;
 }
 
-<h2>H coin Activity</h2>
+<h2>H 幣優惠活動</h2>
 
 <form>
     <div class="row">
-        <div class="col">
-            <div class="caption">
-                <h3>Search</h3>
-
-            </div>
+        <div class="col caption">
+            <h5>活動名稱: </h5>
         </div>
     </div>
     <div class="row">
-        <div class="col">
-            活動名稱: <input type="text" name="activityName" class="form-control" value="@activityName" />
+        <div class="col-6">            
+            <input type="text" name="activityName" class="form-control" value="@activityName" />
         </div>
-        <div class="col" style="margin-top: 10px; margin-bottom: 20px; padding-left: 15px;">
-            <input type="submit" class="btn btn-primary" value="Search" />
+        <div class="col-4">
+            <input type="submit" class="btn btn-success" value="Search" />
         </div>
     </div>
 </form>
 
+<br />
 <p>
-    @Html.ActionLink("新增活動", "CreateActivity", "H_Activities")
+    @Html.ActionLink("新增活動", "CreateActivity", "H_Activities", new {@class="btn btn-primary"})
 </p>
 <table class="table">
     <tr>
@@ -67,8 +65,8 @@
 
 
 
-<!-- Button trigger modal -->
-<!--<button type="button" id="createA" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+ @*Button trigger modal 
+<button type="button" id="createA" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
     新增活動
 </button>
 
@@ -84,5 +82,5 @@
             window.location.href = "../H_Activities/CreateActivity";
         })
 
-    </script>-->
-}
+    </script>
+}*@
