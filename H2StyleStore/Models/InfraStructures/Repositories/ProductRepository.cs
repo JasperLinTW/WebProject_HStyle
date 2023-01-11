@@ -8,6 +8,7 @@ using System.Web;
 using System.Data.Entity;
 using System.Web.Mvc;
 using H2StyleStore.Models.ViewModels;
+using System.Web.Razor.Generator;
 
 namespace H2StyleStore.Models.Infrastructures.Repositories
 {
@@ -185,6 +186,50 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 				{
 					Tag oldTag = _db.Tags.Where(x => x.TagName == tag).FirstOrDefault();
 					product.Tags.Add(oldTag);
+				}
+			}
+
+			List<Spec> specs = dto.specs.Select(x => new Spec
+			{
+				Color = x.Color,
+				Size = x.Size,
+				Stock = x.Stock,
+			}).ToList();
+			
+			var dbSpecs = _db.Specs.Where(x => x.Product_Id == dto.ProductID).ToArray();
+
+			foreach (var dbSpec in dbSpecs)
+			{
+				_db.Specs.Remove(dbSpec);
+			}
+			
+			
+
+			foreach (var spec in specs)
+			{
+				product.Specs.Add(spec);
+			}
+
+			
+			foreach (var dbimg in _db.Images.ToArray())
+			{
+				product.Images.Remove(dbimg);
+			}
+
+
+
+			foreach (string img in dto.images)
+			{
+				var imgs = _db.Images.Select(x => x.Path).ToList();
+				if (imgs.Contains(img) == false)
+				{
+					Image newImg = new Image { Path = img };
+					product.Images.Add(newImg);
+				}
+				else
+				{
+					Image oldImg = _db.Images.Where(x => x.Path == img).FirstOrDefault();
+					product.Images.Add(oldImg);
 				}
 			}
 
