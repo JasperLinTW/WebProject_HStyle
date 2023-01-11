@@ -33,5 +33,26 @@ namespace H2StyleStore.Models.Services
 			_repository.CreateVideo(dto);
             return (true, null);
         }
-    }
+
+		public void UpdateVideo(UpdateVideoDto request)
+		{
+            VideoDto entity = _repository.GetVideoById(request.Id);
+            if (entity == null)
+            {
+                throw new Exception("找不到此影片");
+            }
+
+            entity.Title = request.Title;
+            entity.Description = request.Description;
+            entity.CategoryId = request.CategoryId;
+            entity.FilePath = request.FilePath;
+            entity.OffShelffTime = request.OffShelffTime;
+            entity.OnShelffTime = request.OnShelffTime;
+            entity.CreatedTime = request.CreatedTime;
+            //entity.Tags = request.Tags;
+            //entity.Image = request.Image;
+
+            _repository.Update(entity);
+		}
+	}
 }

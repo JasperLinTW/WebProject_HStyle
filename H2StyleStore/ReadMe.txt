@@ -15,5 +15,7 @@
 [V] Category下拉選單
 
 ===============修改功能=======================
-[working on] 
+[V] 編輯頁面呈現
+[working on] 抓到text值並未轉換
+[working on] 上傳檔案抓值
 

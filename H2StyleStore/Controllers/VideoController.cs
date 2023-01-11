@@ -17,11 +17,12 @@ namespace H2StyleStore.Controllers
 	public class VideoController : Controller
 	{
 		private VideoService _videoService;
-		private IVideoRepository _videoRepository;
+		private readonly IVideoRepository _videoRepository;
 
 		public VideoController()
 		{
 			var db = new AppDbContext();
+			_videoRepository = new VideoRepository(db);
 			IVideoRepository repo = new VideoRepository(db);
 			this._videoService = new VideoService(repo);
 		}
@@ -58,7 +59,7 @@ namespace H2StyleStore.Controllers
 			var imagePath = Server.MapPath("/Images/VideoImages");
 			var videoPath = Server.MapPath("/videos");
 			var helper = new UploadFileHelper();
-		
+
 			try
 			{
 				string imageSave = helper.SaveAs(imagePath, imageFile);
@@ -83,6 +84,40 @@ namespace H2StyleStore.Controllers
 			if (ModelState.IsValid) return RedirectToAction("Index");
 
 			return RedirectToAction("Index");
+		}
+
+		public ActionResult EditVideo(int id)
+		{
+			EditVideoVM model = _videoRepository.GetVideoById(id).ToEditVM();
+
+			if (model == null) return HttpNotFound();
+			return View(model);
+		}
+
+		[HttpPost]
+		public ActionResult EditVideo(EditVideoVM model)
+		{
+			if (ModelState.IsValid == false) return View(model);
+
+			UpdateVideoDto request = model.ToEditDto();
+
+			try
+			{
+				_videoService.UpdateVideo(request);
+			}
+			catch (Exception ex)
+			{
+				ModelState.AddModelError(string.Empty, ex.Message);
+			}
+
+			if (ModelState.IsValid == true)
+			{
+				return RedirectToAction("Index");
+			}
+			else
+			{
+				return View(model);
+			}
 		}
 	}
 }

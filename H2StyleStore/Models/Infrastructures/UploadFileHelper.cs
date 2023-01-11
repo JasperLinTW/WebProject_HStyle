@@ -28,7 +28,6 @@ namespace H2StyleStore.Models.Infrastructures
 
 			file.SaveAs(fullPath);
 			return newFileName;
-			//return $"../../Images/VideoImages/{newFileName}";
 		}
 	}
 	public class UploadFileNullException : ApplicationException

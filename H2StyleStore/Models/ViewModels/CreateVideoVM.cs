@@ -42,8 +42,6 @@ namespace H2StyleStore.Models.ViewModels
 
 		[Display(Name = "標籤")]
 		public string Tags { get; set; }
-
-		//public VideoCategoryVM CategoryName { get; set; }
 	}
 
 	public static class CreateVideoDtoExts
@@ -60,8 +58,7 @@ namespace H2StyleStore.Models.ViewModels
 				OffShelffTime = source.OffShelffTime,
 				Image= source.Image,
 				Tags=source.Tags.Split(',').ToList(),
-				CategoryId=source.CategoryId,
-				//VideoCategory=source.CategoryName.ToDto().ToString(),
+				CategoryId=source.CategoryId,			
 			};
 		}
 	}

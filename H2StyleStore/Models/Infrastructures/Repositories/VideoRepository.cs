@@ -34,7 +34,6 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 				var tags = _db.Tags.Select(t => t.TagName).ToList();
 				if (tags.Contains(tag) == true)
 				{
-					//
 					Tag oldTag = _db.Tags.Where(t => t.TagName == tag).FirstOrDefault();
 					_db.Tags.Add(oldTag);
 				}
@@ -77,11 +76,48 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			}
 		}
 
+		public VideoDto GetVideoById(int videoId)
+		{
+			return _db.Videos.FirstOrDefault(v => v.Id == videoId).ToDto();
+		}
+
 		public bool IsExist(string image, string filePath)
 		{
 			var video = _db.Videos.SingleOrDefault(x => x.Image.Path == image);
 			video = _db.Videos.SingleOrDefault(x => x.FilePath == filePath);
 			return (video != null);
+		}
+		public void Update(CreateVideoDto dto)
+		{
+			Video video = _db.Videos.Find(dto.Id);
+			video.Title = dto.Title;
+			video.Description = dto.Description;
+			video.CreatedTime = dto.CreatedTime;
+			video.CategoryId = dto.CategoryId;
+			video.FilePath= dto.FilePath;
+			video.ImageId = dto.ImageId;
+			video.OnShelffTime= dto.OnShelffTime;
+			video.OffShelffTime = dto.OffShelffTime;
+
+			foreach (var tag in dto.Tags)
+			{
+				var tags = _db.Tags.Select(t => t.TagName).ToList();
+				if (tags.Contains(tag) == true)
+				{
+					Tag oldTag = _db.Tags.Where(t => t.TagName == tag).FirstOrDefault();
+					video.Tags.Add(oldTag);
+				}
+				else
+				{
+					Tag newTag = new Tag { TagName = tag };
+					video.Tags.Add(newTag);
+				}
+			}
+		}
+
+		public void Update(VideoDto entity)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

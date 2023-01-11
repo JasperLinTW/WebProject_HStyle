@@ -46,5 +46,7 @@ namespace H2StyleStore.Models.EFModels
 		public System.Data.Entity.DbSet<H2StyleStore.Models.ViewModels.VideoVM> VideoVMs { get; set; }
 
 		public System.Data.Entity.DbSet<H2StyleStore.Models.ViewModels.CreateVideoVM> CreateVideoVMs { get; set; }
-	}
+
+        public System.Data.Entity.DbSet<H2StyleStore.Models.ViewModels.EditVideoVM> EditVideoVMs { get; set; }
+    }
 }

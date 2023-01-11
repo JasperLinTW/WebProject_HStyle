@@ -55,21 +55,23 @@ namespace H2StyleStore.Models.DTOs
 				Tags = source.Tags.Select(x => x.ToDto()),
 			};
 		}
+	}
 
-		//public static VideoDto VMToDto(this CreateVideoVM source)
-		//{
-		//	return new VideoDto
-		//	{
-		//		Id = source.Id,
-		//		Title = source.Title,
-		//		Description = source.Description,
-		//		FilePath = source.FilePath,
-		//		OnShelffTime = source.OnShelffTime,
-		//		OffShelffTime = source.OffShelffTime,
-		//		Image = source.Image.ToDto(),
-		//		//Tags = source.Tags.Select(x => x.ToDto()),
-		//		CategoryName = source.CategoryName.ToString()
-		//	};
-		//}
+	public static class VideoDtoExts
+	{
+		public static EditVideoVM ToEditVM(this VideoDto source)
+		{
+			return new EditVideoVM()
+			{
+				Title= source.Title,
+				Description= source.Description,
+				FilePath= source.FilePath,
+				OnShelffTime= source.OnShelffTime,
+				OffShelffTime = source.OffShelffTime,
+				Image=source.Image.Path,
+				CategoryId=source.CategoryId,
+				Tags=source.Tags.ToString(),
+			};
+		}
 	}
 }
