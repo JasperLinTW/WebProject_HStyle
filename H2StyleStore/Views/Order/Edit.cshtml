@@ -69,19 +69,18 @@
                 </div>
             </div>
 
-            @{
-                var shippedDate = Model.ShippedDate.Value.ToString("yyyy-MM-ddTHH:mm:ss");
-            }
+
             <div class="row col-md-12 mb-3">
 
                 <div class="form-group col-md-4">
                     @Html.LabelFor(model => model.ShippedDate, htmlAttributes: new { @class = "control-label" })
-                    <div class="col-md-10">
-                        <input type="datetime-local" value="@shippedDate" name="ShippedDate" />
-                        @Html.ValidationMessageFor(model => model.ShippedDate, "", new { @class = "text-danger" })
+                    <div class="input-group col-md-12 date" id="datetimepicker1" data-target-input="nearest">
+                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" />
+                        <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
                     </div>
                 </div>
-
                 <div class="form-group  col-md-4">
                     @Html.LabelFor(model => model.ShipVia, htmlAttributes: new { @class = "control-label" })
                     <div class="col-md-12">
@@ -174,9 +173,23 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    <script type="text/javascript">
-        $(function () {
-            $('#datetimepicker').datetimepicker();
+    <script>
+        @{
+           var shippedDate = Model.ShippedDate.Value.ToString("yyyy-MM-ddTHH:mm:ss");
+         }
+        $(document).ready(function ()
+        {
+            $("#datetimepicker1").datetimepicker(
+                {
+                    defaultDate: `@shippedDate`,
+                    showTodayButton: true,
+                    format: 'YYYY-MM-DD HH:mm',
+                    showClose: true,
+                    showClear: true,
+                    toolbarPlacement: 'top',
+                    stepping: 15
+                });
         });
     </script>
+
 }

@@ -25,6 +25,9 @@
         </div>
     </div>
 </form>
+<div>
+
+</div>
 <table class="table">
     <tr>
         <th>
@@ -76,14 +79,15 @@
 
     @foreach (var item in Model)
     {
-
         <tr class="orderrow" style="cursor:pointer">
             <td id="Order_id">
                 @Html.DisplayFor(modelItem => item.Order_id)
                 @{
                     if (item.Status == "已完成")
                     {
-                        <span class="label label-success ml-2 text-light" style="border: 2px solid #5cb85c; border-radius: 30px; background-color: #5cb85c; font-size:small">已完成</span>
+                        <div class="pl-2">
+                            <span class="label label-success ml-2 text-light" style="border: 2px solid #5cb85c; border-radius: 30px; background-color: #5cb85c; font-size:small">已完成</span>
+                        </div>
                     }
                 }
             </td>
@@ -137,7 +141,8 @@
 @section Scripts{
     <script>
         $('.orderrow').on('click', function (event) {
-            window.location.href = "https://localhost:44313/Order/Details/" + $(this).children('#Order_id').text().trim();
+            console.log($(this).children('#Order_id').text().trim());
+            //window.location.href = "https://localhost:44313/Order/Details/" + $(this).children('#Order_id').text().trim();
         });
     </script>
 
