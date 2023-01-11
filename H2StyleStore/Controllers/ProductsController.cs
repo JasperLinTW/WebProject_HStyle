@@ -46,27 +46,34 @@ namespace H2StyleStore.Controllers
 
 			ViewBag.PCategoryItems = new ProductRepository(new AppDbContext()).GetCategories(null);
 
-			string path = Server.MapPath("/Images/ProductImages");
-			var helper = new UploadFileHelper();
 
-			model.images = new List<string>();
-			
-			foreach (var file in files)
+			if (files[0] != null)
 			{
-				try
-				{
-					string result = helper.SaveAs(path, file);
-					//string OriginalFileName = System.IO.Path.GetFileName(file.FileName);
-					string FileName = result;
-					
-					model.images.Add(FileName);
-				}
-				catch (Exception ex)
-				{
-					ModelState.AddModelError(string.Empty, "上傳檔案失敗: " + ex.Message);
+				string path = Server.MapPath("/Images/ProductImages");
+				var helper = new UploadFileHelper();
 
+
+				model.images = new List<string>();
+
+				foreach (var file in files)
+				{
+					try
+					{
+						string result = helper.SaveAs(path, file);
+						//string OriginalFileName = System.IO.Path.GetFileName(file.FileName);
+						string FileName = result;
+
+						model.images.Add(FileName);
+					}
+					catch (Exception ex)
+					{
+						ModelState.AddModelError(string.Empty, "上傳檔案失敗: " + ex.Message);
+
+					}
 				}
 			}
+
+				
 			
 
 			try
@@ -110,7 +117,7 @@ namespace H2StyleStore.Controllers
 			{
 				string path = Server.MapPath("/Images/ProductImages");
 				var helper = new UploadFileHelper();
-
+				if(model.images == null) { model.images = new List<string> { path }; }
 				foreach (var file in files)
 				{
 					try
@@ -151,8 +158,4 @@ namespace H2StyleStore.Controllers
 
 	}
 
-	public class Methods
-	{
-		
-	}
 }
