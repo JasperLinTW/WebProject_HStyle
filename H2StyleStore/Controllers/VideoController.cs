@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Razor.Parser.SyntaxTree;
+using System.Xml.Linq;
 
 namespace H2StyleStore.Controllers
 {
@@ -38,27 +40,35 @@ namespace H2StyleStore.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult CreateVideo(CreateVideoVM model, HttpPostedFileBase file)
+		public ActionResult CreateVideo(CreateVideoVM model, HttpPostedFileBase videoFile, HttpPostedFileBase imageFile)
 		{
 			ViewBag.VidoeCategoryItems = new VideoRepository(new AppDbContext()).GetVideoCategories();
 
 
-			if (file == null || string.IsNullOrEmpty(file.FileName) || file.ContentLength == 0)
+			if (videoFile == null || string.IsNullOrEmpty(videoFile.FileName) || videoFile.ContentLength == 0)
 			{
 				model.Image = string.Empty;
 			}
-			
-			var path = Server.MapPath("/Images/VideoImages");
+
+			if (imageFile == null || string.IsNullOrEmpty(imageFile.FileName) || imageFile.ContentLength == 0)
+			{
+				model.FilePath = string.Empty;
+			}
+
+			var imagePath = Server.MapPath("/Images/VideoImages");
+			var videoPath = Server.MapPath("/videos");
 			var helper = new UploadFileHelper();
-			
+		
 			try
 			{
-				string result = helper.SaveAs(path, file);
-				model.Image=result;
+				string imageSave = helper.SaveAs(imagePath, imageFile);
+				model.Image = imageSave;
+				string videoSave = helper.SaveAs(videoPath, videoFile);
+				model.FilePath = videoSave;
 			}
 			catch (Exception ex)
 			{
-				ModelState.AddModelError(string.Empty, "上傳失敗: " + ex.Message);
+				ModelState.AddModelError(string.Empty, "影片上傳失敗: " + ex.Message);
 			}
 
 			try
@@ -71,7 +81,8 @@ namespace H2StyleStore.Controllers
 			}
 
 			if (ModelState.IsValid) return RedirectToAction("Index");
-			return View(model);
+
+			return RedirectToAction("Index");
 		}
 	}
 }
