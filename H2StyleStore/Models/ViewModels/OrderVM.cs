@@ -67,7 +67,6 @@ namespace H2StyleStore.Models.ViewModels
 		public string Status_Description{ get; set; }
 
 		public IEnumerable<Order_DetailsVM> Order_Details { get; set; }
-
 	}
 
 	public static class OrderDTOExts
@@ -93,6 +92,7 @@ namespace H2StyleStore.Models.ViewModels
 				Status_id = source.Status_id,
 				Status = source.Status,
 				Status_Description = source.Status_Description,
+				Order_Details= source.Order_Details.Select(x => x.ToVM()),
 			};
 		}
 	}
@@ -118,7 +118,7 @@ namespace H2StyleStore.Models.ViewModels
 				CreatedTime = source.CreatedTime,
 				Status_id = source.Status_id,
 				Status = source.Status,
-				Status_Description = source.Status_Description,
+				Status_Description = source.Status_Description,				
 			};
 		}
 	}

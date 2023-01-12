@@ -24,7 +24,7 @@ namespace H2StyleStore.Models.EFModels
         [StringLength(50)]
         public string Title { get; set; }
 
-        public int Permission_id { get; set; }
+        public int? Permission_id { get; set; }
 
         [StringLength(100)]
         public string EncryptedPassword { get; set; }

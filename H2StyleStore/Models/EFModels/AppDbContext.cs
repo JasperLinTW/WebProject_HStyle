@@ -55,6 +55,11 @@ namespace H2StyleStore.Models.EFModels
 			modelBuilder.Entity<Order_Status>()
 				.HasOptional(e => e.Order_StatusDescription)
 				.WithRequired(e => e.Order_Status);
+
+			modelBuilder.Entity<Order>()
+				.HasMany(e => e.Order_Details)
+				.WithRequired(e => e.Order)
+				.WillCascadeOnDelete(false);
 		}
 	}
 }

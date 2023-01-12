@@ -8,6 +8,12 @@ namespace H2StyleStore.Models.EFModels
 
     public partial class Order
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Order()
+        {
+            Order_Details = new HashSet<Order_Details>();
+        }
+
         [Key]
         public int Order_id { get; set; }
 
@@ -52,6 +58,9 @@ namespace H2StyleStore.Models.EFModels
         public virtual Employee Employee { get; set; }
 
         public virtual Member Member { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Order_Details> Order_Details { get; set; }
 
         public virtual Order_Status Order_Status { get; set; }
     }

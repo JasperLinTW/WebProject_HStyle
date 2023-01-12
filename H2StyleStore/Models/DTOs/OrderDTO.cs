@@ -48,6 +48,8 @@ namespace H2StyleStore.Models.DTOs
 		public string Status { get; set; }
 
 		public string Status_Description{ get; set; }
+
+		public IEnumerable<Order_DetailDTO> Order_Details { get; set; }
 	}
 
 	public static class OrderExts
@@ -75,7 +77,8 @@ namespace H2StyleStore.Models.DTOs
 				Status_id = source.Status_id,
 				Status = source.Order_Status.Status,
 				Status_Description_id= source.Status_Description_id,
-				Status_Description = source.Order_Status.Order_StatusDescription.Description
+				Status_Description = source.Order_Status.Order_StatusDescription.Description,
+				Order_Details = source.Order_Details.Select(x => x.ToDTO()),
 			};
 		}
 	}

@@ -29,5 +29,7 @@ namespace H2StyleStore.Models.EFModels
         public int Quantity { get; set; }
 
         public int? Discount { get; set; }
+
+        public virtual Order Order { get; set; }
     }
 }

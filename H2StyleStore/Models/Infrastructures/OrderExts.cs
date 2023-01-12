@@ -33,7 +33,9 @@ namespace H2StyleStore.Models.Infrastructures
 					Status_id = entity.Status_id,
 					Status = entity.Order_Status.Status,
 					Status_Description_id = entity.Status_Description_id,
-					Status_Description = entity.Order_Status.Order_StatusDescription.Description
+					Status_Description = entity.Order_Status.Order_StatusDescription.Description,
+					Order_Details =entity.Order_Details.Select(x => x.ToDTO()),
+
 				};
 		}
 	}

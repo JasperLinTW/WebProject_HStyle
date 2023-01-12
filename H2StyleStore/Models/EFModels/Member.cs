@@ -38,7 +38,7 @@ namespace H2StyleStore.Models.EFModels
 
         public bool Gender { get; set; }
 
-        [Column(TypeName = "date")]
+        [Column(TypeName = "datetime2")]
         public DateTime Birthday { get; set; }
 
         public int? Permission_Id { get; set; }
