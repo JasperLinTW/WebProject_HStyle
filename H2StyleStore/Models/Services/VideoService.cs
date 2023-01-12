@@ -36,7 +36,7 @@ namespace H2StyleStore.Models.Services
 
 		public void UpdateVideo(UpdateVideoDto request)
 		{
-            CreateVideoDto entity = _repository.GetVideoById(request.Id);
+            UpdateVideoDto entity = _repository.GetVideoById(request.Id);
             if (entity == null)
             {
                 throw new Exception("找不到此影片");
@@ -49,8 +49,8 @@ namespace H2StyleStore.Models.Services
             entity.OffShelffTime = request.OffShelffTime;
             entity.OnShelffTime = request.OnShelffTime;
             entity.CreatedTime = request.CreatedTime;
-            //entity.Tags = request.Tags;
-            //entity.Image = request.Image;
+            entity.Tags = request.Tags;
+            entity.Image = request.Image;
 
             _repository.Update(entity);
 		}

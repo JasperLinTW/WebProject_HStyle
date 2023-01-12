@@ -36,14 +36,14 @@ namespace H2StyleStore.Controllers
 
 		public ActionResult CreateVideo()
 		{
-			ViewBag.VideoCategoryItems = new VideoRepository(new AppDbContext()).GetVideoCategories();
+			ViewBag.VideoCategoryItems =_videoRepository.GetVideoCategories();
 			return View();
 		}
 
 		[HttpPost]
 		public ActionResult CreateVideo(CreateVideoVM model, HttpPostedFileBase videoFile, HttpPostedFileBase imageFile)
 		{
-			ViewBag.VidoeCategoryItems = new VideoRepository(new AppDbContext()).GetVideoCategories();
+			ViewBag.VidoeCategoryItems = _videoRepository.GetVideoCategories();
 
 
 			if (videoFile == null || string.IsNullOrEmpty(videoFile.FileName) || videoFile.ContentLength == 0)
@@ -89,14 +89,62 @@ namespace H2StyleStore.Controllers
 		public ActionResult EditVideo(int id)
 		{
 			EditVideoVM model = _videoRepository.GetVideoById(id).ToEditVM();
+			var videoCategory = _videoRepository.GetVideoCategories(id).ToList();
+			ViewBag.VideoCategoryItems = videoCategory;
 			
 			if (model == null) return HttpNotFound();
 			return View(model);
 		}
 
 		[HttpPost]
-		public ActionResult EditVideo(EditVideoVM model)
+		public ActionResult EditVideo(EditVideoVM model, HttpPostedFileBase videoFile, HttpPostedFileBase imageFile)
 		{
+			//var data=_videoRepository.GetVideoById(model.Id);
+			var videoCategory = _videoRepository.GetVideoCategories(model.Id);
+			ViewBag.VideoCategoryItems = videoCategory;
+
+
+			//---------test---------
+
+			var imagePath = Server.MapPath("/Images/VideoImages");
+			var videoPath = Server.MapPath("/videos");
+			var helper = new UploadFileHelper();
+			if (videoFile == null || string.IsNullOrEmpty(videoFile.FileName) || videoFile.ContentLength == 0)
+			{
+				model.Image = model.Image;
+			}
+			else
+			{
+				try
+				{
+					string videoSave = helper.SaveAs(videoPath, videoFile);
+					model.FilePath = videoSave;
+				}
+				catch (Exception ex)
+				{
+					ModelState.AddModelError(string.Empty, "影片上傳失敗: " + ex.Message);
+				}
+			}
+
+			if (imageFile == null || string.IsNullOrEmpty(imageFile.FileName) || imageFile.ContentLength == 0)
+			{
+				model.FilePath = model.FilePath;
+			}
+			else
+			{
+				try
+				{
+					string imageSave = helper.SaveAs(imagePath, imageFile);
+					model.Image = imageSave;
+				}
+				catch (Exception ex)
+				{
+					ModelState.AddModelError(string.Empty, "圖片上傳失敗: " + ex.Message);
+				}
+				
+			}
+			
+
 			if (ModelState.IsValid == false) return View(model);
 
 			UpdateVideoDto request = model.ToEditDto();

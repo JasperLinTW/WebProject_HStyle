@@ -4,9 +4,11 @@ using H2StyleStore.Models.ViewModels;
 using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+//using System.Web.UI.WebControls;
 
 namespace H2StyleStore.Models.Infrastructures.Repositories
 {
@@ -66,19 +68,25 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 		public IEnumerable<SelectListItem> GetVideoCategories()
 		{
 			var data = _db.VideoCategories;
-
 			foreach (var item in data)
 			{
 				yield return new SelectListItem { Value = item.Id.ToString(), Text = item.CategoryName };
 			}
 		}
 
-		public CreateVideoDto GetVideoById(int videoId)
+		public IEnumerable<SelectListItem> GetVideoCategories(int? categoryId)
 		{
-			CreateVideoDto query = _db.Videos.FirstOrDefault(v => v.Id == videoId).ToCreateDto();
-			query.Image= _db.Videos.FirstOrDefault(v => v.ImageId == query.ImageId).ToCreateDto().ToString();
-			//var filePath=
-			//query.FilePath = "../../Videos/" + 
+			var data = _db.VideoCategories;
+			foreach (var item in data)
+			{
+				yield return new SelectListItem { Value = item.Id.ToString(), Text = item.CategoryName, Selected = (item.Id == categoryId) };
+			}
+
+		}
+
+		public UpdateVideoDto GetVideoById(int videoId)
+		{
+			UpdateVideoDto query = _db.Videos.FirstOrDefault(v => v.Id == videoId).ToEditDto();
 			return query;
 		}
 
@@ -90,14 +98,21 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 		}
 		public void Update(UpdateVideoDto dto)
 		{
+			string path = dto.Image;
+			Image image = new Image { Path = "../../Images/VideoImages/"+path };
+			_db.Images.Add(image);
+			_db.SaveChanges();
+			
+			var imageid = _db.Images.Where(i => i.Path == image.Path).FirstOrDefault();
+
 			Video video = _db.Videos.Find(dto.Id);
 			video.Title = dto.Title;
 			video.Description = dto.Description;
-			video.CreatedTime = dto.CreatedTime;
+			video.CreatedTime = DateTime.Now;
 			video.CategoryId = dto.CategoryId;
-			video.FilePath= dto.FilePath;
-			video.ImageId = dto.ImageId;
-			video.OnShelffTime= dto.OnShelffTime;
+			video.FilePath = "../../Videos/"+ dto.FilePath;
+			video.ImageId = imageid.Image_Id;
+			video.OnShelffTime = dto.OnShelffTime;
 			video.OffShelffTime = dto.OffShelffTime;
 
 			foreach (var tag in dto.Tags)

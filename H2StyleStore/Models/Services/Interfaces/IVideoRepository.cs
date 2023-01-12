@@ -1,5 +1,6 @@
 ﻿using H2StyleStore.Models.DTOs;
 using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace H2StyleStore.Models.Infrastructures.Repositories
 {
@@ -8,7 +9,9 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
         IEnumerable<VideoDto> GetVideos();
         void CreateVideo(CreateVideoDto dto);
         bool IsExist(string image, string filePath);
-		CreateVideoDto GetVideoById(int videoId);
-		void Update(CreateVideoDto entity);
+		UpdateVideoDto GetVideoById(int videoId);
+		void Update(UpdateVideoDto entity);
+        IEnumerable<SelectListItem> GetVideoCategories();
+        IEnumerable<SelectListItem> GetVideoCategories(int? categoryId);
 	}
 }

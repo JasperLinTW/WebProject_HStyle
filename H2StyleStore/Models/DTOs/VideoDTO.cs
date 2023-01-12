@@ -55,23 +55,6 @@ namespace H2StyleStore.Models.DTOs
 				Tags = source.Tags.Select(t => t.ToDto()),
 			};
 		}
-
-		public static CreateVideoDto ToCreateDto(this Video source)
-		{
-			return new CreateVideoDto()
-			{
-				Id = source.Id,
-				Title = source.Title,
-				Description = source.Description,
-				FilePath = source.FilePath,
-				CategoryId = source.CategoryId,
-				ImageId = source.ImageId,
-				OnShelffTime = source.OnShelffTime,
-				OffShelffTime = source.OffShelffTime,
-				CreatedTime = source.CreatedTime,
-				Tags = source.Tags.Select(t=>t.TagName).ToList(),
-			};
-		}
 	}
 
 	public static class VideoDtoExts
@@ -90,5 +73,6 @@ namespace H2StyleStore.Models.DTOs
 				Tags=string.Join(",",source.Tags.ToArray()),
 			};
 		}
+
 	}
 }

@@ -1,7 +1,10 @@
-﻿using System;
+﻿using H2StyleStore.Models.EFModels;
+using H2StyleStore.Models.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.UI;
 
 namespace H2StyleStore.Models.DTOs
 {
@@ -31,5 +34,40 @@ namespace H2StyleStore.Models.DTOs
 
 		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 		public List<string> Tags { get; set; }
+	}
+	public static class UpdateVideoExts
+	{
+		public static UpdateVideoDto ToEditDto(this Video source)
+		{
+			return new UpdateVideoDto()
+			{
+				Id = source.Id,
+				Title = source.Title,
+				Description = source.Description,
+				FilePath = source.FilePath,
+				CategoryId = source.CategoryId,
+				Image = source.Image.Path,
+				OnShelffTime = source.OnShelffTime,
+				OffShelffTime = source.OffShelffTime,
+				//CreatedTime = source.CreatedTime,
+				Tags = source.Tags.Select(t => t.TagName).ToList()
+			};
+		}
+		public static EditVideoVM ToEditVM(this UpdateVideoDto source)
+		{
+			return new EditVideoVM()
+			{
+				Id = source.Id,
+				Title = source.Title,
+				Description = source.Description,
+				FilePath = source.FilePath,
+				CategoryId = source.CategoryId,
+				Image = source.Image,
+				OnShelffTime = source.OnShelffTime,
+				OffShelffTime = source.OffShelffTime,
+				//CreatedTime = source.CreatedTime,
+				Tags = string.Join(",",source.Tags.ToArray()),
+			};
+		}
 	}
 }
