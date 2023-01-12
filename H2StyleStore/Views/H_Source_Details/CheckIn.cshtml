@@ -4,9 +4,9 @@
     ViewBag.Title = "CheckIn";
 }
 
-<h2>CheckIn</h2>
+<h2>打卡紀錄</h2>
 
-<table class="table">
+<table class="table table-hover">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Member_Name)
@@ -23,21 +23,25 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Member_Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Activity)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CheckIn_Times)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Last_Time)
-        </td>       
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Member_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Activity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CheckIn_Times)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Last_Time)
+            </td>
+        </tr>
+    }
 
 </table>
+
+@Html.ActionLink("Back to List", "HDetail")
+

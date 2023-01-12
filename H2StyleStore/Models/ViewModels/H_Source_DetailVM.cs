@@ -17,6 +17,8 @@ namespace H2StyleStore.Models.ViewModels
 		[DisplayName("會員")]
 		public string Member_Name { get; set; }
 
+		public int Activity_Id { get; set; }
+
 		[DisplayName("活動名稱")]
 		public string H_Activity_Name { get; set; }
 
@@ -36,7 +38,7 @@ namespace H2StyleStore.Models.ViewModels
 				Source_H_Id = source.Source_H_Id,
 				Member_Name = source.Member_Name,
 				//Member_Id = source.Member_Id,
-				//Activity_Id = source.Activity_Id,
+				Activity_Id = source.Activity_Id,
 				H_Activity_Name = source.H_Activity_Name,
 				Difference_H = source.Difference_H,
 				Event_Time = source.Event_Time,

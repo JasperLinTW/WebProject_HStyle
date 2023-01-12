@@ -1,0 +1,62 @@
+﻿@model H2StyleStore.Models.ViewModels.H_Source_DetailVM
+
+@{
+    ViewBag.Title = "DeleteDetail";
+}
+
+<h2>刪除會員活動紀錄</h2>
+
+<h3>你確定要刪除會員活動紀錄嗎?</h3>
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Member_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Member_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Activity_Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Activity_Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.H_Activity_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.H_Activity_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Difference_H)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Difference_H)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Event_Time)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Event_Time)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "HDetail")
+        </div>
+    }
+</div>

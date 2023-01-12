@@ -197,6 +197,7 @@
     <Content Include="Views\H_Source_Details\HDetail.cshtml" />
     <Content Include="Views\H_Source_Details\CheckIn.cshtml" />
     <Content Include="Views\H_Activities\DeleteActivity.cshtml" />
+    <Content Include="Views\H_Source_Details\DeleteDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

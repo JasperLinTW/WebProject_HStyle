@@ -4,6 +4,7 @@ using H2StyleStore.Models.Infrastructures.Repositories;
 using H2StyleStore.Models.Services;
 using H2StyleStore.Models.Services.Interfaces;
 using H2StyleStore.Models.ViewModels;
+using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -54,21 +55,14 @@ namespace H2StyleStore.Controllers
 		[HttpPost]
 		public ActionResult CreateActivity(H_ActivityVM model)
 		{
-			if (!ModelState.IsValid)
-			{
-				return View(model);
-			}
 
-			try
+			if (ModelState.IsValid)
 			{
-				string create = _hActivityService.CreateNewActivity(model.ToDto());
+				_hActivityService.CreateNewActivity(model.ToDto());
 				return RedirectToAction("Index");
 			}
-			catch (Exception ex)
-			{
-				ModelState.AddModelError(string.Empty, ex);
-				return View(model);
-			}
+
+			return View(model);
 		}
 
 		[HttpGet]

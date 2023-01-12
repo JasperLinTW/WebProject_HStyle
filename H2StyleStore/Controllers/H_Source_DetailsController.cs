@@ -34,9 +34,10 @@ namespace H2StyleStore.Controllers
 			ViewBag.MemberName = memberName;
 
 			var data = _detailService.GetSource().Select(x => x.ToVM());
-
+			
+			
 			// 若有篩選categoryid
-			//if (activityId.HasValue) data = data.Where(m => m.Member_Id == activityId.Value);
+			if (activityId.HasValue) data = data.Where(m => m.Activity_Id == activityId.Value);
 			// 若有篩選 productName
 			if (string.IsNullOrEmpty(memberName) == false)
 			{
@@ -67,12 +68,12 @@ namespace H2StyleStore.Controllers
 		}
 
 		// POST: H_Activities1/Delete/5
-		[HttpPost, ActionName("DeleteActivity")]
+		[HttpPost, ActionName("DeleteDetail")]
 		[ValidateAntiForgeryToken]
 		public ActionResult DeleteConfirmed(int id)
 		{
 			_repository.DeleteDetail(id);
-			return RedirectToAction("Index");
+			return RedirectToAction("HDetail");
 		}
 	}
 }
