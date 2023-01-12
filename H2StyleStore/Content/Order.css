@@ -1,0 +1,32 @@
+﻿body {
+}
+.table-hover > tbody > tr.no-hover:hover {
+    background-color: transparent;
+}
+
+.borderless td, .borderless th {
+    border-left: none;
+    border-right:none;
+}
+
+.txt-detail{
+    font-size:20px;
+    font-weight:700;
+}
+
+.title {
+    visibility: hidden;
+}
+
+@media print {
+    .donotprint {
+        visibility: hidden;
+    }
+
+    .title {
+        visibility: visible;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
