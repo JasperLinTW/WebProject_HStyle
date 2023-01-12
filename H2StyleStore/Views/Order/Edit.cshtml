@@ -4,7 +4,7 @@
 @{
     ViewBag.Title = "Edit";
     IEnumerable<SelectListItem> status = ViewBag.Status;
-    var statusInDb = status.ToList();
+
 }
 
 <h2>修改訂單</h2>
@@ -71,16 +71,20 @@
 
 
             <div class="row col-md-12 mb-3">
-
+                @{
+                    string shippedDate = string.Empty;
+                    if (Model.ShippedDate.HasValue)
+                    {
+                        shippedDate = Model.ShippedDate.Value.ToString("yyyy-MM-ddTHH:mm:ss");
+                    }
+                }
                 <div class="form-group col-md-4">
                     @Html.LabelFor(model => model.ShippedDate, htmlAttributes: new { @class = "control-label" })
-                    <div class="input-group col-md-12 date" id="datetimepicker1" data-target-input="nearest">
-                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" />
-                        <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                        </div>
+                    <div class="col-md-12">
+                        <input class="form-control" type="datetime-local" value="@shippedDate" name="ShippedDate" />
                     </div>
                 </div>
+
                 <div class="form-group  col-md-4">
                     @Html.LabelFor(model => model.ShipVia, htmlAttributes: new { @class = "control-label" })
                     <div class="col-md-12">
@@ -126,7 +130,7 @@
                     @Html.LabelFor(model => model.RequestRefund, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-12">
                         <div class="checkbox">
-                            @Html.CheckBoxFor(model => model.RequestRefund, new { disabled = "disabled" })
+                            @Html.CheckBoxFor(model => model.RequestRefund, new { disabled = "disabled"})
                             @Html.ValidationMessageFor(model => model.RequestRefund, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -141,17 +145,8 @@
                 <div class="form-group col-md-4">
                     @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label" })
                     <div class="col-md-12">
-                        <select name="Status" class="form-control">
-                            <option value="@Model.Status">@Model.Status</option>
-                            @for (int k = 0; k < statusInDb.Count; k++)
-                            {
-                                if (statusInDb[k].Text != @Model.Status)
-                                {
-                                    <option value="@statusInDb[k].Text">@statusInDb[k].Text</option>
-                                }
-                            }
-                        </select>
-                        @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                        @Html.DropDownListFor(model => model.Status_id, status, new { @class = "form-control " })
+                        @Html.ValidationMessageFor(model => model.Status_id, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <br>
@@ -173,23 +168,4 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    <script>
-        @{
-           var shippedDate = Model.ShippedDate.Value.ToString("yyyy-MM-ddTHH:mm:ss");
-         }
-        $(document).ready(function ()
-        {
-            $("#datetimepicker1").datetimepicker(
-                {
-                    defaultDate: `@shippedDate`,
-                    showTodayButton: true,
-                    format: 'YYYY-MM-DD HH:mm',
-                    showClose: true,
-                    showClear: true,
-                    toolbarPlacement: 'top',
-                    stepping: 15
-                });
-        });
-    </script>
-
 }

@@ -57,10 +57,11 @@ namespace H2StyleStore.Models.ViewModels
 
 		[DisplayName("訂單成立日期")]
 		public DateTime CreatedTime { get; set; }
-		
+
 
 		[DisplayName("訂單狀態")]
 		public string Status { get; set; }
+		public int Status_id { get; set; }
 
 		[DisplayName("訂單描述")]
 		public string Status_Description{ get; set; }
@@ -89,6 +90,7 @@ namespace H2StyleStore.Models.ViewModels
 				RequestRefundTime = source.RequestRefundTime,
 				RequestRefund = source.RequestRefund,
 				CreatedTime = source.CreatedTime,
+				Status_id = source.Status_id,
 				Status = source.Status,
 				Status_Description = source.Status_Description,
 			};
@@ -114,6 +116,7 @@ namespace H2StyleStore.Models.ViewModels
 				RequestRefundTime = source.RequestRefundTime,
 				RequestRefund = source.RequestRefund,
 				CreatedTime = source.CreatedTime,
+				Status_id = source.Status_id,
 				Status = source.Status,
 				Status_Description = source.Status_Description,
 			};

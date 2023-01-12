@@ -81,9 +81,9 @@
     {
         <tr class="orderrow" style="cursor:pointer">
             <td id="Order_id">
-                @Html.DisplayFor(modelItem => item.Order_id)
+                @Html.DisplayFor(modelItem => item.Order_id, new { id = "Order_id" })
                 @{
-                    if (item.Status == "已完成")
+                    if (item.Status_id == 5)
                     {
                         <div class="pl-2">
                             <span class="label label-success ml-2 text-light" style="border: 2px solid #5cb85c; border-radius: 30px; background-color: #5cb85c; font-size:small">已完成</span>
@@ -136,13 +136,79 @@
         </tr>
         i++;
     }
+    <div class="card">
+        <div class="card-body">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>User</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Reason</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-widget="expandable-table" aria-expanded="false">
+                        <td>183</td>
+                        <td>John Doe</td>
+                        <td>11-7-2014</td>
+                        <td>Approved</td>
+                        <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                    </tr>
+                    <tr class="expandable-body d-none">
+                        <td colspan="5">
+                            <p style="display: none;">
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                            </p>
+                        </td>
+                    </tr>
+                    <tr data-widget="expandable-table" aria-expanded="true">
+                        <td>219</td>
+                        <td>Alexander Pierce</td>
+                        <td>11-7-2014</td>
+                        <td>Pending</td>
+                        <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                    </tr>
+                    <tr class="expandable-body">
+                        <td colspan="5">
+                            <p>
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                            </p>
+                        </td>
+                    </tr>
+                    <tr data-widget="expandable-table" aria-expanded="true">
+                        <td>657</td>
+                        <td>Alexander Pierce</td>
+                        <td>11-7-2014</td>
+                        <td>Approved</td>
+                        <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                    </tr>
+                    <tr class="expandable-body">
+                        <td colspan="5">
+                            <p>
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                            </p>
+                        </td>
+                    </tr>
+                    <tr data-widget="expandable-table" aria-expanded="false">
+                        <td>175</td>
+                        <td>Mike Doe</td>
+                        <td>11-7-2014</td>
+                        <td>Denied</td>
+                        <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+    </div>
 </table>
 
 @section Scripts{
     <script>
         $('.orderrow').on('click', function (event) {
-            console.log($(this).children('#Order_id').text().trim());
-            //window.location.href = "https://localhost:44313/Order/Details/" + $(this).children('#Order_id').text().trim();
+            window.location.href = "https://localhost:44313/Order/Details/" + parseFloat($(this).children('#Order_id').text());
         });
     </script>
 
