@@ -47,22 +47,37 @@
             <input type="file" name="videoFile" clss="form-control" />
         </div>
     </div>
+    @{
+        string OnShelffTime = string.Empty;
+        if (Model.OnShelffTime.HasValue)
+        {
+            OnShelffTime = Model.OnShelffTime.Value.ToString("yyyy-MM-ddTHH:mm:ss");
+        }
+
+    }
     <div class="form-group">
         @Html.LabelFor(model => model.OnShelffTime, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.OnShelffTime, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.OnShelffTime, "", new { @class = "text-danger" })
+            <input class="form-control" type="datetime-local" value="@OnShelffTime" name="OnShelffTime" />
+            @*@Html.EditorFor(model => model.OnShelffTime, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.OnShelffTime, "", new { @class = "text-danger" })*@
         </div>
     </div>
-
+    @{
+        string OffShelffTime = string.Empty;
+        if (Model.OffShelffTime.HasValue)
+        {
+            OffShelffTime = Model.OnShelffTime.Value.ToString("yyyy-MM-ddTHH:mm:ss");
+        }
+    }
     <div class="form-group">
         @Html.LabelFor(model => model.OffShelffTime, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.OffShelffTime, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.OffShelffTime, "", new { @class = "text-danger" })
+            <input class="form-control" type="datetime-local" value="@OffShelffTime" name="OffShelffTime" />
+            @*@Html.EditorFor(model => model.OffShelffTime, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.OffShelffTime, "", new { @class = "text-danger" })*@
         </div>
     </div>
-
     <div class="form-group">
         @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -80,7 +95,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.CategoryId, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownListFor(model => model.CategoryId, videoCategory, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.DropDownListFor(model => model.CategoryId, videoCategory, new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
         </div>
     </div>
