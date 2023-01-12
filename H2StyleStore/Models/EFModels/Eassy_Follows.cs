@@ -16,7 +16,5 @@ namespace H2StyleStore.Models.EFModels
         public DateTime FTime { get; set; }
 
         public virtual Essay Essay { get; set; }
-
-        public virtual Member Member { get; set; }
     }
 }

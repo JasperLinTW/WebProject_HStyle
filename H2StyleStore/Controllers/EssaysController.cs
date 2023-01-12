@@ -62,6 +62,13 @@ namespace H2StyleStore.Controllers
 			
 			ViewBag.VideoCategoriesItems = new EssayRepository(new AppDbContext()).GetCategories(null); ;
 
+			//fill Remove, Upload properties value
+			bool isDateTime = DateTime.TryParse(Request.Form["Upload"], out DateTime dt1);
+			model.UpLoad = dt1;
+
+			bool itDateTime = DateTime.TryParse(Request.Form["Removed"], out DateTime dt2);
+			model.Removed = dt2;
+
 			if (files[0] != null)
 			{
 			

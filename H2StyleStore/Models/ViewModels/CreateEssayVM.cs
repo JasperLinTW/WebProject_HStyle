@@ -3,6 +3,7 @@ using H2StyleStore.Models.EFModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -33,9 +34,12 @@ namespace H2StyleStore.Models.ViewModels
 		public int CategoryId { get; set; }
 
 		[Display(Name = "設定發佈時間")]
+		[Column(TypeName = "datetime2")]
+		[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
 		public DateTime UpLoad { get; set; }
 
 		[Display(Name = "設定下架時間")]
+		[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
 		public DateTime Removed { get; set; }
 
 		[Display(Name = "圖片")]

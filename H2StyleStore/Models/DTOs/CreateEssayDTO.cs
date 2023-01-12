@@ -23,8 +23,10 @@ namespace H2StyleStore.Models.DTOs
 
 		public int CategoryId { get; set; }
 
+		[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
 		public DateTime UpLoad { get; set; }
 
+		[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
 		public DateTime Removed { get; set; }
 
 		public string FilePath { get; set; }

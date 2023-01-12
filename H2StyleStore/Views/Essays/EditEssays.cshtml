@@ -86,17 +86,34 @@
             </div>
         </div>
 
+
+        @{
+            //string UpLoad = string.Empty;
+            //if (Model.UpLoad.HasValue)
+
+            string UpLoad = Model.UpLoad.ToString("yyyy-MM-ddTHH:mm:ss");
+
+
+        }
         <div class="form-group">
             @Html.LabelFor(model => model.UpLoad, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
+                <input class="form-control" type="datetime-local" value="@UpLoad" name="UpLoad" />
                 @Html.EditorFor(model => model.UpLoad, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.UpLoad, "", new { @class = "text-danger" })
             </div>
         </div>
+        @{
+            //string Removed = string.Empty;
+            //if (Model.Removed.HasValue)
 
+            string Removed = Model.Removed.ToString("yyyy-MM-ddTHH:mm:ss");
+
+        }
         <div class="form-group">
             @Html.LabelFor(model => model.Removed, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
+                <input class="form-control" type="datetime-local" value="@Removed" name="Removed" />
                 @Html.EditorFor(model => model.Removed, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Removed, "", new { @class = "text-danger" })
             </div>
@@ -117,15 +134,16 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 
-    <script>$("#addSpecBtn").on("click", function () {
+    <script>
+        $("#addSpecBtn").on("click", function () {
             let template =
                 `<label class="control-label col-md-2" for="specs">規格</label>
-                       <div class="col-md-10 input-group specs">
-                       <input class="form-control text-box Color" id="" name="" type="text" value="" placeholder="顏色">
-                       <input class="form-control text-box Size" id="" name="" type="text" value="" placeholder="尺寸">
-                       <input class="form-control text-box Stock " id="" name="" type="number" value="" placeholder="庫存">
-                       <button type="button" class="btn btn-default delSpecBtn">刪除</button>
-                    </div>`;
+                               <div class="col-md-10 input-group specs">
+                               <input class="form-control text-box Color" id="" name="" type="text" value="" placeholder="顏色">
+                               <input class="form-control text-box Size" id="" name="" type="text" value="" placeholder="尺寸">
+                               <input class="form-control text-box Stock " id="" name="" type="number" value="" placeholder="庫存">
+                               <button type="button" class="btn btn-default delSpecBtn">刪除</button>
+                            </div>`;
             const dom = document.createElement("div");
             dom.setAttribute('class', `form-group`);
             dom.innerHTML = template;

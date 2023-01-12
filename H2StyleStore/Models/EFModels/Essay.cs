@@ -12,8 +12,8 @@ namespace H2StyleStore.Models.EFModels
         public Essay()
         {
             Eassy_Follows = new HashSet<Eassy_Follows>();
+            Elikes = new HashSet<Elike>();
             Essays_Comments = new HashSet<Essays_Comments>();
-            Members = new HashSet<Member>();
             Images = new HashSet<Image>();
             Tags = new HashSet<Tag>();
         }
@@ -32,14 +32,21 @@ namespace H2StyleStore.Models.EFModels
         [Required]
         public string EContent { get; set; }
 
-        public DateTime UpLoad { get; set; }
+        [Column(TypeName = "datetime2")]
+		[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
+		public DateTime UpLoad { get; set; }
 
-        public DateTime Removed { get; set; }
+        [Column(TypeName = "datetime2")]
+		[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
+		public DateTime Removed { get; set; }
 
         public int CategoryId { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Eassy_Follows> Eassy_Follows { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Elike> Elikes { get; set; }
 
         public virtual Employee Employee { get; set; }
 
@@ -47,9 +54,6 @@ namespace H2StyleStore.Models.EFModels
         public virtual ICollection<Essays_Comments> Essays_Comments { get; set; }
 
         public virtual VideoCategory VideoCategory { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Member> Members { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Image> Images { get; set; }
