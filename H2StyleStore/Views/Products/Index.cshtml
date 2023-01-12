@@ -4,84 +4,211 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("新增商品", "NewProduct")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Product_Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UnitPrice)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Create_at)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Discontinued)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PCategoryName)
-        </th>
-        <th>標籤</th>
-        <th>規格與尺寸</th>
-        <th>照片</th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.ActionLink(item.Product_Name, "EditProduct", new { id = item.Product_Id })
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UnitPrice)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Create_at)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Discontinued)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PCategoryName)
-        </td>
-        <td> 
-            @("#"+string.Join(" #",item.tags))
-        </td>
-        <td>
-            <table class="table table-bordered">
-                <tr class="active">
-                    <td>顏色</td>
-                    <td>尺寸</td>
-                    <td>庫存量</td>
-                </tr>
-                @foreach (var spec in item.specs)
-                {
-                    <tr class="active">
-                        <td>@spec.Color</td>
-                        <td>@spec.Size</td>
-                        <td>@spec.Stock</td>
+@*<table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Product_Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UnitPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Create_at)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Discontinued)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PCategoryName)
+            </th>
+            <th>標籤</th>
+            <th>規格與尺寸</th>
+            <th>照片</th>
+        </tr>
 
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(item.Product_Name, "EditProduct", new { id = item.Product_Id })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UnitPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Create_at)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Discontinued)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PCategoryName)
+                </td>
+                <td>
+                    @("#"+string.Join(" #",item.tags))
+                </td>
+                <td>
+                    <table class="table table-bordered">
+                        <tr class="active">
+                            <td>顏色</td>
+                            <td>尺寸</td>
+                            <td>庫存量</td>
+                        </tr>
+                        @foreach (var spec in item.specs)
+                        {
+                            <tr class="active">
+                                <td>@spec.Color</td>
+                                <td>@spec.Size</td>
+                                <td>@spec.Stock</td>
+
+                            </tr>
+                        }
+                    </table>
+                </td>
+                <td>
+                    @foreach (var img in item.images)
+                    {
+                        <img class="img" src="@img" />
+                    }
+                </td>
+            </tr>
+        }
+
+    </table>*@
+
+
+<div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+    
+
+    <div class="row">
+        
+        <div class="col-md-12">
+            <p>
+                @Html.ActionLink("新增商品", "NewProduct")
+            </p>
+            <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="example1_info">
+                <thead>
+                    <tr>
+                        <th class="sorting sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="">
+                            @Html.DisplayNameFor(model => model.Product_Name)
+                        </th>
+                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="">
+                            @Html.DisplayNameFor(model => model.UnitPrice)
+                        </th>
+                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="">
+                            @Html.DisplayNameFor(model => model.Description)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Create_at)
+                        </th>
+                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="">
+                            @Html.DisplayNameFor(model => model.Discontinued)
+                        </th>
+                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="" style="">
+                            @Html.DisplayNameFor(model => model.PCategoryName)
+                        </th>
+                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="">
+                            標籤
+                        </th>
+                        @*<th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="">
+                        規格與尺寸
+                    </th>
+                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="">
+                        照片
+                    </th>*@
                     </tr>
-                }
-            </table>
-        </td>
-        <td>
-            @foreach (var img in item.images)
-            {
-                <img class="img" src="@img" />
-            }
-        </td>
-    </tr>
-}
+                </thead>
+                <tbody>
+                    @{bool isOdd = true; }
+                    @foreach (var item in Model)
+                    {
+                        string oddOrEven = isOdd ? "odd" : "even";
+                        <tr class=@oddOrEven>
+                            <td class="dtr-control sorting_1" tabindex="0">
+                                @Html.ActionLink(item.Product_Name, "EditProduct", new { id = item.Product_Id })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UnitPrice)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Create_at)
+                            </td>
 
-</table>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Discontinued)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PCategoryName)
+                            </td>
+                            <td>
+                                @("#"+string.Join(" #",item.tags))
+                            </td>
+                        </tr>
+
+                        @*<tr>
+                        <td colspan="7">
+                            <table class="table table-bordered">
+                                 <tr class="active">
+                                    <td>顏色</td>
+                                    <td>尺寸</td>
+                                    <td>庫存量</td>
+                                </tr>
+                                @foreach (var spec in item.specs)
+                                {
+                                    <tr class="active">
+                                        <td>@spec.Color</td>
+                                        <td>@spec.Size</td>
+                                        <td>@spec.Stock</td>
+
+                                    </tr>
+                                }
+                            </table>
+
+
+                            @foreach (var img in item.images)
+                            {
+                                <img class="img" src="@img" />
+                            }
+                        </td>
+                    </tr>*@
+                        isOdd = !isOdd;
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#example1").DataTable({
+                "responsive": true, "lengthChange": false, "autoWidth": false,
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
+        });
+    </script>
+
+}

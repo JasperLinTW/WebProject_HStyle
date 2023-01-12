@@ -217,21 +217,24 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			}
 
 
-
-			foreach (string img in dto.images)
+			if(dto.images != null)
 			{
-				var imgs = _db.Images.Select(x => x.Path).ToList();
-				if (imgs.Contains(img) == false)
+				foreach (string img in dto.images)
 				{
-					Image newImg = new Image { Path = img };
-					product.Images.Add(newImg);
-				}
-				else
-				{
-					Image oldImg = _db.Images.Where(x => x.Path == img).FirstOrDefault();
-					product.Images.Add(oldImg);
+					var imgs = _db.Images.Select(x => x.Path).ToList();
+					if (imgs.Contains(img) == false)
+					{
+						Image newImg = new Image { Path = img };
+						product.Images.Add(newImg);
+					}
+					else
+					{
+						Image oldImg = _db.Images.Where(x => x.Path == img).FirstOrDefault();
+						product.Images.Add(oldImg);
+					}
 				}
 			}
+			
 
 
 

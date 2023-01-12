@@ -6,141 +6,139 @@
 
 }
 
-<h2>EditProduct</h2>
 
 
 @using (Html.BeginForm("EditProduct", "Products", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    <h4>CreateProductVM</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-horizontal">
 
-    <input name="ProductId" hidden value="@Model.ProductId" />
-    <div class="form-group">
-        @Html.LabelFor(model => model.Product_Name, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Product_Name, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Product_Name, "", new { @class = "text-danger" })
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <input name="ProductId" hidden value="@Model.ProductId" />
+        <div class="form-group">
+            @Html.LabelFor(model => model.Product_Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Product_Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Product_Name, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.UnitPrice, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.UnitPrice, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.UnitPrice, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.UnitPrice, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UnitPrice, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UnitPrice, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Discontinued, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <div class="checkbox">
-                @Html.EditorFor(model => model.Discontinued)
-                @Html.ValidationMessageFor(model => model.Discontinued, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Discontinued, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.Discontinued)
+                    @Html.ValidationMessageFor(model => model.Discontinued, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Category_Id, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(x => x.Category_Id, pCategories, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Category_Id, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DisplayOrder, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DisplayOrder, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DisplayOrder, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.tags, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.tags, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.tags, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.images, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div id="imgs" class="col-md-10">
+                @foreach (var img in Model.images)
+                {
+                    <div class="imgCard">
+                        <img class="img" src="@img" />
+                        <button type="button" class="btn btn-default">刪除</button>
+                        <input name="images" hidden value="@img" />
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">      
+            <div class="col-md-10">
+                <input type="file" name="files" class="form-control" multiple="multiple" />
+            </div>
+        </div>
+
+
+
+        <div id="specsArea">
+            @{int i = 0;
+            }
+            @{foreach (var spec in Model.specs)
+                {
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="specs">規格</label>
+                        <div class="col-md-10 input-group specs">
+                            <input class="form-control text-box Color" name="" type="text" value="@spec.Color" placeholder="顏色">
+                            <input class="form-control text-box Size" name="" type="text" value="@spec.Size" placeholder="尺寸">
+                            <input class="form-control text-box Stock" name="" type="number" value="@spec.Stock" placeholder="庫存">
+                            @{ if (i > 0)
+                                {
+                                    <button type="button" class="btn btn-default delSpecBtn">刪除</button>
+                                }
+                                else
+                                {
+                                    <button type="button" id="addSpecBtn" class="btn btn-default">新增規格</button>
+                                }
+                            }
+                        </div>
+                    </div>
+
+                    i++;
+
+
+                }
+            }
+
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input id="submit" type="submit" value="儲存" class="btn btn-default" />
             </div>
         </div>
     </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Category_Id, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(x => x.Category_Id, pCategories, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.Category_Id, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.DisplayOrder, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.DisplayOrder, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.DisplayOrder, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.tags, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.tags, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.tags, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.images, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div id="imgs" class="col-md-10">
-            @foreach (var img in Model.images)
-            {
-                <div class="imgCard">
-                    <img class="img" src="@img" />
-                    <button type="button" class="btn btn-default">刪除</button>
-                    <input name="images" hidden value="@img" />
-                </div>
-            }
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="control-label col-md-2" for="File">上傳檔案</label>
-        <div class="col-md-10">
-            <input type="file" name="files" clss="form-control" multiple="multiple" />
-        </div>
-    </div>
-
-
-    <div id="specsArea">
-        @{int i = 0;
-        }
-        @{foreach (var spec in Model.specs)
-            {
-
-                <div class="form-group">
-                    <label class="control-label col-md-2" for="specs">規格</label>
-                    <div class="col-md-10 input-group specs">
-                        <input class="form-control text-box Color" name="" type="text" value="@spec.Color" placeholder="顏色">
-                        <input class="form-control text-box Size" name="" type="text" value="@spec.Size" placeholder="尺寸">
-                        <input class="form-control text-box Stock" name="" type="number" value="@spec.Stock" placeholder="庫存">
-                        @{ if (i > 0)
-                            {
-                                <button type="button" class="btn btn-default delSpecBtn">刪除</button>
-                            }
-                            else
-                            {
-                                <button type="button" id="addSpecBtn" class="btn btn-default">新增規格</button>
-                            }
-                        }
-                    </div>
-                </div>
-
-                i++;
-
-
-            }
-        }
-
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input id="submit" type="submit" value="Save" class="btn btn-default" />
-        </div>
-    </div>
-</div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("返回列表", "Index")
 </div>
 
 @section Scripts {
@@ -150,12 +148,12 @@
         $("#addSpecBtn").on("click", function () {
             let template =
                 `<label class="control-label col-md-2" for="specs">規格</label>
-                       <div class="col-md-10 input-group specs">
-                       <input class="form-control text-box Color" id="" name="" type="text" value="" placeholder="顏色">
-                       <input class="form-control text-box Size" id="" name="" type="text" value="" placeholder="尺寸">
-                       <input class="form-control text-box Stock " id="" name="" type="number" value="" placeholder="庫存">
-                       <button type="button" class="btn btn-default delSpecBtn">刪除</button>
-                    </div>`;
+                                   <div class="col-md-10 input-group specs">
+                                   <input class="form-control text-box Color" id="" name="" type="text" value="" placeholder="顏色">
+                                   <input class="form-control text-box Size" id="" name="" type="text" value="" placeholder="尺寸">
+                                   <input class="form-control text-box Stock " id="" name="" type="number" value="" placeholder="庫存">
+                                   <button type="button" class="btn btn-default delSpecBtn">刪除</button>
+                                </div>`;
             const dom = document.createElement("div");
             dom.setAttribute('class', `form-group`);
             dom.innerHTML = template;
@@ -167,7 +165,7 @@
             if ($(this).attr("id") != "addSpecBtn") {
                 $(this).parent().parent().remove();
             }
-            
+
         });
 
         $("#submit").on("click", function () {

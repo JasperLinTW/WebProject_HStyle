@@ -3,8 +3,6 @@ using H2StyleStore.Models.Infrastructures;
 using H2StyleStore.Models.Infrastructures.Repositories;
 using H2StyleStore.Models.Services;
 using H2StyleStore.Models.ViewModels;
-using Microsoft.Ajax.Utilities;
-using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +11,7 @@ using System.Web.Mvc;
 
 namespace H2StyleStore.Controllers
 {
-    public class ProductsController : Controller
+	public class ProductsController : Controller
     {
         private ProductService productService;
 
@@ -117,7 +115,7 @@ namespace H2StyleStore.Controllers
 			{
 				string path = Server.MapPath("/Images/ProductImages");
 				var helper = new UploadFileHelper();
-				if(model.images == null) { model.images = new List<string> { path }; }
+				if(model.images == null) { model.images = new List<string>(); }
 				foreach (var file in files)
 				{
 					try
