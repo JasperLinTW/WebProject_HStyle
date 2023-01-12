@@ -89,7 +89,7 @@ namespace H2StyleStore.Controllers
 		public ActionResult EditVideo(int id)
 		{
 			EditVideoVM model = _videoRepository.GetVideoById(id).ToEditVM();
-
+			
 			if (model == null) return HttpNotFound();
 			return View(model);
 		}

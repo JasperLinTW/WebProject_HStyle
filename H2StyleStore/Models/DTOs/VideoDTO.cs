@@ -52,14 +52,31 @@ namespace H2StyleStore.Models.DTOs
 				OffShelffTime = source.OffShelffTime,
 				CreatedTime = source.CreatedTime,
 				Image = source.Image.ToDto(),
-				Tags = source.Tags.Select(x => x.ToDto()),
+				Tags = source.Tags.Select(t => t.ToDto()),
+			};
+		}
+
+		public static CreateVideoDto ToCreateDto(this Video source)
+		{
+			return new CreateVideoDto()
+			{
+				Id = source.Id,
+				Title = source.Title,
+				Description = source.Description,
+				FilePath = source.FilePath,
+				CategoryId = source.CategoryId,
+				ImageId = source.ImageId,
+				OnShelffTime = source.OnShelffTime,
+				OffShelffTime = source.OffShelffTime,
+				CreatedTime = source.CreatedTime,
+				Tags = source.Tags.Select(t=>t.TagName).ToList(),
 			};
 		}
 	}
 
 	public static class VideoDtoExts
 	{
-		public static EditVideoVM ToEditVM(this VideoDto source)
+		public static EditVideoVM ToEditVM(this CreateVideoDto source)
 		{
 			return new EditVideoVM()
 			{
@@ -68,9 +85,9 @@ namespace H2StyleStore.Models.DTOs
 				FilePath= source.FilePath,
 				OnShelffTime= source.OnShelffTime,
 				OffShelffTime = source.OffShelffTime,
-				Image=source.Image.Path,
+				Image=source.Image,
 				CategoryId=source.CategoryId,
-				Tags=source.Tags.ToString(),
+				Tags=string.Join(",",source.Tags.ToArray()),
 			};
 		}
 	}

@@ -36,7 +36,7 @@ namespace H2StyleStore.Models.Services
 
 		public void UpdateVideo(UpdateVideoDto request)
 		{
-            VideoDto entity = _repository.GetVideoById(request.Id);
+            CreateVideoDto entity = _repository.GetVideoById(request.Id);
             if (entity == null)
             {
                 throw new Exception("找不到此影片");

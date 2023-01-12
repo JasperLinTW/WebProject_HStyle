@@ -1,4 +1,6 @@
 ﻿using H2StyleStore.Models.EFModels;
+using H2StyleStore.Models.ViewModels;
+using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

@@ -26,24 +26,6 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 
 		public void CreateVideo(CreateVideoDto dto)
 		{
-			//int.TryParse(dto.VideoCategory, out int catgoryId);
-
-
-			foreach (string tag in dto.Tags)
-			{
-				var tags = _db.Tags.Select(t => t.TagName).ToList();
-				if (tags.Contains(tag) == true)
-				{
-					Tag oldTag = _db.Tags.Where(t => t.TagName == tag).FirstOrDefault();
-					_db.Tags.Add(oldTag);
-				}
-				else
-				{
-					Tag newTag = new Tag { TagName = tag };
-					_db.Tags.Add(newTag);
-				}
-			}
-
 			string path = dto.Image;
 			Image image = new Image { Path = "../../Images/VideoImages/" + path };
 			_db.Images.Add(image);
@@ -54,7 +36,7 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			{
 				Title = dto.Title,
 				Description = dto.Description,
-				FilePath = "../../Videos/"+dto.FilePath,
+				FilePath = "../../Videos/" + dto.FilePath,
 				CategoryId = dto.CategoryId,
 				ImageId = imageid.Image_Id,
 				OnShelffTime = dto.OnShelffTime,
@@ -62,6 +44,21 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 				CreatedTime = DateTime.Now
 			};
 			_db.Videos.Add(video);
+
+			foreach (string tag in dto.Tags)
+			{
+				var tags = _db.Tags.Select(t => t.TagName).ToList();
+				if (tags.Contains(tag) == true)
+				{
+					Tag oldTag = _db.Tags.Where(t => t.TagName == tag).FirstOrDefault();
+					video.Tags.Add(oldTag);
+				}
+				else
+				{
+					Tag newTag = new Tag { TagName = tag };
+					video.Tags.Add(newTag);
+				}
+			}
 
 			_db.SaveChanges();
 		}
@@ -76,9 +73,13 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			}
 		}
 
-		public VideoDto GetVideoById(int videoId)
+		public CreateVideoDto GetVideoById(int videoId)
 		{
-			return _db.Videos.FirstOrDefault(v => v.Id == videoId).ToDto();
+			CreateVideoDto query = _db.Videos.FirstOrDefault(v => v.Id == videoId).ToCreateDto();
+			query.Image= _db.Videos.FirstOrDefault(v => v.ImageId == query.ImageId).ToCreateDto().ToString();
+			//var filePath=
+			//query.FilePath = "../../Videos/" + 
+			return query;
 		}
 
 		public bool IsExist(string image, string filePath)
@@ -87,7 +88,7 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			video = _db.Videos.SingleOrDefault(x => x.FilePath == filePath);
 			return (video != null);
 		}
-		public void Update(CreateVideoDto dto)
+		public void Update(UpdateVideoDto dto)
 		{
 			Video video = _db.Videos.Find(dto.Id);
 			video.Title = dto.Title;
@@ -113,9 +114,10 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 					video.Tags.Add(newTag);
 				}
 			}
+			_db.SaveChanges();
 		}
 
-		public void Update(VideoDto entity)
+		public void Update(CreateVideoDto entity)
 		{
 			throw new NotImplementedException();
 		}

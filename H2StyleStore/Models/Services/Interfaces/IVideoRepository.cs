@@ -8,7 +8,7 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
         IEnumerable<VideoDto> GetVideos();
         void CreateVideo(CreateVideoDto dto);
         bool IsExist(string image, string filePath);
-		VideoDto GetVideoById(int videoId);
-		void Update(VideoDto entity);
+		CreateVideoDto GetVideoById(int videoId);
+		void Update(CreateVideoDto entity);
 	}
 }

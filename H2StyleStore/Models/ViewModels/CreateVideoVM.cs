@@ -61,5 +61,20 @@ namespace H2StyleStore.Models.ViewModels
 				CategoryId=source.CategoryId,			
 			};
 		}
+		public static UpdateVideoDto ToEditDto(this EditVideoVM source)
+		{
+			return new UpdateVideoDto
+			{
+				Id = source.Id,
+				Title = source.Title,
+				Description = source.Description,
+				FilePath = source.FilePath,
+				OnShelffTime = source.OnShelffTime,
+				OffShelffTime = source.OffShelffTime,
+				Image = source.Image,
+				CategoryId = source.CategoryId,
+				Tags = source.Tags.Split(',').ToList(),
+			};
+		}
 	}
 }

@@ -41,23 +41,4 @@ namespace H2StyleStore.Models.ViewModels
 		[Display(Name = "標籤")]
 		public string Tags { get; set; }
 	}
-
-	public static class VideoDtoExts
-	{
-		public static UpdateVideoDto ToEditDto(this EditVideoVM source)
-		{
-			return new UpdateVideoDto
-			{
-				Id = source.Id,
-				Title = source.Title,
-				Description = source.Description,
-				FilePath = source.FilePath,
-				OnShelffTime = source.OnShelffTime,
-				OffShelffTime = source.OffShelffTime,
-				Image = source.Image,
-				CategoryId = source.CategoryId,
-				Tags = source.Tags.Split(',').ToList(),
-			};
-		}
-	}
 }

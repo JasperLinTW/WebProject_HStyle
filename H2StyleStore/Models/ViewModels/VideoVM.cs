@@ -39,7 +39,7 @@ namespace H2StyleStore.Models.ViewModels
 		public string Image { get; set; }
 	}
 
-    public static class VideoExts
+    public static class VideoDtoExts
     {
         public static VideoVM ToVM(this VideoDto source)
         {
