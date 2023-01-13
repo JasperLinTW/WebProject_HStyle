@@ -13,7 +13,7 @@ namespace H2StyleStore.Models.DTOs
 
 	public static class MemberInBirthExts
 	{
-		public static MemberInBirthDto ToDto(this Member source)
+		public static MemberInBirthDto ToBirthDto(this Member source)
 		{
 			return new MemberInBirthDto
 			{

@@ -72,7 +72,7 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			var member = _db.Members
 				.Where(b => b.Birthday.Month == birth.Month).ToList();
 
-			return member.Select(m => m.ToDto());
+			return member.Select(m => m.ToBirthDto());
 		}
 
 		public IEnumerable<H_Source_DetailDto> GetTotalDetail(int id)
