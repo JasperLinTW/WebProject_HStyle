@@ -1,0 +1,145 @@
+﻿@model IEnumerable<H2StyleStore.Models.ViewModels.OrderVM>
+
+@{
+    ViewBag.Title = "Update";
+
+}
+
+@{
+    IEnumerable<SelectListItem> status = ViewBag.Status;
+    IEnumerable<SelectListItem> status_order = ViewBag.Status_order;
+    var statusInDb= status_order.ToList();
+}
+
+<h2>批次更新</h2>
+
+<form action="@Url.Action("Update")" method="post">
+    <p >
+        <input type="submit" value="確定修改" class="btn btn-info pull-right" style="margin-top: 10px; margin-bottom: 10px; padding-left: 15px" onclick="return confirm('確定修改?')" />
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Order_id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmployeeAccount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Total)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Payment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ShippedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ShipVia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Freight)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ShipName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ShipAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ShipPhone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RequestRefundTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RequestRefund)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+        </tr>
+
+        @{int i = 0;}
+        @{ string shippedDate = null;} 
+
+        @foreach (var item in Model)
+        {
+            if (item.ShippedDate.HasValue == true)
+            {
+                shippedDate = item.ShippedDate.Value.ToString("yyyy-MM-ddTHH:mm:ss");
+            }
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Order_id)
+                    <input type="hidden" value="@item.Order_id" name="orders[@i].Order_id" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeeAccount)
+                    <input type="hidden" value="@item.EmployeeAccount" name="orders[@i].Employee_id" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Total)
+                    <input type="hidden" value="@item.Total" name="orders[@i].Total" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Payment)
+                    <input type="hidden" value="@item.Payment" name="orders[@i].Payment" />
+                </td>
+                <td>
+                    <input type="datetime-local" value="@shippedDate" name="orders[@i].ShippedDate" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ShipVia)
+                    <input type="hidden" value="@item.ShipVia" name="orders[@i].ShipVia" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Freight)
+                    <input type="hidden" value="@item.Freight" name="orders[@i].Freight" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ShipName)
+                    <input type="hidden" value="@item.ShipName" name="orders[@i].ShipName" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ShipAddress)
+                    <input type="hidden" value="@item.ShipAddress" name="orders[@i].ShipAddress" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ShipPhone)
+                    <input type="hidden" value="@item.ShipPhone" name="orders[@i].ShipPhone" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RequestRefundTime)
+                    <input type="hidden" value="@item.RequestRefundTime" name="orders[@i].RequestRefundTime" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RequestRefund)
+                    <input type="hidden" value="@item.RequestRefund" name="orders[@i].Order_id" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedTime)
+                    <input type="hidden" value="@item.CreatedTime" name="orders[@i].CreatedTime" />
+                </td>
+                <td>
+                    <select name="orders[@i].Status">
+                        <option value="@item.Status">@item.Status</option>
+
+                        @for (int k = 0; k < statusInDb.Count ; k++)
+                        {
+                            if (statusInDb[k].Text != @item.Status)
+                            {
+                                <option value="@statusInDb[k].Text">@statusInDb[k].Text</option>
+                            }
+                        }
+                    </select>
+                </td>
+            </tr>
+            i++;
+            shippedDate = null;
+        }
+    </table>
+</form>
