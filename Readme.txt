@@ -44,19 +44,23 @@
                  IH_Source_DetailRepository/CreateHDetail,
 				 H_Source_DetailService/CreateHDetail
 
--- 實作購物滿額送H幣
+-/- 實作購物滿額送H幣
 [V?] add H_ActivityService/HcoinOrderPrice
 [V?] use H_Source_DetailService/CreateDetail, 
                  IH_Source_DetailRepository/CreateHDetail,
 				 H_Source_DetailService/CreateHDetail
 
+-- add H_Source_Detail Searchs
+   [V] SelectListItem 
+
 -- 更改版面
    [V] modify _Layout
    [V] add css file and js file
 
--/- add H_Source_Detail Searchs
-   [X] SelectListItem  
-
--/- 實作生日送H幣活動
+-- 實作生日送H幣活動
+   add HcoinForBirth.exe
+   add EfModel connect HStyleDataBase
+   add HcoinForBirth/HcoinForBirth Method
+	    
 
 -/- 計算ToTal Hcoin，傳入Member Table 的 H_value欄位
