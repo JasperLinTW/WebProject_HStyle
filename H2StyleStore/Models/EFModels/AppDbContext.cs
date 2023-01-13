@@ -226,5 +226,5 @@ namespace H2StyleStore.Models.EFModels
 				.WithRequired(e => e.Video)
 				.WillCascadeOnDelete(false);
 		}
-	}
+    }
 }

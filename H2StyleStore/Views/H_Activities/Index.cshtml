@@ -1,0 +1,86 @@
+﻿@model IEnumerable<H2StyleStore.Models.ViewModels.H_ActivityVM>
+
+@{
+    ViewBag.Title = "Index";
+    var activityName = ViewBag.ActivityName as string;
+}
+
+<h2>H 幣優惠活動</h2>
+
+<form>
+    <div class="row">
+        <div class="col caption">
+            <h5>活動名稱: </h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">            
+            <input type="text" name="activityName" class="form-control" value="@activityName" />
+        </div>
+        <div class="col-4">
+            <input type="submit" class="btn btn-success" value="Search" />
+        </div>
+    </div>
+</form>
+
+<br />
+<p>
+    @Html.ActionLink("新增活動", "CreateActivity", "H_Activities", new {@class="btn btn-primary"})
+</p>
+<table class="table table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Activity_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Activity_Describe)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.H_Value)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Activity_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Activity_Describe)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.H_Value)
+            </td>
+            <td>
+                @Html.ActionLink("修改", "EditActivity", new { id = item.H_Activity_Id }, new { @class = "btn btn-default" })
+                @*@Html.ActionLink("刪除", "DeleteActivity", new { id = item.H_Activity_Id }, new { @class = "btn btn-danger" })*@
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+
+
+ @*Button trigger modal 
+<button type="button" id="createA" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+    新增活動
+</button>
+
+
+@section Scripts
+{
+    <script>
+        $("#activity").on("click", function () {
+            window.location.href = "../H_Activities/EditActivity?id=" + $(this).children('#activity_id').text();
+        })
+
+        $("#createA").on("click", function () {
+            window.location.href = "../H_Activities/CreateActivity";
+        })
+
+    </script>
+}*@

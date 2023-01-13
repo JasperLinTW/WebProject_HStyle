@@ -1,0 +1,63 @@
+﻿@model IEnumerable<H2StyleStore.Models.ViewModels.H_Source_DetailVM>
+
+@{
+    ViewBag.Title = "HDetail";
+    var activity = ViewBag.Activities as IEnumerable<SelectListItem>;
+    var memberName = ViewBag.MemberName as string;
+}
+
+<h2>會員活動紀錄</h2>
+
+<form>
+    <div class="row">
+        <div class="col-md-5">活動分類:@Html.DropDownList("activityId", activity, new { @class = "form-control" })</div>
+        <div class="col-md-5">會員名稱:<input type="text" name="memberName" class="form-control" value="@memberName"></div>
+        <div class="col-md-2" style="margin-top: 24px; margin-bottom: 0px; padding-left: 15px;">
+        <input type="submit" class="btn btn-success" value="Search" />
+        </div>
+    </div>
+</form>
+
+<br />
+<table class="table table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Member_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.H_Activity_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Difference_H)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Event_Time)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Member_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.H_Activity_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Difference_H)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Event_Time)
+            </td>
+            <td>
+                @Html.ActionLink("刪除", "DeleteDetail", new { id = item.Source_H_Id }, new { @class = "btn btn-default" })
+            </td>
+        </tr>
+    }
+
+</table>
+
+@Html.ActionLink("打卡活動", "CheckIn")
+
