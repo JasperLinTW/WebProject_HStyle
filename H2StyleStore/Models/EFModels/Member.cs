@@ -44,14 +44,12 @@ namespace H2StyleStore.Models.EFModels
 
         public bool Gender { get; set; }
 
-        [Column(TypeName = "datetime")]  //§â2§R±¼¤F
-        [DisplayFormat(DataFormatString ="{0:yyyy-MM-dd HH:mm:ss}",ApplyFormatInEditMode =true)]
+        [Column(TypeName = "datetime2")]
         public DateTime Birthday { get; set; }
 
         public int? Permission_Id { get; set; }
 
-		[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
-		public DateTime Jointime { get; set; }
+        public DateTime Jointime { get; set; }
 
         public bool? Mail_verify { get; set; }
 

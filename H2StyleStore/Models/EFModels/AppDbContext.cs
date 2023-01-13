@@ -215,7 +215,6 @@ namespace H2StyleStore.Models.EFModels
 				.WithRequired(e => e.VideoCategory)
 				.HasForeignKey(e => e.CategoryId)
 				.WillCascadeOnDelete(false);
-		}
 
 			modelBuilder.Entity<Video>()
 				.HasMany(e => e.VideoLikes)
@@ -227,5 +226,5 @@ namespace H2StyleStore.Models.EFModels
 				.WithRequired(e => e.Video)
 				.WillCascadeOnDelete(false);
 		}
-    }
+	}
 }

@@ -165,13 +165,18 @@
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\MembersController.cs" />
+    <Compile Include="Controllers\VideoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DTOs\CreateVideoDto.cs" />
     <Compile Include="Models\DTOs\H_ActivityDto.cs" />
     <Compile Include="Models\DTOs\H_CheckInDto.cs" />
     <Compile Include="Models\DTOs\H_Source_DetailDto.cs" />
     <Compile Include="Models\DTOs\MemberInBirthDto.cs" />
+    <Compile Include="Models\DTOs\UpdateVideoDto.cs" />
+    <Compile Include="Models\DTOs\VideoCategoryDto.cs" />
+    <Compile Include="Models\DTOs\VideoDTO.cs" />
     <Compile Include="Models\EFModels\Address.cs" />
     <Compile Include="Models\EFModels\AppDbContext.cs" />
     <Compile Include="Models\EFModels\Eassy_Follows.cs" />
@@ -201,10 +206,15 @@
     <Compile Include="Models\EFModels\VideoView.cs" />
     <Compile Include="Models\Infrastructures\Repositories\H_ActivityRepository.cs" />
     <Compile Include="Models\Infrastructures\Repositories\H_Source_DetailRepository.cs" />
+    <Compile Include="Models\Infrastructures\Repositories\VideoRepository.cs" />
     <Compile Include="Models\Services\H_ActivityService.cs" />
     <Compile Include="Models\Services\H_Source_DetailService.cs" />
     <Compile Include="Models\Services\Interfaces\IH_ActivityRepository.cs" />
     <Compile Include="Models\Services\Interfaces\IH_Source_DetailRepository.cs" />
+    <Compile Include="Models\Services\Interfaces\IVideoRepository.cs" />
+    <Compile Include="Models\Services\VideoService.cs" />
+    <Compile Include="Models\ViewModels\CreateVideoVM.cs" />
+    <Compile Include="Models\ViewModels\EditVideoVM.cs" />
     <Compile Include="Models\ViewModels\H_ActivityVM.cs" />
     <Compile Include="Models\ViewModels\H_CheckInVM.cs" />
     <Compile Include="Models\ViewModels\H_Source_DetailVM.cs" />
@@ -252,6 +262,8 @@
     <Compile Include="Models\ViewModels\Login_EmployeesVM.cs" />
     <Compile Include="Models\ViewModels\RegisterVM.cs" />
     <Compile Include="Models\ViewModels\Register_EmployeesVM.cs" />
+    <Compile Include="Models\ViewModels\VideoCategoryVM.cs" />
+    <Compile Include="Models\ViewModels\VideoVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -261,6 +273,20 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css\adminlte.css" />
+    <Content Include="Content\css\adminlte.min.css" />
+    <Content Include="Content\css\alt\adminlte.components.css" />
+    <Content Include="Content\css\alt\adminlte.components.min.css" />
+    <Content Include="Content\css\alt\adminlte.core.css" />
+    <Content Include="Content\css\alt\adminlte.core.min.css" />
+    <Content Include="Content\css\alt\adminlte.extra-components.css" />
+    <Content Include="Content\css\alt\adminlte.extra-components.min.css" />
+    <Content Include="Content\css\alt\adminlte.light.css" />
+    <Content Include="Content\css\alt\adminlte.light.min.css" />
+    <Content Include="Content\css\alt\adminlte.pages.css" />
+    <Content Include="Content\css\alt\adminlte.pages.min.css" />
+    <Content Include="Content\css\alt\adminlte.plugins.css" />
+    <Content Include="Content\css\alt\adminlte.plugins.min.css" />
     <Content Include="Content\font awesome.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\images\ui-icons_444444_256x240.png" />
@@ -328,6 +354,16 @@
     <Content Include="Images\ProductImages\img-5.jpg" />
     <Content Include="Images\ProductImages\img-6.jpg" />
     <Content Include="Images\ProductImages\img-7.jpg" />
+    <Content Include="Images\VideoImages\7b3f62e2adf54c8191bbebf924410334.jpg" />
+    <Content Include="Images\VideoImages\90d90a0e5b874a2b85b538200e1f1f11.jpg" />
+    <Content Include="Images\VideoImages\9c73e90bd0df485281c922820960b627.jpg" />
+    <Content Include="Images\VideoImages\a56eb053449a4896a728e6de27138c51.jpg" />
+    <Content Include="Images\VideoImages\d9915f140f4749bba9fb9101b454a35c.jpg" />
+    <Content Include="Images\VideoImages\image01.jpg" />
+    <Content Include="Images\VideoImages\image02.jpg" />
+    <Content Include="Images\VideoImages\image03.jpg" />
+    <Content Include="Images\VideoImages\image04.jpg" />
+    <Content Include="Images\VideoImages\image05.jpg" />
     <Content Include="Photos\Logo-light.png" />
     <Content Include="Photos\Logo-small.png" />
     <Content Include="Photos\Logo.png" />
@@ -413,6 +449,20 @@
     <Content Include="Content\_bootstrap-datetimepicker.less" />
     <Content Include="Content\bootstrap-datetimepicker-build.less" />
     <Content Include="libman.json" />
+    <Content Include="Content\css\adminlte.css.map" />
+    <Content Include="Content\css\adminlte.min.css.map" />
+    <Content Include="Content\css\alt\adminlte.components.css.map" />
+    <Content Include="Content\css\alt\adminlte.components.min.css.map" />
+    <Content Include="Content\css\alt\adminlte.core.css.map" />
+    <Content Include="Content\css\alt\adminlte.core.min.css.map" />
+    <Content Include="Content\css\alt\adminlte.extra-components.css.map" />
+    <Content Include="Content\css\alt\adminlte.extra-components.min.css.map" />
+    <Content Include="Content\css\alt\adminlte.light.css.map" />
+    <Content Include="Content\css\alt\adminlte.light.min.css.map" />
+    <Content Include="Content\css\alt\adminlte.pages.css.map" />
+    <Content Include="Content\css\alt\adminlte.pages.min.css.map" />
+    <Content Include="Content\css\alt\adminlte.plugins.css.map" />
+    <Content Include="Content\css\alt\adminlte.plugins.min.css.map" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -429,6 +479,14 @@
     <Content Include="Scripts\moment-with-locales.min.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
+    <Content Include="Videos\16b1587b451d41999fa257f844ea5203.mp4" />
+    <Content Include="Videos\Bella化妝.mp4" />
+    <Content Include="Videos\cfe6162878d94c66ac0d396c21c5cfe7.mp4" />
+    <Content Include="Videos\f669c3ae83ba4d91b451bc949356a6af.mp4" />
+    <Content Include="Videos\Inside Kate Moss%27s Handbag _ British Vogue.mp4" />
+    <Content Include="Videos\《BLACKPINK》直擊Rosé巴黎時裝秀 到哪一定要有白飯 Rosé, gets ready for the Saint Laurent show｜人物專訪｜Vogue Taiwan.mp4" />
+    <Content Include="Videos\直擊國際巨星小S徐熙娣房間！偷看一下超爆笑內幕｜大明星化妝間｜Vogue Taiwan.mp4" />
+    <Content Include="Videos\買精品，吃大餐！Morris推薦年終禮物就到遠百信義A13這樣挑！.mp4" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -477,6 +535,9 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Web.config" />
+    <Content Include="Views\Video\CreateVideo.cshtml" />
+    <Content Include="Views\Video\EditVideo.cshtml" />
+    <Content Include="Views\Video\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

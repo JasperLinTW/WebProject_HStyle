@@ -44,9 +44,9 @@ namespace H2StyleStore.Models.DTOs
 			Discontinued = source.Discontinued,
 			DisplayOrder = source.DisplayOrder,
 			PCategoryName = source.PCategory.ToDto(),
-			imgs = source.Images.Select(x => x.ToDto()),
+			imgs = source.Images.Select(x => x.ToPDto()),
 			specs = source.Specs.Select(x => x.ToDto()),
-			tags = source.Tags.Select(x => x.ToDto()),
+			tags = source.Tags.Select(x => x.ToPDto()),
 			
 		};
 	}

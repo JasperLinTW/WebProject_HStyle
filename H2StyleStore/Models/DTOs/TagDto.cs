@@ -21,21 +21,22 @@ namespace H2StyleStore.Models.DTOs
         {
             return new TagDto()
             {
-                Id= source.Id,
-                TagName= source.TagName
+                Id = source.Id,
+                TagName = source.TagName
             };
         }
 
-		public static TagDto ToDto(this TagVM source)
-		{
-			return new TagDto()
-			{
-				Id = source.Id,
-				TagName = source.TagName
-			};
-		}
-		public static string ToDto(this Tag source)
-		{
-			return source.TagName;
-		}
+        public static TagDto ToDto(this TagVM source)
+        {
+            return new TagDto()
+            {
+                Id = source.Id,
+                TagName = source.TagName
+            };
+        }
+        public static string ToPDto(this Tag source)
+        {
+            return source.TagName;
+        }
+    }
 }
