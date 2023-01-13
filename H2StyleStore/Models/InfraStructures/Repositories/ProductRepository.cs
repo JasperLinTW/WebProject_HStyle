@@ -217,29 +217,34 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			}
 
 
-			if(dto.images != null)
+
+			foreach (string img in dto.images)
 			{
-				foreach (string img in dto.images)
+				var imgs = _db.Images.Select(x => x.Path).ToList();
+				if (imgs.Contains(img) == false)
 				{
-					var imgs = _db.Images.Select(x => x.Path).ToList();
-					if (imgs.Contains(img) == false)
-					{
-						Image newImg = new Image { Path = img };
-						product.Images.Add(newImg);
-					}
-					else
-					{
-						Image oldImg = _db.Images.Where(x => x.Path == img).FirstOrDefault();
-						product.Images.Add(oldImg);
-					}
+					Image newImg = new Image { Path = img };
+					product.Images.Add(newImg);
+				}
+				else
+				{
+					Image oldImg = _db.Images.Where(x => x.Path == img).FirstOrDefault();
+					product.Images.Add(oldImg);
 				}
 			}
-			
+			_db.SaveChanges();
+		}
 
+		public void EditDiscontinued(List<EditAllDto> newItems)
+		{
+			var product = _db.Products;
+
+			foreach (var item in newItems) {
+				product.Find(item.id).Discontinued = item.discontinued;
+			}
 
 
 			_db.SaveChanges();
-
 		}
 	}
 }
