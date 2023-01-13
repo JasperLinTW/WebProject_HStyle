@@ -14,6 +14,8 @@ namespace H2StyleStore.Models.EFModels
 
 		public virtual DbSet<Address> Addresses { get; set; }
 		public virtual DbSet<Eassy_Follows> Eassy_Follows { get; set; }
+		public virtual DbSet<EComments_Likes> EComments_Likes { get; set; }
+		public virtual DbSet<Elike> Elikes { get; set; }
 		public virtual DbSet<Employee> Employees { get; set; }
 		public virtual DbSet<Essay> Essays { get; set; }
 		public virtual DbSet<Essays_Comments> Essays_Comments { get; set; }

@@ -30,6 +30,7 @@ namespace H2StyleStore.Models.Infrastructures
 			return newFileName;
 		}
 	}
+
 	public class UploadFileNullException : ApplicationException
 	{
 	}
