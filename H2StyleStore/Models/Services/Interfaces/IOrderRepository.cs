@@ -22,5 +22,6 @@ namespace H2StyleStore.Models.Services.Interfaces
 		void Update(OrderDTO entity);
 		OrderDTO GetOrderbyId(int id);
 		IEnumerable<SelectListItem> GetStatus();
+		int StatusTransfer(string status);
 	}
 }

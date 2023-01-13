@@ -8,16 +8,22 @@ namespace H2StyleStore.Models.EFModels
 
     public partial class Order_StatusDescription
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Order_StatusDescription()
+        {
+            Orders = new HashSet<Order>();
+        }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Description_id { get; set; }
 
         public int? Status_id { get; set; }
 
-        [Required]
         [StringLength(100)]
         public string Description { get; set; }
 
-        public virtual Order_Status Order_Status { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

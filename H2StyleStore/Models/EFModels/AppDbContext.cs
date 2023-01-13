@@ -8,13 +8,14 @@ namespace H2StyleStore.Models.EFModels
 	public partial class AppDbContext : DbContext
 	{
 		public AppDbContext()
-			: base("name=AppDbContext")
+			: base("name=AppDbContext2")
 		{
 		}
 
 		public virtual DbSet<Employee> Employees { get; set; }
 		public virtual DbSet<Member> Members { get; set; }
 		public virtual DbSet<Order_Details> Order_Details { get; set; }
+		public virtual DbSet<Order_Log> Order_Log { get; set; }
 		public virtual DbSet<Order_Status> Order_Status { get; set; }
 		public virtual DbSet<Order_StatusDescription> Order_StatusDescription { get; set; }
 		public virtual DbSet<Order> Orders { get; set; }
@@ -52,9 +53,10 @@ namespace H2StyleStore.Models.EFModels
 				.WithRequired(e => e.Order_Status)
 				.WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<Order_Status>()
-				.HasOptional(e => e.Order_StatusDescription)
-				.WithRequired(e => e.Order_Status);
+			modelBuilder.Entity<Order_StatusDescription>()
+				.HasMany(e => e.Orders)
+				.WithOptional(e => e.Order_StatusDescription)
+				.HasForeignKey(e => e.Status_Description_id);
 
 			modelBuilder.Entity<Order>()
 				.HasMany(e => e.Order_Details)

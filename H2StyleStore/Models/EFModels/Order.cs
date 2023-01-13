@@ -63,5 +63,7 @@ namespace H2StyleStore.Models.EFModels
         public virtual ICollection<Order_Details> Order_Details { get; set; }
 
         public virtual Order_Status Order_Status { get; set; }
+
+        public virtual Order_StatusDescription Order_StatusDescription { get; set; }
     }
 }

@@ -30,6 +30,7 @@ namespace H2StyleStore.Controllers
         {
             ViewBag.Status = orderService.GetStatus(status_id);
 			ViewBag.Value = value;
+			ViewBag.Status_order = orderService.GetStatus();
 
 			var data = orderService.Load();
 
@@ -72,10 +73,12 @@ namespace H2StyleStore.Controllers
 		}
 
         [HttpPost]
-        public ActionResult Update(OrderVM[] orders)
+        public ActionResult Update(OrderUpdateVM[] orders)
         {
             for (int i = 0; i < orders.Length; i++)
             {
+				var status_id = orderService.StatusTransfer(orders[i].Status);
+				orders[i].Status_id = status_id;
                 orderService.Update(orders[i].ToDTO());
 			}
             return RedirectToAction("Index");

@@ -54,32 +54,34 @@ namespace H2StyleStore.Models.DTOs
 
 	public static class OrderExts
 	{
-		public static OrderDTO ToDTO(this Order source)
+		public static OrderDTO ToDTO(this Order entity)
 		{
-			return new OrderDTO
-			{
-				Order_id = source.Order_id,
-				Member_id = source.Member_id,
-				MemberName = source.Member.Name,
-				Employee_id = source.Employee_id,
-				EmployeeAccount = source.Employee.Account,
-				Total = source.Total,
-				Payment = source.Payment,
-				ShippedDate = source.ShippedDate,
-				ShipVia = source.ShipVia,
-				Freight = source.Freight,
-				ShipName = source.ShipName,
-				ShipAddress = source.ShipAddress,
-				ShipPhone = source.ShipPhone,
-				RequestRefundTime = source.RequestRefundTime,
-				RequestRefund = source.RequestRefund,
-				CreatedTime = source.CreatedTime,
-				Status_id = source.Status_id,
-				Status = source.Order_Status.Status,
-				Status_Description_id= source.Status_Description_id,
-				Status_Description = source.Order_Status.Order_StatusDescription.Description,
-				Order_Details = source.Order_Details.Select(x => x.ToDTO()),
-			};
+			return entity == null
+				? null
+				: new OrderDTO
+				{
+					Order_id = entity.Order_id,
+					Member_id = entity.Member_id,
+					MemberName = entity.Member.Name,
+					Employee_id = entity.Employee_id,
+					Total = entity.Total,
+					Payment = entity.Payment,
+					ShippedDate = entity.ShippedDate,
+					ShipVia = entity.ShipVia,
+					Freight = entity.Freight,
+					ShipName = entity.ShipName,
+					ShipAddress = entity.ShipAddress,
+					ShipPhone = entity.ShipPhone,
+					RequestRefund = entity.RequestRefund,
+					RequestRefundTime = entity.RequestRefundTime,
+					CreatedTime = entity.CreatedTime,
+					Status_id = entity.Status_id,
+					Status = entity.Order_Status.Status,
+					Status_Description_id = entity.Status_Description_id,
+					Status_Description = entity.Order_StatusDescription.Description,
+					Order_Details = entity.Order_Details.Select(x => x.ToDTO()),
+
+				};
 		}
 	}
 }

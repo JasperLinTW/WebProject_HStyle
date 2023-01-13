@@ -49,5 +49,10 @@ namespace H2StyleStore.Models.Services
 		{
 			return _repository.GetStatus();
 		}
+
+		public int StatusTransfer(string status)
+		{
+			return _repository.StatusTransfer(status);
+		}
 	}
 }

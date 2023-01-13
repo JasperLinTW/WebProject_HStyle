@@ -25,8 +25,18 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 		{
 			Order order = _db.Orders.Find(entity.Order_id);
 
-			order.Status_id = entity.Status_id;
+			var log = new Order_Log
+			{
+				Order_id = entity.Order_id,
+				Status = entity.Status,
+				Status_ChangedTime = DateTime.Now,
+			};
+
+			_db.Order_Log.Add(log);
+
+			order.Status_id= entity.Status_id;
 			order.ShippedDate = entity.ShippedDate;
+
 
 			_db.SaveChanges();
 		}
@@ -78,6 +88,14 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			.ToList();
 
 			return items;
+		}
+
+		public int StatusTransfer(string status)
+		{
+			var data = _db.Order_Status.FirstOrDefault(x => x.Status == status);
+			int result = data.Status_id;
+
+			return result;
 		}
 	}
 }

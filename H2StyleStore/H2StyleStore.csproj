@@ -166,12 +166,13 @@
     <Compile Include="Models\EFModels\Member.cs" />
     <Compile Include="Models\EFModels\Order.cs" />
     <Compile Include="Models\EFModels\Order_Details.cs" />
+    <Compile Include="Models\EFModels\Order_Log.cs" />
     <Compile Include="Models\EFModels\Order_Status.cs" />
     <Compile Include="Models\EFModels\Order_StatusDescription.cs" />
-    <Compile Include="Models\Infrastructures\OrderExts.cs" />
     <Compile Include="Models\Infrastructures\Repositories\OrderRepository.cs" />
     <Compile Include="Models\Services\Interfaces\IOrderRepository.cs" />
     <Compile Include="Models\Services\OrderService.cs" />
+    <Compile Include="Models\ViewModels\OrderUpdateVM.cs" />
     <Compile Include="Models\ViewModels\OrderVM.cs" />
     <Compile Include="Models\ViewModels\Order_DetailsVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
