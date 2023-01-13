@@ -19,6 +19,13 @@ namespace H2StyleStore.Models.DTOs
         public static string ToDto(this Image source)
         {
             return source.Path;
-        }
-    }
+		}
+		public static ImageDto ToDto(this Image source)
+		{
+			return new ImageDto
+            {
+                Image_Id = source.Image_Id,
+                Path = source.Path,
+            };
+}
 }

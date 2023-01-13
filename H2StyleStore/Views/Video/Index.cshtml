@@ -1,0 +1,88 @@
+﻿@model IEnumerable<H2StyleStore.Models.ViewModels.VideoVM>
+
+@{
+    ViewBag.Title = "Index";
+    var categories = ViewBag.Categories as IEnumerable<SelectListItem>;
+    var videoTitle = ViewBag.VideoTitle as string;
+}
+
+
+
+<div>
+    <h2>影片列表<span style="margin-left:30px;margin-bottom:10px;"> @Html.ActionLink("新增影片", "CreateVideo", null, new { @class = "btn btn-primary mb-2" })</span> </h2>
+
+</div>
+
+<form>
+    <div class="row">
+        <div class="col-md-5">影片分類:@Html.DropDownList("categoryId", categories, new { @class = "form-control" })</div>
+        <div class="col-md-5">影片標題:<input type="text" name="videoTitle" class="form-control" value="@videoTitle" /></div>
+        <div class="col-md-2" style="margin-top:24px;margin-bottom:0px;padding-left:15px">
+            <input type="submit" class="btn btn-success" value="搜尋" />
+        </div>
+    </div>
+</form>
+<br />
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CategoryName)
+        </th>
+        <th>
+            標籤
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OnShelffTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OffShelffTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Image)
+        </th>
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoryName)
+            </td>
+
+            <td>
+                @("#"+string.Join(" #",item.Tags))
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OnShelffTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OffShelffTime)
+            </td>
+            <td>
+                <img class="image" src="@item.Image" width="200">
+            </td>
+            <td>
+                @Html.ActionLink("修改", "EditVideo", new { id = item.Id }, new { @class = "btn btn-default" })
+            </td>
+        </tr>
+    }
+
+
+</table>

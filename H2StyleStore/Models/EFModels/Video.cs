@@ -14,6 +14,8 @@ namespace H2StyleStore.Models.EFModels
             VideoLikes = new HashSet<VideoLike>();
             VideoViews = new HashSet<VideoView>();
             Tags = new HashSet<Tag>();
+            //VideoCategory=new VideoCategory();
+            //Image=new Image();
         }
 
         public int Id { get; set; }

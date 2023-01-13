@@ -1,0 +1,120 @@
+﻿@model H2StyleStore.Models.ViewModels.EditVideoVM
+
+@{
+    ViewBag.Title = "EditVideo";
+    var videoCategory = ViewBag.VideoCategoryItems as IEnumerable<SelectListItem>;
+}
+
+<h2>編輯影片</h2>
+
+
+@using (Html.BeginForm("EditVideo", "Video", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Id)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.Description, 8, 100,new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.FilePath, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.FilePath, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.FilePath, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2" for="File">上傳影片檔案</label>
+        <div class="col-md-10">
+            <input type="file" name="videoFile" clss="form-control" />
+        </div>
+    </div>
+    @{
+        string OnShelffTime = string.Empty;
+        if (Model.OnShelffTime.HasValue)
+        {
+            OnShelffTime = Model.OnShelffTime.Value.ToString("yyyy-MM-ddTHH:mm:ss");
+        }
+
+    }
+    <div class="form-group">
+        @Html.LabelFor(model => model.OnShelffTime, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <input class="form-control" type="datetime-local" value="@OnShelffTime" name="OnShelffTime" />
+        </div>
+    </div>
+    @{
+        string OffShelffTime = string.Empty;
+        if (Model.OffShelffTime.HasValue)
+        {
+            OffShelffTime = Model.OnShelffTime.Value.ToString("yyyy-MM-ddTHH:mm:ss");
+        }
+    }
+    <div class="form-group">
+        @Html.LabelFor(model => model.OffShelffTime, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <input class="form-control" type="datetime-local" value="@OffShelffTime" name="OffShelffTime" />
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <img id="imagePath" src="@Model.Image" width="400" />
+            @Html.EditorFor(model => model.Image, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2" for="File">上傳圖片檔案</label>
+        <div class="col-md-10">
+            <input type="file" name="imageFile" clss="form-control" />
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.CategoryId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.CategoryId, videoCategory, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Tags, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Tags, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Tags, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="儲存" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
