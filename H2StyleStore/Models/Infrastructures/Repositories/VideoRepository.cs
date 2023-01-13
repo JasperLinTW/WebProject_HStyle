@@ -76,12 +76,10 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 
 		public IEnumerable<SelectListItem> GetVideoCategories(int? categoryId)
 		{
-			var data = _db.VideoCategories;
-			foreach (var item in data)
-			{
-				yield return new SelectListItem { Value = item.Id.ToString(), Text = item.CategoryName, Selected = (item.Id == categoryId) };
-			}
-
+			var data = _db.VideoCategories.Select(x => new SelectListItem
+			{ Value = x.Id.ToString(), Text = x.CategoryName, Selected = (categoryId.HasValue && x.Id == categoryId) })
+			.ToList().Prepend(new SelectListItem { Value = string.Empty, Text = "請選擇" });
+			return data;
 		}
 
 		public UpdateVideoDto GetVideoById(int videoId)
@@ -99,10 +97,10 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 		public void Update(UpdateVideoDto dto)
 		{
 			string path = dto.Image;
-			Image image = new Image { Path = "../../Images/VideoImages/"+path };
+			Image image = new Image { Path = "../../Images/VideoImages/" + path };
 			_db.Images.Add(image);
 			_db.SaveChanges();
-			
+
 			var imageid = _db.Images.Where(i => i.Path == image.Path).FirstOrDefault();
 
 			Video video = _db.Videos.Find(dto.Id);
@@ -110,7 +108,7 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			video.Description = dto.Description;
 			video.CreatedTime = DateTime.Now;
 			video.CategoryId = dto.CategoryId;
-			video.FilePath = "../../Videos/"+ dto.FilePath;
+			video.FilePath = "../../Videos/" + dto.FilePath;
 			video.ImageId = imageid.Image_Id;
 			video.OnShelffTime = dto.OnShelffTime;
 			video.OffShelffTime = dto.OffShelffTime;

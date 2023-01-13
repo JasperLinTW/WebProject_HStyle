@@ -33,11 +33,13 @@ namespace H2StyleStore.Models.ViewModels
 		[Display(Name = "標籤")]
 		public IEnumerable<string> Tags { get; set; }
 
-		[Display(Name = "影片類別")]
+		[Display(Name = "類別")]
 		public string CategoryName { get; set; }
 
 		public string Image { get; set; }
-	}
+
+        public int CategoryId{ get; set; }
+    }
 
     public static class VideoDtoExts
     {
@@ -46,6 +48,7 @@ namespace H2StyleStore.Models.ViewModels
             return new VideoVM
             {
                 Id = source.Id,
+                CategoryId= source.CategoryId,
                 Title = source.Title,
                 Description = source.Description,
                 //ImageId = source.ImageId,

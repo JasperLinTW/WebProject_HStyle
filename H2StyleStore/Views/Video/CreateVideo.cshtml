@@ -5,94 +5,87 @@
     var videoCategories = ViewBag.VideoCategoryItems as IEnumerable<SelectListItem>;
 }
 
-<h2>CreateVideo</h2>
+<h2>新增影片</h2>
 
 
 @using (Html.BeginForm("CreateVideo", "Video", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    <h4>CreateVideoVM</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Description, 8, 100, new{ @class = "form-control" } )
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
-    @{
-        string OnShelffTime = string.Empty;
-        //if (Model.OffShelffTime.HasValue)
-        //{
-        //    OnShelffTime = Model.OnShelffTime.Value.ToString("yyyy-MM-dd");
-        //}
+        @{
+            string OnShelffTime = string.Empty;
+        }
+        <div class="form-group">
+            @Html.LabelFor(model => model.OnShelffTime, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input class="form-control" type="datetime-local" value="@OnShelffTime" name="OnShelffTime" />
+            </div>
+        </div>
+        @{
+            string OffShelffTime = string.Empty;
+        }
+        <div class="form-group">
+            @Html.LabelFor(model => model.OffShelffTime, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input class="form-control" type="datetime-local" value="@OffShelffTime" name="OffShelffTime" />
+            </div>
+        </div>
 
-    }
-    <div class="form-group">
-        @Html.LabelFor(model => model.OnShelffTime, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <input class="form-control" type="datetime-local" value="@OnShelffTime" name="OnShelffTime" />
-            @*@Html.EditorFor(model => model.OnShelffTime, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OnShelffTime, "", new { @class = "text-danger" })*@
+        <div class="form-group">
+            @Html.LabelFor(model => model.CategoryId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(c => c.CategoryId, videoCategories, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
-    @{
-        string OffShelffTime = string.Empty;
-    }
-    <div class="form-group">
-        @Html.LabelFor(model => model.OffShelffTime, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <input class="form-control" type="datetime-local" value="@OffShelffTime" name="OffShelffTime" />
-            @*@Html.EditorFor(model => model.OffShelffTime, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.OffShelffTime, "", new { @class = "text-danger" })*@
-        </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.CategoryId, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(c => c.CategoryId, videoCategories, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Tags, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Tags, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Tags, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Tags, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Tags, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Tags, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="col-md-10">
+                <label class="control-label col-md-2" for="File">上傳影片檔案</label>
+                <input type="file" name="imageFile" clss="form-control" />
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label class="control-label col-md-2" for="File">上傳影片檔案</label>
-        <div class="col-md-10">
-            <input type="file" name="videoFile" clss="form-control" />
-        </div>
-    </div>
 
-    <div class="form-group">
-        <label class="control-label col-md-2" for="File">上傳圖片檔案</label>
-        <div class="col-md-10">
-            <input type="file" name="imageFile" clss="form-control" />
+        <div class="form-group">
+            <label class="control-label col-md-2" for="File">上傳圖片檔案</label>
+            <div class="col-md-10">
+                <input type="file" name="imageFile" accept="image/*" clss="form-control" />
+            </div>
+            <img id="imgshow" src="" alt="" />
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="儲存" class="btn btn-default" />
+            </div>
         </div>
     </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
-        </div>
-    </div>
-</div>
 }
 
 <div>
@@ -101,4 +94,25 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @*<script>
+        //在input file內容改變的時候觸發事件
+        $('#filed').change(function () {
+            //獲取input file的files文件數組;
+            //$('#filed')獲取的是jQuery對象，.get(0)轉為原生對象;
+            //這邊預設只能選一個，但是存放形式仍然是數組，所以取第一個元素使用[0];
+            var file = $('#filed').get(0).files[0];
+            //創建用來讀取此文件的對象
+            var reader = new FileReader();
+            //使用該對象讀取file文件
+            reader.readAsDataURL(file);
+            //讀取文件成功後執行的方法函數
+            reader.onload = function (e) {
+                //讀取成功後返回的一個參數e，整個的一個進度事件
+                console.log(e);
+                //選擇所要顯示圖片的img，要賦值給img的src就是e中target下result裡面
+                //的base64編碼格式的地址
+                $('#imgshow').get(0).src = e.target.result;
+            }
+        })
+    </script>*@
 }

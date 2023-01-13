@@ -4,6 +4,7 @@ using H2StyleStore.Models.Infrastructures;
 using H2StyleStore.Models.Infrastructures.Repositories;
 using H2StyleStore.Models.Services;
 using H2StyleStore.Models.ViewModels;
+using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace H2StyleStore.Controllers
 	{
 		private VideoService _videoService;
 		private readonly IVideoRepository _videoRepository;
-
+		private AppDbContext _db = new AppDbContext();
 		public VideoController()
 		{
 			var db = new AppDbContext();
@@ -28,15 +29,32 @@ namespace H2StyleStore.Controllers
 		}
 
 		// GET: Video
-		public ActionResult Index()
+		//public ActionResult Index()
+		//{
+		//	var data = _videoService.GetVideos().Select(v => v.ToVM());
+		//	return View(data);
+		//}
+
+		public ActionResult Index(int? categoryId, string videoTitle)
 		{
-			var data = _videoService.GetVideos().Select(v => v.ToVM());
+			// 將篩選條件放在ViewBag,稍後在 view page取回
+			ViewBag.Categories = _videoRepository.GetVideoCategories(categoryId);
+			ViewBag.VideoTitle = videoTitle;
+
+			var data = _videoService.GetVideos().Select(x => x.ToVM());
+
+			// 若有篩選categoryid
+			if (categoryId.HasValue) data = data.Where(p => p.CategoryId == categoryId.Value);
+
+			// 若有篩選 productName
+			if (string.IsNullOrEmpty(videoTitle) == false) data = data.Where(p => p.Title.Contains(videoTitle));
+			// data = data.Where(p => Left(p.Name)=="AB");
 			return View(data);
 		}
 
 		public ActionResult CreateVideo()
 		{
-			ViewBag.VideoCategoryItems =_videoRepository.GetVideoCategories();
+			ViewBag.VideoCategoryItems = _videoRepository.GetVideoCategories();
 			return View();
 		}
 
@@ -83,7 +101,7 @@ namespace H2StyleStore.Controllers
 
 			if (ModelState.IsValid) return RedirectToAction("Index");
 
-			return RedirectToAction("Index");
+			return View(model);
 		}
 
 		public ActionResult EditVideo(int id)
@@ -91,7 +109,7 @@ namespace H2StyleStore.Controllers
 			EditVideoVM model = _videoRepository.GetVideoById(id).ToEditVM();
 			var videoCategory = _videoRepository.GetVideoCategories(id).ToList();
 			ViewBag.VideoCategoryItems = videoCategory;
-			
+
 			if (model == null) return HttpNotFound();
 			return View(model);
 		}
@@ -141,9 +159,9 @@ namespace H2StyleStore.Controllers
 				{
 					ModelState.AddModelError(string.Empty, "圖片上傳失敗: " + ex.Message);
 				}
-				
+
 			}
-			
+
 
 			if (ModelState.IsValid == false) return View(model);
 

@@ -30,6 +30,8 @@ namespace H2StyleStore.Models.Services
 				return (false, "這部影片已經上傳過了");
 			}
 
+
+
 			_repository.CreateVideo(dto);
             return (true, null);
         }

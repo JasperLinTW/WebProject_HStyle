@@ -36,7 +36,7 @@ namespace H2StyleStore.Models.ViewModels
 		[FileExtensions(ErrorMessage ="只能上傳圖檔")]
 		public string Image { get; set; }
 
-		[Display(Name = "影片類別")]
+		[Display(Name = "類別")]
 		[Required]
 		public int CategoryId{ get; set; }
 
@@ -57,7 +57,7 @@ namespace H2StyleStore.Models.ViewModels
 				OnShelffTime = source.OnShelffTime,
 				OffShelffTime = source.OffShelffTime,
 				Image= source.Image,
-				Tags=source.Tags.Split(',').ToList(),
+				Tags=source.Tags.Split(',').Select(t=>t.Trim()).ToList(),
 				CategoryId=source.CategoryId,			
 			};
 		}
