@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "方案項目", "方案項�
 		Readme.txt = Readme.txt
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HcoinForBirth", "HcoinForBirth\HcoinForBirth.csproj", "{EAACF929-DBFD-49B9-AA77-E98536B372A1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +22,10 @@ Global
 		{23FACC83-4FB4-4214-BA44-45F2774305CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23FACC83-4FB4-4214-BA44-45F2774305CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23FACC83-4FB4-4214-BA44-45F2774305CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAACF929-DBFD-49B9-AA77-E98536B372A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAACF929-DBFD-49B9-AA77-E98536B372A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAACF929-DBFD-49B9-AA77-E98536B372A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAACF929-DBFD-49B9-AA77-E98536B372A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

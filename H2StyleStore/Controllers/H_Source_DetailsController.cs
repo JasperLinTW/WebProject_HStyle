@@ -34,11 +34,11 @@ namespace H2StyleStore.Controllers
 			ViewBag.MemberName = memberName;
 
 			var data = _detailService.GetSource().Select(x => x.ToVM());
-			
-			
-			// 若有篩選categoryid
+
+
+			// 若有篩選 activityId
 			if (activityId.HasValue) data = data.Where(m => m.Activity_Id == activityId.Value);
-			// 若有篩選 productName
+			// 若有篩選 memberName
 			if (string.IsNullOrEmpty(memberName) == false)
 			{
 				data = data
