@@ -156,25 +156,61 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DTOs\CreateProductDto.cs" />
+    <Compile Include="Models\DTOs\EditAllDto.cs" />
+    <Compile Include="Models\DTOs\ImageDto.cs" />
     <Compile Include="Models\DTOs\OrderDTO.cs" />
     <Compile Include="Models\DTOs\Order_DetailDTO.cs" />
+    <Compile Include="Models\DTOs\PCategoryDto.cs" />
+    <Compile Include="Models\DTOs\ProductDto.cs" />
+    <Compile Include="Models\DTOs\SpecDto.cs" />
+    <Compile Include="Models\DTOs\TagDto.cs" />
+    <Compile Include="Models\EFModels\Address.cs" />
     <Compile Include="Models\EFModels\AppDbContext.cs" />
+    <Compile Include="Models\EFModels\Eassy_Follows.cs" />
     <Compile Include="Models\EFModels\Employee.cs" />
+    <Compile Include="Models\EFModels\Essay.cs" />
+    <Compile Include="Models\EFModels\Essays_Comments.cs" />
+    <Compile Include="Models\EFModels\H_Activities.cs" />
+    <Compile Include="Models\EFModels\H_CheckIns.cs" />
+    <Compile Include="Models\EFModels\H_Source_Details.cs" />
+    <Compile Include="Models\EFModels\Image.cs" />
     <Compile Include="Models\EFModels\Member.cs" />
+    <Compile Include="Models\EFModels\News.cs" />
     <Compile Include="Models\EFModels\Order.cs" />
     <Compile Include="Models\EFModels\Order_Details.cs" />
     <Compile Include="Models\EFModels\Order_Log.cs" />
     <Compile Include="Models\EFModels\Order_Status.cs" />
     <Compile Include="Models\EFModels\Order_StatusDescription.cs" />
+    <Compile Include="Models\EFModels\PCategory.cs" />
+    <Compile Include="Models\EFModels\PermissionsE.cs" />
+    <Compile Include="Models\EFModels\PermissionsM.cs" />
+    <Compile Include="Models\EFModels\Product.cs" />
+    <Compile Include="Models\EFModels\Spec.cs" />
+    <Compile Include="Models\EFModels\Tag.cs" />
+    <Compile Include="Models\EFModels\Video.cs" />
+    <Compile Include="Models\EFModels\VideoCategory.cs" />
+    <Compile Include="Models\EFModels\VideoLike.cs" />
+    <Compile Include="Models\EFModels\VideoView.cs" />
     <Compile Include="Models\Infrastructures\Repositories\OrderRepository.cs" />
+    <Compile Include="Models\Infrastructures\Repositories\ProductRepository.cs" />
+    <Compile Include="Models\Infrastructures\UploadFileHelper.cs" />
     <Compile Include="Models\Services\Interfaces\IOrderRepository.cs" />
+    <Compile Include="Models\Services\IProductRepository.cs" />
     <Compile Include="Models\Services\OrderService.cs" />
+    <Compile Include="Models\Services\ProductService.cs" />
+    <Compile Include="Models\ViewModels\CreateProductVM.cs" />
+    <Compile Include="Models\ViewModels\EditAllVM.cs" />
     <Compile Include="Models\ViewModels\OrderUpdateVM.cs" />
     <Compile Include="Models\ViewModels\OrderVM.cs" />
     <Compile Include="Models\ViewModels\Order_DetailsVM.cs" />
+    <Compile Include="Models\ViewModels\ProductVM.cs" />
+    <Compile Include="Models\ViewModels\SpecVm.cs" />
+    <Compile Include="Models\ViewModels\TagVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -200,6 +236,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Photos\Logo-light.png" />
+    <Content Include="Photos\Logo-small.png" />
+    <Content Include="Photos\Logo.png" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -316,6 +355,9 @@
     <Content Include="Views\Order\Edit.cshtml" />
     <Content Include="Scripts\moment.min.js.map" />
     <Content Include="Scripts\moment-with-locales.min.js.map" />
+    <Content Include="Views\Products\EditProduct.cshtml" />
+    <Content Include="Views\Products\Index.cshtml" />
+    <Content Include="Views\Products\NewProduct.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

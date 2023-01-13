@@ -11,6 +11,7 @@ namespace H2StyleStore.Models.EFModels
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Employee()
         {
+            Essays = new HashSet<Essay>();
             Orders = new HashSet<Order>();
         }
 
@@ -28,6 +29,11 @@ namespace H2StyleStore.Models.EFModels
 
         [StringLength(100)]
         public string EncryptedPassword { get; set; }
+
+        public virtual PermissionsE PermissionsE { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Essay> Essays { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Orders { get; set; }

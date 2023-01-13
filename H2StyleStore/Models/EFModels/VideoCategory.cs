@@ -6,30 +6,28 @@ namespace H2StyleStore.Models.EFModels
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Image
+    public partial class VideoCategory
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Image()
+        public VideoCategory()
         {
-            Videos = new HashSet<Video>();
             Essays = new HashSet<Essay>();
-            Products = new HashSet<Product>();
+            Videos = new HashSet<Video>();
         }
 
-        [Key]
-        public int Image_Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
-        [StringLength(200)]
-        public string Path { get; set; }
+        [StringLength(20)]
+        public string CategoryName { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Video> Videos { get; set; }
+        [StringLength(200)]
+        public string CategoryDescription { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Essay> Essays { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Product> Products { get; set; }
+        public virtual ICollection<Video> Videos { get; set; }
     }
 }

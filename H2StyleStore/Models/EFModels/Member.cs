@@ -11,7 +11,13 @@ namespace H2StyleStore.Models.EFModels
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Member()
         {
+            Addresses = new HashSet<Address>();
+            Essays_Comments = new HashSet<Essays_Comments>();
+            H_CheckIns = new HashSet<H_CheckIns>();
+            H_Source_Details = new HashSet<H_Source_Details>();
             Orders = new HashSet<Order>();
+            Essays_Comments1 = new HashSet<Essays_Comments>();
+            Essays = new HashSet<Essay>();
         }
 
         public int Id { get; set; }
@@ -56,6 +62,28 @@ namespace H2StyleStore.Models.EFModels
         public string EncryptedPassword { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Address> Addresses { get; set; }
+
+        public virtual Eassy_Follows Eassy_Follows { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Essays_Comments> Essays_Comments { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<H_CheckIns> H_CheckIns { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<H_Source_Details> H_Source_Details { get; set; }
+
+        public virtual PermissionsM PermissionsM { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Orders { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Essays_Comments> Essays_Comments1 { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Essay> Essays { get; set; }
     }
 }
