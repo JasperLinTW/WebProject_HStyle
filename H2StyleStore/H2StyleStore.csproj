@@ -159,6 +159,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
+    <Compile Include="Controllers\EssaysController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\H_ActivitiesController.cs" />
     <Compile Include="Controllers\H_Source_DetailsController.cs" />
@@ -169,7 +170,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DTOs\CategoryDTO.cs" />
+    <Compile Include="Models\DTOs\CreateEssayDTO.cs" />
     <Compile Include="Models\DTOs\CreateVideoDto.cs" />
+    <Compile Include="Models\DTOs\EssayDTO.cs" />
     <Compile Include="Models\DTOs\H_ActivityDto.cs" />
     <Compile Include="Models\DTOs\H_CheckInDto.cs" />
     <Compile Include="Models\DTOs\H_Source_DetailDto.cs" />
@@ -180,6 +184,8 @@
     <Compile Include="Models\EFModels\Address.cs" />
     <Compile Include="Models\EFModels\AppDbContext.cs" />
     <Compile Include="Models\EFModels\Eassy_Follows.cs" />
+    <Compile Include="Models\EFModels\EComments_Likes.cs" />
+    <Compile Include="Models\EFModels\Elike.cs" />
     <Compile Include="Models\EFModels\Employee.cs" />
     <Compile Include="Models\EFModels\Essay.cs" />
     <Compile Include="Models\EFModels\Essays_Comments.cs" />
@@ -204,17 +210,22 @@
     <Compile Include="Models\EFModels\VideoCategory.cs" />
     <Compile Include="Models\EFModels\VideoLike.cs" />
     <Compile Include="Models\EFModels\VideoView.cs" />
+    <Compile Include="Models\Infrastructures\Repositories\EssayRepository.cs" />
     <Compile Include="Models\Infrastructures\Repositories\H_ActivityRepository.cs" />
     <Compile Include="Models\Infrastructures\Repositories\H_Source_DetailRepository.cs" />
     <Compile Include="Models\Infrastructures\Repositories\VideoRepository.cs" />
+    <Compile Include="Models\Services\EssayService.cs" />
     <Compile Include="Models\Services\H_ActivityService.cs" />
     <Compile Include="Models\Services\H_Source_DetailService.cs" />
+    <Compile Include="Models\Services\Interfaces\IEssayRepository.cs" />
     <Compile Include="Models\Services\Interfaces\IH_ActivityRepository.cs" />
     <Compile Include="Models\Services\Interfaces\IH_Source_DetailRepository.cs" />
     <Compile Include="Models\Services\Interfaces\IVideoRepository.cs" />
     <Compile Include="Models\Services\VideoService.cs" />
+    <Compile Include="Models\ViewModels\CreateEssayVM.cs" />
     <Compile Include="Models\ViewModels\CreateVideoVM.cs" />
     <Compile Include="Models\ViewModels\EditVideoVM.cs" />
+    <Compile Include="Models\ViewModels\EssayVM.cs" />
     <Compile Include="Models\ViewModels\H_ActivityVM.cs" />
     <Compile Include="Models\ViewModels\H_CheckInVM.cs" />
     <Compile Include="Models\ViewModels\H_Source_DetailVM.cs" />
@@ -300,6 +311,20 @@
     <Content Include="Content\jquery-ui.theme.css" />
     <Content Include="Content\Order.css" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\css\adminlte.css" />
+    <Content Include="fonts\css\adminlte.min.css" />
+    <Content Include="fonts\css\alt\adminlte.components.css" />
+    <Content Include="fonts\css\alt\adminlte.components.min.css" />
+    <Content Include="fonts\css\alt\adminlte.core.css" />
+    <Content Include="fonts\css\alt\adminlte.core.min.css" />
+    <Content Include="fonts\css\alt\adminlte.extra-components.css" />
+    <Content Include="fonts\css\alt\adminlte.extra-components.min.css" />
+    <Content Include="fonts\css\alt\adminlte.light.css" />
+    <Content Include="fonts\css\alt\adminlte.light.min.css" />
+    <Content Include="fonts\css\alt\adminlte.pages.css" />
+    <Content Include="fonts\css\alt\adminlte.pages.min.css" />
+    <Content Include="fonts\css\alt\adminlte.plugins.css" />
+    <Content Include="fonts\css\alt\adminlte.plugins.min.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -367,6 +392,7 @@
     <Content Include="Photos\Logo-light.png" />
     <Content Include="Photos\Logo-small.png" />
     <Content Include="Photos\Logo.png" />
+    <Content Include="ReadMe.txt" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -463,6 +489,20 @@
     <Content Include="Content\css\alt\adminlte.pages.min.css.map" />
     <Content Include="Content\css\alt\adminlte.plugins.css.map" />
     <Content Include="Content\css\alt\adminlte.plugins.min.css.map" />
+    <Content Include="fonts\css\adminlte.css.map" />
+    <Content Include="fonts\css\adminlte.min.css.map" />
+    <Content Include="fonts\css\alt\adminlte.components.css.map" />
+    <Content Include="fonts\css\alt\adminlte.components.min.css.map" />
+    <Content Include="fonts\css\alt\adminlte.core.css.map" />
+    <Content Include="fonts\css\alt\adminlte.core.min.css.map" />
+    <Content Include="fonts\css\alt\adminlte.extra-components.css.map" />
+    <Content Include="fonts\css\alt\adminlte.extra-components.min.css.map" />
+    <Content Include="fonts\css\alt\adminlte.light.css.map" />
+    <Content Include="fonts\css\alt\adminlte.light.min.css.map" />
+    <Content Include="fonts\css\alt\adminlte.pages.css.map" />
+    <Content Include="fonts\css\alt\adminlte.pages.min.css.map" />
+    <Content Include="fonts\css\alt\adminlte.plugins.css.map" />
+    <Content Include="fonts\css\alt\adminlte.plugins.min.css.map" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -544,6 +584,9 @@
     <Content Include="Views\Video\CreateVideo.cshtml" />
     <Content Include="Views\Video\EditVideo.cshtml" />
     <Content Include="Views\Video\Index.cshtml" />
+    <Content Include="Views\Essays\EditEssays.cshtml" />
+    <Content Include="Views\Essays\Index.cshtml" />
+    <Content Include="Views\Essays\NewEssay.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

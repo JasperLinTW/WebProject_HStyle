@@ -56,8 +56,8 @@ namespace H2StyleStore.Models.DTOs
 			CategoryName = source.VideoCategory.CategoryName,
 			UpLoad = source.UpLoad,
 			Removed = source.Removed,
-			images = source.Images.Select(i=>i.ToDto()),
-			Tags = source.Tags.Select(i=>i.ToDto())
+			images = source.Images.Select(i=>i.ToPDto()),
+			Tags = source.Tags.Select(i=>i.ToPDto())
 		};
 
 		public static Essay ToDb(this EssayDTO source)

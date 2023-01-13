@@ -31,7 +31,7 @@ namespace H2StyleStore.Models.DTOs
 
 		public ImageDto Image { get; set; }
 
-		public IEnumerable<TagDto> Tags { get; set; }
+		public IEnumerable<TagDTO> Tags { get; set; }
 
 		public string CategoryName { get; set; }
 	}

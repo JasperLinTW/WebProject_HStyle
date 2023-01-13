@@ -31,7 +31,8 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="../../Content/css/adminlte.min.css">
     <link rel="stylesheet" href="~/Content/StyleSheet1.css">
-    
+    <link href="~/Content/Order.css" rel="stylesheet" />
+
 </head>
 <body class="hold-transition sidebar-mini">
     <!-- Site wrapper -->
@@ -44,7 +45,7 @@
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block mt-1">
-                    <a href="#"><img src="../../Photos/Logo.png" alt="AdminLTE Logo"></a>
+                    <a href="@Url.Action("Index", "HOME")"><img src="../../Photos/Logo.png" alt="AdminLTE Logo"></a>
                 </li>
             </ul>
 
@@ -110,7 +111,7 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar main-sidebar-custom sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="../../index3.html" class="brand-link" style="display:flex; align-content:center; justify-content:center; height:55px">
+            <a href="@Url.Action("Index", "HOME")" class="brand-link" style="display:flex; align-content:center; justify-content:center; height:55px">
                 <img src="../../Photos/Logo-small.png">
             </a>
             <!-- Sidebar -->
@@ -131,7 +132,7 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
-                     with font-awesome or any other icon font library -->
+    with font-awesome or any other icon font library -->
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fa-solid fa-user"></i>
@@ -264,38 +265,43 @@
                                 </li>
                             </ul>
                         </li>
+                        @{
+                            if (User.Identity.IsAuthenticated)
+                            {
+                                <li class="mt-3 btn btn-secondary hide-on-collapse" style="align-content:center; justify-content:center">
+                                    <i class="fa-solid fa-right-from-bracket mt-1" style="margin-right:13.5px">@Html.ActionLink("登出", "Logout", "Members")</i>
+                                </li>
+
+                                @*<li>@Html.ActionLink("登出", "Logout", "Members")</li>*@
+                                <li><a href="/Members/Index/">使用者名稱：@(User.Identity.Name)</a></li>
+                                @*<li>@Html.ActionLink("購物車", "Info", "Cart")</li>*@
+
+                            }
+                            else
+                            {
+                                <li class="mt-3 btn btn-secondary hide-on-collapse" style="align-content:center; justify-content:center">
+                                    <i class="fa-solid fa-right-from-bracket mt-1" style="margin-right:13.5px">@Html.ActionLink("登入", "Login", "Members")</i>
+                                </li>
+                                <li class="mt-3 btn btn-secondary hide-on-collapse" style="align-content:center; justify-content:center">
+                                    <i class="fa-solid fa-right-from-bracket mt-1" style="margin-right:13.5px">@Html.ActionLink("註冊新會員", "Register", "Members")</i>
+                                </li>
+
+
+                            }
+                        }
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
             </div>
             <!-- /.sidebar -->
-            <div class="sidebar-custom" style="align-content: center; justify-content: center ; display:flex;">
+            @*<div class="sidebar-custom" style="align-content: center; justify-content: center ; display:flex;">
                 <a href="#" class="mt-3 btn btn-secondary hide-on-collapse" style="align-content:center; justify-content:center">
                     <i class="fa-solid fa-right-from-bracket mt-1" style="margin-right:13.5px"></i>
                     登出
                 </a>
-            </div>
-            @{
-                if (User.Identity.IsAuthenticated)
-                {
-                    <li class="mt-3 btn btn-secondary hide-on-collapse" style="align-content:center; justify-content:center">
-                        <i class="fa-solid fa-right-from-bracket mt-1" style="margin-right:13.5px">@Html.ActionLink("登出", "Logout", "Members")</i>
-                    </li>
+            </div>*@
 
-                    @*<li>@Html.ActionLink("登出", "Logout", "Members")</li>*@
-                    <li><a href="/Members/Index/">使用者名稱：@(User.Identity.Name)</a></li>
-                    @*<li>@Html.ActionLink("購物車", "Info", "Cart")</li>*@
-                }
-                else
-                {
-                    <li class="mt-3 btn btn-secondary hide-on-collapse" style="align-content:center; justify-content:center">
-                        <i class="fa-solid fa-right-from-bracket mt-1" style="margin-right:13.5px">@Html.ActionLink("登入", "Login", "Members")</i>
-                    </li>
-                    <li class="mt-3 btn btn-secondary hide-on-collapse" style="align-content:center; justify-content:center">
-                        <i class="fa-solid fa-right-from-bracket mt-1" style="margin-right:13.5px">@Html.ActionLink("註冊新會員", "Register", "Members")</i>
-                    </li>
-                }
-            }
+           
             <!-- /.sidebar-custom -->
         </aside>
 
@@ -344,6 +350,7 @@
             </section>
             @Scripts.Render("~/bundles/jquery")
             @RenderSection("scripts", required: false)
+            @RenderSection("styles", required: false)
             <!-- /.content -->
         </div>
         <!-- /.content-wrapper -->
@@ -372,12 +379,12 @@
 
 
 
-                            
-                        
-                        
-                    
-                   
-    </body>
+
+
+
+
+
+</body>
 
 </html>
 

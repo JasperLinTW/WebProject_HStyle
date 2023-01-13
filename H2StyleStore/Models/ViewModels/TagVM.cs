@@ -16,7 +16,7 @@ namespace H2StyleStore.Models.ViewModels
 
 	public static class TagVMExts
 	{
-        public static TagVM ToVM(this TagDto source)
+        public static TagVM ToVM(this TagDTO source)
 		{
 			return new TagVM
 			{
@@ -27,7 +27,7 @@ namespace H2StyleStore.Models.ViewModels
 	}
 	public static class TagExts
 	{
-		public static TagVM ToVM(this TagDto source)
+		public static TagVM ToVM(this TagDTO source)
 		{
 			return new TagVM()
 			{
@@ -35,13 +35,6 @@ namespace H2StyleStore.Models.ViewModels
 				TagName = source.TagName
 			};
 		}
-		public static TagVM ToVM(this TagDTO source)
-		{
-			return new TagVM
-			{
-				Id = source.Id,
-				TagName = source.TagName,
-			};
-		}
+		
 	}
 }

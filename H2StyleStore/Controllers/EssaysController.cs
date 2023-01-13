@@ -1,6 +1,7 @@
 ﻿using H2StyleStore.Models;
 using H2StyleStore.Models.DTOs;
 using H2StyleStore.Models.EFModels;
+using H2StyleStore.Models.Infrastructures;
 using H2StyleStore.Models.Infrastructures.Repositories;
 using H2StyleStore.Models.Services;
 using H2StyleStore.Models.Services.Interfaces;
@@ -84,7 +85,7 @@ namespace H2StyleStore.Controllers
 						//string OriginalFileName = System.IO.Path.GetFileName(file.FileName);
 						string FileName = result;
 
-					  model.Images.Add(FileName);
+					  model.Images.Add($"../../Images/Essaysimage/{FileName}");
 					}
 					catch (Exception ex)
 					{
@@ -145,7 +146,7 @@ namespace H2StyleStore.Controllers
 						//string OriginalFileName = System.IO.Path.GetFileName(file.FileName);
 						string FileName = result;
 
-						model.Images.Add(FileName);
+						model.Images.Add($"../../Images/Essaysimage/{FileName}");
 					}
 					catch (Exception ex)
 					{
