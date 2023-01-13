@@ -15,12 +15,20 @@ namespace H2StyleStore.Models.DTOs
 	}
 	public static class TagExts
 	{
-		public static string ToDto(this Tag source)
+		public static string ToPDto(this Tag source)
 		{
 			return source.TagName;
 		}
 
 		public static TagDTO ToDto(this TagVM source)
+		{
+			return new TagDTO()
+			{
+				Id = source.Id,
+				TagName = source.TagName
+			};
+		}
+		public static TagDTO ToDto(this Tag source)
 		{
 			return new TagDTO()
 			{
