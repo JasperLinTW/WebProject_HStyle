@@ -4,12 +4,15 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>商品管理列表</h2>
 
-<p>
-    @Html.ActionLink("新增商品", "NewProduct")
-</p>
-<table class="table">
+<div class="mb-1 pe-0 text-right">
+    <button type="button" class="btn btn-default"> @Html.ActionLink("新增商品", "NewProduct")</button>
+    <button id="allSave" type="button" class="btn btn-default">儲存</button>
+</div>
+
+
+<table class="table table-bordered  borderless listTable">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Product_Name)
@@ -30,58 +33,109 @@
             @Html.DisplayNameFor(model => model.PCategoryName)
         </th>
         <th>標籤</th>
-        <th>規格與尺寸</th>
-        <th>照片</th>
+        <th>詳情</th>
+        @*<th>規格與尺寸</th>
+            <th>照片</th>*@
     </tr>
+    @{ int i = 0;}
+    @foreach (var item in Model)
+    {
+        <tr >
+            <td>
+                <i class="fa-solid fa-pen-to-square"></i>
+                @Html.ActionLink(item.Product_Name, "EditProduct", new { id = item.Product_Id })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UnitPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Create_at)
+            </td>
+            <td class="discontinued">
+                @Html.EditorFor(modelItem => item.Discontinued)
+                <input class="ProductId" name="ProductId" hidden value="@item.Product_Id" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PCategoryName)
+            </td>
+            <td>
+                @("#"+string.Join(" #",item.tags))
+            </td>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.ActionLink(item.Product_Name, "EditProduct", new { id = item.Product_Id })
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UnitPrice)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Create_at)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Discontinued)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PCategoryName)
-        </td>
-        <td> 
-            @("#"+string.Join(" #",item.tags))
-        </td>
-        <td>
-            <table class="table table-bordered">
-                <tr class="active">
-                    <td>顏色</td>
-                    <td>尺寸</td>
-                    <td>庫存量</td>
-                </tr>
-                @foreach (var spec in item.specs)
-                {
-                    <tr class="active">
-                        <td>@spec.Color</td>
-                        <td>@spec.Size</td>
-                        <td>@spec.Stock</td>
+            <td data-toggle="collapse" href="#multiCollapseExample-@i" role="button" aria-expanded="false" aria-controls="multiCollapseExample-@i"><i class="fa-solid fa-circle-plus"></i></td>
 
-                    </tr>
-                }
-            </table>
-        </td>
-        <td>
-            @foreach (var img in item.images)
-            {
-                <img class="img" src="@img" />
-            }
-        </td>
-    </tr>
-}
+        </tr>
+
+        <tr class="collapse multi-collapse" id="multiCollapseExample-@i">
+            <td colspan="8">
+                
+                    <div>
+                        <table class="table table-bordered">
+                            <tr class="active">
+                                <td>顏色</td>
+                                <td>尺寸</td>
+                                <td>庫存量</td>
+                            </tr>
+                            @foreach (var spec in item.specs)
+                            {
+                                <tr class="active">
+                                    <td>@spec.Color</td>
+                                    <td>@spec.Size</td>
+                                    <td>@spec.Stock</td>
+
+                                </tr>
+                            }
+                        </table>
+
+
+                        @foreach (var img in item.images)
+                        {
+                            <img class="img" src="@img" />
+                        }
+                    </div>
+
+                
+
+            </td>
+        </tr>
+        i++;
+    }
 
 </table>
+
+@section Scripts {
+    <script>
+        let editAlls = [];
+        
+        $("#allSave").on("click", function () {
+            $(".discontinued").each(function () {
+                //console.log($(this).children(".ProductId").val());
+                //console.log($(this).children(":checkbox")[0].checked);
+                editAlls.push({
+                    id: $(this).children(".ProductId").val(),
+                    discontinued: $(this).children(":checkbox")[0].checked,
+                });
+
+            });
+            console.log(editAlls);
+
+            $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("EditAll", "Products")',
+                    contentType: "application/json",
+                    data: JSON.stringify({editAlls})
+            }).done(function (result) {
+                alert(result);
+            }).fail(function (err) {
+                alert(err.statusText)
+            })
+
+            editAlls = [];
+        });
+
+    </script>
+
+}

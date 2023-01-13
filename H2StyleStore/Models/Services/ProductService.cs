@@ -61,13 +61,14 @@ namespace H2StyleStore.Models.Services
 			{
 				return (false, "商品名稱已使用，請更改名稱");
 			}
-
-
-
 			_repository.Edit(dto);
 
 			return (true, null);
+		}
 
+		public void EditDiscontinued(List<EditAllDto> newItems)
+		{
+			_repository.EditDiscontinued(newItems);
 		}
 
 

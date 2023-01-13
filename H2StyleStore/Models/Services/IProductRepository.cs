@@ -21,5 +21,7 @@ namespace H2StyleStore.Models.Services
 		void Create(CreateProductDto product);
 
 		void Edit(CreateProductDto dto);
+
+		void EditDiscontinued(List<EditAllDto> newItems);
 	}
 }

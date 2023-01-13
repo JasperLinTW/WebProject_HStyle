@@ -34,6 +34,22 @@ namespace H2StyleStore.Controllers
             
             return View(data);
         }
+		[HttpPost]
+		public string EditAll(List<EditAllVM> editAlls)
+		{
+			try
+			{
+				productService.EditDiscontinued(editAlls.Select(x => x.ToDto()).ToList());
+			}
+			catch(Exception ex)
+			{
+				return "儲存失敗，原因: "+ ex.Message;
+			}
+			
+			
+
+			return "儲存成功";
+		}
 
 		public ActionResult NewProduct()
 		{
