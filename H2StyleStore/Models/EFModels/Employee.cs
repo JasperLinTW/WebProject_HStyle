@@ -15,14 +15,13 @@ namespace H2StyleStore.Models.EFModels
         [StringLength(50)]
         public string Account { get; set; }
 
-        [Required]
-        [StringLength(50)]
-        public string Password { get; set; }
-
         [StringLength(50)]
         public string Title { get; set; }
 
-        public int Permission_id { get; set; }
+        public int? Permission_id { get; set; }
+
+        [StringLength(100)]
+        public string EncryptedPassword { get; set; }
 
         public virtual PermissionsE PermissionsE { get; set; }
     }

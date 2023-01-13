@@ -4,11 +4,11 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>會員中心</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+@*<p>
+    @Html.ActionLink("新增會員資料", "Create")   這個不要開   有自己做得VM
+</p>*@
 <table class="table">
     <tr>
         <th>
@@ -19,9 +19,6 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Account)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Password)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Phone_Number)
@@ -35,13 +32,13 @@
         <th>
             @Html.DisplayNameFor(model => model.Birthday)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.Permission_Id)
-        </th>
+        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.Jointime)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.Mail_verify)
         </th>
         <th>
@@ -50,6 +47,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Total_H)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EncryptedPassword)
+        </th>*@
         <th></th>
     </tr>
 
@@ -65,9 +65,6 @@
             @Html.DisplayFor(modelItem => item.Account)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Password)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.Phone_Number)
         </td>
         <td>
@@ -79,13 +76,13 @@
         <td>
             @Html.DisplayFor(modelItem => item.Birthday)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.Permission_Id)
-        </td>
+        </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.Jointime)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.Mail_verify)
         </td>
         <td>
@@ -94,6 +91,9 @@
         <td>
             @Html.DisplayFor(modelItem => item.Total_H)
         </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EncryptedPassword)
+        </td>*@
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
             @Html.ActionLink("Details", "Details", new { id=item.Id }) |

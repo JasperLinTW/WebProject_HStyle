@@ -20,12 +20,16 @@ namespace H2StyleStore.Models.EFModels
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
+			modelBuilder.Entity<Address>()
+				.Property(e => e.destination_THE)
+				.IsUnicode(false);
+
 			modelBuilder.Entity<Employee>()
 				.Property(e => e.Account)
 				.IsUnicode(false);
 
 			modelBuilder.Entity<Employee>()
-				.Property(e => e.Password)
+				.Property(e => e.EncryptedPassword)
 				.IsUnicode(false);
 
 			modelBuilder.Entity<Member>()
@@ -33,14 +37,23 @@ namespace H2StyleStore.Models.EFModels
 				.IsUnicode(false);
 
 			modelBuilder.Entity<Member>()
-				.Property(e => e.Password)
+				.Property(e => e.Phone_Number)
 				.IsUnicode(false);
+
+			modelBuilder.Entity<Member>()
+				.Property(e => e.EncryptedPassword)
+				.IsUnicode(false);
+
+			modelBuilder.Entity<Member>()
+				.HasMany(e => e.Addresses)
+				.WithRequired(e => e.Member)
+				.HasForeignKey(e => e.Member_id)
+				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<PermissionsE>()
 				.HasMany(e => e.Employees)
-				.WithRequired(e => e.PermissionsE)
-				.HasForeignKey(e => e.Permission_id)
-				.WillCascadeOnDelete(false);
+				.WithOptional(e => e.PermissionsE)
+				.HasForeignKey(e => e.Permission_id);
 		}
 	}
 }

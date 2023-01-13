@@ -128,17 +128,38 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MembersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DTOs\ChangePasswordRequest.cs" />
+    <Compile Include="Models\DTOs\EmployeeDto.cs" />
+    <Compile Include="Models\DTOs\MemberDto.cs" />
+    <Compile Include="Models\DTOs\RegisterDto.cs" />
+    <Compile Include="Models\DTOs\Register_EmployeeDto.cs" />
+    <Compile Include="Models\DTOs\UpdateProfileDto.cs" />
     <Compile Include="Models\EFModels\Address.cs" />
     <Compile Include="Models\EFModels\AppDbContext.cs" />
     <Compile Include="Models\EFModels\Employee.cs" />
     <Compile Include="Models\EFModels\Member.cs" />
     <Compile Include="Models\EFModels\PermissionsE.cs" />
     <Compile Include="Models\EFModels\PermissionsM.cs" />
+    <Compile Include="Models\InfraStructures\EmailHelper.cs" />
+    <Compile Include="Models\InfraStructures\ExtensionMethods\EmployeesExts.cs" />
+    <Compile Include="Models\InfraStructures\ExtensionMethods\MemberExts.cs" />
+    <Compile Include="Models\InfraStructures\HashUtility.cs" />
+    <Compile Include="Models\InfraStructures\Repositories\EmployeeRepository.cs" />
+    <Compile Include="Models\InfraStructures\Repositories\MemberRepository.cs" />
+    <Compile Include="Models\Services\EmployeeService.cs" />
+    <Compile Include="Models\Services\Interfaces\IEmployeeRepository.cs" />
+    <Compile Include="Models\Services\Interfaces\IMemberRepository.cs" />
+    <Compile Include="Models\Services\MemberService.cs" />
+    <Compile Include="Models\ViewModels\LoginVM.cs" />
+    <Compile Include="Models\ViewModels\Login_EmployeesVM.cs" />
+    <Compile Include="Models\ViewModels\RegisterVM.cs" />
+    <Compile Include="Models\ViewModels\Register_EmployeesVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -170,22 +191,35 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Web.config" />
-    <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Employees\Create.cshtml" />
+    <Content Include="Views\Employees\Delete.cshtml" />
+    <Content Include="Views\Employees\Details.cshtml" />
+    <Content Include="Views\Employees\Edit.cshtml" />
+    <Content Include="Views\Employees\Index.cshtml" />
+    <Content Include="Views\Employees\Login.cshtml" />
+    <Content Include="Views\Employees\RegisterConfirm_E.cshtml" />
+    <Content Include="Views\Employees\Register_Employees.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Members\ActiveRegister.cshtml" />
+    <Content Include="Views\Members\Create.cshtml" />
+    <Content Include="Views\Members\DateTimePicker2.cshtml" />
+    <Content Include="Views\Members\Delete.cshtml" />
+    <Content Include="Views\Members\Details.cshtml" />
+    <Content Include="Views\Members\Edit.cshtml" />
     <Content Include="Views\Members\Index.cshtml" />
+    <Content Include="Views\Members\Login.cshtml" />
+    <Content Include="Views\Members\Register.cshtml" />
+    <Content Include="Views\Members\RegisterConfirm.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\DTOs\" />
-    <Folder Include="Models\Infrastructures\ExtensionMethods\" />
-    <Folder Include="Models\Infrastructures\Repositories\" />
-    <Folder Include="Models\Services\" />
-    <Folder Include="Models\ViewModels\" />
+    <Folder Include="files\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
