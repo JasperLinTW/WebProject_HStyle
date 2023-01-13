@@ -47,12 +47,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -178,29 +172,6 @@
     <Compile Include="Models\DTOs\H_CheckInDto.cs" />
     <Compile Include="Models\DTOs\H_Source_DetailDto.cs" />
     <Compile Include="Models\DTOs\MemberInBirthDto.cs" />
-    <Compile Include="Models\EFModels\AppDbContext.cs" />
-    <Compile Include="Models\EFModels\H_Activities.cs" />
-    <Compile Include="Models\EFModels\H_CheckIns.cs" />
-    <Compile Include="Models\EFModels\H_Source_Details.cs" />
-    <Compile Include="Models\EFModels\Member.cs" />
-    <Compile Include="Models\Infrastructures\Repositories\H_ActivityRepository.cs" />
-    <Compile Include="Models\Infrastructures\Repositories\H_Source_DetailRepository.cs" />
-    <Compile Include="Models\Services\H_ActivityService.cs" />
-    <Compile Include="Models\Services\H_Source_DetailService.cs" />
-    <Compile Include="Models\Services\Interfaces\IH_ActivityRepository.cs" />
-    <Compile Include="Models\Services\Interfaces\IH_Source_DetailRepository.cs" />
-    <Compile Include="Models\ViewModels\H_ActivityVM.cs" />
-    <Compile Include="Models\ViewModels\H_CheckInVM.cs" />
-    <Compile Include="Models\ViewModels\H_Source_DetailVM.cs" />
-    <Compile Include="Models\DTOs\CreateProductDto.cs" />
-    <Compile Include="Models\DTOs\EditAllDto.cs" />
-    <Compile Include="Models\DTOs\ImageDto.cs" />
-    <Compile Include="Models\DTOs\OrderDTO.cs" />
-    <Compile Include="Models\DTOs\Order_DetailDTO.cs" />
-    <Compile Include="Models\DTOs\PCategoryDto.cs" />
-    <Compile Include="Models\DTOs\ProductDto.cs" />
-    <Compile Include="Models\DTOs\SpecDto.cs" />
-    <Compile Include="Models\DTOs\TagDto.cs" />
     <Compile Include="Models\EFModels\Address.cs" />
     <Compile Include="Models\EFModels\AppDbContext.cs" />
     <Compile Include="Models\EFModels\Eassy_Follows.cs" />
@@ -228,6 +199,24 @@
     <Compile Include="Models\EFModels\VideoCategory.cs" />
     <Compile Include="Models\EFModels\VideoLike.cs" />
     <Compile Include="Models\EFModels\VideoView.cs" />
+    <Compile Include="Models\Infrastructures\Repositories\H_ActivityRepository.cs" />
+    <Compile Include="Models\Infrastructures\Repositories\H_Source_DetailRepository.cs" />
+    <Compile Include="Models\Services\H_ActivityService.cs" />
+    <Compile Include="Models\Services\H_Source_DetailService.cs" />
+    <Compile Include="Models\Services\Interfaces\IH_ActivityRepository.cs" />
+    <Compile Include="Models\Services\Interfaces\IH_Source_DetailRepository.cs" />
+    <Compile Include="Models\ViewModels\H_ActivityVM.cs" />
+    <Compile Include="Models\ViewModels\H_CheckInVM.cs" />
+    <Compile Include="Models\ViewModels\H_Source_DetailVM.cs" />
+    <Compile Include="Models\DTOs\CreateProductDto.cs" />
+    <Compile Include="Models\DTOs\EditAllDto.cs" />
+    <Compile Include="Models\DTOs\ImageDto.cs" />
+    <Compile Include="Models\DTOs\OrderDTO.cs" />
+    <Compile Include="Models\DTOs\Order_DetailDTO.cs" />
+    <Compile Include="Models\DTOs\PCategoryDto.cs" />
+    <Compile Include="Models\DTOs\ProductDto.cs" />
+    <Compile Include="Models\DTOs\SpecDto.cs" />
+    <Compile Include="Models\DTOs\TagDto.cs" />
     <Compile Include="Models\Infrastructures\Repositories\OrderRepository.cs" />
     <Compile Include="Models\Infrastructures\Repositories\ProductRepository.cs" />
     <Compile Include="Models\Infrastructures\UploadFileHelper.cs" />
@@ -249,12 +238,6 @@
     <Compile Include="Models\DTOs\RegisterDto.cs" />
     <Compile Include="Models\DTOs\Register_EmployeeDto.cs" />
     <Compile Include="Models\DTOs\UpdateProfileDto.cs" />
-    <Compile Include="Models\EFModels\Address.cs" />
-    <Compile Include="Models\EFModels\AppDbContext.cs" />
-    <Compile Include="Models\EFModels\Employee.cs" />
-    <Compile Include="Models\EFModels\Member.cs" />
-    <Compile Include="Models\EFModels\PermissionsE.cs" />
-    <Compile Include="Models\EFModels\PermissionsM.cs" />
     <Compile Include="Models\InfraStructures\EmailHelper.cs" />
     <Compile Include="Models\InfraStructures\ExtensionMethods\EmployeesExts.cs" />
     <Compile Include="Models\InfraStructures\ExtensionMethods\MemberExts.cs" />
@@ -446,7 +429,6 @@
     <Content Include="Scripts\moment-with-locales.min.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -454,10 +436,6 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Web.config" />
-    <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Employees\Create.cshtml" />
     <Content Include="Views\Employees\Delete.cshtml" />
     <Content Include="Views\Employees\Details.cshtml" />
@@ -496,12 +474,14 @@
     <Content Include="Views\Members\Register.cshtml" />
     <Content Include="Views\Members\RegisterConfirm.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="files\" />
+    <Folder Include="obj\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
