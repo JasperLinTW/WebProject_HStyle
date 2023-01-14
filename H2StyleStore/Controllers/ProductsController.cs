@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using X.PagedList;
 
 namespace H2StyleStore.Controllers
 {
@@ -30,8 +31,25 @@ namespace H2StyleStore.Controllers
 			var data = productService.GetProducts()
                 .Select(x => x.ToVM());
             
-            return View(data);
+            return View();
         }
+
+		public ActionResult PagedPartial(string searchStr, int? page)
+		{
+			//找出符合篩選條件的資料
+
+			List<ProductVM> filtedProducts = productService.productsFilter(searchStr).Select(x => x.ToVM()).ToList();
+
+			//將資料轉為 PagedList 的資料
+
+			var pageNumber = (page == null)? 1: (int)page;// 若無傳入 Page，預設查詢第1頁
+			var onePageOfProducts = filtedProducts.ToPagedList(pageNumber, 5); // 參數說明: ToPagedList( 第幾頁 , 一頁要顯示多少資料 )
+
+	
+
+			return PartialView("PagedPartial", onePageOfProducts);
+		}
+
 		[HttpPost]
 		public string EditAll(List<EditAllVM> editAlls)
 		{

@@ -23,5 +23,6 @@ namespace H2StyleStore.Models.Services
 		void Edit(CreateProductDto dto);
 
 		void EditDiscontinued(List<EditAllDto> newItems);
+		List<ProductDto> GetFiltedProducts(string filterStr);
 	}
 }

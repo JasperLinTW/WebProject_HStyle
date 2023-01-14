@@ -246,5 +246,23 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 
 			_db.SaveChanges();
 		}
+
+		public List<ProductDto> GetFiltedProducts(string filterStr)
+		{
+			IEnumerable<Product> products = _db.Products;
+			products = products.Where(
+				x =>
+				x.UnitPrice.ToString().Contains(filterStr)
+				|| x.Product_Name.Contains(filterStr) 			
+				|| string.Join("", x.Tags.Select(y => y.TagName)).Contains(filterStr)
+				|| x.Description.Contains(filterStr)
+				|| x.PCategory.PCategoryName.Contains(filterStr)
+				);
+
+			products = products.OrderBy(x => x.DisplayOrder);
+			var data = products.Select(x => x.ToDto()).ToList();
+
+			return data;
+		}
 	}
 }

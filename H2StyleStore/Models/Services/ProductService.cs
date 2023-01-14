@@ -71,6 +71,19 @@ namespace H2StyleStore.Models.Services
 			_repository.EditDiscontinued(newItems);
 		}
 
-
+		internal List<ProductDto> productsFilter(string searchFilter)
+		{
+			bool isEmpty = string.IsNullOrEmpty(searchFilter);
+			if (isEmpty)
+			{
+				var data = _repository.GetProducts().ToList();
+				return (data);
+			}
+			else
+			{
+				var data = _repository.GetFiltedProducts(searchFilter);
+				return (data);
+			}
+		}
 	}
 }
