@@ -26,18 +26,39 @@ namespace H2StyleStore.Controllers
         }
 
         // GET: Order
-        public ActionResult Index(int? status_id, string value)
+        public ActionResult Index(int? status_id, string value, string sortOrder)
         {
-            ViewBag.Status = orderService.GetStatus(status_id);
+			ViewBag.Status = orderService.GetStatus(status_id);
 			ViewBag.Value = value;
 			ViewBag.Status_order = orderService.GetStatus();
+			ViewBag.CreatetimeSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+			ViewBag.TotalSortParm = sortOrder == "total" ? "total_desc" : "total";
 
 			var data = orderService.Load();
 
-            //依訂單成立時間排序
-            data.OrderBy(x => x.CreatedTime);
+			//可排序
+			switch (sortOrder)
+			{
 
-            //可篩選
+				case "Date":
+					data = data.OrderBy(o => o.CreatedTime);
+					break;
+				case "date_desc":
+					data = data.OrderByDescending(o => o.CreatedTime);
+					break;
+				case "total":
+					data = data.OrderBy(o => o.Total);
+					break;
+				case "total_desc":
+					data = data.OrderByDescending(o => o.Total);
+					break;
+				default:
+					data = data.OrderBy(o => o.Order_id);
+					break;
+			}
+
+
+			//可篩選
 			if (status_id.HasValue)
             {
 				data = data.Where(s => s.Status_id == status_id.Value);

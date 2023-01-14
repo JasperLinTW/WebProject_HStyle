@@ -43,7 +43,8 @@
                     @Html.DisplayNameFor(model => model.MemberName)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Total)
+                    @Html.ActionLink("總額", "Index", new { sortOrder = ViewBag.CreatetimeSortParm }, new { @class = "text-dark" })
+                    <i class="fa-solid fa-sort ml-2" style="cursor:pointer"></i>
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Payment)
@@ -73,8 +74,8 @@
                     @Html.DisplayNameFor(model => model.RequestRefund)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.CreatedTime)
-                </th>
+                   @Html.ActionLink("訂單成立日期", "Index", new { sortOrder = ViewBag.CreatetimeSortParm }, new { @class = "text-dark" })
+                <i class="fa-solid fa-sort ml-2" style="cursor:pointer"></i>
                 <th>
                     @Html.DisplayNameFor(model => model.Status)
                 </th>
