@@ -23,5 +23,6 @@ namespace H2StyleStore.Models.Services.Interfaces
 		OrderDTO GetOrderbyId(int id);
 		IEnumerable<SelectListItem> GetStatus();
 		int StatusTransfer(string status);
+		IEnumerable<SelectListItem> GetStatusDescription();
 	}
 }

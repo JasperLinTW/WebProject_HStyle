@@ -54,5 +54,10 @@ namespace H2StyleStore.Models.Services
 		{
 			return _repository.StatusTransfer(status);
 		}
+
+		public IEnumerable<SelectListItem> GetStatusDescription()
+		{
+			return _repository.GetStatusDescription();
+		}
 	}
 }

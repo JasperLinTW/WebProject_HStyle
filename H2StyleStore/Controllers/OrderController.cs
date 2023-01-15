@@ -108,6 +108,7 @@ namespace H2StyleStore.Controllers
 		public ActionResult Edit(int id)
 		{
 			ViewBag.Status = orderService.GetStatus();
+			ViewBag.StatusDescription = orderService.GetStatusDescription();
 			var data = orderService.GetOrderbyId(id).ToVM();
 			
 

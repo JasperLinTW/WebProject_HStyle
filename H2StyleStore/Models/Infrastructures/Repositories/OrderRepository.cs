@@ -97,5 +97,18 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 
 			return result;
 		}
+
+		public IEnumerable<SelectListItem> GetStatusDescription()
+		{
+			var items = _db.Order_StatusDescription.Where(x => x.Status_id == 6).Select(x => new SelectListItem
+			{
+				Value = x.Description_id.ToString(),
+				Text = x.Description,
+			})
+			.ToList()
+			.Prepend(new SelectListItem { Value = string.Empty, Text = "請選擇" });
+
+			return items;
+		}
 	}
 }
