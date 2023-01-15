@@ -34,7 +34,7 @@ namespace H2StyleStore.Controllers
             return View();
         }
 
-		public ActionResult PagedPartial(string searchStr, int? page)
+		public ActionResult PagedPartial(string searchStr, int? page, int? pageSize)
 		{
 			//找出符合篩選條件的資料
 
@@ -43,8 +43,11 @@ namespace H2StyleStore.Controllers
 			//將資料轉為 PagedList 的資料
 
 			var pageNumber = (page == null)? 1: (int)page;// 若無傳入 Page，預設查詢第1頁
-			var onePageOfProducts = filtedProducts.ToPagedList(pageNumber, 5); // 參數說明: ToPagedList( 第幾頁 , 一頁要顯示多少資料 )
 
+			pageSize = pageSize ?? 10;
+			var onePageOfProducts = filtedProducts.ToPagedList(pageNumber, (int)pageSize); // 參數說明: ToPagedList( 第幾頁 , 一頁要顯示多少資料 )
+
+			
 	
 
 			return PartialView("PagedPartial", onePageOfProducts);

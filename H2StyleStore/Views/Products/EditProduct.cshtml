@@ -89,7 +89,7 @@
             </div>
         </div>
 
-        <div class="form-group">      
+        <div class="form-group">
             <div class="col-md-10">
                 <input type="file" name="files" class="form-control" multiple="multiple" />
             </div>
@@ -98,43 +98,38 @@
 
 
         <div id="specsArea">
-            @{int i = 0;
-            }
-            @{foreach (var spec in Model.specs)
-                {
 
-                    <div class="form-group">
-                        <label class="control-label col-md-2" for="specs">規格</label>
-                        <div class="col-md-10 input-group specs">
-                            <input class="form-control text-box Color" name="" type="text" value="@spec.Color" placeholder="顏色">
-                            <input class="form-control text-box Size" name="" type="text" value="@spec.Size" placeholder="尺寸">
-                            <input class="form-control text-box Stock" name="" type="number" value="@spec.Stock" placeholder="庫存">
-                            @{ if (i > 0)
-                                {
-                                    <button type="button" class="btn btn-default delSpecBtn">刪除</button>
-                                }
-                                else
-                                {
-                                    <button type="button" id="addSpecBtn" class="btn btn-default">新增規格</button>
-                                }
+            <div class="row">
+                <div class="col-md-2">
+                    <label class="control-label" for="specs">規格</label>
+                </div>
+                <div class="col-md-8 text-right"><button type="button" id="addSpecBtn" class=" btn btn-default mb-1">新增規格</button></div>
+            </div>
+                @{int i = 0; }
+                @{foreach (var spec in Model.specs)
+                    {
+                        <div class="form-group spec">
+                            <div class="col-md-10 input-group specs mb-2">
+                                <input class="form-control text-box Color" name="" type="text" value="@spec.Color" placeholder="顏色">
+                                <input class="form-control text-box Size" name="" type="text" value="@spec.Size" placeholder="尺寸">
+                                <input class="form-control text-box Stock" name="" type="number" value="@spec.Stock" placeholder="庫存">
+                                <button type="button" class="btn btn-default delSpecBtn">刪除</button>
+                            </div>
+
+                            @{i++;
                             }
+
                         </div>
-                    </div>
-
-                    i++;
-
-
+                    }
                 }
-            }
+            </div>
 
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input id="submit" type="submit" value="儲存" class="btn btn-default" />
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input id="submit" type="submit" value="儲存" class="btn btn-default" />
+                </div>
             </div>
         </div>
-    </div>
 }
 
 <div>
@@ -145,26 +140,31 @@
     @Scripts.Render("~/bundles/jqueryval")
 
     <script>
+
         $("#addSpecBtn").on("click", function () {
             let template =
-                `<label class="control-label col-md-2" for="specs">規格</label>
-                                   <div class="col-md-10 input-group specs">
-                                   <input class="form-control text-box Color" id="" name="" type="text" value="" placeholder="顏色">
-                                   <input class="form-control text-box Size" id="" name="" type="text" value="" placeholder="尺寸">
-                                   <input class="form-control text-box Stock " id="" name="" type="number" value="" placeholder="庫存">
-                                   <button type="button" class="btn btn-default delSpecBtn">刪除</button>
-                                </div>`;
+                `<div class="col-md-10 input-group specs">
+                          <input class="form-control text-box Color" id="" name="" type="text" value="" placeholder="顏色">
+                          <input class="form-control text-box Size" id="" name="" type="text" value="" placeholder="尺寸">
+                          <input class="form-control text-box Stock " id="" name="" type="number" value="" placeholder="庫存">
+                          <button type="button" class="btn btn-default delSpecBtn">刪除</button>
+                    </div>`;
             const dom = document.createElement("div");
-            dom.setAttribute('class', `form-group`);
+            dom.setAttribute('class', `form-group spec`);
             dom.innerHTML = template;
             $("#specsArea").append(dom);
 
         });
 
         $("#specsArea").on("click", "[type = button]", function () {
-            if ($(this).attr("id") != "addSpecBtn") {
-                $(this).parent().parent().remove();
+            if ($("#specsArea").children('.spec').length <= 1) {
+                alert("至少需要一組規格");
+            } else {
+                if ($(this).attr("id") != "addSpecBtn") {
+                    $(this).parent().parent().remove();
+                }
             }
+            
 
         });
 

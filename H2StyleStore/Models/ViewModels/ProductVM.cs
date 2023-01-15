@@ -25,7 +25,7 @@ namespace H2StyleStore.Models.ViewModels
 		[Display(Name = "創建時間")]
 		public DateTime Create_at { get; set; }
 
-		[Display(Name = "已下架")]
+		[Display(Name = "下架")]
 		public bool Discontinued { get; set; }
 
 		[Display(Name = "類別名稱")]

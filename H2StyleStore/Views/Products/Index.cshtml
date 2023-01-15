@@ -36,6 +36,8 @@
 
 @section Scripts {
     <script>
+
+
         let editAlls = [];
 
         $("#allSave").on("click", function () {
@@ -48,7 +50,7 @@
                 });
 
             });
-            console.log(editAlls);
+
 
             $.ajax({
                     type: "POST",
@@ -63,7 +65,24 @@
 
             editAlls = [];
         });
+        
+        $("#productDatas").on("click","#checkAll", function () {
+            
+            $("input[name='item.Discontinued']").prop("checked", $(this).is(":checked"));
+        });
 
+        
+        $("#productDatas").on("click", ".fa-solid", function () {
+            if ($(this).attr("aria-expanded") == "false") {
+                $(this).attr("class", "fa-solid fa-circle-minus");
+            } else {
+                $(this).attr("class", "fa-solid fa-circle-plus");
+            }
+            
+        });
+       
+        
+   
     </script>
     <script>
         
@@ -83,6 +102,7 @@
                 var filter = {
                     searchStr: $("#searchStr").val(),
                     page: page,
+                    pageSize: $("#pageSize").val(),
                 }
                 // Ajax 呼叫
                 $.ajax({
