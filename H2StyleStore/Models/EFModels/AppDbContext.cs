@@ -228,5 +228,7 @@ namespace H2StyleStore.Models.EFModels
 				.WithRequired(e => e.Video)
 				.WillCascadeOnDelete(false);
 		}
+
+		public System.Data.Entity.DbSet<H2StyleStore.Models.ViewModels.VideoVM> VideoVMs { get; set; }
 	}
 }

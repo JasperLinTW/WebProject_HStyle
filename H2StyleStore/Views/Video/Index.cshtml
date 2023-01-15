@@ -4,19 +4,18 @@
     ViewBag.Title = "Index";
     var categories = ViewBag.Categories as IEnumerable<SelectListItem>;
     var videoTitle = ViewBag.VideoTitle as string;
+    var tagName= ViewBag.TagName as string;
 }
-
-
 
 <div>
     <h2>影片列表<span style="margin-left:30px;margin-bottom:10px;"> @Html.ActionLink("新增影片", "CreateVideo", null, new { @class = "btn btn-primary mb-2" })</span> </h2>
-
 </div>
 
 <form>
     <div class="row">
-        <div class="col-md-5">影片分類:@Html.DropDownList("categoryId", categories, new { @class = "form-control" })</div>
-        <div class="col-md-5">影片標題:<input type="text" name="videoTitle" class="form-control" value="@videoTitle" /></div>
+        <div class="col-md-3">影片分類:@Html.DropDownList("categoryId", categories, new { @class = "form-control" })</div>
+        <div class="col-md-3">標籤:<input type="text" name="tagName" class="form-control" value="@tagName" /></div>
+        <div class="col-md-4">影片標題:<input type="text" name="videoTitle" class="form-control" value="@videoTitle" /></div>
         <div class="col-md-2" style="margin-top:24px;margin-bottom:0px;padding-left:15px">
             <input type="submit" class="btn btn-success" value="搜尋" />
         </div>
@@ -24,11 +23,12 @@
 </form>
 <br />
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
+        <th>
+            影片縮圖
+        </th>
+
         <th>
             @Html.DisplayNameFor(model => model.Title)
         </th>
@@ -47,22 +47,20 @@
         <th>
             @Html.DisplayNameFor(model => model.OffShelffTime)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Image)
-        </th>
-
     </tr>
 
     @foreach (var item in Model)
     {
         <tr>
             <td>
+                <img class="image" src="@item.Image" width="200">
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CategoryName)
             </td>
-
             <td>
                 @("#"+string.Join(" #",item.Tags))
             </td>
@@ -76,13 +74,9 @@
                 @Html.DisplayFor(modelItem => item.OffShelffTime)
             </td>
             <td>
-                <img class="image" src="@item.Image" width="200">
-            </td>
-            <td>
                 @Html.ActionLink("修改", "EditVideo", new { id = item.Id }, new { @class = "btn btn-default" })
             </td>
         </tr>
     }
-
 
 </table>

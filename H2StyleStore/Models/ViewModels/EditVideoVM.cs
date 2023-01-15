@@ -19,7 +19,7 @@ namespace H2StyleStore.Models.ViewModels
 		[Display(Name = "影片說明")]
 		public string Description { get; set; }
 
-		[Display(Name = "檔案上傳")]
+		[Display(Name = "影片路徑")]
 		[Required]
 		public string FilePath { get; set; }
 

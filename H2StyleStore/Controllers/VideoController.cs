@@ -35,11 +35,12 @@ namespace H2StyleStore.Controllers
 		//	return View(data);
 		//}
 
-		public ActionResult Index(int? categoryId, string videoTitle)
+		public ActionResult Index(int? categoryId, string videoTitle,string tagName)
 		{
 			// 將篩選條件放在ViewBag,稍後在 view page取回
 			ViewBag.Categories = _videoRepository.GetVideoCategories(categoryId);
 			ViewBag.VideoTitle = videoTitle;
+			ViewBag.TagName = tagName;
 
 			var data = _videoService.GetVideos().Select(x => x.ToVM());
 
@@ -49,6 +50,9 @@ namespace H2StyleStore.Controllers
 			// 若有篩選 productName
 			if (string.IsNullOrEmpty(videoTitle) == false) data = data.Where(p => p.Title.Contains(videoTitle));
 			// data = data.Where(p => Left(p.Name)=="AB");
+
+			//Tag篩選
+			if (string.IsNullOrEmpty(tagName) == false) data = data.Where(p => p.Tags.Contains(tagName));
 			return View(data);
 		}
 
