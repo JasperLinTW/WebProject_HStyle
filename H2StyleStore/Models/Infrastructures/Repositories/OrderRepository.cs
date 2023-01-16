@@ -80,7 +80,7 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 
 		public IEnumerable<SelectListItem> GetStatus()
 		{
-			var items = _db.Order_Status.Select(x => new SelectListItem
+			var items = _db.Order_Status.Where(x => x.Status_id != 6).Select(x => new SelectListItem
 			{
 				Value = x.Status_id.ToString(),
 				Text = x.Status,
@@ -109,6 +109,29 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			.Prepend(new SelectListItem { Value = string.Empty, Text = "請選擇" });
 
 			return items;
+		}
+
+		public void Cancel(int status_Description, int order_id)
+		{
+			Order order = _db.Orders.Find(order_id);
+
+			var log = new Order_Log
+			{
+				Order_id = order_id,
+				Status = "取消",
+				Status_ChangedTime = DateTime.Now,
+			};
+
+			_db.Order_Log.Add(log);
+
+			order.Status_Description_id= status_Description;
+			if (status_Description < 6)
+			{
+				order.Status_id = 6;
+			}
+
+			_db.SaveChanges();
+
 		}
 	}
 }

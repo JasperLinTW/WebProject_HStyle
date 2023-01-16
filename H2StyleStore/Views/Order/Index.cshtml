@@ -164,7 +164,13 @@
                 <tr class="collapse multi-collapse no-hover" id="multiCollapseExample_@i">
                     <td colspan="16">
                         <div class="card card-body">
-                            <div class="txt-detail donotprint">訂單詳情</div>
+                            <div class="txt-detail donotprint mb-1">
+                                訂單詳情
+                                @if (item.Status_id == 6)
+                                {
+                                    <div style="text-align:right; font-size:20px;" class="mb-2"><span class="badge badge-danger badge-pill">訂單取消原因: @item.Status_Description</span></div>
+                                }
+                            </div>
                             <table class="container-fluid table-hover borderless">
                                 <tr class="no-hover bg-light">
                                     <th>

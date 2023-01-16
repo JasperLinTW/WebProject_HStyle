@@ -15,19 +15,19 @@ using System.Web.Mvc;
 namespace H2StyleStore.Controllers
 {
 	public class OrderController : Controller
-    {
-        private OrderService orderService;
+	{
+		private OrderService orderService;
 
 		public OrderController()
-        {
-            var db = new AppDbContext();
-            IOrderRepository repo = new OrderRepository(db);
-            this.orderService = new OrderService(repo);
-        }
+		{
+			var db = new AppDbContext();
+			IOrderRepository repo = new OrderRepository(db);
+			this.orderService = new OrderService(repo);
+		}
 
-        // GET: Order
-        public ActionResult Index(int? status_id, string value, string sortOrder)
-        {
+		// GET: Order
+		public ActionResult Index(int? status_id, string value, string sortOrder)
+		{
 			ViewBag.Status = orderService.GetStatus(status_id);
 			ViewBag.Value = value;
 			ViewBag.Status_order = orderService.GetStatus();
@@ -60,7 +60,7 @@ namespace H2StyleStore.Controllers
 
 			//可篩選
 			if (status_id.HasValue)
-            {
+			{
 				data = data.Where(s => s.Status_id == status_id.Value);
 			}
 			//可搜尋
@@ -70,10 +70,10 @@ namespace H2StyleStore.Controllers
 			}
 			var list = data.Select(x => x.ToVM()).ToList();
 			return View(list);
-        }
+		}
 
-        public ActionResult Details(int? id)
-        {
+		public ActionResult Details(int? id)
+		{
 			var data = orderService.FindById(id).Select(x => x.ToVM());
 			if (id != null)
 			{
@@ -81,7 +81,7 @@ namespace H2StyleStore.Controllers
 			}
 
 			return View(data);
-        }
+		}
 
 		public ActionResult Update()
 		{
@@ -93,24 +93,24 @@ namespace H2StyleStore.Controllers
 			return View(data.ToArray());
 		}
 
-        [HttpPost]
-        public ActionResult Update(OrderUpdateVM[] orders)
-        {
-            for (int i = 0; i < orders.Length; i++)
-            {
+		[HttpPost]
+		public ActionResult Update(OrderUpdateVM[] orders)
+		{
+			for (int i = 0; i < orders.Length; i++)
+			{
 				var status_id = orderService.StatusTransfer(orders[i].Status);
 				orders[i].Status_id = status_id;
-                orderService.Update(orders[i].ToDTO());
+				orderService.Update(orders[i].ToDTO());
 			}
-            return RedirectToAction("Index");
-        }
+			return RedirectToAction("Index");
+		}
 
 		public ActionResult Edit(int id)
 		{
-			ViewBag.Status = orderService.GetStatus();
+			ViewBag.Status_order = orderService.GetStatus();
 			ViewBag.StatusDescription = orderService.GetStatusDescription();
 			var data = orderService.GetOrderbyId(id).ToVM();
-			
+
 
 			return View(data);
 		}
@@ -120,6 +120,24 @@ namespace H2StyleStore.Controllers
 		{
 			orderService.Update(order.ToDTO());
 			return RedirectToAction("Index");
+		}
+
+		[HttpPost]
+		public string Cancel (int status_Description, int order_id)
+		{
+
+			try
+			{
+				orderService.Cancel(status_Description, order_id);
+			}
+			catch (Exception ex)
+			{
+
+				return "取消訂單失敗，原因:" + ex.Message;
+			}
+			return "取消訂單成功";
+
+
 		}
 
 	}
