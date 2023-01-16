@@ -1,5 +1,6 @@
 ﻿@using X.PagedList;
 @using X.PagedList.Mvc
+@using X.PagedList.Web.Common;
 @using H2StyleStore.Models.ViewModels
 @model X.PagedList.IPagedList<ProductVM>
 
@@ -98,17 +99,36 @@
 
 </table>
 
-@{
-    List<SelectListItem> pageSizeList = new List<SelectListItem>
+<div class="row d-flex">
+
+
+
+    @{
+        List<SelectListItem> pageSizeList = new List<SelectListItem>
 {
         new SelectListItem{ Text = "5", Value = "5"},
         new SelectListItem{ Text = "10", Value = "10"},
         new SelectListItem{ Text = "15", Value = "15"},
     };
-<label>每頁顯示: </label>
-@Html.DropDownList("pageSize", pageSizeList, new { @class = "" })
-<label>筆 </label>
-}
 
-@Html.PagedListPager((IPagedList)Model, page => page.ToString())
+        <div class="col-4">
 
+            <label>每頁顯示: </label>
+            @Html.DropDownList("pageSize", pageSizeList, new { @class = "" })
+            <label>筆 </label>
+
+        </div>
+
+            }
+
+        <div class="col-4 d-flex justify-content-center">
+            @Html.PagedListPager((IPagedList)Model, page =>
+                page.ToString(),
+                new PagedListRenderOptionsBase
+                {
+                    LiElementClasses = new string[] { "page-item" },
+                    PageClasses = new string[] { "page-link" }
+            })
+
+        </div>
+</div>
