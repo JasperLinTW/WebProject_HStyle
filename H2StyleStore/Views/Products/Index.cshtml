@@ -12,7 +12,7 @@
     <div class="col-sm-4 col-md-3 col-lg-3">
 
         <div>
-            <input class="form-control text-box Color" id="searchStr" name="searchStr" type="text" placeholder="請輸入查詢關鍵字">
+            <input class="form-control text-box Color" id="searchStr" name="term" type="text" placeholder="請輸入查詢關鍵字">
         </div>
     </div>
     <div class="col-sm-4 col-md-3 col-lg-3">
@@ -50,8 +50,6 @@
                 });
 
             });
-
-
             $.ajax({
                     type: "POST",
                     url: '@Url.Action("EditAll", "Products")',
@@ -65,27 +63,32 @@
 
             editAlls = [];
         });
-        
+
         $("#productDatas").on("click","#checkAll", function () {
-            
+
             $("input[name='item.Discontinued']").prop("checked", $(this).is(":checked"));
         });
 
-        
+
         $("#productDatas").on("click", ".fa-solid", function () {
             if ($(this).attr("aria-expanded") == "false") {
                 $(this).attr("class", "fa-solid fa-circle-minus");
             } else {
                 $(this).attr("class", "fa-solid fa-circle-plus");
             }
-            
+
         });
-       
-        
-   
+
+        $("#productDatas").on("change","#pageSize", function () {
+            search();
+        });
+
+
+
+
     </script>
     <script>
-        
+
              function search() {
             // 若 hash 沒資料，預設取第 1 頁
             // hash = #，瀏覽器解讀為位置識別符號
@@ -141,6 +144,13 @@
         search();
 
     </script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js" integrity="sha256-6XMVI0zB8cRzfZjqKcD01PBsAy3FlDASrlC8SxCpInY=" crossorigin="anonymous"></script>    <!-- Google Font: Source Sans Pro -->
 
+    <script type="text/javascript">
+        $('#searchStr').autocomplete({
+            source: "/Products/QueryProducts",
+            delay: 0,
+        });
+    </script>
 
 }

@@ -13,18 +13,19 @@ using X.PagedList;
 namespace H2StyleStore.Controllers
 {
 	public class ProductsController : Controller
-    {
-        private ProductService productService;
+	{
+		private ProductService productService;
 
-        public ProductsController()
-        {
+		public ProductsController()
+		{
 			var db = new AppDbContext();
-            IProductRepository repo = new ProductRepository(db);
+			IProductRepository repo = new ProductRepository(db);
 			this.productService = new ProductService(repo);
 		}
 
-        public static string select_user_name;
+		public static string select_user_name;
 		// GET: Products
+		[Authorize(Roles ="test")]
 		public ActionResult Index()
         {
 			
@@ -64,10 +65,17 @@ namespace H2StyleStore.Controllers
 			{
 				return "儲存失敗，原因: "+ ex.Message;
 			}
-			
-			
 
 			return "儲存成功";
+		}
+
+		public JsonResult QueryProducts(string term)
+		{
+			var items = productService.GetProducts();
+			List<string> itemNames = items.Select(x => x.Product_Name).ToList();
+			var filteredItems = itemNames.Where(
+				name => name.StartsWith(term));
+			return Json(filteredItems.DefaultIfEmpty(), JsonRequestBehavior.AllowGet);
 		}
 
 		public ActionResult NewProduct()
