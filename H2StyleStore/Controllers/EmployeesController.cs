@@ -84,7 +84,8 @@ namespace H2StyleStore.Controllers
 				// 記住登入成功的會員
 				var rememberMe = false;
 
-				string returnUrl = ProcessLogin(model.Account, rememberMe, out HttpCookie cookie);
+                //這邊先找出來 
+				string returnUrl = ProcessLogin(model.Account, rememberMe, out HttpCookie cookie); //然後這邊丟進去
 
 				Response.Cookies.Add(cookie);
 
@@ -212,7 +213,10 @@ namespace H2StyleStore.Controllers
 		private string ProcessLogin(string account, bool rememberMe, out HttpCookie cookie)
 		{
 			var member = repository.GetByAccount(account);
-            string roles = "2"; // 在本範例, 沒有用到角色權限,所以存入空白
+			
+			int? Permission_id = member.Permission_id;
+			string roles = Permission_id.ToString(); //丟權限表  
+		    //string roles = "2"; // 在本範例, 沒有用到角色權限,所以存入空白    
 
 			// 建立一張認證票
 			FormsAuthenticationTicket ticket =

@@ -16,7 +16,7 @@ namespace H2StyleStore.Models.DTOs
 
 		public string Title { get; set; }
 
-		public int Permission_id { get; set; }
+		public int? Permission_id { get; set; }
 
 		public string EncryptedPassword { get; set; }
 
