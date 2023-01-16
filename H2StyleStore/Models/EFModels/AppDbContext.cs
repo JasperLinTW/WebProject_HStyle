@@ -14,8 +14,6 @@ namespace H2StyleStore.Models.EFModels
 
 		public virtual DbSet<Address> Addresses { get; set; }
 		public virtual DbSet<Eassy_Follows> Eassy_Follows { get; set; }
-		public virtual DbSet<EComments_Likes> EComments_Likes { get; set; }
-		public virtual DbSet<Elike> Elikes { get; set; }
 		public virtual DbSet<Employee> Employees { get; set; }
 		public virtual DbSet<Essay> Essays { get; set; }
 		public virtual DbSet<Essays_Comments> Essays_Comments { get; set; }
@@ -228,5 +226,7 @@ namespace H2StyleStore.Models.EFModels
 				.WithRequired(e => e.Video)
 				.WillCascadeOnDelete(false);
 		}
-	}
+
+        public System.Data.Entity.DbSet<H2StyleStore.Models.ViewModels.H_Source_DetailVM> H_Source_DetailVM { get; set; }
+    }
 }

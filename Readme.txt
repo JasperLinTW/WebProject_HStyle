@@ -81,3 +81,6 @@
        H_ActivityRepository/AddH_valueInMember
 
 -- 在Member中加入註冊活動的優惠
+
+-- H_Source_Detail加入了 Total_H_SorFar, Remark, Employee 的欄位
+   重新建立EFModel和修改H_Source_DetailVM, H_Source_DetailDto
