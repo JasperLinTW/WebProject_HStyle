@@ -18,7 +18,7 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			{
 				Account = dto.Account,
 				Title = null, 
-				Permission_id = 2,
+				Permission_id = 1,
 				EncryptedPassword = dto.EncryptedPassword, //加密密碼 
 			};
 
