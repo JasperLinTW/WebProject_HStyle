@@ -35,7 +35,7 @@ namespace H2StyleStore.Controllers
 		//	return View(data);
 		//}
 
-		public ActionResult Index(int? categoryId, string videoTitle,string tagName)
+		public ActionResult Index(int? categoryId, string videoTitle, string tagName)
 		{
 			// 將篩選條件放在ViewBag,稍後在 view page取回
 			ViewBag.Categories = _videoRepository.GetVideoCategories(categoryId);
@@ -53,6 +53,7 @@ namespace H2StyleStore.Controllers
 
 			//Tag篩選
 			if (string.IsNullOrEmpty(tagName) == false) data = data.Where(p => p.Tags.Contains(tagName));
+
 			return View(data);
 		}
 
@@ -133,7 +134,7 @@ namespace H2StyleStore.Controllers
 			var helper = new UploadFileHelper();
 			if (videoFile == null || string.IsNullOrEmpty(videoFile.FileName) || videoFile.ContentLength == 0)
 			{
-				model.Image = model.Image;
+				model.FilePath = model.FilePath;
 			}
 			else
 			{
@@ -150,7 +151,7 @@ namespace H2StyleStore.Controllers
 
 			if (imageFile == null || string.IsNullOrEmpty(imageFile.FileName) || imageFile.ContentLength == 0)
 			{
-				model.FilePath = model.FilePath;
+				model.Image = model.Image;
 			}
 			else
 			{
