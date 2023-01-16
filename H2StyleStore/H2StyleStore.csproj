@@ -184,8 +184,6 @@
     <Compile Include="Models\EFModels\Address.cs" />
     <Compile Include="Models\EFModels\AppDbContext.cs" />
     <Compile Include="Models\EFModels\Eassy_Follows.cs" />
-    <Compile Include="Models\EFModels\EComments_Likes.cs" />
-    <Compile Include="Models\EFModels\Elike.cs" />
     <Compile Include="Models\EFModels\Employee.cs" />
     <Compile Include="Models\EFModels\Essay.cs" />
     <Compile Include="Models\EFModels\Essays_Comments.cs" />

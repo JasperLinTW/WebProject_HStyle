@@ -37,6 +37,7 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			activity.Activity_Name = dto.Activity_Name;
 			activity.Activity_Describe = dto.Activity_Describe;
 			activity.H_Activity_Id = dto.H_Activity_Id;
+			activity.H_Value = dto.H_Value;
 
 			_db.SaveChanges();
 		}

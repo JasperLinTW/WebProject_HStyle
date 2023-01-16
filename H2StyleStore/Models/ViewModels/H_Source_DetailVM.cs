@@ -30,7 +30,14 @@ namespace H2StyleStore.Models.ViewModels
 		public DateTime Event_Time { get; set; }
 
 		[DisplayName("H幣總額")]
-		public int? Total_H { get; set; }
+		public int? Total_H_SoFar { get; set; }
+
+		[DisplayName("備註")]
+		[StringLength(500)]
+		public string Remark { get; set; }
+
+		[DisplayName("員工")]
+		public int? Employee_Id { get; set; }
 
 	}
 	public static class HSourceDetailExts
@@ -46,7 +53,9 @@ namespace H2StyleStore.Models.ViewModels
 				H_Activity_Name = source.H_Activity_Name,
 				Difference_H = source.Difference_H,
 				Event_Time = source.Event_Time,
-				Total_H = source.Total_H
+				Total_H_SoFar = source.Total_H_SoFar,
+				Remark = source.Remark,
+				Employee_Id = source.Employee_Id,
 			};
 		}
 	}

@@ -19,6 +19,15 @@ namespace H2StyleStore.Models.EFModels
 
         public DateTime Event_Time { get; set; }
 
+        public int? Total_H_SoFar { get; set; }
+
+        [StringLength(500)]
+        public string Remark { get; set; }
+
+        public int? Employee_Id { get; set; }
+
+        public virtual Employee Employee { get; set; }
+
         public virtual H_Activities H_Activities { get; set; }
 
         public virtual Member Member { get; set; }

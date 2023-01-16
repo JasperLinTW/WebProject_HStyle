@@ -2,6 +2,7 @@
 using H2StyleStore.Models.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -25,7 +26,12 @@ namespace H2StyleStore.Models.DTOs
 
 		public DateTime Event_Time { get; set; }
 
-		public int? Total_H { get; set; }
+		public int? Total_H_SoFar { get; set; }
+
+		[StringLength(500)]
+		public string Remark { get; set; }
+
+		public int? Employee_Id { get; set; }
 	}
 
 	public static class HSourceDetailExts
@@ -41,7 +47,9 @@ namespace H2StyleStore.Models.DTOs
 				H_Activity_Name = source.H_Activities.Activity_Name,
 				Difference_H = source.Difference_H,
 				Event_Time = source.Event_Time,
-				Total_H = source.Member.Total_H
+				Total_H_SoFar = source.Member.Total_H,
+				Remark = source.Remark,
+				Employee_Id = source.Employee_Id,
 			};
 		}
 	}

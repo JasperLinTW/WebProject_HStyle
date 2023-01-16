@@ -34,7 +34,13 @@
             @Html.DisplayNameFor(model => model.Event_Time)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Total_H)
+            @Html.DisplayNameFor(model => model.Total_H_SoFar)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Remark)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Employee_Id)
         </th>
         <th></th>
     </tr>
@@ -55,7 +61,13 @@
                 @Html.DisplayFor(modelItem => item.Event_Time)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Total_H)
+                @Html.DisplayFor(modelItem => item.Total_H_SoFar)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Remark)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Employee_Id)
             </td>
         </tr>
     }
