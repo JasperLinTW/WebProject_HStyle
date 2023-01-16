@@ -25,7 +25,7 @@ namespace H2StyleStore.Models.DTOs
 
 		[Required]
 		[StringLength(1000)]
-		public string EContent { get; set; }		
+		public string EContent { get; set; }
 
 		public int CategoryId { get; set; }
 
@@ -33,11 +33,11 @@ namespace H2StyleStore.Models.DTOs
 
 		public DateTime UpLoad { get; set; }
 
-		public DateTime Removed { get; set; } 
+		public DateTime Removed { get; set; }
 
 		public IEnumerable<string> images { get; set; }
 
-		public IEnumerable<string> Tags { get;  set; }
+		public IEnumerable<string> Tags { get; set; }
 	}
 
 
@@ -56,8 +56,8 @@ namespace H2StyleStore.Models.DTOs
 			CategoryName = source.VideoCategory.CategoryName,
 			UpLoad = source.UpLoad,
 			Removed = source.Removed,
-			images = source.Images.Select(i=>i.ToPDto()),
-			Tags = source.Tags.Select(i=>i.ToPDto())
+			images = source.Images.Select(i => i.ToPDto()),
+			Tags = source.Tags.Select(i => i.ToPDto())
 		};
 
 		public static Essay ToDb(this EssayDTO source)
@@ -72,6 +72,6 @@ namespace H2StyleStore.Models.DTOs
 			Removed = source.Removed,
 		};
 
-		
+
 	}
 }

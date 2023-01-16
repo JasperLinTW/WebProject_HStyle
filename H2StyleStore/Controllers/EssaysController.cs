@@ -24,19 +24,27 @@ namespace H2StyleStore.Controllers
 	{
 
 		private EssayService essayService;
+		private readonly IEssayRepository _essayRepository;
+		private AppDbContext _db = new AppDbContext();
 
 		public EssaysController()
 		{
 			var db = new AppDbContext();
+			_essayRepository = new EssayRepository(db);
 			IEssayRepository repo = new EssayRepository(db);
 			this.essayService = new EssayService(repo);
 		}
 		// GET: Products
-		public ActionResult Index()
+		public ActionResult Index(int? categoryId, string eTitle)
 		{
+			ViewBag.Categories = _essayRepository.GetCategoriesSelect(categoryId);
+			ViewBag.EssayTitle = eTitle;
+			var data = essayService.GetEssays().Select(x => x.ToVM());
+			// 若有篩選categoryid
+			if (categoryId.HasValue) data = data.Where(p => p.CategoryId == categoryId.Value);
 
-			var data = essayService.GetEssays()
-				.Select(x => x.ToVM());
+			// 若有篩選 productName
+			if (string.IsNullOrEmpty(eTitle) == false) data = data.Where(p => p.ETitle.Contains(eTitle));
 
 			return View(data);
 		}
@@ -60,7 +68,7 @@ namespace H2StyleStore.Controllers
 		[HttpPost]
 		public ActionResult NewEssay(CreateEssayVM model, HttpPostedFileBase[] files)
 		{
-			
+
 			ViewBag.VideoCategoriesItems = new EssayRepository(new AppDbContext()).GetCategories(null); ;
 
 			//fill Remove, Upload properties value
@@ -70,22 +78,26 @@ namespace H2StyleStore.Controllers
 			bool itDateTime = DateTime.TryParse(Request.Form["Removed"], out DateTime dt2);
 			model.Removed = dt2;
 
-			if (files[0] != null)
+			if (files[1] != null)
 			{
-			
+
 				string path = Server.MapPath("/images/Essaysimage");
 				var helper = new UploadFileHelper();
 
-				if(model.Images == null) { model.Images = new List<string> (); }
+				if (model.Images == null) { model.Images = new List<string>(); }
 				foreach (var file in files)
 				{
+					if (file == null)
+					{
+						continue;
+					}
 					try
 					{
 						string result = helper.SaveAs(path, file);
 						//string OriginalFileName = System.IO.Path.GetFileName(file.FileName);
 						string FileName = result;
 
-					  model.Images.Add($"../../Images/Essaysimage/{FileName}");
+						model.Images.Add($"../../Images/Essaysimage/{FileName}");
 					}
 					catch (Exception ex)
 					{
@@ -94,7 +106,7 @@ namespace H2StyleStore.Controllers
 					}
 				}
 			}
-			
+
 
 			try
 			{
@@ -106,7 +118,7 @@ namespace H2StyleStore.Controllers
 				ModelState.AddModelError(string.Empty, ex.Message);
 			}
 
-			
+
 			if (ModelState.IsValid)
 			{
 				return RedirectToAction("Index");
@@ -131,7 +143,7 @@ namespace H2StyleStore.Controllers
 		{
 			ViewBag.VideoCategories = new EssayRepository(new AppDbContext()).GetCategories(null);
 
-			if (files[0] != null)
+			if (files[1] != null)
 			{
 
 				string path = Server.MapPath("/images/Essaysimage");
@@ -140,6 +152,10 @@ namespace H2StyleStore.Controllers
 				if (model.Images == null) { model.Images = new List<string>(); }
 				foreach (var file in files)
 				{
+					if (file == null)
+					{
+						continue;
+					}
 					try
 					{
 						string result = helper.SaveAs(path, file);
@@ -155,7 +171,7 @@ namespace H2StyleStore.Controllers
 					}
 				}
 			}
-	
+
 
 			try
 			{
@@ -176,6 +192,15 @@ namespace H2StyleStore.Controllers
 
 			return View(model);
 		}
+
+		public ActionResult Delete(int id)
+		{
+
+			essayService.Delete(id);
+
+			return RedirectToAction("Index");
+		}
+
 
 	}
 }

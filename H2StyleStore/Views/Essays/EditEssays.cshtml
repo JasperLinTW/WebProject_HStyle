@@ -1,11 +1,20 @@
 ﻿@model H2StyleStore.Models.ViewModels.CreateEssayVM
+@section Styles{
+    <!-- summernote -->
+    <link href="@Url.Content("https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css")" rel="stylesheet" type="text/css">
+
+    <!-- CodeMirror -->
+    <link rel="stylesheet" href="../../Scripts/plugins/codemirror/codemirror.css">
+    <link rel="stylesheet" href="../../Scripts/plugins/codemirror/theme/monokai.css">
+}
+
 
 @{
-    ViewBag.Title = "EditEssays";
+    ViewBag.Title = "NewEssay";
     var VideoCategories = ViewBag.VideoCategoriesItems as IEnumerable<SelectListItem>;
 }
 
-<h2>EditEssays</h2>
+<h2>修改文章詳細内容</h2>
 <hr />
 
 @using (Html.BeginForm("EditEssays", "Essays", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -41,13 +50,22 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.EContent, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.EContent, 8, 100, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.EContent, "", new { @class = "text-danger" })
-            </div>
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.EContent, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.EContent, 8, 100, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.EContent, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+        <div class="card-body" name="EContent">
+            <textarea id="summernote" style="display: none;">
+                
+            </textarea>
+            <input id="contentArea" name="EContent" hidden />
+            <input id="dbContent" name="dbContent" value=@Model.EContent hidden />
         </div>
+
 
         <div class="form-group">
             @Html.LabelFor(model => model.CategoryId, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -121,7 +139,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input id="submit" type="submit" value="Save" class="btn btn-default" />
             </div>
         </div>
     </div>
@@ -135,49 +153,32 @@
     @Scripts.Render("~/bundles/jqueryval")
 
     <script>
-        $("#addSpecBtn").on("click", function () {
-            let template =
-                `<label class="control-label col-md-2" for="specs">規格</label>
-                               <div class="col-md-10 input-group specs">
-                               <input class="form-control text-box Color" id="" name="" type="text" value="" placeholder="顏色">
-                               <input class="form-control text-box Size" id="" name="" type="text" value="" placeholder="尺寸">
-                               <input class="form-control text-box Stock " id="" name="" type="number" value="" placeholder="庫存">
-                               <button type="button" class="btn btn-default delSpecBtn">刪除</button>
-                            </div>`;
-            const dom = document.createElement("div");
-            dom.setAttribute('class', `form-group`);
-            dom.innerHTML = template;
-            $("#specsArea").append(dom);
-
-        });
-
-        $("#specsArea").on("click", "[type = button]", function () {
-            if ($(this).attr("id") != "addSpecBtn") {
-                $(this).parent().parent().remove();
-            }
-
-        });
-
-        $("#submit").on("click", function () {
-            var i = 0;
-            $(".Color").each(function () {
-                $(this).attr('name', `Specs[${i}].Color`);
-                i++;
-            });
-            var j = 0;
-            $(".Size").each(function () {
-                $(this).attr('name', `Specs[${j}].Size`);
-                j++;
-            });
-            var k = 0;
-            $(".Stock").each(function () {
-                $(this).attr('name', `Specs[${k}].Stock`);
-                k++;
-            });
-
-        });
-
         $("#imgs").on("click", "[type = button]", function () {
             $(this).parent().remove();
         });</script>
+
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <script src="~/Scripts/plugins/summernote/summernote-bs4.min.js"></script>
+    <!-- CodeMirror -->
+    <script src="../../Scripts/plugins/codemirror/codemirror.js"></script>
+    <script src="../../Scripts/plugins/codemirror/mode/css/css.js"></script>
+    <script src="../../Scripts/plugins/codemirror/mode/xml/xml.js"></script>
+    <script src="../../Scripts/plugins/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+    <script>
+        $(function () {
+            // Summernote
+            $('#summernote').summernote()
+
+        })
+        $("#submit").on("click", function () {
+            $("#contentArea").attr("value", encodeURI(($(".note-editable").html())));
+
+        });
+        $(document).ready(function () {
+            $(".note-editable").html($("#dbContent").val());
+        });
+
+    </script>
+
 }
+

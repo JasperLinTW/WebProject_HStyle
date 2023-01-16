@@ -28,7 +28,7 @@ namespace H2StyleStore.Models.ViewModels
 		[Required]
 		[StringLength(50)]
 		[Display(Name = "内文")] // 修改Html加入...
-		public string EContent { get; set; }		
+		public string EContent { get; set; }
 
 		[Display(Name = "類別名稱")]
 		public string CategoryName { get; set; }
@@ -44,6 +44,7 @@ namespace H2StyleStore.Models.ViewModels
 
 		[Display(Name = "標籤")]
 		public IEnumerable<string> Tags { get; set; }
+		public int CategoryId { get; set; }
 
 
 	}
@@ -58,6 +59,7 @@ namespace H2StyleStore.Models.ViewModels
 				ETitle = source.ETitle,
 				EContent = source.EContent,
 				CategoryName = source.CategoryName,
+				CategoryId = source.CategoryId,
 				UpLoad = source.UpLoad,
 				Removed = source.Removed,
 				Images = source.images,
@@ -72,6 +74,7 @@ namespace H2StyleStore.Models.ViewModels
 				ETitle = source.ETitle,
 				EContent = source.EContent,
 				CategoryName = source.CategoryName,
+				CategoryId = source.CategoryId,
 				UpLoad = source.UpLoad,
 				Removed = source.Removed,
 			};
