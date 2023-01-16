@@ -5,6 +5,7 @@ using H2StyleStore.Models.Services;
 using H2StyleStore.Models.Services.Interfaces;
 using H2StyleStore.Models.ViewModels;
 using Microsoft.Win32;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,11 +27,12 @@ namespace H2StyleStore.Controllers
 		}
 
 		// GET: Order
-		public ActionResult Index(int? status_id, string value, string sortOrder)
+		public ActionResult Index(int? status_id, string searchString, string sortOrder, string currentFilter, int? page)
 		{
 			ViewBag.Status = orderService.GetStatus(status_id);
-			ViewBag.Value = value;
+			ViewBag.Value = searchString;
 			ViewBag.Status_order = orderService.GetStatus();
+			ViewBag.CurrentSort = sortOrder;
 			ViewBag.CreatetimeSortParm = sortOrder == "Date" ? "date_desc" : "Date";
 			ViewBag.TotalSortParm = sortOrder == "total" ? "total_desc" : "total";
 
@@ -56,7 +58,17 @@ namespace H2StyleStore.Controllers
 					data = data.OrderBy(o => o.Order_id);
 					break;
 			}
+			//分頁
+			if (searchString != null)
+			{
+				page = 1;
+			}
+			else
+			{
+				searchString = currentFilter;
+			}
 
+			ViewBag.CurrentFilter = searchString;
 
 			//可篩選
 			if (status_id.HasValue)
@@ -64,12 +76,16 @@ namespace H2StyleStore.Controllers
 				data = data.Where(s => s.Status_id == status_id.Value);
 			}
 			//可搜尋
-			if (string.IsNullOrEmpty(value) == false)
+			if (string.IsNullOrEmpty(searchString) == false)
 			{
-				data = data.Where(n => n.MemberName.Contains(value) || n.Order_id.ToString().Contains(value));
+				data = data.Where(n => n.MemberName.Contains(searchString) || n.Order_id.ToString().Contains(searchString));
 			}
-			var list = data.Select(x => x.ToVM()).ToList();
-			return View(list);
+			var list = data.Select(x => x.ToVM());
+
+			int pageSize = 3;
+			int pageNumber = (page ?? 1);
+
+			return View(list.ToPagedList(pageNumber, pageSize));
 		}
 
 		public ActionResult Details(int? id)
