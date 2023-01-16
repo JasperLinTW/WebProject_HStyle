@@ -31,9 +31,20 @@ namespace H2StyleStore.Controllers
 		[Authorize]
 		public ActionResult Index()
         {
-            var employees = db.Employees.Include(e => e.PermissionsE);
-            return View(employees.ToList());
-        }
+            
+            var roles = FormsAuthentication.Decrypt(System.Web.HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName].Value).UserData;  //roles
+
+            if (int.Parse(roles) > 2)
+            {
+				var employees = db.Employees.Include(e => e.PermissionsE);
+				return View(employees.ToList());
+			}
+            return RedirectToAction("Index","home");
+
+			
+		}
+
+
 
 		// GET: Members/Register
 		public ActionResult Register_Employees()
@@ -216,7 +227,7 @@ namespace H2StyleStore.Controllers
 			
 			int? Permission_id = member.Permission_id;
 			string roles = Permission_id.ToString(); //丟權限表  
-		    //string roles = "2"; // 在本範例, 沒有用到角色權限,所以存入空白    
+		    //string roles = String.Empty; // 在本範例, 沒有用到角色權限,所以存入空白    
 
 			// 建立一張認證票
 			FormsAuthenticationTicket ticket =
