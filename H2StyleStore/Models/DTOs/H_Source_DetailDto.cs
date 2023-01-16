@@ -25,7 +25,9 @@ namespace H2StyleStore.Models.DTOs
 
 		public DateTime Event_Time { get; set; }
 
+		public int? Total_H { get; set; }
 	}
+
 	public static class HSourceDetailExts
 	{
 		public static H_Source_DetailDto ToDto(this H_Source_Details source)
@@ -38,7 +40,8 @@ namespace H2StyleStore.Models.DTOs
 				Activity_Id = source.Activity_Id,
 				H_Activity_Name = source.H_Activities.Activity_Name,
 				Difference_H = source.Difference_H,
-				Event_Time = source.Event_Time
+				Event_Time = source.Event_Time,
+				Total_H = source.Member.Total_H
 			};
 		}
 	}

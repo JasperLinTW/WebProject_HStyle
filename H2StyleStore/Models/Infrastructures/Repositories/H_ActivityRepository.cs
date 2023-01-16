@@ -3,6 +3,7 @@ using H2StyleStore.Models.EFModels;
 using H2StyleStore.Models.Services.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.EnterpriseServices;
 using System.Linq;
 using System.Web;
 
@@ -68,5 +69,42 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			_db.SaveChanges();
 		}
 
+		public H_CheckInDto GetCheckInById(int id, int activityId_checkIn)
+		{
+			H_CheckInDto checkIn = _db.H_CheckIns.SingleOrDefault(c => c.Member_Id == id).ToDto();
+
+			// 若沒有此會員的打卡紀錄，就新增一筆次數為0的打卡紀錄
+			if (checkIn == null)
+			{
+				H_CheckIns data = new H_CheckIns
+				{
+					Member_Id = id,
+					Activity_Id = activityId_checkIn,
+					CheckIn_Times = 0,
+					Last_Time = DateTime.Now,
+				};
+				_db.H_CheckIns.Add(data);
+				_db.SaveChanges();
+
+				return data.ToDto();
+			}
+
+			return checkIn;
+		}
+
+		public void EditCheckIn(int id, int checkInTimes)
+		{
+			// 找出原先紀錄
+			H_CheckIns oldData = _db.H_CheckIns.SingleOrDefault(c => c.Member_Id == id);
+
+			// 新增最新一筆紀錄
+			oldData = new H_CheckIns
+			{
+				CheckIn_Times = checkInTimes,
+				Last_Time = DateTime.Now,
+			};
+
+			_db.SaveChanges();
+		}
 	}
 }

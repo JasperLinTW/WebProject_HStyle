@@ -21,5 +21,19 @@ namespace H2StyleStore.Models.Services.Interfaces
 		H_ActivityDto FindActivity(int? id);
 
 		void DeleteActivity(int id);
+
+		/// <summary>
+		/// 找出會員的打卡紀錄
+		/// </summary>
+		/// <param name="id"></param>
+		/// <param name="activityId_checkIn"></param>
+		/// <returns></returns>
+		H_CheckInDto GetCheckInById(int id, int activityId_checkIn);
+
+		/// <summary>
+		/// 修改打卡紀錄
+		/// </summary>
+		/// <param name="model_CheckIn"></param>
+		void EditCheckIn(int id, int checkInTimes);
 	}
 }

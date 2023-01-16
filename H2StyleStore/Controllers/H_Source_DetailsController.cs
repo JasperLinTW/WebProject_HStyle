@@ -17,13 +17,17 @@ namespace H2StyleStore.Controllers
 	public class H_Source_DetailsController : Controller
 	{
 		private H_Source_DetailService _detailService;
+		private H_ActivityService _activityService;
 		private IH_Source_DetailRepository _repository;
+		private IH_ActivityRepository _activityRepository;
 
 		public H_Source_DetailsController()
 		{
 			var db = new AppDbContext();
 			_repository = new H_Source_DetailRepository(db);
+			_activityRepository = new H_ActivityRepository(db);
 			this._detailService = new H_Source_DetailService(_repository);
+			_activityService = new H_ActivityService(_activityRepository);
 		}
 
 		// GET: H_Source_Details
@@ -34,6 +38,10 @@ namespace H2StyleStore.Controllers
 			ViewBag.MemberName = memberName;
 
 			var data = _detailService.GetSource().Select(x => x.ToVM());
+			foreach (var item in data)
+			{
+				_activityService.TotalHcoin(item.Member_Id);
+			}
 
 
 			// 若有篩選 activityId
@@ -48,20 +56,20 @@ namespace H2StyleStore.Controllers
 			return View(data);
 		}
 
-		
+
 
 		public ActionResult CheckIn()
 		{
 			var data = _detailService.GetCheckIn().Select(x => x.ToVM());
 			return View(data);
-		}	
+		}
 
 		public ActionResult DeleteDetail(int? id)
 		{
 			if (id == null) return View("Index");
 
 			H_Source_DetailVM hDetail = _repository.FindDetail(id).ToVM();
-			
+
 			if (hDetail == null) return HttpNotFound();
 
 			return View(hDetail);

@@ -90,7 +90,7 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 				{ Value = a.H_Activity_Id.ToString(), Text = a.Activity_Name, Selected = (activityId.HasValue && a.H_Activity_Id == activityId.Value) })
 				.ToList()
 				.Prepend(new SelectListItem { Value = string.Empty, Text = "請選擇" });
-			
+
 			return items;
 		}
 
@@ -99,11 +99,14 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 		/// </summary>
 		/// <param name="id"></param>
 		/// <param name="total"></param>
-		//public void AddH_valueInMember(int id, int total)
-		//{
-		//	var item = _db.Members
-		//		.FirstOrDefault(m => m.Id == id);
+		public void AddH_valueInMember(int id, int total)
+		{
+			var item = _db.Members
+				.FirstOrDefault(m => m.Id == id);
 
-		//}
+			item.Total_H = total;
+
+			_db.SaveChanges();
+		}
 	}
 }

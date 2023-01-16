@@ -16,6 +16,7 @@ namespace H2StyleStore.Models.ViewModels
 
 		[DisplayName("會員")]
 		public string Member_Name { get; set; }
+		public int Member_Id { get; set; }
 
 		public int Activity_Id { get; set; }
 
@@ -26,7 +27,10 @@ namespace H2StyleStore.Models.ViewModels
 		public int Difference_H { get; set; }
 
 		[DisplayName("取得時間")]
-		public DateTime Event_Time { get; set; }		
+		public DateTime Event_Time { get; set; }
+
+		[DisplayName("H幣總額")]
+		public int? Total_H { get; set; }
 
 	}
 	public static class HSourceDetailExts
@@ -37,12 +41,12 @@ namespace H2StyleStore.Models.ViewModels
 			{
 				Source_H_Id = source.Source_H_Id,
 				Member_Name = source.Member_Name,
-				//Member_Id = source.Member_Id,
+				Member_Id = source.Member_Id,
 				Activity_Id = source.Activity_Id,
 				H_Activity_Name = source.H_Activity_Name,
 				Difference_H = source.Difference_H,
 				Event_Time = source.Event_Time,
-
+				Total_H = source.Total_H
 			};
 		}
 	}

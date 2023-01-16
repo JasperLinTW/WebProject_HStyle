@@ -4,9 +4,22 @@
     ViewBag.Title = "DeleteDetail";
 }
 
+<style>
+    dt {
+        font-size: 20px;
+        margin-left: 20px;
+    }
+
+    dd {
+        font-size: 20px;
+        margin-left: 40px;
+    }
+</style>
+
+
 <h2>刪除會員活動紀錄</h2>
 
-<h3>你確定要刪除會員活動紀錄嗎?</h3>
+<h4>你確定要刪除<span style="text-decoration:auto; font-weight:900;">會員活動紀錄</span>嗎?</h4>
 <div>
     <dl class="dl-horizontal">
         <dt>
@@ -51,11 +64,12 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
+            <input type="submit" value="Delete" class="btn btn-default" style="margin-right:30px;" /> |
             @Html.ActionLink("Back to List", "HDetail")
         </div>
     }

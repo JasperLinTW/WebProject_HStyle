@@ -61,14 +61,14 @@ namespace H2StyleStore.Models.Services.Interfaces
 		/// </summary>
 		/// <param name="activityId"></param>
 		/// <returns></returns>
-		IEnumerable<SelectListItem> GetActivities(int? activityId);		
+		IEnumerable<SelectListItem> GetActivities(int? activityId);
 
 		/// <summary>
 		/// 傳入所有 H_Value
 		/// </summary>
 		/// <param name="id">會員Id</param>
 		/// <param name="total">總H_Value</param>
-		//void AddH_valueInMember(int id, int total);
+		void AddH_valueInMember(int id, int total);
 
 	}
 }

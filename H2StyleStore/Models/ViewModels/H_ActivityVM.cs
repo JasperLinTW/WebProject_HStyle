@@ -23,7 +23,7 @@ namespace H2StyleStore.Models.ViewModels
 		[DisplayName("活動描述")]
 		public string Activity_Describe { get; set; }
 
-		[DisplayName("多少H幣")]
+		[DisplayName("H幣值")]
 		public int H_Value { get; set; }
 	}
 

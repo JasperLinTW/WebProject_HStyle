@@ -13,13 +13,13 @@
         <div class="col-md-5">活動分類:@Html.DropDownList("activityId", activity, new { @class = "form-control" })</div>
         <div class="col-md-5">會員名稱:<input type="text" name="memberName" class="form-control" value="@memberName"></div>
         <div class="col-md-2" style="margin-top: 24px; margin-bottom: 0px; padding-left: 15px;">
-        <input type="submit" class="btn btn-success" value="Search" />
+            <input type="submit" class="btn btn-success" value="Search" />
         </div>
     </div>
 </form>
 
 <br />
-<table class="table table-hover">
+<table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Member_Name)
@@ -32,6 +32,9 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Event_Time)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Total_H)
         </th>
         <th></th>
     </tr>
@@ -52,12 +55,12 @@
                 @Html.DisplayFor(modelItem => item.Event_Time)
             </td>
             <td>
-                @Html.ActionLink("刪除", "DeleteDetail", new { id = item.Source_H_Id }, new { @class = "btn btn-default" })
+                @Html.DisplayFor(modelItem => item.Total_H)
             </td>
         </tr>
     }
 
 </table>
 
+<hr />
 @Html.ActionLink("打卡活動", "CheckIn")
-

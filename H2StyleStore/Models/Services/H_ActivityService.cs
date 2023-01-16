@@ -70,16 +70,23 @@ namespace H2StyleStore.Models.Services
 				Event_Time = DateTime.Now,
 			};
 			_sourceDetailRepository.CreateHDetail(model);
+
+			// 修改H幣總額
+			TotalHcoin(id);
 		}
 
 		/// <summary>
 		/// 購物fullPrice(滿額)送H幣
+		/// 花費滿多少，就送H幣，訂單結案且已送貨後30天發放，若有人退訂就手動刪除紀錄
 		/// </summary>
 		/// <param name="id">會員Id</param>
 		/// <param name="price">訂單總金額</param>
 		public string HcoinOrderPrice(int id, int price)
 		{
+			// todo 需要修改規則，改為排程
+			// 花費滿額
 			int activityId_fullPrice = 4;
+			// 得到的H幣
 			int activityId_Hcoin = 5;
 			int fullPrice = _repository.FindActivity(activityId_fullPrice).H_Value;
 			int hCoin = _repository.FindActivity(activityId_Hcoin).H_Value;
@@ -95,27 +102,54 @@ namespace H2StyleStore.Models.Services
 			};
 			_sourceDetailRepository.CreateHDetail(model);
 
+			// 修改H幣總額
+			TotalHcoin(id);
+
 			return "購物滿額送H幣: " + hCoin.ToString();
 		}
 
 		/// <summary>
-		/// 當月生日送H幣
-		/// </summary>		
-		public string HcoinBirthMonth()
+		/// 打卡滿七天就送H幣，不必連續
+		/// </summary>
+		/// <param name="id">會員Id</param>
+		/// <returns></returns>
+		public string HcoinCheckIn(int id)
 		{
-			// todo finish it
+			// 活動Id和項目
+			int activityId_checkIn = 3;
+			var activity = _repository.FindActivity(activityId_checkIn);
 
-			int activityId_Birthday = 2;
+			// 找出member打卡紀錄
+			var memberCheckIn = _repository.GetCheckInById(id, activityId_checkIn);
 
-			DateTime nowDay = DateTime.Today;
+			// 打卡次數加一
+			int checkInTimes = memberCheckIn.CheckIn_Times + 1;
 
-			// 當月1號發放 Hcoin
-			if (nowDay.Day != 1) return null;
+			// 若打卡次數為七，則增加活動紀錄(Detail)，並將次數改為0
+			if (checkInTimes < 0 || checkInTimes > 7)
+			{
+				return "打卡紀錄有錯誤";
+			}
+			else if (checkInTimes == 7)
+			{
+				H_Source_DetailDto model_Detail = new H_Source_DetailDto
+				{
+					Member_Id = id,
+					Activity_Id = activityId_checkIn,
+					Difference_H = activity.H_Value,
+					Event_Time = DateTime.Now,
+				};
+				_sourceDetailRepository.CreateHDetail(model_Detail);
 
-			var inBirth = _sourceDetailRepository.MemberInBirth(nowDay);
+				checkInTimes = 0;
+			}
 
-			return null;
+			// 修改打卡紀錄
+			_repository.EditCheckIn(id, checkInTimes);
+			// 修改H幣總額
+			TotalHcoin(id);
 
+			return "打卡成功";
 		}
 
 		/// <summary>
@@ -124,16 +158,18 @@ namespace H2StyleStore.Models.Services
 		/// <param name="id"></param>
 		public void TotalHcoin(int id)
 		{
-			// todo 要傳入Member資料表
+			// 找出會員所有活動的紀錄
 			var detail = _sourceDetailRepository.GetTotalDetail(id);
 
+			// 計算H幣總額
 			int total = 0;
 			foreach (var item in detail)
 			{
 				total += item.Difference_H;
 			}
 
-			// _sourceDetailRepository.AddH_valueInMember(id, total);
+			// 修改Member的Total_H
+			_sourceDetailRepository.AddH_valueInMember(id, total);
 		}
 
 	}

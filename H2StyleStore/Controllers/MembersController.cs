@@ -23,10 +23,16 @@ namespace H2StyleStore.Controllers
         private IMemberRepository repository;
         private MemberService service;
 
+        private H_ActivityService _activityService;
+        private IH_ActivityRepository _repo;
+
         public MembersController()   //不知道幹嘛用
         {
             repository = new MemberRepository();
             service = new MemberService(repository);
+
+            _repo = new H_ActivityRepository(db);
+            _activityService = new H_ActivityService(_repo);
         }
 
 
@@ -58,6 +64,9 @@ namespace H2StyleStore.Controllers
 
             if (response.IsSuccess)
             {
+                // 註冊活動送H幣
+                _activityService.HcoinRegister(model.Id);
+
                 // 建檔成功 redirect to confirm page
                 return View("RegisterConfirm");                   //註冊成功就跳到這邊
             }
