@@ -212,7 +212,7 @@ namespace H2StyleStore.Controllers
 		private string ProcessLogin(string account, bool rememberMe, out HttpCookie cookie)
 		{
 			var member = repository.GetByAccount(account);
-			string roles = String.Empty; // 在本範例, 沒有用到角色權限,所以存入空白
+            string roles = "2"; // 在本範例, 沒有用到角色權限,所以存入空白
 
 			// 建立一張認證票
 			FormsAuthenticationTicket ticket =

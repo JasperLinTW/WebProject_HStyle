@@ -24,6 +24,7 @@ namespace H2StyleStore.Controllers
 
         public static string select_user_name;
 		// GET: Products
+		[Authorize(Roles = "2")]
 		public ActionResult Index()
         {
 			
