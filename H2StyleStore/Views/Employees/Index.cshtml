@@ -12,13 +12,13 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Account)
+            @*@Html.DisplayNameFor(model => model.Account)*@帳號
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Title)
+            @*@Html.DisplayNameFor(model => model.Title)*@標題
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Employee_id)
+            @*@Html.DisplayNameFor(model => model.Employee_id)*@權限名稱
         </th>
         @*<th>
                 @Html.DisplayNameFor(model => model.EncryptedPassword)
@@ -42,9 +42,9 @@
                     @Html.DisplayFor(modelItem => item.EncryptedPassword)
                 </td>*@
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Employee_id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Employee_id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Employee_id })
+                @Html.ActionLink("編輯", "Edit", new { id = item.Employee_id }) |
+                @*@Html.ActionLink("Details", "Details", new { id = item.Employee_id }) |*@
+                @Html.ActionLink("刪除", "Delete", new { id = item.Employee_id })
             </td>
         </tr>
     }
