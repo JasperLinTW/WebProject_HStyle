@@ -15,7 +15,7 @@ using System.Web.Security;
 
 namespace H2StyleStore.Controllers
 {
-    public class EmployeesController : Controller
+	public class EmployeesController : Controller
     {
         private AppDbContext db = new AppDbContext();
 		private IEmployeeRepository repository;
@@ -28,6 +28,7 @@ namespace H2StyleStore.Controllers
 		}
 
 		// GET: Employees
+		[Authorize]
 		public ActionResult Index()
         {
             var employees = db.Employees.Include(e => e.PermissionsE);

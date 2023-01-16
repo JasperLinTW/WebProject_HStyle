@@ -17,7 +17,7 @@ using H2StyleStore.Models.DTOs;
 
 namespace H2StyleStore.Controllers
 {
-    public class MembersController : Controller
+	public class MembersController : Controller
     {
        private AppDbContext db = new AppDbContext();
         private IMemberRepository repository;

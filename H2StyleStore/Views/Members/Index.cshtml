@@ -71,7 +71,22 @@
             @Html.DisplayFor(modelItem => item.Address)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Gender)
+            @{ 
+                if(item.Gender == true)
+                {
+                        <label>男</label> ;
+                }
+                else
+                {
+                    <label>女</label>;
+                }
+            }
+           
+            @*@Html.DisplayFor(modelItem => item.Gender, "", new { @class = "text-danger" })*@
+
+
+            @*@Html.DisplayFor(modelItem => item.Gender, "{0:true;false}")*@
+            @*@Html.DisplayFor(modelItem => item.Gender)*@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Birthday)
@@ -80,7 +95,7 @@
             @Html.DisplayFor(modelItem => item.Permission_Id)
         </td>*@
         <td>
-            @Html.DisplayFor(modelItem => item.Jointime)
+            @Html.DisplayFor(modelItem => item.Jointime)    
         </td>
         @*<td>
             @Html.DisplayFor(modelItem => item.Mail_verify)
