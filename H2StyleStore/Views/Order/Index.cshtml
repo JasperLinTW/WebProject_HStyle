@@ -44,8 +44,7 @@
                     會員名稱
                 </th>
                 <th>
-                    @Html.ActionLink("總額", "Index", new { sortOrder = ViewBag.CreatetimeSortParm }, new { @class = "text-dark" })
-                    <i class="fa-solid fa-sort ml-2" style="cursor:pointer"></i>
+                    @Html.ActionLink("總額", "Index", new { sortOrder = ViewBag.TotalSortParm }, new { @class = "text-dark fa-solid fa-sort" })
                 </th>
                 <th>
                     付款金額
@@ -75,12 +74,12 @@
                     退貨
                 </th>
                 <th>
-                    @Html.ActionLink("訂單成立日期", "Index", new { sortOrder = ViewBag.CreatetimeSortParm }, new { @class = "text-dark" })
-                    <i class="fa-solid fa-sort ml-2" style="cursor:pointer"></i>
+                    @Html.ActionLink("訂單成立日期", "Index", new { sortOrder = ViewBag.CreatetimeSortParm }, new { @class = "text-dark fa-solid fa-sort" })
                 <th>
                     訂單狀態
                 </th>
                 <th>
+                    編輯
                 </th>
                 <th>
                 </th>
@@ -158,7 +157,7 @@
                         </select>
                     </td>
                     <td class="edit" style="cursor:pointer">
-                        <i class="fa-solid fa-pen-to-square"></i>
+                        <i class="fa-solid fa-pen-to-square pl-2"></i>
                     </td>
                     <td id="info">
                         <a class="btn p-0 pb-1" data-toggle="collapse" href="#multiCollapseExample_@i" role="button" aria-expanded="false" aria-controls="multiCollapseExample_@i" >
@@ -173,14 +172,14 @@
                             <div class="txt-detail mb-1">
                                 訂單詳情
                                 <div style="text-align:right"class="mb-2">
-                                    <button class="btn btn-light" type="button" id="detail"><i class="fa-solid fa-list-check">  檢貨單</i></button>
+                                    <button class="btn btn-light" type="button" id="detail"><i class="fa-solid fa-boxes-packing">  撿貨單</i></button>
                                 </div>
                                 @if (item.Status_id == 6)
                                 {
                                     <div style="text-align:right; font-size:20px;" class="mb-2"><span class="badge badge-danger badge-pill">訂單取消原因: @item.Status_Description</span></div>
                                 }
                             </div>                        
-                            <table class="container-fluid table-hover borderless1">
+                            <table class="container-fluid table-hover">
                                 <tr class="no-hover bg-light">
                                     <th>
                                         商品編號

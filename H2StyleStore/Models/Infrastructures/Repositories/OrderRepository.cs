@@ -34,19 +34,31 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			};
 
 			_db.Order_Log.Add(log);
+		    Order_Status newStatus =_db.Order_Status.Where(x => x.Status == entity.Status).FirstOrDefault();
 
-			order.Status_id= entity.Status_id;
+			order.Status_id = newStatus.Status_id;
 			order.ShippedDate = entity.ShippedDate;
 
+			Order_StatusDescription newDescription = _db.Order_StatusDescription.Where(x => x.Status_id == newStatus.Status_id).FirstOrDefault();
+			order.Status_Description_id = newDescription.Description_id;
 
-			_db.SaveChanges();
+			try
+			{
+				_db.SaveChanges();
+			}
+			catch (Exception)
+			{
+
+				throw;
+			}
+
 		}
 
 		public IEnumerable<Order_DetailDTO> FindById(int? id)
 		{
 			IEnumerable<Order_Details> order_detail = _db.Order_Details;
 			var data = order_detail.Select(od => od.ToDTO());
-			
+
 			return data;
 		}
 
@@ -125,7 +137,7 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 
 			_db.Order_Log.Add(log);
 
-			order.Status_Description_id= status_Description;
+			order.Status_Description_id = status_Description;
 			if (status_Description < 6)
 			{
 				order.Status_id = 6;

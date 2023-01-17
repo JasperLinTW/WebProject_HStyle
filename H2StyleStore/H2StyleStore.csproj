@@ -512,6 +512,8 @@
     <Content Include="fonts\css\alt\adminlte.plugins.css.map" />
     <Content Include="fonts\css\alt\adminlte.plugins.min.css.map" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\dateformat.js" />
+    <Content Include="Scripts\dateformat.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />

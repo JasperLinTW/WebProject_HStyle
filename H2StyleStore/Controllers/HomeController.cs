@@ -10,6 +10,7 @@ namespace H2StyleStore.Controllers
     {
         public ActionResult Index()
         {
+            var user = this.User;
             return View();
         }
 
