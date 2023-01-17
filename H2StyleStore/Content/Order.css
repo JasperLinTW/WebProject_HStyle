@@ -42,3 +42,7 @@
 [aria-expanded="true"] .menu__icon--close {
     display: inline;
 }
+
+.note-editable {
+    height: 325px
+}

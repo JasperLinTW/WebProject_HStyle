@@ -17,8 +17,8 @@ namespace H2StyleStore.Models.ViewModels
 		public int Essay_Id { get; set; }
 
 		// todo 登入自動輸入
-		[Display(Name = "員工賬號ID")]
-		public int Influencer_Id { get; set; }
+		[Display(Name = "員工賬號")]
+		public string Influencer_Name { get; set; }
 
 		[Required]
 		[StringLength(500)]
@@ -33,12 +33,12 @@ namespace H2StyleStore.Models.ViewModels
 		[Display(Name = "類別名稱")]
 		public int CategoryId { get; set; }
 
-		[Display(Name = "設定發佈時間")]
+		[Display(Name = "發佈時間")]
 		[Column(TypeName = "datetime2")]
 		[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
 		public DateTime UpLoad { get; set; }
 
-		[Display(Name = "設定下架時間")]
+		[Display(Name = "下架時間")]
 		[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
 		public DateTime Removed { get; set; }
 
@@ -56,7 +56,7 @@ namespace H2StyleStore.Models.ViewModels
 			return new CreateEssayDTO
 			{
 				Essay_Id = source.Essay_Id,
-				Influencer_Id = 3,
+				Influencer_Name = source.Influencer_Name,
 				ETitle = source.ETitle,
 				EContent = source.EContent,
 				UpLoad = source.UpLoad,
@@ -70,7 +70,7 @@ namespace H2StyleStore.Models.ViewModels
 		=> new CreateEssayDTO
 		{
 			Essay_Id = source.Essay_Id,
-			Influencer_Id = 3,
+			Influencer_Id = source.Influencer_Id,
 			ETitle = source.ETitle,
 			EContent = source.EContent,
 			UpLoad = source.UpLoad,
@@ -84,7 +84,7 @@ namespace H2StyleStore.Models.ViewModels
 			=> new CreateEssayVM
 			{
 				Essay_Id = source.Essay_Id,
-				Influencer_Id = 3,
+				Influencer_Name = source.Influencer_Name,
 				ETitle = source.ETitle,
 				EContent = source.EContent,
 				UpLoad = source.UpLoad,

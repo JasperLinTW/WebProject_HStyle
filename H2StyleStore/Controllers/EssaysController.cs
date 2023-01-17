@@ -17,6 +17,7 @@ using System.Web.Razor.Parser.SyntaxTree;
 using System.Web.Security;
 using System.Web.Services.Description;
 using System.Web.UI.WebControls;
+using PagedList;
 
 namespace H2StyleStore.Controllers
 {
@@ -35,18 +36,64 @@ namespace H2StyleStore.Controllers
 			this.essayService = new EssayService(repo);
 		}
 		// GET: Products
-		public ActionResult Index(int? categoryId, string eTitle)
+		public ActionResult Index(int? categoryId, string eTitle, string tagName,
+			string sortOrder, string currentFilter, string searchString, int? page)
 		{
 			ViewBag.Categories = _essayRepository.GetCategoriesSelect(categoryId);
 			ViewBag.EssayTitle = eTitle;
+			ViewBag.CurrentSort = sortOrder;
+			ViewBag.TagName = tagName;
+			//ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+			//ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+
+			if (searchString != null)
+			{
+				page = 1;
+			}
+			else
+			{
+				searchString = currentFilter;
+			}
+
+			ViewBag.CurrentFilter = searchString;
+
 			var data = essayService.GetEssays().Select(x => x.ToVM());
+
+			//switch (sortOrder)
+			//{
+			//	case "name_desc":
+			//		data = data.OrderByDescending(e => e.ETitle);
+			//		break;
+			//	case "Date_On":
+			//		data = data.OrderBy(e => e.UpLoad);
+			//		break;
+			//	case "Date_Off":
+			//		data = data.OrderBy(e => e.Removed);
+			//		break;
+			//	case "date_desc_On":
+			//		data = data.OrderByDescending(e => e.UpLoad);
+			//		break;
+			//	case "date_desc_Off":
+			//		data = data.OrderByDescending(e => e.Removed);
+			//		break;
+			//	default:  // Name ascending 
+			//		data = data.OrderBy(e => e.Essay_Id);
+			//		break;
+			//}
+
+
+
+			//var data = essayService.GetEssays().Select(x => x.ToVM());
 			// 若有篩選categoryid
 			if (categoryId.HasValue) data = data.Where(p => p.CategoryId == categoryId.Value);
 
 			// 若有篩選 productName
 			if (string.IsNullOrEmpty(eTitle) == false) data = data.Where(p => p.ETitle.Contains(eTitle));
+			if (string.IsNullOrEmpty(tagName) == false) data = data.Where(p => p.Tags.Contains(tagName));
 
-			return View(data);
+			int pageSize = 5;
+			int pageNumber = (page ?? 1);
+			return View(data.ToPagedList(pageNumber, pageSize));
 		}
 
 		//public ActionResult UploadEssay()
@@ -70,7 +117,7 @@ namespace H2StyleStore.Controllers
 		{
 
 			ViewBag.VideoCategoriesItems = new EssayRepository(new AppDbContext()).GetCategories(null); ;
-
+			model.Influencer_Name = this.User.Identity.Name;
 			//fill Remove, Upload properties value
 			bool isDateTime = DateTime.TryParse(Request.Form["Upload"], out DateTime dt1);
 			model.UpLoad = dt1;
@@ -131,7 +178,6 @@ namespace H2StyleStore.Controllers
 		}
 		public ActionResult EditEssays(int id)
 		{
-
 			var data = essayService.GetEssay(id).ToCreateVM();
 			var categories = new EssayRepository(new AppDbContext()).GetCategories(data.CategoryId).ToList();
 
@@ -142,6 +188,7 @@ namespace H2StyleStore.Controllers
 		public ActionResult EditEssays(CreateEssayVM model, HttpPostedFileBase[] files)
 		{
 			ViewBag.VideoCategories = new EssayRepository(new AppDbContext()).GetCategories(null);
+			model.Influencer_Name = this.User.Identity.Name;
 
 			if (files[1] != null)
 			{
@@ -171,7 +218,6 @@ namespace H2StyleStore.Controllers
 					}
 				}
 			}
-
 
 			try
 			{

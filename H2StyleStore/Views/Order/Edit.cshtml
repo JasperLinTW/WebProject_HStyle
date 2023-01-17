@@ -115,7 +115,7 @@
                 <div class="form-group col-md-4">
                     @Html.LabelFor(model => model.ShippedDate, htmlAttributes: new { @class = "control-label" })
                     <div class="col-md-12">
-                        <input class="form-control" type="datetime-local" value="@shippedDate" name="ShippedDate" id="shippeddate"/>
+                        <input class="form-control" type="datetime-local" value="@shippedDate" name="ShippedDate" id="shippeddate" />
                     </div>
                 </div>
 
@@ -192,7 +192,7 @@
                 </div>
                 <div>
                     <input type="submit" value="確定修改" class="btn btn-default" onclick="return confirm('確定修改?')" />
-                    
+
                 </div>
             </div>
         </div>
@@ -238,8 +238,8 @@
             let dateStringWithTime = moment(now).format('YYYY-MM-DD HH:mm');
             $('#shippeddate').val(dateStringWithTime)
         })
-            
-       
+
+
 
 
 

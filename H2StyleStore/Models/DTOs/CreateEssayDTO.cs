@@ -12,6 +12,7 @@ namespace H2StyleStore.Models.DTOs
 		public int Essay_Id { get; set; }
 
 		public int Influencer_Id { get; set; }
+		public string Influencer_Name { get; set; }
 
 		[Required]
 		[StringLength(1000)]

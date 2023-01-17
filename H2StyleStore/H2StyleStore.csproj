@@ -599,12 +599,12 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\Video\CreateVideo.cshtml" />
     <Content Include="Views\Video\EditVideo.cshtml" />
-    <Content Include="Views\Video\Index.cshtml" />
     <Content Include="Views\Essays\EditEssays.cshtml" />
     <Content Include="Views\Essays\Index.cshtml" />
     <Content Include="Views\Essays\NewEssay.cshtml" />
     <Content Include="Views\Products\PagedPartial.cshtml" />
     <Content Include="Views\H_Source_Details\CreateNewDetail.cshtml" />
+    <Content Include="Views\Video\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

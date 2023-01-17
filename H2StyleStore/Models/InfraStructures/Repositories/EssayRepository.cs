@@ -84,10 +84,11 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 		public void Create(EssayDTO dto)
 		{
 			int.TryParse(dto.CategoryName, out int catgoryId);
+			Employee employee = _db.Employees.Where(x => x.Account == dto.Influencer_Name).FirstOrDefault();
 			Essay essays = new Essay
 			{
 				Essay_Id = dto.Essay_Id,
-				Influencer_Id = 3,
+				Influencer_Id = employee.Employee_id,
 				UplodTime = dto.UplodTime,
 				ETitle = dto.ETitle,
 				EContent = dto.EContent,
@@ -103,11 +104,12 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 
 		public void Create(CreateEssayDTO dto)
 		{
+			Employee employee = _db.Employees.Where(x => x.Account == dto.Influencer_Name).FirstOrDefault();
 			//int.TryParse(dto.CategoryName, out int catgoryId);
 			Essay essays = new Essay
 			{
 
-				Influencer_Id = dto.Influencer_Id,
+				Influencer_Id = employee.Employee_id,
 				//Influencer_Id = dto.Influencer_Id,
 				UplodTime = DateTime.Now,
 				ETitle = dto.ETitle,
@@ -144,8 +146,9 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 		}
 		public void Edit(CreateEssayDTO dTO)
 		{
+			Employee employee = _db.Employees.Where(x => x.Account == dTO.Influencer_Name).FirstOrDefault();
 			var essay = _db.Essays.Find(dTO.Essay_Id);
-			essay.Influencer_Id = dTO.Influencer_Id;
+			essay.Influencer_Id = employee.Employee_id;
 			essay.ETitle = dTO.ETitle;
 			essay.EContent = dTO.EContent;
 			essay.UpLoad = dTO.UpLoad;
