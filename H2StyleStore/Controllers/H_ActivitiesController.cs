@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Xml.Linq;
+using PagedList;
 
 namespace H2StyleStore.Controllers
 {
@@ -32,18 +33,32 @@ namespace H2StyleStore.Controllers
 		}
 
 		// GET: H_Activities
-		public ActionResult Index(string activityName)
+		public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page, string activityName)
 		{
+			ViewBag.CurrentSort = sortOrder;
 			ViewBag.ActivityName = activityName;
+			if (searchString != null)
+			{
+				page = 1;
+			}
+			else
+			{
+				searchString = currentFilter;
+			}
+
+			ViewBag.CurrentFilter = searchString;
 
 			IEnumerable<H_ActivityVM> data = _hActivityService.GetHActivity().Select(a => a.ToVM());
 			// Search
 			if (string.IsNullOrEmpty(activityName) == false)
 			{
 				data = data
-					.Where(a => a.Activity_Name.Contains(activityName));
+					.Where(a => a.Activity_Name.Contains(activityName) || a.Activity_Describe.Contains(activityName));
 			}
-			return View(data);
+			
+			int pageSize = 5;
+			int pageNumber = (page ?? 1);
+			return View(data.ToPagedList(pageNumber, pageSize));
 		}
 
 		public ActionResult CreateActivity()

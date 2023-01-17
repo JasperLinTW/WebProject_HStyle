@@ -10,6 +10,7 @@ namespace HcoinForBirth
 {
 	internal class Program
 	{
+		private static AppDbContext _db = new AppDbContext();
 		static void Main(string[] args)
 		{
 			// 測試用
@@ -18,6 +19,13 @@ namespace HcoinForBirth
 			// 發放生日H幣
 			DateTime today = DateTime.Now;
 			HcoinForBirth(today);
+
+			// 計算Total H幣
+			//var member = _db.Members.ToList();
+			//for (int i = 0; i < member.Count; i++)
+			//{
+			//	TotalHcoin(member[i].Id);
+			//}
 		}
 
 		/// <summary>
@@ -40,7 +48,7 @@ namespace HcoinForBirth
 		}
 
 		/// <summary>
-		/// 每天執行一次，發送H幣給當月生日的會員，若今年已發送則不會有紀錄
+		/// 發送H幣給當月生日的會員，若今年已發送則不會有紀錄，每天執行一次
 		/// </summary>
 		/// <param name="today">今天的日期</param>
 		private static void HcoinForBirth(DateTime today)
@@ -85,6 +93,31 @@ namespace HcoinForBirth
 					throw new Exception(ex.Message);
 				}
 			}
+		}
+
+		/// <summary>
+		/// 計算所有 H coin
+		/// </summary>
+		/// <param name="id"></param>
+		public static void TotalHcoin(int id)
+		{
+			AppDbContext _db = new AppDbContext();
+
+			// 找出會員所有活動的紀錄
+			var detail = _db.H_Source_Details.Where(d => d.Member_Id == id);
+
+			// 計算H幣總額
+			int total = 0;
+			foreach (var item in detail)
+			{
+				total += item.Difference_H;
+			}
+
+			// 修改Member的Total_H
+			var member = _db.Members.Find(id);
+			member.Total_H = total;
+
+			_db.SaveChanges();
 		}
 	}
 }

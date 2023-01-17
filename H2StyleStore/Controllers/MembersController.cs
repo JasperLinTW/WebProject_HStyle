@@ -23,10 +23,16 @@ namespace H2StyleStore.Controllers
         private IMemberRepository repository;
         private MemberService service;
 
+        private H_ActivityService _activityService;
+        private IH_ActivityRepository _repo;
+
         public MembersController()   //不知道幹嘛用
         {
             repository = new MemberRepository();
             service = new MemberService(repository);
+
+            _repo = new H_ActivityRepository(db);
+            _activityService = new H_ActivityService(_repo);
         }
 
 

@@ -11,30 +11,52 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 
 namespace H2StyleStore.Controllers
 {
 	public class H_Source_DetailsController : Controller
 	{
 		private H_Source_DetailService _detailService;
+		private H_ActivityService _activityService;
 		private IH_Source_DetailRepository _repository;
+		private IH_ActivityRepository _activityRepository;
 
 		public H_Source_DetailsController()
 		{
 			var db = new AppDbContext();
+			var db2 = new AppDbContext();
+
 			_repository = new H_Source_DetailRepository(db);
+			_activityRepository = new H_ActivityRepository(db2);
 			this._detailService = new H_Source_DetailService(_repository);
+			_activityService = new H_ActivityService(_activityRepository);
 		}
 
 		// GET: H_Source_Details
-		public ActionResult HDetail(int? activityId, string memberName)
+		public ActionResult HDetail(string sortOrder, string currentFilter, string searchString, int? page, int? activityId, string memberName)
 		{
+			ViewBag.CurrentSort = sortOrder;
 			// 將篩選條件放在ViewBag,稍後在 view page取回
 			ViewBag.Activities = _repository.GetActivities(activityId);
 			ViewBag.MemberName = memberName;
 
-			var data = _detailService.GetSource().Select(x => x.ToVM());
+			if (searchString != null)
+			{
+				page = 1;
+			}
+			else
+			{
+				searchString = currentFilter;
+			}
 
+			ViewBag.CurrentFilter = searchString;
+
+			var data = _detailService.GetSource().Select(x => x.ToVM());
+			//foreach (var item in data)
+			//{
+			//	_detailService.TotalHcoin(item.Member_Id);
+			//}
 
 			// 若有篩選 activityId
 			if (activityId.HasValue) data = data.Where(m => m.Activity_Id == activityId.Value);
@@ -45,23 +67,59 @@ namespace H2StyleStore.Controllers
 					.Where(a => a.Member_Name.Contains(memberName));
 			}
 
-			return View(data);
+			//switch (sortOrder)
+			//{
+			//	case "name_desc":
+			//		data = data.OrderByDescending(s => s.Member_Name);
+			//		break;
+			//	case "Date":
+			//		data = data.OrderBy(s => s.Event_Time);
+			//		break;
+			//	case "Employee":
+			//		data = data.OrderByDescending(s => s.Employee_Id);
+			//		break;
+			//	default:  // Name ascending 
+			//		data = data.OrderBy(s => s.Source_H_Id);
+			//		break;
+			//}
+
+			int pageSize = 10;
+			int pageNumber = (page ?? 1);
+			return View(data.ToPagedList(pageNumber, pageSize));
+
 		}
 
-		
+
+		public ActionResult CreateNewDetail()
+		{
+			return View();
+		}
+
+		[HttpPost]
+		public ActionResult CreateNewDetail(CreateH_Source_DetailVM model)
+		{
+			if(ModelState.IsValid)
+			{
+				_detailService.CreateNewDetail(model.ToDto());
+				return RedirectToAction("HDetail");
+			}
+
+			return View(model);
+		}
+
 
 		public ActionResult CheckIn()
 		{
 			var data = _detailService.GetCheckIn().Select(x => x.ToVM());
 			return View(data);
-		}	
+		}
 
 		public ActionResult DeleteDetail(int? id)
 		{
 			if (id == null) return View("Index");
 
 			H_Source_DetailVM hDetail = _repository.FindDetail(id).ToVM();
-			
+
 			if (hDetail == null) return HttpNotFound();
 
 			return View(hDetail);

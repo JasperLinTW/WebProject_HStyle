@@ -44,7 +44,7 @@
                  IH_Source_DetailRepository/CreateHDetail,
 				 H_Source_DetailService/CreateHDetail
 
--/- 實作購物滿額送H幣
+-/- 實作購物滿額送H幣  --->需要考慮送貨狀態並且貨物送達要一個月後才可發放H幣
 [V?] add H_ActivityService/HcoinOrderPrice
 [V?] use H_Source_DetailService/CreateDetail, 
                  IH_Source_DetailRepository/CreateHDetail,
@@ -61,6 +61,30 @@
    add HcoinForBirth.exe
    add EfModel connect HStyleDataBase
    add HcoinForBirth/HcoinForBirth Method
-	    
 
--/- 計算ToTal Hcoin，傳入Member Table 的 H_value欄位
+-- 實作打卡活動
+[V?] add H_ActivityService/HcoinCheckIn
+         IH_ActivityRepository/GetCheckInById
+         H_activityRepository/GetCheckInById
+
+-- 計算各個會員的H幣總和
+   add H_ActivityService/TotalHcoin
+       IH_Source_DetailRepository/AddH_valueInMember
+	   H_Source_DetailRepository/AddH_valueInMember
+
+-- Modify H_Source_DetailsController/HDetail
+          加入Total欄位
+
+-- 計算ToTal Hcoin，傳入Member Table 的 H_value欄位
+   add H_ActivityService/TotalHcoin
+       IH_ActivityRepository/AddH_valueInMember
+       H_ActivityRepository/AddH_valueInMember
+
+-- 在Member中加入註冊活動的優惠
+
+-- H_Source_Detail加入了 Total_H_SorFar, Remark, Employee 的欄位
+   重新建立EFModel和修改H_Source_DetailVM, H_Source_DetailDto
+
+-- 建立新增活動紀錄
+
+-- 將活動從activityService改到detailService
