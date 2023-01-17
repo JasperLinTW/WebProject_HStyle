@@ -77,11 +77,13 @@
         <label class="control-label col-md-2" for="File">上傳檔案</label>
         <div class="col-md-10">
             <input type="file" name="files" class="form-control" multiple="multiple" />
+            @Html.ValidationMessageFor(model => model.images, "", new { @class = "text-danger" })
+
         </div>
     </div>
     @{
         List<SelectListItem> list = new List<SelectListItem>
-                        {
+                {
                                         new SelectListItem{Value="XL", Text="XL"},
                                         new SelectListItem{Value="L", Text="L"},
                                         new SelectListItem{Value="M", Text="M"},
@@ -109,7 +111,8 @@
 
 
     </div>
-    <span class="field-validation-valid text-danger" data-valmsg-for="specErr" data-valmsg-replace="true"></span>
+    @Html.ValidationMessageFor(model => model.specs, "", new { @class = "text-danger" })
+
 
 
     <div class="form-group">

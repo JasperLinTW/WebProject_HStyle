@@ -89,7 +89,22 @@ namespace H2StyleStore.Controllers
 
 			ViewBag.PCategoryItems = new ProductRepository(new AppDbContext()).GetCategories(null);
 
-			
+			try
+			{
+				foreach (var spec in model.specs)
+				{
+					if (spec.Color == null || spec.Stock < 1)
+					{
+						throw new Exception("規格格式有誤，請檢查");
+					}
+				}
+			}
+			catch(Exception ex)
+			{
+				ModelState.AddModelError("specs", ex.Message);
+				return View(model);
+			}
+
 			if (files[0] != null)
 			{
 				string path = Server.MapPath("/Images/ProductImages");
@@ -110,14 +125,14 @@ namespace H2StyleStore.Controllers
 					}
 					catch (Exception ex)
 					{
-						ModelState.AddModelError(string.Empty, "上傳檔案失敗: " + ex.Message);
+						ModelState.AddModelError("images", "上傳檔案失敗: " + ex.Message);
 
 					}
 				}
 			}
 			else
 			{
-				ModelState.AddModelError(string.Empty, "必須上傳商品照片");
+				ModelState.AddModelError("images", "必須上傳商品照片");
 			}
 
 			if (ModelState.IsValid == false)
@@ -130,15 +145,13 @@ namespace H2StyleStore.Controllers
 
 			try
 			{
-				foreach(var spec in model.specs)
-				{
-					if(spec.Color == null || spec.Stock < 1 )
-					{
-						throw new Exception("規格格式有誤，請檢查");
-					}
-				}
 				var productDto = model.ToCreateDto();
 				(bool IsSuccess, string ErrorMessage) result = productService.Create(productDto);
+
+				if(result.IsSuccess == false)
+				{
+					ModelState.AddModelError("Product_Name", result.ErrorMessage);
+				}
 			}
 			catch (Exception ex)
 			{
