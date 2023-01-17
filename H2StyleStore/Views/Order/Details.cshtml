@@ -4,31 +4,16 @@
     ViewBag.Title = "Details";
 }
 
-<style>
-    .title {
-        display:none;
-    }
 
-    @@media print {
-        .donotprint {
-            display: none;
-        }
-
-        .title {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-    }
-</style>
-
-<h2 class="donotprint m-0">訂單詳情</h2>
 <h4 class="title">撿貨單</h4>
 
-<p>
-    <input name="print" type="button" value="列印檢貨單" class="donotprint btn btn-secondary" onClick="doprint()">
-</p>
-<div>
+<div style="text-align:right" class="mb-2">
+
+    <button name="print" type="button" class="donotprint btn btn-secondary" onClick="doprint()"> <i class="fa-solid fa-print">  列印</i></button>
+
+</div>
+
+<div class="container">
     <table class="table">
         <tr>
             <th>
@@ -81,8 +66,13 @@
     {
         total += (@item.SubTotal - @item.Discount.Value);
     }
-    <div class="pl-2" style="font-weight:bold ;">合計:@total 元</div>
+    <div class="col-md-6" style="font-weight:bold ;">
+        <div class="col-md-3">合計:@total 元</div>
+    </div>
 </div>
+<a href="../Index">
+    <i class="fa-solid fa-rotate-left donotprint ml-2 mt-5">  回列表</i>
+</a>
 
 @section Scripts{
     <script>

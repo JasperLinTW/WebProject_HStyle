@@ -28,6 +28,7 @@ namespace H2StyleStore.Models.Services
 			return _repository.GetStatus(status);
 		}
 
+
 		public IEnumerable<Order_DetailDTO> FindById(int? id)
 		{
 			return _repository.FindById(id);
@@ -53,6 +54,16 @@ namespace H2StyleStore.Models.Services
 		public int StatusTransfer(string status)
 		{
 			return _repository.StatusTransfer(status);
+		}
+
+		public IEnumerable<SelectListItem> GetStatusDescription()
+		{
+			return _repository.GetStatusDescription();
+		}
+
+		public void Cancel(int status_Description, int order_id)
+		{
+		    _repository.Cancel(status_Description, order_id);
 		}
 	}
 }

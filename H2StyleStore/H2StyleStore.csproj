@@ -260,6 +260,7 @@
     <Compile Include="Models\Services\ProductService.cs" />
     <Compile Include="Models\ViewModels\CreateProductVM.cs" />
     <Compile Include="Models\ViewModels\EditAllVM.cs" />
+    <Compile Include="Models\ViewModels\Order_LogVM.cs" />
     <Compile Include="Models\ViewModels\OrderUpdateVM.cs" />
     <Compile Include="Models\ViewModels\OrderVM.cs" />
     <Compile Include="Models\ViewModels\Order_DetailsVM.cs" />
@@ -519,6 +520,8 @@
     <Content Include="fonts\css\alt\adminlte.plugins.css.map" />
     <Content Include="fonts\css\alt\adminlte.plugins.min.css.map" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\dateformat.js" />
+    <Content Include="Scripts\dateformat.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />

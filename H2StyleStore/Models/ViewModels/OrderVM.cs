@@ -1,4 +1,5 @@
 ﻿using H2StyleStore.Models.DTOs;
+using H2StyleStore.Models.EFModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -65,8 +66,9 @@ namespace H2StyleStore.Models.ViewModels
 
 		[DisplayName("訂單描述")]
 		public string Status_Description{ get; set; }
-
+		public string Status_Description_id { get; set; }
 		public IEnumerable<Order_DetailsVM> Order_Details { get; set; }
+		public IEnumerable<Order_Log>Order_Logs { get; set; }	
 	}
 
 	public static class OrderDTOExts

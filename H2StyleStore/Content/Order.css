@@ -8,24 +8,37 @@
     border: none;
 }
 
+
+
 .txt-detail{
     font-size:20px;
     font-weight:700;
 }
 
 .title {
-    visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 @media print {
     .donotprint {
         visibility: hidden;
     }
+}
 
-    .title {
-        visibility: visible;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+[aria-expanded="false"] .menu__icon--open {
+    display: inline;
+}
+
+[aria-expanded="false"] .menu__icon--close {
+    display: none;
+}
+
+[aria-expanded="true"] .menu__icon--open {
+    display: none;
+}
+
+[aria-expanded="true"] .menu__icon--close {
+    display: inline;
 }

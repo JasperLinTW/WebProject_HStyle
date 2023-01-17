@@ -1,5 +1,6 @@
-﻿@model IEnumerable<H2StyleStore.Models.ViewModels.OrderVM>
-
+﻿@model PagedList.IPagedList<H2StyleStore.Models.ViewModels.OrderVM>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "Index";
@@ -14,8 +15,8 @@
     int total = 0;
 }
 
-<h2 class="mt-2 mb-3 donotprint">訂單管理</h2>
 
+<h2 class="mt-2 mb-3">訂單管理</h2>
 <form method="get">
     <div class="row mb-4 mr-2 donotprint">
         <div class="col-lg-12">
@@ -37,46 +38,50 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Order_id)
+                    訂單編號
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.MemberName)
+                    會員名稱
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Total)
+                    @Html.ActionLink("總額", "Index", new { sortOrder = ViewBag.TotalSortParm }, new { @class = "text-dark fa-solid fa-sort" })
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Payment)
+                    付款金額
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.ShippedDate)
+                    出貨時間
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.ShipVia)
+                    配送方式
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Freight)
+                    運費
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.ShipName)
+                    收件人
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.ShipAddress)
+                    寄送地址
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.ShipPhone)
+                    收件人電話
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.RequestRefundTime)
+                    退貨時間
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.RequestRefund)
+                    退貨
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.CreatedTime)
+                    @Html.ActionLink("訂單成立日期", "Index", new { sortOrder = ViewBag.CreatetimeSortParm }, new { @class = "text-dark fa-solid fa-sort" })
+                <th>
+                    訂單狀態
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Status)
+                    編輯
+                </th>
+                <th>
                 </th>
             </tr>
         </thead>
@@ -152,19 +157,29 @@
                         </select>
                     </td>
                     <td class="edit" style="cursor:pointer">
-                        <i class="fa-solid fa-pen-to-square"></i>
+                        <i class="fa-solid fa-pen-to-square pl-2"></i>
                     </td>
-                    <td>
-                        <a class="btn p-0 pb-1" data-toggle="collapse" href="#multiCollapseExample_@i" role="button" aria-expanded="false" aria-controls="multiCollapseExample_@i">
-                            <i class="fa-solid fa-circle-info"></i>
+                    <td id="info">
+                        <a class="btn p-0 pb-1" data-toggle="collapse" href="#multiCollapseExample_@i" role="button" aria-expanded="false" aria-controls="multiCollapseExample_@i" >
+                            <i class="fa fa-angle-down fa-lg menu__icon--open"></i>
+                            <i class="fa fa-angle-up fa-lg menu__icon--close"></i>
                         </a>
                     </td>
                 </tr>
-                <tr class="collapse multi-collapse no-hover" id="multiCollapseExample_@i">
+                <tr class="no-hover list">
                     <td colspan="16">
-                        <div class="card card-body">
-                            <div class="txt-detail donotprint">訂單詳情</div>
-                            <table class="container-fluid table-hover borderless">
+                        <div class="card card-body collapse multi-collapse" id="multiCollapseExample_@i">
+                            <div class="txt-detail mb-1">
+                                訂單詳情
+                                <div style="text-align:right"class="mb-2">
+                                    <button class="btn btn-light" type="button" id="detail"><i class="fa-solid fa-boxes-packing">  撿貨單</i></button>
+                                </div>
+                                @if (item.Status_id == 6)
+                                {
+                                    <div style="text-align:right; font-size:20px;" class="mb-2"><span class="badge badge-danger badge-pill">訂單取消原因: @item.Status_Description</span></div>
+                                }
+                            </div>                        
+                            <table class="container-fluid table-hover">
                                 <tr class="no-hover bg-light">
                                     <th>
                                         商品編號
@@ -212,7 +227,6 @@
                             </table>
                             <div class="pl-2" style="font-weight:bold ;">合計:@total 元</div>
                         </div>
-
                     </td>
                 </tr>
                 total = 0;
@@ -222,13 +236,20 @@
         </tbody>
     </table>
 </form>
+<br />
+<div style="text-align:right">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+</div>
 
-    @section Scripts{
-        <script>
-            $('.edit').on('click', function (event) {
-                window.location.href = "https://localhost:44313/Order/Edit/" + parseFloat($(this).siblings('#Order_id').text());
-            });
+@section Scripts{
+    <script>
+        $('.edit').on('click', function (event) {
+            window.location.href = "https://localhost:44313/Order/Edit/" + parseFloat($(this).siblings('#Order_id').text());
+        });
+        $('.list').on('click', '#detail', function (event) {
+           window.location.href = "https://localhost:44313/Order/Details/" + parseFloat($('#Order_id').text());
+        });
+    </script>
 
-        </script>
-
-    }
+}
