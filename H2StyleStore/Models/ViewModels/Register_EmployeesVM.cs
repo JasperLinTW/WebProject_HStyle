@@ -35,7 +35,7 @@ namespace H2StyleStore.Models.ViewModels
 		public string ConfirmPassword { get; set; }
 
 		//[StringLength(50)]
-	 //   public string Title { get; set; }   應該不需要給人輸入
+	 //   public string Title { get; set; }   應該不需要給人輸入吧~?
 
 
 	}
