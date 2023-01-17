@@ -58,13 +58,22 @@ namespace H2StyleStore.Models.Services
 
 		public (bool, string) Edit(CreateEssayDTO dTO)
 		{
-			if(_repository.EditIsExist(dTO.ETitle, dTO.Essay_Id))
+			if (_repository.EditIsExist(dTO.ETitle, dTO.Essay_Id))
 			{
 				return (false, "標題名稱已使用，請更改名稱");
 			}
 
 			_repository.Edit(dTO);
 			return (true, null);
+		}
+		public void Delete(int id)
+		{
+			if (_repository.GetEssay(id).Essay_Id != id)
+			{
+				return;
+			}
+
+			_repository.Delete(id);
 		}
 	}
 }

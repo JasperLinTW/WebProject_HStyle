@@ -33,6 +33,23 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			return item;
 		}
 
+		public IEnumerable<SelectListItem> GetCategoriesSelect(int? categoryId)
+		{
+			var data = _db.VideoCategories
+				.Select(c => new SelectListItem
+				{
+					Value = c.Id.ToString(),
+					Text = c.CategoryName
+				,
+					Selected = (categoryId.HasValue && c.Id == categoryId.Value)
+				})
+				.ToList()
+				.Prepend(new SelectListItem { Value = string.Empty, Text = "請選擇" });
+
+			return data;
+		}
+
+
 
 		public IEnumerable<SelectListItem> GetCategories(int? categoryId)
 		{
@@ -50,7 +67,6 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 				};
 
 			}
-
 		}
 		public bool IsExist(string etitle)
 		{
@@ -71,14 +87,14 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			Essay essays = new Essay
 			{
 				Essay_Id = dto.Essay_Id,
-				Influencer_Id =3,
+				Influencer_Id = 3,
 				UplodTime = dto.UplodTime,
 				ETitle = dto.ETitle,
 				EContent = dto.EContent,
 				UpLoad = dto.UpLoad,
 				Removed = dto.Removed,
 				CategoryId = catgoryId,
-				
+
 			};
 
 			_db.Essays.Add(essays);
@@ -90,7 +106,7 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			//int.TryParse(dto.CategoryName, out int catgoryId);
 			Essay essays = new Essay
 			{
-				
+
 				Influencer_Id = dto.Influencer_Id,
 				//Influencer_Id = dto.Influencer_Id,
 				UplodTime = DateTime.Now,
@@ -99,7 +115,7 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 				UpLoad = dto.UpLoad,
 				Removed = dto.Removed,
 				CategoryId = dto.CategoryId,
-				
+
 			};
 			_db.Essays.Add(essays);
 
@@ -135,7 +151,7 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			essay.UpLoad = dTO.UpLoad;
 			essay.Removed = dTO.Removed;
 			essay.CategoryId = dTO.CategoryId;
-			foreach(var dbTag in essay.Tags.ToArray())
+			foreach (var dbTag in essay.Tags.ToArray())
 			{
 				essay.Tags.Remove(dbTag);
 			}
@@ -154,7 +170,7 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 				}
 			}
 
-			foreach(var dbing in _db.Images.ToArray())
+			foreach (var dbing in _db.Images.ToArray())
 			{
 				essay.Images.Remove(dbing);
 			}
@@ -178,6 +194,13 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			_db.SaveChanges();
 		}
 
-	
+		public void Delete(int id)
+		{
+			var essay = _db.Essays.FirstOrDefault(x => x.Essay_Id == id);
+			_db.Essays.Remove(essay);
+			_db.SaveChanges();
+		}
+
+
 	}
 }

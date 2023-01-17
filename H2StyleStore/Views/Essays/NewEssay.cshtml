@@ -1,7 +1,7 @@
 ﻿@model H2StyleStore.Models.ViewModels.CreateEssayVM
 @section Styles{
     <!-- summernote -->
-    <link href="@Url.Content("https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css")" rel="stylesheet" type="text/css">
+    <link href="@Url.Content("https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css")" rel="stylesheet" type="text/css"  >
 
     <!-- CodeMirror -->
     <link rel="stylesheet" href="../../Scripts/plugins/codemirror/codemirror.css">
@@ -22,7 +22,9 @@
     @Html.AntiForgeryToken()
 
 <div class="form-horizontal">
-
+    @*<td class="invisible">
+        @Html.DisplayFor(modelItem => item.CategoryId)
+    </td>
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
         @Html.LabelFor(model => model.Influencer_Id, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -30,7 +32,7 @@
             @Html.EditorFor(model => model.Influencer_Id, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Influencer_Id, "", new { @class = "text-danger" })
         </div>
-    </div>
+    </div>*@
 
     <div class="form-group">
         @Html.LabelFor(model => model.ETitle, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -48,13 +50,13 @@
             </div>
         </div>*@
 
-<div class="card-body" name="EContent">
-    <textarea id="summernote" style="display: none;">
+    <div class="card-body" name="EContent">
+        <textarea id="summernote" style="display: none;">
         
     </textarea>
-    <input id="contentArea" name="EContent" value="" hidden />
+        <input id="contentArea" name="EContent" value="" hidden />
 
-</div>
+    </div>
 
     @section Scripts {
         <!-- Summernote -->
@@ -72,7 +74,7 @@
 
             })
             $("#submit").on("click", function () {
-                $("#contentArea").attr("value", (encodeURI($(".note-editable").html()) ));
+                $("#contentArea").attr("value", encodeURI(($(".note-editable").html())));
 
             });
 
@@ -128,12 +130,11 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input id="submit" type="submit" value="Create" class="btn btn-default" />
+            <input id="submit" type="submit" value="Create" class="btn btn-secondary" />
         </div>
     </div>
 </div>
-  
-    
+
 }
 
 <div>
