@@ -1,10 +1,12 @@
-﻿@model IEnumerable<H2StyleStore.Models.ViewModels.VideoVM>
+﻿@model PagedList.IPagedList<H2StyleStore.Models.ViewModels.VideoVM>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "Index";
     var categories = ViewBag.Categories as IEnumerable<SelectListItem>;
     var videoTitle = ViewBag.VideoTitle as string;
-    var tagName= ViewBag.TagName as string;
+    var tagName = ViewBag.TagName as string;
 }
 
 <div>
@@ -14,8 +16,8 @@
 <form>
     <div class="row">
         <div class="col-md-3">影片分類:@Html.DropDownList("categoryId", categories, new { @class = "form-control" })</div>
-        <div class="col-md-3">標籤:<input type="text" name="tagName" class="form-control" value="@tagName" /></div>
-        <div class="col-md-4">影片標題:<input type="text" name="videoTitle" class="form-control" value="@videoTitle" /></div>
+        <div class="col-md-3">標籤:<input type="text" name="tagName" class="form-control" value="@tagName" placeholder="請輸入標籤" /></div>
+        <div class="col-md-4">影片名稱:<input type="text" name="videoTitle" class="form-control" value="@videoTitle" placeholder="請輸入影片名稱" /></div>
         <div class="col-md-2" style="margin-top:24px;margin-bottom:0px;padding-left:15px">
             <input type="submit" class="btn btn-success" value="搜尋" />
         </div>
@@ -30,22 +32,27 @@
         </th>
 
         <th>
-            @Html.DisplayNameFor(model => model.Title)
+            影片名稱
+            @*@Html.DisplayNameFor(model => model.Title)*@
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CategoryName)
+            類別
+            @*@Html.DisplayNameFor(model => model.CategoryName)*@
         </th>
         <th>
             標籤
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Description)
+            影片說明
+            @*@Html.DisplayNameFor(model => model.Description)*@
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.OnShelffTime)
+            上架時間
+            @*@Html.DisplayNameFor(model => model.OnShelffTime)*@
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.OffShelffTime)
+            下架時間
+            @*@Html.DisplayNameFor(model => model.OffShelffTime)*@
         </th>
     </tr>
 
@@ -65,7 +72,9 @@
                 @("#"+string.Join(" #",item.Tags))
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
+                <div class="container">
+                    @Html.DisplayFor(modelItem => item.Description)
+                </div>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.OnShelffTime)
@@ -78,5 +87,9 @@
             </td>
         </tr>
     }
-
 </table>
+
+<div style="text-align:right">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+</div>

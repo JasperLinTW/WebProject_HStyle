@@ -13,16 +13,14 @@ namespace H2StyleStore.Models.ViewModels
 		public int Id { get; set; }
 
 		[Display(Name = "影片名稱")]
-		
 		public string Title { get; set; }
-
+		
 		//public int CategoryId{ get; set; }
 
 		[Display(Name = "影片說明")]
 		public string Description { get; set; }
 
 		[Display(Name = "檔案上傳")]
-		
 		public string FilePath { get; set; }
 
 		[Display(Name = "上架時間")]
