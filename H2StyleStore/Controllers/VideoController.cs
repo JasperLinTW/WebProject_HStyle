@@ -45,9 +45,9 @@ namespace H2StyleStore.Controllers
 			ViewBag.VideoTitle = videoTitle;
 			ViewBag.TagName = tagName;
 			ViewBag.CurrentSort = sortOrder;
-			ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-			ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
-			
+			ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "category" : "category_desc";
+			ViewBag.DateSortParm = sortOrder == "Date_On" ? "date_desc_On" : "Date_On";
+
 			if (searchString != null)
 			{
 				page = 1;
@@ -77,6 +77,12 @@ namespace H2StyleStore.Controllers
 					break;
 				case "date_desc_Off":
 					data = data.OrderByDescending(s => s.OffShelffTime);
+					break;
+				case "category_desc":
+					data = data.OrderByDescending(s => s.CategoryId);
+					break;
+				case "category":
+					data = data.OrderByDescending(s => s.CategoryId);
 					break;
 				default:  // Name ascending 
 					data = data.OrderBy(s => s.Id);

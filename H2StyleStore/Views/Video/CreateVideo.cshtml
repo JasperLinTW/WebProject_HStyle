@@ -90,7 +90,6 @@
                     <div class="align-items-center ">
                         <img id="previewI" src="#" alt="" width="700" />
                     </div>
-                    
                     <div class="mt-2">
                         <label class="control-label col-md-2" for="File">上傳圖片檔案</label>
                         <input type="file" name="imageFile" id="upload" onchange="setPreviewI(this)" />
@@ -103,13 +102,19 @@
                     <input type="submit" value="儲存" class="btn btn-default" />
                 </div>
             </div>
-        </div>     
+        </div>
+    </div>
+    <div>
+        <a href="Index" class="nav-link">
+            <i class="fa-solid fa-rotate-left"></i>
+            回列表
+        </a>
     </div>
 }
 
-<div>
+@*<div>
     @Html.ActionLink("檢視所有影片", "Index")
-</div>
+</div>*@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
