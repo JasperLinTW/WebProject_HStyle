@@ -1,4 +1,5 @@
-﻿using H2StyleStore.Models.DTOs;
+﻿using H2StyleStore.filter;
+using H2StyleStore.Models.DTOs;
 using H2StyleStore.Models.EFModels;
 using H2StyleStore.Models.Infrastructures.Repositories;
 using H2StyleStore.Models.Services;
@@ -16,6 +17,7 @@ using System.Web.Mvc;
 
 namespace H2StyleStore.Controllers
 {
+	[AuthrizeHelper("2", "3")]
 	public class OrderController : Controller
 	{
 		private OrderService orderService;

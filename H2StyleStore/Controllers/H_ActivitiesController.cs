@@ -16,9 +16,12 @@ using System.Web;
 using System.Web.Mvc;
 using System.Xml.Linq;
 using PagedList;
+using H2StyleStore.filter;
 
 namespace H2StyleStore.Controllers
 {
+	[AuthrizeHelper("2", "3")]
+
 	public class H_ActivitiesController : Controller
 	{
 		private H_ActivityService _hActivityService;
