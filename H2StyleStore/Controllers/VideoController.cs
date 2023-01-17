@@ -12,6 +12,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Razor.Parser.SyntaxTree;
 using System.Xml.Linq;
+using PagedList;
+
 
 namespace H2StyleStore.Controllers
 {
@@ -35,13 +37,52 @@ namespace H2StyleStore.Controllers
 		//	return View(data);
 		//}
 
-		public ActionResult Index(int? categoryId, string videoTitle)
+		public ActionResult Index(int? categoryId, string videoTitle, string tagName, 
+			string sortOrder, string currentFilter, string searchString, int? page)
 		{
 			// 將篩選條件放在ViewBag,稍後在 view page取回
 			ViewBag.Categories = _videoRepository.GetVideoCategories(categoryId);
 			ViewBag.VideoTitle = videoTitle;
+			ViewBag.TagName = tagName;
+			ViewBag.CurrentSort = sortOrder;
+			ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+			ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+			
+			if (searchString != null)
+			{
+				page = 1;
+			}
+			else
+			{
+				searchString = currentFilter;
+			}
+
+			ViewBag.CurrentFilter = searchString;
 
 			var data = _videoService.GetVideos().Select(x => x.ToVM());
+
+			switch (sortOrder)
+			{
+				case "name_desc":
+					data = data.OrderByDescending(s => s.Title);
+					break;
+				case "Date_On":
+					data = data.OrderBy(s => s.OnShelffTime);
+					break;
+				case "Date_Off":
+					data = data.OrderBy(s => s.OffShelffTime);
+					break;
+				case "date_desc_On":
+					data = data.OrderByDescending(s => s.OnShelffTime);
+					break;
+				case "date_desc_Off":
+					data = data.OrderByDescending(s => s.OffShelffTime);
+					break;
+				default:  // Name ascending 
+					data = data.OrderBy(s => s.Id);
+					break;
+			}
+
 
 			// 若有篩選categoryid
 			if (categoryId.HasValue) data = data.Where(p => p.CategoryId == categoryId.Value);
@@ -49,10 +90,16 @@ namespace H2StyleStore.Controllers
 			// 若有篩選 productName
 			if (string.IsNullOrEmpty(videoTitle) == false) data = data.Where(p => p.Title.Contains(videoTitle));
 			// data = data.Where(p => Left(p.Name)=="AB");
-			return View(data);
+
+			//Tag篩選
+			if (string.IsNullOrEmpty(tagName) == false) data = data.Where(p => p.Tags.Contains(tagName));
+
+			int pageSize = 5;
+			int pageNumber = (page ?? 1);
+			return View(data.ToPagedList(pageNumber, pageSize));
 		}
 
-		public ActionResult CreateVideo()
+		public ActionResult CreateVideo()          
 		{
 			ViewBag.VideoCategoryItems = _videoRepository.GetVideoCategories();
 			return View();
@@ -61,7 +108,7 @@ namespace H2StyleStore.Controllers
 		[HttpPost]
 		public ActionResult CreateVideo(CreateVideoVM model, HttpPostedFileBase videoFile, HttpPostedFileBase imageFile)
 		{
-			ViewBag.VidoeCategoryItems = _videoRepository.GetVideoCategories();
+			ViewBag.VideoCategoryItems = _videoRepository.GetVideoCategories();
 
 
 			if (videoFile == null || string.IsNullOrEmpty(videoFile.FileName) || videoFile.ContentLength == 0)
@@ -129,7 +176,7 @@ namespace H2StyleStore.Controllers
 			var helper = new UploadFileHelper();
 			if (videoFile == null || string.IsNullOrEmpty(videoFile.FileName) || videoFile.ContentLength == 0)
 			{
-				model.Image = model.Image;
+				model.FilePath = model.FilePath;
 			}
 			else
 			{
@@ -146,7 +193,7 @@ namespace H2StyleStore.Controllers
 
 			if (imageFile == null || string.IsNullOrEmpty(imageFile.FileName) || imageFile.ContentLength == 0)
 			{
-				model.FilePath = model.FilePath;
+				model.Image = model.Image;
 			}
 			else
 			{

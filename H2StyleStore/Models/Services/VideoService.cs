@@ -30,7 +30,7 @@ namespace H2StyleStore.Models.Services
 				return (false, "這部影片已經上傳過了");
 			}
 
-
+            if (dto.FilePath == null) return (false, "請上傳影片檔案");
 
 			_repository.CreateVideo(dto);
             return (true, null);
