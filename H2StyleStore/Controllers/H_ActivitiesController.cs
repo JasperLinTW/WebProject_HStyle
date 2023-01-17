@@ -41,7 +41,7 @@ namespace H2StyleStore.Controllers
 			if (string.IsNullOrEmpty(activityName) == false)
 			{
 				data = data
-					.Where(a => a.Activity_Name.Contains(activityName));
+					.Where(a => a.Activity_Name.Contains(activityName) || a.Activity_Describe.Contains(activityName));
 			}
 			return View(data);
 		}

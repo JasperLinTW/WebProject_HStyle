@@ -554,8 +554,6 @@
     <Content Include="Views\H_Activities\EditActivity.cshtml" />
     <Content Include="Views\H_Source_Details\HDetail.cshtml" />
     <Content Include="Views\H_Source_Details\CheckIn.cshtml" />
-    <Content Include="Views\H_Activities\DeleteActivity.cshtml" />
-    <Content Include="Views\H_Source_Details\DeleteDetail.cshtml" />
     <Content Include="Views\Order\Index.cshtml" />
     <Content Include="Views\Order\Details.cshtml" />
     <Content Include="Views\Order\Update.cshtml" />
