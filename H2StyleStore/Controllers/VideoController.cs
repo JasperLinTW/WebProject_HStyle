@@ -13,10 +13,11 @@ using System.Web.Mvc;
 using System.Web.Razor.Parser.SyntaxTree;
 using System.Xml.Linq;
 using PagedList;
-
+using H2StyleStore.filter;
 
 namespace H2StyleStore.Controllers
 {
+	[AuthrizeHelper("1", "3")]
 	public class VideoController : Controller
 	{
 		private VideoService _videoService;
