@@ -62,7 +62,7 @@
             @Html.DisplayFor(modelItem => item.Email)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Account)
+            @Html.DisplayFor(modelItem => item.Account )
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Phone_Number)
@@ -89,7 +89,8 @@
             @*@Html.DisplayFor(modelItem => item.Gender)*@
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Birthday)
+            @item.Birthday.ToString("yyyy/MM/dd")
+            
         </td>
         @*<td>
             @Html.DisplayFor(modelItem => item.Permission_Id)
@@ -110,9 +111,9 @@
             @Html.DisplayFor(modelItem => item.EncryptedPassword)
         </td>*@
         <td>
-            @Html.ActionLink("編輯", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("編輯", "Edit", new { id=item.Id }) 
             @*@Html.ActionLink("Details", "Details", new { id=item.Id }) |*@
-            @Html.ActionLink("刪除", "Delete", new { id=item.Id })
+            @*@Html.ActionLink("刪除", "Delete", new { id=item.Id })*@
         </td>
     </tr>
 }

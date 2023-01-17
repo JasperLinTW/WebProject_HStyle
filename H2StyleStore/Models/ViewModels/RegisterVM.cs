@@ -61,7 +61,8 @@ namespace H2StyleStore.Models.ViewModels
         
         [Display(Name = "手機")]
         [StringLength(10)]
-        public string Phone_Number { get; set; }
+		[Required]
+		public string Phone_Number { get; set; }
     }
 
     public static class RegisterVMExts

@@ -15,7 +15,7 @@
             @*@Html.DisplayNameFor(model => model.Account)*@帳號
         </th>
         <th>
-            @*@Html.DisplayNameFor(model => model.Title)*@標題
+            @*@Html.DisplayNameFor(model => model.Title)*@稱謂
         </th>
         <th>
             @*@Html.DisplayNameFor(model => model.Employee_id)*@權限名稱
@@ -42,9 +42,9 @@
                     @Html.DisplayFor(modelItem => item.EncryptedPassword)
                 </td>*@
             <td>
-                @Html.ActionLink("編輯", "Edit", new { id = item.Employee_id }) |
+                @Html.ActionLink("編輯", "Edit", new { id = item.Employee_id }) 
                 @*@Html.ActionLink("Details", "Details", new { id = item.Employee_id }) |*@
-                @Html.ActionLink("刪除", "Delete", new { id = item.Employee_id })
+                @*@Html.ActionLink("刪除", "Delete", new { id = item.Employee_id })*@
             </td>
         </tr>
     }
