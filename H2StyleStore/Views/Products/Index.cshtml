@@ -17,11 +17,11 @@
     </div>
     <div class="col-sm-4 col-md-3 col-lg-3">
         <div>
-            <button id="search" class="btn btn-default" onclick="search()"><i class="fas fa-search fa-lg"></i>搜尋</button>
+            <button id="search" class="btn btn-primary" onclick="search()"><i class="fas fa-search fa-lg pr-2"></i>搜尋</button>
         </div>
     </div>
     <div class="col-sm-4 col-md-6 col-lg-6 pe-0 text-right">
-        <button type="button" class="btn btn-default"> @Html.ActionLink("新增商品", "NewProduct")</button>
+        <button type="button" class="btn btn-success"><a class="text-white" href="https://localhost:44313/Products/NewProduct">新增商品</a></button>
         <button id="allSave" type="button" class="btn btn-default">儲存</button>
     </div>
 </div>
@@ -72,9 +72,9 @@
 
         $("#productDatas").on("click", ".fa-solid", function () {
             if ($(this).attr("aria-expanded") == "false") {
-                $(this).attr("class", "fa-solid fa-circle-minus");
+                $(this).attr("class", "fa-solid fa-angle-up");
             } else {
-                $(this).attr("class", "fa-solid fa-circle-plus");
+                $(this).attr("class", "fa-solid fa-angle-down");
             }
 
         });
