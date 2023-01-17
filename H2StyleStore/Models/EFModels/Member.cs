@@ -41,17 +41,14 @@ namespace H2StyleStore.Models.EFModels
         [Required]
         [StringLength(100)]
         public string Address { get; set; }
-		[DisplayFormat(NullDisplayText = "¥¼ª¾")]
-		public bool Gender { get; set; }
+
+        public bool Gender { get; set; }
 
         [Column(TypeName = "datetime2")]
-		[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
-
-		public DateTime Birthday { get; set; }
+        public DateTime Birthday { get; set; }
 
         public int? Permission_Id { get; set; }
 
-        [DisplayFormat(DataFormatString ="{0:yyyy-MM-dd HH:mm:ss}",ApplyFormatInEditMode =true)]
         public DateTime Jointime { get; set; }
 
         public bool? Mail_verify { get; set; }

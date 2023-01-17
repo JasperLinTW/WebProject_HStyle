@@ -12,113 +12,112 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Product_Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Product_Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Product_Name, "", new { @class = "text-danger" })
-            </div>
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.Product_Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Product_Name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Product_Name, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.UnitPrice, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.UnitPrice, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.UnitPrice, "", new { @class = "text-danger" })
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.UnitPrice, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.UnitPrice, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.UnitPrice, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.tags, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.tags, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.tags, "", new { @class = "text-danger" })
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.tags, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.tags, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.tags, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Discontinued, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.Discontinued)
-                    @Html.ValidationMessageFor(model => model.Discontinued, "", new { @class = "text-danger" })
-                </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Discontinued, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <div class="checkbox">
+                @Html.EditorFor(model => model.Discontinued)
+                @Html.ValidationMessageFor(model => model.Discontinued, "", new { @class = "text-danger" })
             </div>
         </div>
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.DisplayOrder, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DisplayOrder, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DisplayOrder, "", new { @class = "text-danger" })
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.DisplayOrder, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.DisplayOrder, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.DisplayOrder, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Category_Id, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(x => x.Category_Id, pCategories, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Category_Id, "", new { @class = "text-danger" })
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Category_Id, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(x => x.Category_Id, pCategories, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Category_Id, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        <div class="form-group">
-            <label class="control-label col-md-2" for="File">上傳檔案</label>
-            <div class="col-md-10">
-                <input type="file" name="files" class="form-control" multiple="multiple" />
-            </div>
+    <div class="form-group" name="upload" id="upload">
+        <label class="control-label col-md-2" for="File">上傳檔案</label>
+        <div class="col-md-10">
+            <input type="file" name="files" class="form-control" multiple="multiple" />
         </div>
-        @{
-            List<SelectListItem> list = new List<SelectListItem>
-                                {
+    </div>
+    @{
+        List<SelectListItem> list = new List<SelectListItem>
+                        {
                                         new SelectListItem{Value="XL", Text="XL"},
                                         new SelectListItem{Value="L", Text="L"},
                                         new SelectListItem{Value="M", Text="M"},
                                         new SelectListItem{Value="S", Text="S"},
                                         new SelectListItem{Value="XS", Text="XS"},
                                     };
-        }
-        <div id="specsArea">
+    }
+    <div id="specsArea">
 
-            <div class="row">
-                <div class="col-md-2">
-                    <label class="control-label" for="specs">規格</label>
-                </div>
-                <div class="col-md-8 text-right"><button type="button" id="addSpecBtn" class=" btn btn-default mb-1">新增規格</button></div>
+        <div class="row">
+            <div class="col-md-2">
+                <label class="control-label" for="specs">規格</label>
             </div>
-
-            <div class="form-group spec">
-                <div class="col-md-10 input-group specs mb-2">
-                    <input class="form-control text-box Color" name="" type="text" value="" placeholder="顏色">
-                    @Html.DropDownList("Size", list, new { @class = "form-control text-box Size" })
-                    <input class="form-control text-box Stock" name="" type="number" value="" placeholder="庫存">
-                    <button type="button" class="btn btn-default delSpecBtn">刪除</button>
-                </div>
-
-
-
-            </div>
-
+            <div class="col-md-8 text-right"><button type="button" id="addSpecBtn" class=" btn btn-default mb-1">新增規格</button></div>
         </div>
-        
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input id="submit" type="submit" value="儲存" class="btn btn-default" />
+        <div class="form-group spec">
+            <div class="col-md-10 input-group specs mb-2" id="specErr" name="specErr">
+                <input class="form-control text-box Color" name="" type="text" value="" placeholder="顏色">
+                @Html.DropDownList("Size", list, new { @class = "form-control text-box Size" })
+                <input class="form-control text-box Stock" name="" type="number" value="" placeholder="庫存">
+                <button type="button" class="btn btn-default delSpecBtn">刪除</button>
             </div>
+        </div>
+
+
+    </div>
+    <span class="field-validation-valid text-danger" data-valmsg-for="specErr" data-valmsg-replace="true"></span>
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input id="submit" type="submit" value="儲存" class="btn btn-default" />
         </div>
     </div>
+</div>
 }
 
 <div>

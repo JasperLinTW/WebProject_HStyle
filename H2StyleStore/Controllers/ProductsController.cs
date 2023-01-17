@@ -89,7 +89,7 @@ namespace H2StyleStore.Controllers
 
 			ViewBag.PCategoryItems = new ProductRepository(new AppDbContext()).GetCategories(null);
 
-
+			
 			if (files[0] != null)
 			{
 				string path = Server.MapPath("/Images/ProductImages");
@@ -115,12 +115,28 @@ namespace H2StyleStore.Controllers
 					}
 				}
 			}
+			else
+			{
+				ModelState.AddModelError(string.Empty, "必須上傳商品照片");
+			}
 
-				
-			
+			if (ModelState.IsValid == false)
+			{
+				return View(model);
+			}
+
+
+
 
 			try
 			{
+				foreach(var spec in model.specs)
+				{
+					if(spec.Color == null || spec.Stock < 1 )
+					{
+						throw new Exception("規格格式有誤，請檢查");
+					}
+				}
 				var productDto = model.ToCreateDto();
 				(bool IsSuccess, string ErrorMessage) result = productService.Create(productDto);
 			}

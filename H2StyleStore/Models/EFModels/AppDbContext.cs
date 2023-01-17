@@ -8,7 +8,7 @@ namespace H2StyleStore.Models.EFModels
 	public partial class AppDbContext : DbContext
 	{
 		public AppDbContext()
-			: base("name=AppDbContext")
+			: base("name=AppDbContext1")
 		{
 		}
 
@@ -226,9 +226,5 @@ namespace H2StyleStore.Models.EFModels
 				.WithRequired(e => e.Video)
 				.WillCascadeOnDelete(false);
 		}
-
-        public System.Data.Entity.DbSet<H2StyleStore.Models.ViewModels.H_Source_DetailVM> H_Source_DetailVM { get; set; }
-
-		public System.Data.Entity.DbSet<H2StyleStore.Models.ViewModels.CreateH_Source_DetailVM> CreateH_Source_DetailVM { get; set; }
 	}
 }
