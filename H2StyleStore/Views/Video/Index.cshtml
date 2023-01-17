@@ -9,6 +9,12 @@
     var tagName = ViewBag.TagName as string;
 }
 
+<style>
+    .width {
+        width:100px;
+    }
+</style>
+
 <div>
     <h2>影片列表<span style="margin-left:30px;margin-bottom:10px;"> @Html.ActionLink("新增影片", "CreateVideo", null, new { @class = "btn btn-primary mb-2" })</span> </h2>
 </div>
@@ -33,26 +39,21 @@
 
         <th>
             影片名稱
-            @*@Html.DisplayNameFor(model => model.Title)*@
         </th>
-        <th>
-            類別
-            @*@Html.DisplayNameFor(model => model.CategoryName)*@
+        <th class="width">
+            @Html.ActionLink("影片類別", "Index", new { sortOrder = ViewBag.NameSortParm }, new { @class = "text-dark fa-solid fa-sort" })
         </th>
         <th>
             標籤
         </th>
         <th>
             影片說明
-            @*@Html.DisplayNameFor(model => model.Description)*@
         </th>
         <th>
-            上架時間
-            @*@Html.DisplayNameFor(model => model.OnShelffTime)*@
+            @Html.ActionLink("上架時間", "Index", new { sortOrder = ViewBag.NameSortParm }, new { @class = "text-dark fa-solid fa-sort" })
         </th>
         <th>
-            下架時間
-            @*@Html.DisplayNameFor(model => model.OffShelffTime)*@
+            @Html.ActionLink("下架時間", "Index", new { sortOrder = ViewBag.NameSortParm }, new { @class = "text-dark fa-solid fa-sort" })
         </th>
     </tr>
 

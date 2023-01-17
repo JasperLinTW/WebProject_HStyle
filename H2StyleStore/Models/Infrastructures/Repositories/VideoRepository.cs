@@ -108,7 +108,7 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			video.Description = dto.Description;
 			video.CreatedTime = DateTime.Now;
 			video.CategoryId = dto.CategoryId;
-			video.FilePath = dto.FilePath;
+			video.FilePath = "../../Videos/" + dto.FilePath;
 			video.ImageId = imageid.Image_Id;
 			video.OnShelffTime = dto.OnShelffTime;
 			video.OffShelffTime = dto.OffShelffTime;
