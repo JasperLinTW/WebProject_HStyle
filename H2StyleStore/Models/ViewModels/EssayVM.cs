@@ -70,6 +70,7 @@ namespace H2StyleStore.Models.ViewModels
 			=> new EssayDTO
 			{
 				Essay_Id = source.Essay_Id,
+				Influencer_Name = source.Influencer_Name,
 				UplodTime = source.UplodTime,
 				ETitle = source.ETitle,
 				EContent = source.EContent,
