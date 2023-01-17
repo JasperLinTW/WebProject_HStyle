@@ -21,11 +21,11 @@ namespace H2StyleStore.Controllers
 
 		public OrderController()
 		{
-			//string currentUser = this.User.Identity.Name;
+			string currentUser = this.User.Identity.Name;
 
 			var db = new AppDbContext();
 			IOrderRepository repo = new OrderRepository(db);
-			//this.orderService = new OrderService(repo, currentUser);
+			this.orderService = new OrderService(repo, currentUser);
 			this.orderService = new OrderService(repo);
 		}
 
