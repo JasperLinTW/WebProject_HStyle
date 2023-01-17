@@ -28,7 +28,7 @@ namespace H2StyleStore.Models.ViewModels
 		public string Remark { get; set; }
 
 		[DisplayName("員工Id")]
-		public int? Employee_Id { get; set; }		
+		public string Employee_Name { get; set; }		
 	}
 
 	public static class CreateH_Source_DetailVMExts
@@ -44,7 +44,7 @@ namespace H2StyleStore.Models.ViewModels
 				//Event_Time= source.Event_Time,
 				//Total_H_SoFar= source.Total_H_SoFar,
 				Remark = source.Remark,
-				Employee_Id = source.Employee_Id
+				Employee_Name = source.Employee_Name
 			};
 		}
 	}

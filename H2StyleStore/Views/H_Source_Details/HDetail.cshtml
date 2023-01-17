@@ -28,25 +28,22 @@
 <table class="table">
     <tr>
         <th>
-            @*@Html.DisplayNameFor(model => model.Member_Name)*@
-            會員名稱
+            @Html.ActionLink("會員名稱", "HDetail", new { sortOrder = ViewBag.NameSortParm }, new {@class= "text-dark fa-solid fa-sort" })
         </th>
         <th>
-            @*@Html.DisplayNameFor(model => model.H_Activity_Name)*@
-            活動名稱
+            @Html.ActionLink("活動名稱", "HDetail", new { sortOrder = ViewBag.ActivitySortParm }, new { @class = "text-dark fa-solid fa-sort" })
         </th>
         <th>
             @*@Html.DisplayNameFor(model => model.Difference_H)*@
             H幣值
         </th>
         <th>
-            @*@Html.DisplayNameFor(model => model.Event_Time)*@
-            取得時間
+            @Html.ActionLink("取得時間", "HDetail", new { sortOrder = ViewBag.DateSortParm }, new { @class = "text-dark fa-solid fa-sort" })
         </th>
-        <th>
+        <!--<th>-->
             @*@Html.DisplayNameFor(model => model.Total_H_SoFar)*@
-            H幣總額
-        </th>
+            <!--H幣總額
+        </th>-->
         <th>
             @*@Html.DisplayNameFor(model => model.Remark)*@
             備註
@@ -73,9 +70,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Event_Time)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.Total_H_SoFar)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Remark)
             </td>
