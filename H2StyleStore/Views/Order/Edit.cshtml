@@ -115,7 +115,7 @@
                 <div class="form-group col-md-4">
                     @Html.LabelFor(model => model.ShippedDate, htmlAttributes: new { @class = "control-label" })
                     <div class="col-md-12">
-                        <input class="form-control" type="datetime-local" value="@shippedDate" name="ShippedDate" id="shippeddate"/>
+                        <input class="form-control" type="datetime-local" value="@shippedDate" name="ShippedDate" id="shippeddate" />
                     </div>
                 </div>
 
@@ -178,21 +178,44 @@
                 </div>
                 <div class="form-group col-md-4">
                     @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label" })
-                    <select name="Status" class="form-control" id="status">
-                        <option value="@Model.Status">@Model.Status</option>
+                    @if (@Model.Status == "取消")
+                    {<select name="Status" disabled="disabled" style="width: 125px" class="form-control" id="status">
+                            <option value="@Model.Status">@Model.Status</option>
+                        </select>
+                    }
+                    else if (@Model.RequestRefund == true)
+                    {
+                        <select name="Status" style="width: 125px" class="form-control" id="status">
+                            <option value="@Model.Status">@Model.Status</option>
 
-                        @for (int k = 0; k < statusInDb.Count; k++)
-                        {
-                            if (statusInDb[k].Text != @Model.Status)
+                            @for (int k = 0; k < statusInDb.Count; k++)
                             {
-                                <option value="@statusInDb[k].Text">@statusInDb[k].Text</option>
+                                if (statusInDb[k].Text != @Model.Status && Convert.ToInt32(statusInDb[k].Value) >= 7)
+                                {
+                                    <option value="@statusInDb[k].Text">@statusInDb[k].Text</option>
+                                }
                             }
-                        }
-                    </select>
+                        </select>
+                    }
+                    else
+                    {
+                        <select name="Status" style="width: 125px" class="form-control" id="status">
+                            <option value="@Model.Status">@Model.Status</option>
+
+                            @for (int k = 0; k < statusInDb.Count; k++)
+                            {
+                                if (statusInDb[k].Text != @Model.Status && Convert.ToInt32(statusInDb[k].Value) > @Model.Status_id && Convert.ToInt32(statusInDb[k].Value) < 7)
+                                {
+                                    <option value="@statusInDb[k].Text">@statusInDb[k].Text</option>
+                                }
+                            }
+                        </select>
+                    }
+
                 </div>
                 <div>
                     <input type="submit" value="確定修改" class="btn btn-default" onclick="return confirm('確定修改?')" />
-                    
+
                 </div>
             </div>
         </div>
@@ -238,8 +261,8 @@
             let dateStringWithTime = moment(now).format('YYYY-MM-DD HH:mm');
             $('#shippeddate').val(dateStringWithTime)
         })
-            
-       
+
+
 
 
 
