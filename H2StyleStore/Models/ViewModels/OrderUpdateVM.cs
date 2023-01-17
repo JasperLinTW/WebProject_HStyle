@@ -13,6 +13,9 @@ namespace H2StyleStore.Models.ViewModels
 		public DateTime? ShippedDate { get; set; }
 
 		public string Status { get; set; }
+
+		public string EmployeeAccount { get; set; }
+
 		public int Status_id { get; set; }
 	}
 	public static class OrderUpdateVMExts
@@ -23,6 +26,7 @@ namespace H2StyleStore.Models.ViewModels
 			{
 				Order_id = source.Order_id,
 				ShippedDate = source.ShippedDate,
+				EmployeeAccount= source.EmployeeAccount,
 				Status_id = source.Status_id,
 				Status= source.Status,
 			};

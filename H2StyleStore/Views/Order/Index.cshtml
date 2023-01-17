@@ -17,6 +17,8 @@
 
 
 <h2 class="mt-2 mb-3">訂單管理</h2>
+
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
 <form method="get">
     <div class="row mb-4 mr-2 donotprint">
         <div class="col-lg-12">
@@ -31,6 +33,7 @@
     </div>
 </form>
 <form action="@Url.Action("Update")" method="post">
+
     <div style="text-align:right">
         <input type="submit" id="save" value="批次修改" class="btn btn-info mb-3" onclick="return confirm('確定修改?')" />
     </div>
@@ -45,6 +48,7 @@
                 </th>
                 <th>
                     @Html.ActionLink("總額", "Index", new { sortOrder = ViewBag.TotalSortParm }, new { @class = "text-dark fa-solid fa-sort" })
+                    @*<a href="/Order/Index" value=@{}>總額<i class="fa-solid fa-sort"></i></a>*@
                 </th>
                 <th>
                     付款金額
@@ -118,6 +122,7 @@
                     </td>
                     <td>
                         <input type="datetime-local" value="@shippedDate" name="orders[@i].ShippedDate" />
+                        @Html.ValidationMessageFor(modelItem => item.ShippedDate, "", new { @class = "text-danger" })
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.ShipVia)
@@ -155,12 +160,13 @@
                                 }
                             }
                         </select>
+                        @Html.ValidationMessageFor(modelItem => item.Status, "", new { @class = "text-danger" })
                     </td>
                     <td class="edit" style="cursor:pointer">
                         <i class="fa-solid fa-pen-to-square pl-2"></i>
                     </td>
                     <td id="info">
-                        <a class="btn p-0 pb-1" data-toggle="collapse" href="#multiCollapseExample_@i" role="button" aria-expanded="false" aria-controls="multiCollapseExample_@i" >
+                        <a class="btn p-0 pb-1" data-toggle="collapse" href="#multiCollapseExample_@i" role="button" aria-expanded="false" aria-controls="multiCollapseExample_@i">
                             <i class="fa fa-angle-down fa-lg menu__icon--open"></i>
                             <i class="fa fa-angle-up fa-lg menu__icon--close"></i>
                         </a>
@@ -171,14 +177,14 @@
                         <div class="card card-body collapse multi-collapse" id="multiCollapseExample_@i">
                             <div class="txt-detail mb-1">
                                 訂單詳情
-                                <div style="text-align:right"class="mb-2">
+                                <div style="text-align:right" class="mb-2">
                                     <button class="btn btn-light" type="button" id="detail"><i class="fa-solid fa-boxes-packing">  撿貨單</i></button>
                                 </div>
                                 @if (item.Status_id == 6)
                                 {
                                     <div style="text-align:right; font-size:20px;" class="mb-2"><span class="badge badge-danger badge-pill">訂單取消原因: @item.Status_Description</span></div>
                                 }
-                            </div>                        
+                            </div>
                             <table class="container-fluid table-hover">
                                 <tr class="no-hover bg-light">
                                     <th>
@@ -248,7 +254,7 @@
             window.location.href = "https://localhost:44313/Order/Edit/" + parseFloat($(this).siblings('#Order_id').text());
         });
         $('.list').on('click', '#detail', function (event) {
-           window.location.href = "https://localhost:44313/Order/Details/" + parseFloat($('#Order_id').text());
+            window.location.href = "https://localhost:44313/Order/Details/" + parseFloat($('#Order_id').text());
         });
     </script>
 
