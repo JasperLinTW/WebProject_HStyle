@@ -23,12 +23,12 @@ namespace H2StyleStore.Models.DTOs
 
 		public string Remark { get; set; }
 
-		public int? Employee_Id { get; set; }
+		public string Employee_Name { get; set; }
 	}
 	
 	public static class CreateH_Source_DetailDtoExts
 	{
-		public static CreateH_Source_DetailVM To(this CreateH_Source_DetailDto source)
+		public static CreateH_Source_DetailVM ToVM(this CreateH_Source_DetailDto source)
 		{
 			return new CreateH_Source_DetailVM
 			{
@@ -39,7 +39,7 @@ namespace H2StyleStore.Models.DTOs
 				//Event_Time= source.Event_Time,
 				//Total_H_SoFar= source.Total_H_SoFar,
 				Remark = source.Remark,
-				Employee_Id = source.Employee_Id
+				Employee_Name = source.Employee_Name
 			};
 		}
 	}

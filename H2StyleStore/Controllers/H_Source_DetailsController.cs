@@ -36,6 +36,9 @@ namespace H2StyleStore.Controllers
 		// GET: H_Source_Details
 		public ActionResult HDetail(string sortOrder, string currentFilter, string searchString, int? page, int? activityId, string memberName)
 		{
+			ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+			ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+			ViewBag.ActivitySortParm = String.IsNullOrEmpty(sortOrder) ? "Activity" : "";
 			ViewBag.CurrentSort = sortOrder;
 			// 將篩選條件放在ViewBag,稍後在 view page取回
 			ViewBag.Activities = _repository.GetActivities(activityId);
@@ -67,21 +70,21 @@ namespace H2StyleStore.Controllers
 					.Where(a => a.Member_Name.Contains(memberName));
 			}
 
-			//switch (sortOrder)
-			//{
-			//	case "name_desc":
-			//		data = data.OrderByDescending(s => s.Member_Name);
-			//		break;
-			//	case "Date":
-			//		data = data.OrderBy(s => s.Event_Time);
-			//		break;
-			//	case "Employee":
-			//		data = data.OrderByDescending(s => s.Employee_Id);
-			//		break;
-			//	default:  // Name ascending 
-			//		data = data.OrderBy(s => s.Source_H_Id);
-			//		break;
-			//}
+			switch (sortOrder)
+			{
+				case "name_desc":
+					data = data.OrderByDescending(s => s.Member_Name);
+					break;
+				case "Date":
+					data = data.OrderBy(s => s.Event_Time);
+					break;
+				case "Activity":
+					data = data.OrderByDescending(s => s.H_Activity_Name);
+					break;
+				default:  // Name ascending 
+					data = data.OrderBy(s => s.Source_H_Id);
+					break;
+			}
 
 			int pageSize = 10;
 			int pageNumber = (page ?? 1);
@@ -98,8 +101,11 @@ namespace H2StyleStore.Controllers
 		[HttpPost]
 		public ActionResult CreateNewDetail(CreateH_Source_DetailVM model)
 		{
-			if(ModelState.IsValid)
-			{
+			string user = User.Identity.Name;
+			model.Employee_Name = user;
+			
+			if (ModelState.IsValid)
+			{				
 				_detailService.CreateNewDetail(model.ToDto());
 				return RedirectToAction("HDetail");
 			}

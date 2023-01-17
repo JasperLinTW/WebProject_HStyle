@@ -88,7 +88,7 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 				Event_Time = DateTime.Now,
 				Total_H_SoFar = _db.Members.Find(dto.Member_Id).Total_H + dto.Total_H_SoFar,
 				Remark = dto.Remark,
-				Employee_Id = dto.Employee_Id,
+				Employee_Id = _db.Employees.Where(x => x.Account == dto.Employee_Name).FirstOrDefault().Employee_id
 			};
 
 			_db.H_Source_Details.Add(data);
