@@ -1,7 +1,7 @@
 ﻿@model H2StyleStore.Models.ViewModels.CreateEssayVM
 @section Styles{
     <!-- summernote -->
-    <link href="@Url.Content("https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css")" rel="stylesheet" type="text/css">
+    <link href="@Url.Content("https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css")" rel="stylesheet" type="text/css"  >
 
     <!-- CodeMirror -->
     <link rel="stylesheet" href="../../Scripts/plugins/codemirror/codemirror.css">
@@ -21,117 +21,119 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Influencer_Id, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Influencer_Id, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Influencer_Id, "", new { @class = "text-danger" })
-            </div>
+<div class="form-horizontal">
+    @*<td class="invisible">
+        @Html.DisplayFor(modelItem => item.CategoryId)
+    </td>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.Influencer_Id, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Influencer_Id, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Influencer_Id, "", new { @class = "text-danger" })
         </div>
+    </div>*@
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ETitle, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ETitle, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ETitle, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        @*<div class="form-group">
-                @Html.LabelFor(model => model.EContent, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.TextAreaFor(model => model.EContent, 8, 100, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.EContent, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
-
-        <div class="card-body" name="EContent">
-            <textarea id="summernote" style="display: none;">
-        
-    </textarea>
-            <input id="contentArea" name="EContent" value="" hidden />
-
-        </div>
-
-        @section Scripts {
-            <!-- Summernote -->
-            <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-            <script src="~/Scripts/plugins/summernote/summernote-bs4.min.js"></script>
-            <!-- CodeMirror -->
-            <script src="../../Scripts/plugins/codemirror/codemirror.js"></script>
-            <script src="../../Scripts/plugins/codemirror/mode/css/css.js"></script>
-            <script src="../../Scripts/plugins/codemirror/mode/xml/xml.js"></script>
-            <script src="../../Scripts/plugins/codemirror/mode/htmlmixed/htmlmixed.js"></script>
-            <script>
-                $(function () {
-                    // Summernote
-                    $('#summernote').summernote()
-
-                })
-                $("#submit").on("click", function () {
-                    $("#contentArea").attr("value", encodeURI(($(".note-editable").html())));
-
-                });
-
-            </script>
-        }
-
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CategoryId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(x => x.CategoryId, VideoCategories, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-md-2" for="File">上傳檔案</label>
-            <div class="col-md-10">
-                <input type="file" name="files" clss="form-control" multiple="multiple" />
-            </div>
-        </div>
-
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Tags, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Tags, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Tags, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-
-        @{
-            string UpLoad = string.Empty;
-
-
-        }
-        <div class="form-group">
-            @Html.LabelFor(model => model.UpLoad, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input class="form-control" type="datetime-local" value="@UpLoad" name="UpLoad" />
-            </div>
-        </div>
-        @{
-            string Removed = string.Empty;
-        }
-        <div class="form-group">
-            @Html.LabelFor(model => model.Removed, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input class="form-control" type="datetime-local" value="@Removed" name="Removed" />
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input id="submit" type="submit" value="Create" class="btn btn-default" />
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.ETitle, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ETitle, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ETitle, "", new { @class = "text-danger" })
         </div>
     </div>
+
+    @*<div class="form-group">
+            @Html.LabelFor(model => model.EContent, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.EContent, 8, 100, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.EContent, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+    <div class="card-body" name="EContent">
+        <textarea id="summernote" style="display: none;">
+        
+    </textarea>
+        <input id="contentArea" name="EContent" value="" hidden />
+
+    </div>
+
+    @section Scripts {
+        <!-- Summernote -->
+        <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+        <script src="~/Scripts/plugins/summernote/summernote-bs4.min.js"></script>
+        <!-- CodeMirror -->
+        <script src="../../Scripts/plugins/codemirror/codemirror.js"></script>
+        <script src="../../Scripts/plugins/codemirror/mode/css/css.js"></script>
+        <script src="../../Scripts/plugins/codemirror/mode/xml/xml.js"></script>
+        <script src="../../Scripts/plugins/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+        <script>
+            $(function () {
+                // Summernote
+                $('#summernote').summernote()
+
+            })
+            $("#submit").on("click", function () {
+                $("#contentArea").attr("value", encodeURI(($(".note-editable").html())));
+
+            });
+
+        </script>
+    }
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CategoryId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(x => x.CategoryId, VideoCategories, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2" for="File">上傳檔案</label>
+        <div class="col-md-10">
+            <input type="file" name="files" clss="form-control" multiple="multiple" />
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Tags, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Tags, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Tags, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    @{
+        string UpLoad = string.Empty;
+
+
+    }
+    <div class="form-group">
+        @Html.LabelFor(model => model.UpLoad, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <input class="form-control" type="datetime-local" value="@UpLoad" name="UpLoad" />
+        </div>
+    </div>
+    @{
+        string Removed = string.Empty;
+    }
+    <div class="form-group">
+        @Html.LabelFor(model => model.Removed, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <input class="form-control" type="datetime-local" value="@Removed" name="Removed" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input id="submit" type="submit" value="Create" class="btn btn-secondary" />
+        </div>
+    </div>
+</div>
 
 }
 
