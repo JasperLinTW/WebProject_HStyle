@@ -13,57 +13,68 @@ using H2StyleStore.Models.Services;
 using H2StyleStore.Models.ViewModels;
 using System.Web.Security;
 using H2StyleStore.Models.Infrastructures.ExtensionMethods;
+using H2StyleStore.filter;
 
 namespace H2StyleStore.Controllers
 {
+	[AuthrizeHelper("3")]
 	public class EmployeesController : Controller
     {
         private AppDbContext db = new AppDbContext();
 		private IEmployeeRepository repository;
 		private EmployeeService service;
 
-		public EmployeesController()   //不知道幹嘛用
+		public EmployeesController()   //真的給他用
 		{
 			repository = new EmployeeRepository();
 			service = new EmployeeService(repository);
 
 		}
 
+		[AllowAnonymous]
+		public ActionResult permissions_failed()  //不能通過頁面
+		{
+			return View();
+
+		}
 		// GET: Employees
-		
-		public ActionResult Index()
+
+		public ActionResult Index()  //權限3
         {
-			List<int> list= new List<int> { 1,2 }; //代表 資料庫1跟2都能進去
-			bool isAuthenticated = new AuthrizeHelper().IsAuthenticated(list);
-			if(isAuthenticated == false)   //用來判斷權限
-			{
-				return RedirectToAction("Index", "home");
-			}
+			//List<int> list= new List<int> { 3 }; //代表 資料庫1跟2都能進去
+			//bool isAuthenticated = new AuthrizeHelper().IsAuthenticated(list);
+			//if(isAuthenticated == false)   //用來判斷權限
+			//{
+			//	return RedirectToAction("Index", "home");
+			//}
 
 			var employees = db.Employees.Include(e => e.PermissionsE);
 			return View(employees.ToList());
 
 		}
 
-	//	var roles = FormsAuthentication.Decrypt(System.Web.HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName].Value).UserData;  //抓出cookie  跟  roles比較
+		//	var roles = FormsAuthentication.Decrypt(System.Web.HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName].Value).UserData;  //抓出cookie  跟  roles比較
 
-	//		if (int.Parse(roles) >= 3)   //用來判斷權限
- //           {
-	//			var employees = db.Employees.Include(e => e.PermissionsE);
-	//			return View(employees.ToList());
-	//}
- //           return RedirectToAction("Index","home");  //如果沒有就轉跳這個頁面
+		//		if (int.Parse(roles) >= 3)   //用來判斷權限
+		//           {
+		//			var employees = db.Employees.Include(e => e.PermissionsE);
+		//			return View(employees.ToList());
+		//}
+		//           return RedirectToAction("Index","home");  //如果沒有就轉跳這個頁面
 
 
-	// GET: Members/Register
-	public ActionResult Register_Employees()
+		// GET: Members/Register.
+		[AllowAnonymous]
+		public ActionResult Register_Employees()
 		{
 			return View();
 		}
 
+		[AllowAnonymous]
 		[HttpPost]
-		public ActionResult Register_Employees(Register_EmployeesVM model)
+		public ActionResult Register_Employees(Register_EmployeesVM model) //不要權限
 		{
+
 			if (!ModelState.IsValid)
 			{
 				return View(model);
@@ -86,14 +97,14 @@ namespace H2StyleStore.Controllers
 			}
 		}
 
-
+		[AllowAnonymous]
 		public ActionResult Login()
 		{
 			return View();
 		}
-
+		[AllowAnonymous]
 		[HttpPost]
-		public ActionResult Login(Login_EmployeesVM model)   //12-26 2:05s Create LoginVM
+		public ActionResult Login(Login_EmployeesVM model)   //12-26 2:05s Create LoginVM   不要權限
 		{
 			// var service = new MemberService(repository);
 			(bool IsSuccess, string ErrorMessage) response =
@@ -116,7 +127,8 @@ namespace H2StyleStore.Controllers
 
 			return this.View(model);
 		}
-		public ActionResult Logout()
+		[AllowAnonymous]
+		public ActionResult Logout() //不要權限
 		{
 			Session.Abandon();
 			FormsAuthentication.SignOut();

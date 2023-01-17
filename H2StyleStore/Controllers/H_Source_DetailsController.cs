@@ -12,9 +12,11 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using PagedList;
+using H2StyleStore.filter;
 
 namespace H2StyleStore.Controllers
 {
+	[AuthrizeHelper("2", "3")]
 	public class H_Source_DetailsController : Controller
 	{
 		private H_Source_DetailService _detailService;

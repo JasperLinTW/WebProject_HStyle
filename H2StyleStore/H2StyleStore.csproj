@@ -178,6 +178,7 @@
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\MembersController.cs" />
     <Compile Include="Controllers\VideoController.cs" />
+    <Compile Include="filter\AuthrizeHelper.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -220,7 +221,6 @@
     <Compile Include="Models\EFModels\VideoCategory.cs" />
     <Compile Include="Models\EFModels\VideoLike.cs" />
     <Compile Include="Models\EFModels\VideoView.cs" />
-    <Compile Include="Models\Infrastructures\ExtensionMethods\AuthrizeHelper.cs" />
     <Compile Include="Models\Infrastructures\Repositories\EssayRepository.cs" />
     <Compile Include="Models\Infrastructures\Repositories\H_ActivityRepository.cs" />
     <Compile Include="Models\Infrastructures\Repositories\H_Source_DetailRepository.cs" />
@@ -605,6 +605,8 @@
     <Content Include="Views\Products\PagedPartial.cshtml" />
     <Content Include="Views\H_Source_Details\CreateNewDetail.cshtml" />
     <Content Include="Views\Video\Index.cshtml" />
+    <Content Include="Views\Employees\permissions_failed1.cshtml" />
+    <Content Include="Views\Employees\permissions_failed.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
