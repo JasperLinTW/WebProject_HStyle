@@ -37,10 +37,16 @@ namespace H2StyleStore.Models.Services.Interfaces
 		void DeleteDetail(int id);
 
 		/// <summary>
-		/// 新增單筆活動紀錄
+		/// 新增單筆活動紀錄，自動新增紀錄
 		/// </summary>
 		/// <param name="dto"></param>
 		void CreateHDetail(H_Source_DetailDto dto);
+
+		/// <summary>
+		/// 新增單筆活動紀錄，自動新增紀錄
+		/// </summary>
+		/// <param name="dto"></param>
+		void CreatNewDetail(CreateH_Source_DetailDto dto);
 
 		/// <summary>
 		/// 找出當月生日的會員

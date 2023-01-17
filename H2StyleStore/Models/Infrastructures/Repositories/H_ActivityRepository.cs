@@ -107,5 +107,18 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 
 			_db.SaveChanges();
 		}
+
+		public void CreateHDetail(H_Source_DetailDto dto)
+		{
+			H_Source_Details detail = new H_Source_Details
+			{
+				Member_Id = dto.Member_Id,
+				Activity_Id = dto.Activity_Id,
+				Difference_H = dto.Difference_H,
+				Event_Time = dto.Event_Time,
+			};
+			_db.H_Source_Details.Add(detail);
+			_db.SaveChanges();
+		}
 	}
 }

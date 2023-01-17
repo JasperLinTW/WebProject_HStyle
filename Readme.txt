@@ -84,3 +84,7 @@
 
 -- H_Source_Detail加入了 Total_H_SorFar, Remark, Employee 的欄位
    重新建立EFModel和修改H_Source_DetailVM, H_Source_DetailDto
+
+-- 建立新增活動紀錄
+
+-- 將活動從activityService改到detailService

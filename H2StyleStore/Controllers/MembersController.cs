@@ -64,9 +64,6 @@ namespace H2StyleStore.Controllers
 
             if (response.IsSuccess)
             {
-                // 註冊活動送H幣
-                _activityService.HcoinRegister(model.Id);
-
                 // 建檔成功 redirect to confirm page
                 return View("RegisterConfirm");                   //註冊成功就跳到這邊
             }

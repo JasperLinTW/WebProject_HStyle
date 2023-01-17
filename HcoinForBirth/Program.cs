@@ -21,11 +21,11 @@ namespace HcoinForBirth
 			HcoinForBirth(today);
 
 			// 計算Total H幣
-			var member = _db.Members.ToList();
-			for (int i = 0; i < member.Count; i++)
-			{
-				TotalHcoin(member[i].Id);
-			}
+			//var member = _db.Members.ToList();
+			//for (int i = 0; i < member.Count; i++)
+			//{
+			//	TotalHcoin(member[i].Id);
+			//}
 		}
 
 		/// <summary>

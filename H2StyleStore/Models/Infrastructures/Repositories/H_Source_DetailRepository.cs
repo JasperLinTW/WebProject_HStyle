@@ -1,5 +1,6 @@
 ﻿using H2StyleStore.Models.DTOs;
 using H2StyleStore.Models.EFModels;
+using H2StyleStore.Models.Services;
 using H2StyleStore.Models.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -13,9 +14,13 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 	public class H_Source_DetailRepository : IH_Source_DetailRepository
 	{
 		private AppDbContext _db;
+		//private H_ActivityService activityService;
+
 		public H_Source_DetailRepository(AppDbContext db)
 		{
 			_db = db;
+			//IH_ActivityRepository ac_repo = new H_ActivityRepository(_db);
+			//activityService = new H_ActivityService(ac_repo);
 		}
 
 		public IEnumerable<H_Source_DetailDto> GetSource()
@@ -67,6 +72,29 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			_db.SaveChanges();
 		}
 
+		/// <summary>
+		/// 新增單筆活動紀錄，手動新增
+		/// </summary>
+		/// <param name="dto"></param>
+		public void CreatNewDetail(CreateH_Source_DetailDto dto)
+		{
+			// 計算Hcoin總和，再記錄在Total_H_SorFar中
+			//activityService.TotalHcoin(dto.Member_Id);
+			H_Source_Details data = new H_Source_Details()
+			{
+				Member_Id = dto.Member_Id,
+				Activity_Id = dto.Activity_Id,
+				Difference_H = dto.Difference_H,
+				Event_Time = DateTime.Now,
+				Total_H_SoFar = _db.Members.Find(dto.Member_Id).Total_H + dto.Total_H_SoFar,
+				Remark = dto.Remark,
+				Employee_Id = dto.Employee_Id,
+			};
+
+			_db.H_Source_Details.Add(data);
+			_db.SaveChanges();
+		}
+
 		public IEnumerable<MemberInBirthDto> MemberInBirth(DateTime birth)
 		{
 			var member = _db.Members
@@ -108,5 +136,6 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 
 			_db.SaveChanges();
 		}
+
 	}
 }

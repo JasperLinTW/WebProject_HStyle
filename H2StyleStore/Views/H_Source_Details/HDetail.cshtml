@@ -1,4 +1,6 @@
-﻿@model IEnumerable<H2StyleStore.Models.ViewModels.H_Source_DetailVM>
+﻿@model PagedList.IPagedList<H2StyleStore.Models.ViewModels.H_Source_DetailVM>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "HDetail";
@@ -18,29 +20,40 @@
     </div>
 </form>
 
+<div class="d-flex flex-row-reverse bd-highlight mt-3">
+    @Html.ActionLink("新增紀錄", "CreateNewDetail", "H_Source_Details", new { @class = "btn btn-success" })
+</div>
+
 <br />
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Member_Name)
+            @*@Html.DisplayNameFor(model => model.Member_Name)*@
+            會員名稱
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.H_Activity_Name)
+            @*@Html.DisplayNameFor(model => model.H_Activity_Name)*@
+            活動名稱
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Difference_H)
+            @*@Html.DisplayNameFor(model => model.Difference_H)*@
+            H幣值
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Event_Time)
+            @*@Html.DisplayNameFor(model => model.Event_Time)*@
+            取得時間
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Total_H_SoFar)
+            @*@Html.DisplayNameFor(model => model.Total_H_SoFar)*@
+            H幣總額
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Remark)
+            @*@Html.DisplayNameFor(model => model.Remark)*@
+            備註
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Employee_Id)
+            @*@Html.DisplayNameFor(model => model.Employee_Id)*@
+            員工
         </th>
         <th></th>
     </tr>
@@ -74,3 +87,7 @@
 
 </table>
 
+<div style="text-align:right">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("HDetail", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+</div>

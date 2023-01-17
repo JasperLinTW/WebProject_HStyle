@@ -16,13 +16,12 @@ namespace H2StyleStore.Models.Services
 	{
 
 		private readonly IH_ActivityRepository _repository;
-		private IH_Source_DetailRepository _sourceDetailRepository;
 		public H_ActivityService(IH_ActivityRepository repo)
 		{
-			AppDbContext db = new AppDbContext();
+			//AppDbContext db = new AppDbContext();
 			_repository = repo;
-			_sourceDetailRepository = new H_Source_DetailRepository(db);
 		}
+
 
 		public IEnumerable<H_ActivityDto> GetHActivity()
 		{
@@ -69,10 +68,10 @@ namespace H2StyleStore.Models.Services
 				Difference_H = difference_H,
 				Event_Time = DateTime.Now,
 			};
-			_sourceDetailRepository.CreateHDetail(model);
+			_repository.CreateHDetail(model);
 
 			// 修改H幣總額
-			TotalHcoin(id);
+			//TotalHcoin(id);
 		}
 
 		/// <summary>
@@ -100,10 +99,10 @@ namespace H2StyleStore.Models.Services
 				Difference_H = hCoin,
 				Event_Time = DateTime.Now,
 			};
-			_sourceDetailRepository.CreateHDetail(model);
+			_repository.CreateHDetail(model);
 
 			// 修改H幣總額
-			TotalHcoin(id);
+			//TotalHcoin(id);
 
 			return "購物滿額送H幣: " + hCoin.ToString();
 		}
@@ -139,7 +138,7 @@ namespace H2StyleStore.Models.Services
 					Difference_H = activity.H_Value,
 					Event_Time = DateTime.Now,
 				};
-				_sourceDetailRepository.CreateHDetail(model_Detail);
+				_repository.CreateHDetail(model_Detail);
 
 				checkInTimes = 0;
 			}
@@ -147,30 +146,30 @@ namespace H2StyleStore.Models.Services
 			// 修改打卡紀錄
 			_repository.EditCheckIn(id, checkInTimes);
 			// 修改H幣總額
-			TotalHcoin(id);
+			//TotalHcoin(id);
 
 			return "打卡成功";
 		}
 
-		/// <summary>
-		/// 計算所有 H coin
-		/// </summary>
-		/// <param name="id"></param>
-		public void TotalHcoin(int id)
-		{
-			// 找出會員所有活動的紀錄
-			var detail = _sourceDetailRepository.GetTotalDetail(id);
+		///// <summary>
+		///// 計算所有 H coin
+		///// </summary>
+		///// <param name="id"></param>
+		//public void TotalHcoin(int id)
+		//{
+		//	// 找出會員所有活動的紀錄
+		//	var detail = _sourceDetailRepository.GetTotalDetail(id);
 
-			// 計算H幣總額
-			int total = 0;
-			foreach (var item in detail)
-			{
-				total += item.Difference_H;
-			}
+		//	// 計算H幣總額
+		//	int total = 0;
+		//	foreach (var item in detail)
+		//	{
+		//		total += item.Difference_H;
+		//	}
 
-			// 修改Member的Total_H
-			_sourceDetailRepository.AddH_valueInMember(id, total);
-		}
+		//	// 修改Member的Total_H
+		//	_sourceDetailRepository.AddH_valueInMember(id, total);
+		//}
 
 	}
 }

@@ -35,5 +35,11 @@ namespace H2StyleStore.Models.Services.Interfaces
 		/// </summary>
 		/// <param name="model_CheckIn"></param>
 		void EditCheckIn(int id, int checkInTimes);
+
+		/// <summary>
+		/// 新增單筆活動紀錄，自動新增紀錄
+		/// </summary>
+		/// <param name="dto"></param>
+		void CreateHDetail(H_Source_DetailDto dto);
 	}
 }
