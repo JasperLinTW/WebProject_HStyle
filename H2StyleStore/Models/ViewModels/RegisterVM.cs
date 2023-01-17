@@ -33,20 +33,24 @@ namespace H2StyleStore.Models.ViewModels
         [Compare(nameof(Password))]
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
+
         [Display(Name = "性別")]
-        public bool Gender { get; set; }
+		[Required]
+		public bool Gender { get; set; }
 
-
-        [Display(Name = "地址")]
+		[Required]
+		[Display(Name = "地址")]
         public string Address { get; set; }
        
         [Display(Name = "生日")]
         [Column(TypeName = "date")]
-        public DateTime Birthday { get; set; }
+		[Required]
+		public DateTime Birthday { get; set; }
        
         [Display(Name = "加入日期")]
         [Column(TypeName = "datetime")]
-        public DateTime Jointime { get; set; }
+		[Required]
+		public DateTime Jointime { get; set; }
 
         [Display(Name = "信箱")]
         [Required]
@@ -61,7 +65,8 @@ namespace H2StyleStore.Models.ViewModels
         
         [Display(Name = "手機")]
         [StringLength(10)]
-        public string Phone_Number { get; set; }
+		[Required]
+		public string Phone_Number { get; set; }
     }
 
     public static class RegisterVMExts

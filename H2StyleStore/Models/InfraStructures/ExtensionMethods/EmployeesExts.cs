@@ -15,6 +15,7 @@ namespace H2StyleStore.Models.Infrastructures.ExtensionMethods
 				? null
 				: new EmployeeDto
 				{
+					Permission_id= entity.Permission_id,
 					Employee_id = entity.Employee_id,
 					Account = entity.Account,
 					EncryptedPassword = entity.EncryptedPassword, //老樣子驗證碼
