@@ -14,9 +14,12 @@ using H2StyleStore.Models.ViewModels;
 using System.Web.Security;
 using H2StyleStore.Models.Infrastructures.Repositories;
 using H2StyleStore.Models.DTOs;
+using H2StyleStore.filter;
 
 namespace H2StyleStore.Controllers
 {
+	[AuthrizeHelper("3")]
+
 	public class MembersController : Controller
     {
        private AppDbContext db = new AppDbContext();

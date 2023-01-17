@@ -1,4 +1,5 @@
-﻿using H2StyleStore.Models;
+﻿using H2StyleStore.filter;
+using H2StyleStore.Models;
 using H2StyleStore.Models.DTOs;
 using H2StyleStore.Models.EFModels;
 using H2StyleStore.Models.Infrastructures;
@@ -20,6 +21,7 @@ using System.Web.UI.WebControls;
 
 namespace H2StyleStore.Controllers
 {
+	[AuthrizeHelper("1","3")]
 	public class EssaysController : Controller
 	{
 

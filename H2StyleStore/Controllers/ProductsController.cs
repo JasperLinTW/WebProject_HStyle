@@ -1,4 +1,5 @@
-﻿using H2StyleStore.Models.EFModels;
+﻿using H2StyleStore.filter;
+using H2StyleStore.Models.EFModels;
 using H2StyleStore.Models.Infrastructures;
 using H2StyleStore.Models.Infrastructures.Repositories;
 using H2StyleStore.Models.Services;
@@ -12,6 +13,7 @@ using X.PagedList;
 
 namespace H2StyleStore.Controllers
 {
+	[AuthrizeHelper("2", "3")]
 	public class ProductsController : Controller
 	{
 		private ProductService productService;
