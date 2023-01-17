@@ -8,6 +8,7 @@ using Microsoft.Win32;
 using PagedList;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Reflection;
 using System.Web;
@@ -21,11 +22,8 @@ namespace H2StyleStore.Controllers
 
 		public OrderController()
 		{
-			//string currentUser = this.User.Identity.Name;
-
 			var db = new AppDbContext();
 			IOrderRepository repo = new OrderRepository(db);
-			//this.orderService = new OrderService(repo, currentUser);
 			this.orderService = new OrderService(repo);
 		}
 
@@ -102,26 +100,41 @@ namespace H2StyleStore.Controllers
 			return View(data);
 		}
 
-		public ActionResult Update()
-		{
-			ViewBag.Status = orderService.GetStatus();
+		//public ActionResult Update()
+		//{
+		//	ViewBag.Status = orderService.GetStatus();
 
-			var data = orderService.Load()
-					   .Select(x => x.ToVM());
-			data.OrderBy(x => x.CreatedTime);
-			return View(data.ToArray());
-		}
+		//	var data = orderService.Load()
+		//			   .Select(x => x.ToVM());
+		//	data.OrderBy(x => x.CreatedTime);
+		//	return View(data.ToArray());
+		//}
 
 		[HttpPost]
 		public ActionResult Update(OrderUpdateVM[] orders)
 		{
-			for (int i = 0; i < orders.Length; i++)
+			try
 			{
-				var status_id = orderService.StatusTransfer(orders[i].Status);
-				orders[i].Status_id = status_id;
-				orderService.Update(orders[i].ToDTO());
+				for (int i = 0; i < orders.Length; i++)
+				{
+					orders[i].EmployeeAccount = this.User.Identity.Name;
+					var status_id = orderService.StatusTransfer(orders[i].Status);
+					orders[i].Status_id = status_id;
+					orderService.Update(orders[i].ToDTO());
+				}
 			}
+			catch (Exception ex)
+			{
+				ModelState.AddModelError(string.Empty, "修改失敗: " + ex.Message);
+			}
+			if (ModelState.IsValid)
+			{
+				return RedirectToAction("Index");
+			}
+
 			return RedirectToAction("Index");
+
+
 		}
 
 		public ActionResult Edit(int id)
@@ -130,19 +143,33 @@ namespace H2StyleStore.Controllers
 			ViewBag.StatusDescription = orderService.GetStatusDescription();
 			var data = orderService.GetOrderbyId(id).ToVM();
 
-
 			return View(data);
 		}
 
 		[HttpPost]
 		public ActionResult Edit(OrderVM order)
 		{
-			orderService.Update(order.ToDTO());
-			return RedirectToAction("Index");
+			try
+			{
+				order.EmployeeAccount = this.User.Identity.Name;
+				orderService.Update(order.ToDTO());
+			}
+			catch (Exception ex)
+			{
+
+				ModelState.AddModelError(string.Empty, "修改失敗: " + ex.Message);
+			}
+			if (ModelState.IsValid)
+			{
+				return RedirectToAction("Index");
+			}
+
+			return View(order);
+
 		}
 
 		[HttpPost]
-		public string Cancel (int status_Description, int order_id)
+		public string Cancel(int status_Description, int order_id)
 		{
 
 			try

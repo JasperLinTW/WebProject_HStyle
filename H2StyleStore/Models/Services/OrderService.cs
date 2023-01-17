@@ -13,6 +13,7 @@ namespace H2StyleStore.Models.Services
 	public class OrderService
 	{
 		private readonly IOrderRepository _repository;
+
 		public OrderService(IOrderRepository repository)
 		{
 			_repository = repository;

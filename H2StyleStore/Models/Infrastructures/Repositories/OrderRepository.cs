@@ -34,10 +34,13 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			};
 
 			_db.Order_Log.Add(log);
-		    Order_Status newStatus =_db.Order_Status.Where(x => x.Status == entity.Status).FirstOrDefault();
+			Order_Status newStatus = _db.Order_Status.Where(x => x.Status == entity.Status).FirstOrDefault();
+
+			Employee employee = _db.Employees.Where(x => x.Account == entity.EmployeeAccount).FirstOrDefault();
 
 			order.Status_id = newStatus.Status_id;
 			order.ShippedDate = entity.ShippedDate;
+			order.Employee_id = employee.Employee_id;
 
 			Order_StatusDescription newDescription = _db.Order_StatusDescription.Where(x => x.Status_id == newStatus.Status_id).FirstOrDefault();
 			order.Status_Description_id = newDescription.Description_id;
@@ -87,6 +90,15 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 		public OrderDTO GetOrderbyId(int id)
 		{
 			OrderDTO order = _db.Orders.Find(id).ToDTO();
+			if (order.Employee_id == null)
+			{
+				order.EmployeeAccount = string.Empty;
+			}
+			else
+			{
+				Employee employee = _db.Employees.Where(x => x.Employee_id == order.Employee_id).FirstOrDefault();
+				order.EmployeeAccount = employee.Account;
+			}
 
 			return order;
 		}
