@@ -33,7 +33,6 @@ namespace H2StyleStore.Controllers
 		public ActionResult Index(int? status_id, string searchString, string sortOrder, string currentFilter, int? page)
 		{
 			ViewBag.Status = orderService.GetStatus(status_id);
-			ViewBag.Value = searchString;
 			ViewBag.Status_order = orderService.GetStatus();
 			ViewBag.CurrentSort = sortOrder;
 			ViewBag.CreatetimeSortParm = sortOrder == "Date" ? "date_desc" : "Date";

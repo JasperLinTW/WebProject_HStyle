@@ -9,7 +9,6 @@
 @{
     IEnumerable<SelectListItem> statuslist = ViewBag.Status;
     IEnumerable<SelectListItem> status_order = ViewBag.Status_order;
-    var value = ViewBag.Value;
     var statusInDb = status_order.ToList();
 
     int total = 0;
@@ -25,7 +24,7 @@
             <div class="caption">
                 <div class="row">
                     <div class="col-md-3">訂單狀態:@Html.DropDownList("status_id", statuslist, new { @class = "form-control" })</div>
-                    <div class="col-md-3">搜尋:<input type="text" name="value" class="form-control" value="@value" placeholder="請輸入訂單編號、會員名稱"></div>
+                    <div class="col-md-3">搜尋:@Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { placeholder = "請輸入訂單編號、會員名稱", @class = "form-control"})</div>
                     <div class="col-md-1 pt-4"><input type="submit" class="btn btn-primary" value="搜尋" /></div>
                 </div>
             </div>
@@ -40,7 +39,7 @@
     <table class="table table-bordered table-hover borderless">
         <thead>
             <tr>
-                <th>
+                <th style="width:100px;">
                     訂單編號
                 </th>
                 <th>
@@ -48,7 +47,6 @@
                 </th>
                 <th>
                     @Html.ActionLink("總額", "Index", new { sortOrder = ViewBag.TotalSortParm }, new { @class = "text-dark fa-solid fa-sort" })
-                    @*<a href="/Order/Index" value=@{}>總額<i class="fa-solid fa-sort"></i></a>*@
                 </th>
                 <th>
                     付款金額
