@@ -121,7 +121,7 @@
                         @Html.DisplayFor(modelItem => item.Payment)
                     </td>
                     <td>
-                        @if (item.Status == "取消")
+                        @if (item.Status_id >= 4)
                         {
                             <input type="datetime-local" disabled="disabled" value="@shippedDate" name="orders[@i].ShippedDate" />
                         }
@@ -158,13 +158,19 @@
                     </td>
                     <td>
                         @if (item.Status == "取消")
-                        {<select name="orders[@i].Status" disabled="disabled" style="width: 125px">
+                        {<select name="orders[@i].Status" disabled="disabled" style="width: 145px">
+                                <option value="@item.Status">@item.Status</option>
+                            </select>
+                        }
+                        else if (item.Status_id >= 9)
+                        {
+                            <select name="orders[@i].Status" disabled="disabled" style="width: 145px">
                                 <option value="@item.Status">@item.Status</option>
                             </select>
                         }
                         else if (item.RequestRefund == true)
                         {
-                            <select name="orders[@i].Status" style="width: 125px">
+                            <select name="orders[@i].Status" style="width: 145px">
                                 <option value="@item.Status">@item.Status</option>
 
                                 @for (int k = 0; k < statusInDb.Count; k++)
@@ -178,7 +184,7 @@
                         }
                         else
                         {
-                            <select name="orders[@i].Status" style="width: 125px">
+                            <select name="orders[@i].Status" style="width: 145px">
                                 <option value="@item.Status">@item.Status</option>
 
                                 @for (int k = 0; k < statusInDb.Count; k++)
