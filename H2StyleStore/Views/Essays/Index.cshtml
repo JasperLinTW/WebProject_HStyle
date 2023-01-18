@@ -107,15 +107,15 @@
                 <br />
                 <div class="row">
 
-                    <div class="col-md-pull-1" style="width: 200px; float: left;">
+                    <div class="col-md-2">
 
                         @foreach (var img in item.Images)
                         {
-                            <img class="img w-100" src="@img" />
+                            <img class="img w-100" style="width: 100%; height:100%；" src="@img" />
                         }
                     </div>
                     <br />
-                    <div class="col-md-pull-11 ml-3">
+                    <div class="col-md-10">
                         <p>
                             <b style="color: #78BEF5; font-size: large; font-weight: bold;">@Html.DisplayFor(modelItem => item.ETitle)</b>
                         </p>
@@ -154,7 +154,7 @@
             @Html.ActionLink("Edit", "EditEssays", new { id = item.Essay_Id }, new { @class = "btn btn-default" }) |
             @*@Html.ActionLink("Details", "Details", new { id = item.Essay_Id }) |*@
             @Html.ActionLink("Delete", "Delete", new { id = item.Essay_Id, }, new { @class = "btn btn-danger" })|
-            <b style="color:hotpink" ; font-size: medium;>@Html.DisplayFor(modelItem => item.Influencer_Name)</b>
+            <b style="color: hotpink; " ;>by</b><b class="ml-1" style="color: hotpink; font-size: medium;" >@Html.DisplayFor(modelItem => item.Influencer_Name)</b>
 
         </td>
         </tr>
