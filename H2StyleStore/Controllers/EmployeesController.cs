@@ -120,14 +120,15 @@ namespace H2StyleStore.Controllers
 
 				Response.Cookies.Add(cookie);
 
-				return Redirect(returnUrl);
+				//	return Redirect(returnUrl);
+				return RedirectToAction("Index","Home");
 			}
 
 			ModelState.AddModelError(string.Empty, response.ErrorMessage);
 
 			return this.View(model);
 		}
-		[AllowAnonymous]
+		[AllowAnonymous]  //不要權限
 		public ActionResult Logout() //不要權限
 		{
 			Session.Abandon();
