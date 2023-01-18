@@ -405,6 +405,8 @@
     <Content Include="Images\VideoImages\image03.jpg" />
     <Content Include="Images\VideoImages\image04.jpg" />
     <Content Include="Images\VideoImages\image05.jpg" />
+    <Content Include="Photos\background1.png" />
+    <Content Include="Photos\background2.jpg" />
     <Content Include="Photos\Logo-light.png" />
     <Content Include="Photos\Logo-small.png" />
     <Content Include="Photos\Logo.png" />

@@ -46,3 +46,31 @@
 .note-editable {
     height: 325px
 }
+
+.h300px {
+    height: 300px;
+}
+
+.w600px {
+    width: 600px;
+}
+
+.object-fit-cover {
+    object-fit: cover;
+}
+
+.fz40 {
+    font-size: 40px;
+}
+
+.z1 {
+    z-index: 1;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.mt-50 {
+    margin-top: -50px;
+}
