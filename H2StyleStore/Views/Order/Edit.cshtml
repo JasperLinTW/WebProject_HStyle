@@ -115,13 +115,13 @@
                 <div class="form-group col-md-4">
                     @Html.LabelFor(model => model.ShippedDate, htmlAttributes: new { @class = "control-label" })
                     <div class="col-md-12">
-                        @if (Model.Status_id >=4 )
+                        @if (Model.Status_id > 4 )
                         {
-                            <input type="datetime-local" class="form-control" disabled="disabled" value="@shippedDate" name="Model.ShippedDate" />
+                            <input id="shippeddate" type="datetime-local" class="form-control" readonly="readonly" value="@shippedDate" name="ShippedDate" />
                         }
                         else
                         {
-                            <input type="datetime-local" class="form-control"  value="@shippedDate" name="Model.ShippedDate" />
+                            <input id="shippeddate" type="datetime-local" class="form-control"  value="@shippedDate" name="ShippedDate" />
                         }
                     </div>
                 </div>
