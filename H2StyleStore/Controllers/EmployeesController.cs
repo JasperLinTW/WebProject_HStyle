@@ -64,6 +64,21 @@ namespace H2StyleStore.Controllers
 
 
 		// GET: Members/Register.
+
+		[AllowAnonymous]
+		public ActionResult Details_Employees(string account)  //還沒弄好 改成用account來做判斷
+		{
+			if (string.IsNullOrEmpty(account))
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			Employee employee = db.Employees.Where(e => e.Account == account).FirstOrDefault();
+			if (employee == null)
+			{
+				return HttpNotFound();
+			}
+			return View(employee);
+		}
 		[AllowAnonymous]
 		public ActionResult Register_Employees()
 		{
@@ -120,14 +135,15 @@ namespace H2StyleStore.Controllers
 
 				Response.Cookies.Add(cookie);
 
-				return Redirect(returnUrl);
+				//	return Redirect(returnUrl);
+				return RedirectToAction("Index","Home");
 			}
 
 			ModelState.AddModelError(string.Empty, response.ErrorMessage);
 
 			return this.View(model);
 		}
-		[AllowAnonymous]
+		[AllowAnonymous]  //不要權限
 		public ActionResult Logout() //不要權限
 		{
 			Session.Abandon();

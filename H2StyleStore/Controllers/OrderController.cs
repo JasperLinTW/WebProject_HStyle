@@ -85,7 +85,7 @@ namespace H2StyleStore.Controllers
 			}
 			var list = data.Select(x => x.ToVM());
 
-			int pageSize = 3;
+			int pageSize = 5;
 			int pageNumber = (page ?? 1);
 
 			return View(list.ToPagedList(pageNumber, pageSize));

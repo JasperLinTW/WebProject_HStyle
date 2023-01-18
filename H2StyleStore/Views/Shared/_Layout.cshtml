@@ -211,39 +211,12 @@
                             </ul>
                                 </li>
                                 <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="../../Essays/Index" class="nav-link">
                                 <i class="nav-icon fas fa-edit"></i>
                                 <p>
                                     部落格文章管理
-                                    <i class="fas fa-angle-left right"></i>
                                 </p>
                             </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="/Essays" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>文章管理</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="/Essays/NewEssay" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>新增文章</p>
-                                    </a>
-                                </li>
-                                @*<li class="nav-item">
-                                    <a href="/" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>穿搭</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="../forms/validation.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>美妝</p>
-                                    </a>
-                                </li>*@
-                            </ul>
                         </li>
                                 <li class="nav-item">
                             <a href="../../Video/Index" class="nav-link">
@@ -264,7 +237,7 @@
                         </div>
 
                         <div>
-                            <a class="mt-3 btn btn-secondary hide-on-collapse" href="/Members/Index?Length=9" style="align-content:center; justify-content:center"> <i class="fa-sharp fa-solid fa-user" style="margin-right:13.5px"></i>使用者名稱：@(User.Identity.Name)</a>
+                            <a class="mt-3 btn btn-secondary hide-on-collapse" href="/Employees/Details_Employees?account=@User.Identity.Name" style="align-content:center; justify-content:center"> <i class="fa-sharp fa-solid fa-user" style="margin-right:13.5px"></i>使用者名稱：@(User.Identity.Name)</a>
                         </div>
                         @*<li>@Html.ActionLink("登出", "Logout", "Members")</li>*@
                         @*<ul>

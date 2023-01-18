@@ -405,6 +405,8 @@
     <Content Include="Images\VideoImages\image03.jpg" />
     <Content Include="Images\VideoImages\image04.jpg" />
     <Content Include="Images\VideoImages\image05.jpg" />
+    <Content Include="Photos\background1.png" />
+    <Content Include="Photos\background2.jpg" />
     <Content Include="Photos\Logo-light.png" />
     <Content Include="Photos\Logo-small.png" />
     <Content Include="Photos\Logo.png" />
@@ -607,6 +609,7 @@
     <Content Include="Views\Video\Index.cshtml" />
     <Content Include="Views\Employees\permissions_failed1.cshtml" />
     <Content Include="Views\Employees\permissions_failed.cshtml" />
+    <Content Include="Views\Employees\Details_Employees.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
