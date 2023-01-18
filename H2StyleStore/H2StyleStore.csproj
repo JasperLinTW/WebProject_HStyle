@@ -607,6 +607,7 @@
     <Content Include="Views\Video\Index.cshtml" />
     <Content Include="Views\Employees\permissions_failed1.cshtml" />
     <Content Include="Views\Employees\permissions_failed.cshtml" />
+    <Content Include="Views\Employees\Details_Employees.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

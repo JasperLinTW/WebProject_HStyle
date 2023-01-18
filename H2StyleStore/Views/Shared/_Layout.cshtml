@@ -264,7 +264,7 @@
                         </div>
 
                         <div>
-                            <a class="mt-3 btn btn-secondary hide-on-collapse" href="/Members/Index?Length=9" style="align-content:center; justify-content:center"> <i class="fa-sharp fa-solid fa-user" style="margin-right:13.5px"></i>使用者名稱：@(User.Identity.Name)</a>
+                            <a class="mt-3 btn btn-secondary hide-on-collapse" href="/Employees/Details_Employees?account=@User.Identity.Name" style="align-content:center; justify-content:center"> <i class="fa-sharp fa-solid fa-user" style="margin-right:13.5px"></i>使用者名稱：@(User.Identity.Name)</a>
                         </div>
                         @*<li>@Html.ActionLink("登出", "Logout", "Members")</li>*@
                         @*<ul>
