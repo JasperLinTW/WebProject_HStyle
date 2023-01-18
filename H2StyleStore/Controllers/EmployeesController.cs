@@ -65,6 +65,7 @@ namespace H2StyleStore.Controllers
 
 		// GET: Members/Register.
 
+		[AllowAnonymous]
 		public ActionResult Details_Employees(string account)  //還沒弄好 改成用account來做判斷
 		{
 			if (string.IsNullOrEmpty(account))
