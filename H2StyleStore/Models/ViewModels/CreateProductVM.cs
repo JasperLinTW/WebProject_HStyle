@@ -13,12 +13,15 @@ namespace H2StyleStore.Models.ViewModels
 		public int ProductId { get; set; }
 
 		[Display(Name = "商品名稱")]
+		[Required]
 		public string Product_Name { get; set; }
 
 		[Display(Name = "單價")]
+		[Required]
 		public int UnitPrice { get; set; }
 
 		[Display(Name = "商品描述")]
+		[Required]
 		public string Description { get; set; }
 
 
@@ -37,6 +40,7 @@ namespace H2StyleStore.Models.ViewModels
 		public List<string> images { get; set; }
 
 		[Display(Name = "規格")]
+		[Required(ErrorMessage ="規格至少一項")]
 		public List<SpecVm> specs { get; set; }
 
 		[Display(Name = "標籤")]
