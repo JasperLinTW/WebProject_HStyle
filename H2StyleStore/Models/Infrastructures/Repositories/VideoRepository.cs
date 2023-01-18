@@ -97,7 +97,7 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 		public void Update(UpdateVideoDto dto)
 		{
 			string path = dto.Image;
-			Image image = new Image { Path = path };
+			Image image = new Image { Path = "../../Images/VideoImages/"+path };
 			_db.Images.Add(image);
 			_db.SaveChanges();
 
@@ -108,10 +108,15 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			video.Description = dto.Description;
 			video.CreatedTime = DateTime.Now;
 			video.CategoryId = dto.CategoryId;
-			video.FilePath = "../../Videos/" + dto.FilePath;
+			video.FilePath = "../../Videos/"+dto.FilePath;
 			video.ImageId = imageid.Image_Id;
 			video.OnShelffTime = dto.OnShelffTime;
 			video.OffShelffTime = dto.OffShelffTime;
+
+			foreach (var dbTag in video.Tags.ToArray())
+			{
+				video.Tags.Remove(dbTag);
+			}
 
 			foreach (var tag in dto.Tags)
 			{
