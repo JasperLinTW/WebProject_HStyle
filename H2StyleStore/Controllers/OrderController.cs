@@ -103,16 +103,6 @@ namespace H2StyleStore.Controllers
 			return View(data);
 		}
 
-		//public ActionResult Update()
-		//{
-		//	ViewBag.Status = orderService.GetStatus();
-
-		//	var data = orderService.Load()
-		//			   .Select(x => x.ToVM());
-		//	data.OrderBy(x => x.CreatedTime);
-		//	return View(data.ToArray());
-		//}
-
 		[HttpPost]
 		public ActionResult Update(OrderUpdateVM[] orders)
 		{
