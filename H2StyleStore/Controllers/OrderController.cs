@@ -30,13 +30,14 @@ namespace H2StyleStore.Controllers
 		}
 
 		// GET: Order
-		public ActionResult Index(int? status_id, string searchString, string sortOrder, string currentFilter, int? page)
+		public ActionResult Index(int? status_id, string searchString, string sortOrder, string currentFilter, int? page, int? pageSize)
 		{
 			ViewBag.Status = orderService.GetStatus(status_id);
 			ViewBag.Status_order = orderService.GetStatus();
 			ViewBag.CurrentSort = sortOrder;
 			ViewBag.CreatetimeSortParm = sortOrder == "Date" ? "date_desc" : "Date";
 			ViewBag.TotalSortParm = sortOrder == "total" ? "total_desc" : "total";
+			ViewBag.PageSize = pageSize;
 
 			var data = orderService.Load();
 
@@ -84,10 +85,11 @@ namespace H2StyleStore.Controllers
 			}
 			var list = data.Select(x => x.ToVM());
 
-			int pageSize = 5;
+			//檢視頁數
+			pageSize = pageSize ?? 10;
 			int pageNumber = (page ?? 1);
 
-			return View(list.ToPagedList(pageNumber, pageSize));
+			return View(list.ToPagedList(pageNumber, (int)pageSize));
 		}
 
 		public ActionResult Details(int? id)

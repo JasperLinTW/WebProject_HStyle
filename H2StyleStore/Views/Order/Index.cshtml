@@ -278,6 +278,13 @@
     </table>
 </form>
 <br />
+<div class="col-2">
+    <label>每頁顯示: </label> <select data-val="true" data-val-number="欄位 PageSize 必須是數字。" data-val-required="PageSize 欄位是必要項。" id="pageSize" name="pageSize">
+        <option value="5">5</option>
+        <option selected="selected" value="10">10</option>
+        <option value="15">15</option>
+    </select> <label>筆 </label>
+</div>
 <div style="text-align:right">
     Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
     @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
