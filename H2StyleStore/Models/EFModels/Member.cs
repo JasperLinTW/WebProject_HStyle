@@ -47,7 +47,6 @@ namespace H2StyleStore.Models.EFModels
         [Column(TypeName = "datetime2")]
         [DisplayFormat(DataFormatString ="{0:yyyy-MM-dd HH:mm:ss}",ApplyFormatInEditMode =true)]
         public DateTime Birthday { get; set; }
-
         public int? Permission_Id { get; set; }
 
 		[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
