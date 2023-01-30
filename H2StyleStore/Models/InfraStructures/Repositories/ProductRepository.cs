@@ -30,6 +30,16 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			return query.Select(x => x.ToDto());
 		}
 
+		public IEnumerable<ProductDto> GetProducts(string term)
+		{
+			IEnumerable<Product> query = _db.Products;
+			//.Include("PCategory");
+			query = query.Where(x => x.Product_Name.StartsWith(term));
+			query = query.OrderBy(x => x.DisplayOrder);
+
+			return query.Select(x => x.ToDto());
+		}
+
 		public CreateProductDto GetProduct(int id)
 		{
 			IEnumerable<Product> query = _db.Products;

@@ -22,6 +22,12 @@ namespace H2StyleStore.Models.Services
 			return _repository.GetProducts();
 		}
 
+		public IEnumerable<string> GetProducts(string term)
+		{
+			var itemNames = _repository.GetProducts(term).Select(x => x.Product_Name);
+			return itemNames;
+		}
+
 		public CreateProductDto GetProduct(int productId)
 		{
 			return _repository.GetProduct(productId);

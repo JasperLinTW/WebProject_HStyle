@@ -11,6 +11,7 @@ namespace H2StyleStore.Models.Services
 	public interface IProductRepository
 	{
 		IEnumerable<ProductDto> GetProducts();
+		IEnumerable<ProductDto> GetProducts(string term);
 		CreateProductDto GetProduct(int id);
 
 		bool IsExist(string productName);

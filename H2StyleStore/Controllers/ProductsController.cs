@@ -30,9 +30,6 @@ namespace H2StyleStore.Controllers
 		
 		public ActionResult Index()
         {
-			
-			var data = productService.GetProducts()
-                .Select(x => x.ToVM());
             
             return View();
         }
@@ -73,11 +70,9 @@ namespace H2StyleStore.Controllers
 
 		public JsonResult QueryProducts(string term)
 		{
-			var items = productService.GetProducts();
-			List<string> itemNames = items.Select(x => x.Product_Name).ToList();
-			var filteredItems = itemNames.Where(
-				name => name.StartsWith(term));
-			return Json(filteredItems.DefaultIfEmpty(), JsonRequestBehavior.AllowGet);
+			var items = productService.GetProducts(term).ToList();
+			
+			return Json(items.DefaultIfEmpty(), JsonRequestBehavior.AllowGet);
 		}
 
 		public ActionResult NewProduct()
