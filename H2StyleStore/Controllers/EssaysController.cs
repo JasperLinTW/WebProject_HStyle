@@ -22,7 +22,7 @@ using PagedList;
 
 namespace H2StyleStore.Controllers
 {
-	[AuthrizeHelper("1","3")]
+	[AuthrizeHelper("1", "3")]
 	public class EssaysController : Controller
 	{
 
@@ -126,6 +126,41 @@ namespace H2StyleStore.Controllers
 
 			bool itDateTime = DateTime.TryParse(Request.Form["Removed"], out DateTime dt2);
 			model.Removed = dt2;
+
+
+			try
+			{
+				if (model.Removed <= model.UpLoad)
+				{
+
+					throw new Exception("下架時間不能小於上架時間");
+
+				}
+			}
+			catch (Exception ex)
+			{
+				ModelState.AddModelError("Removed", ex.Message);
+				//return View(model);
+			}
+
+			try
+			{
+				if (model.UpLoad <= DateTime.Today)
+				{
+
+					throw new Exception("上架時間不能小於今天");
+
+				}
+			}
+			catch (Exception ex)
+			{
+				ModelState.AddModelError("UpLoad", ex.Message);
+
+			}
+			if (ModelState.IsValid)
+			{
+				return View(model);
+			}
 
 			if (files[1] != null)
 			{

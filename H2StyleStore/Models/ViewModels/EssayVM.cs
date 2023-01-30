@@ -15,14 +15,17 @@ namespace H2StyleStore.Models.ViewModels
 		public int Essay_Id { get; set; }
 
 		[Display(Name = "員工賬號ID")]
+		[Required]
 		public string Influencer_Name { get; set; }
 
 		[Display(Name = "發佈時間")]
+		[Required]
 		public DateTime UplodTime { get; set; }
 
 		[Required]
 		[StringLength(10)]
 		[Display(Name = "標題名稱")]
+
 		public string ETitle { get; set; }
 
 		[Required]
@@ -30,18 +33,24 @@ namespace H2StyleStore.Models.ViewModels
 		[Display(Name = "内文")] // 修改Html加入...
 		public string EContent { get; set; }
 
+
+		[Required]
 		[Display(Name = "類別名稱")]
 		public string CategoryName { get; set; }
 
+		[Required]
 		[Display(Name = "設定發佈時間")]
 		public DateTime UpLoad { get; set; }
 
+		[Required]
 		[Display(Name = "設定下架時間")]
 		public DateTime Removed { get; set; }
 
+		[Required]
 		[Display(Name = "圖片")]
 		public IEnumerable<string> Images { get; set; }
 
+		[Required]
 		[Display(Name = "標籤")]
 		public IEnumerable<string> Tags { get; set; }
 		public int CategoryId { get; set; }

@@ -30,21 +30,26 @@ namespace H2StyleStore.Models.ViewModels
 		public string EContent { get; set; }
 
 		// 下拉
+		[Required]
 		[Display(Name = "類別名稱")]
 		public int CategoryId { get; set; }
 
+		[Required]
 		[Display(Name = "發佈時間")]
 		[Column(TypeName = "datetime2")]
 		[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
 		public DateTime UpLoad { get; set; }
 
+		[Required]
 		[Display(Name = "下架時間")]
 		[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
 		public DateTime Removed { get; set; }
 
+		[Required]
 		[Display(Name = "圖片")]
 		public List<string> Images { get; set; }
 
+		[Required]
 		[Display(Name = "標籤")]
 		public string Tags { get; set; }
 	}
