@@ -9,6 +9,7 @@
 @{
     IEnumerable<SelectListItem> statuslist = ViewBag.Status;
     IEnumerable<SelectListItem> status_order = ViewBag.Status_order;
+    IEnumerable<SelectListItem> pageSizeList = ViewBag.pageSizeList;
     var statusInDb = status_order.ToList();
 
     int total = 0;
@@ -30,11 +31,7 @@
             </div>
         </div>
     </div>
-    <label>每頁顯示: </label> <select data-val="true" data-val-number="欄位 PageSize 必須是數字。" data-val-required="PageSize 欄位是必要項。" name="pageSize">
-        <option value="5">5</option>
-        <option value="10">10</option>
-        <option value="15">15</option>
-    </select> <label>筆 </label>
+    <label>每頁顯示: </label>@Html.DropDownList("pageSize", pageSizeList)<label>筆 </label>
 </form>
 <form action="@Url.Action("Update")" method="post">
     <div style="text-align:right">
@@ -290,7 +287,7 @@
 <br />
 <div style="text-align:right">
     Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter}))
 </div>
 
 @section Scripts{

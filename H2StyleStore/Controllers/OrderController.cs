@@ -37,8 +37,13 @@ namespace H2StyleStore.Controllers
 			ViewBag.CurrentSort = sortOrder;
 			ViewBag.CreatetimeSortParm = sortOrder == "Date" ? "date_desc" : "Date";
 			ViewBag.TotalSortParm = sortOrder == "total" ? "total_desc" : "total";
-			ViewBag.PageSize = pageSize;
-
+			List<SelectListItem> pageSizeList = new List<SelectListItem>
+            {
+		    new SelectListItem{ Text = "5", Value = "5", Selected = pageSize == 5},
+		    new SelectListItem{ Text = "10", Value = "10", Selected = pageSize == 10},
+		    new SelectListItem{ Text = "15", Value = "15", Selected = pageSize == 15}, 
+			};
+			ViewBag.pageSizeList = pageSizeList;
 			var data = orderService.Load();
 
 			//可排序
