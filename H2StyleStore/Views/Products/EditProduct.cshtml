@@ -89,13 +89,17 @@
         </div>
     </div>
 
+    <div id="imgPreview" class="d-flex">
+
+    </div>
+
     <div class="form-group">
         <div class="col-md-10">
-            <input type="file" name="files" class="form-control" multiple="multiple" />
+            <input id="imgInput" type="file" name="files" class="form-control" multiple="multiple" accept="image/*" />
         </div>
     </div>
     @{
-        
+
     }
 
 
@@ -111,7 +115,7 @@
         @{foreach (var spec in Model.specs)
             {
                 List<SelectListItem> list = new List<SelectListItem>
-                        {
+                    {
                                         new SelectListItem{Value="XL", Text="XL"},
                                         new SelectListItem{Value="L", Text="L"},
                                         new SelectListItem{Value="M", Text="M"},
@@ -120,17 +124,17 @@
                                     };
                 foreach (var item in list)
                 {
-                    if(spec.Size == item.Value) { item.Selected = true; }
+                    if (spec.Size == item.Value) { item.Selected = true; }
                 }
                 <div class="form-group spec">
-                            <div class="col-md-10 input-group specs mb-2">
-                                <input class="form-control text-box Color" name="" type="text" value="@spec.Color" placeholder="顏色">
-                                @Html.DropDownList("Size", list, new { @class = "form-control text-box Size" })
+                    <div class="col-md-10 input-group specs mb-2">
+                        <input class="form-control text-box Color" name="" type="text" value="@spec.Color" placeholder="顏色">
+                        @Html.DropDownList("Size", list, new { @class = "form-control text-box Size" })
 
-                                @*<input class="form-control text-box Size" name="" type="text" value="@spec.Size" placeholder="尺寸">*@
-                                <input class="form-control text-box Stock" name="" type="number" value="@spec.Stock" placeholder="庫存">
-                                <button type="button" class="btn btn-default delSpecBtn">刪除</button>
-                            </div>
+                        @*<input class="form-control text-box Size" name="" type="text" value="@spec.Size" placeholder="尺寸">*@
+                        <input class="form-control text-box Stock" name="" type="number" value="@spec.Stock" placeholder="庫存">
+                        <button type="button" class="btn btn-default delSpecBtn">刪除</button>
+                    </div>
 
                     @{i++;
                     }
@@ -211,5 +215,34 @@
         $("#imgs").on("click", "[type = button]", function () {
             $(this).parent().remove();
         });
+
+        $("#imgInput").change(function () {
+            $("#imgPreview").empty();
+            readURL(this);
+        });
+
+        function readURL(input) {
+
+            if (input.files && input.files[0]) {
+
+                Array.from(input.files).forEach(element => {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+
+                        let template = `<img class="img" src="${e.target.result}" />`;
+                        const dom = document.createElement("div");
+                        dom.setAttribute('class', `imgCard`);
+                        dom.innerHTML = template;
+                        $("#imgPreview").append(dom);
+
+                    }
+
+                    reader.readAsDataURL(element);
+
+                });
+
+            }
+
+        }
     </script>
 }
