@@ -59,190 +59,218 @@
         </div>
     </div>
 
-    <div class="form-group">
+    @*<div class="form-group">
         @Html.LabelFor(model => model.DisplayOrder, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.DisplayOrder, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.DisplayOrder, "", new { @class = "text-danger" })
         </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.tags, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.tags, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.tags, "", new { @class = "text-danger" })
+    </div>*@
+<div class="form-group">
+    @Html.LabelFor(model => model.DisplayOrder, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10 d-flex">
+        <input class="form-control col-6"
+               id="rangeValue"
+               type="text"
+               value=@Model.DisplayOrder
+               name="DisplayOrder"
+               readonly />
+        <div class="input-group-text col-6">
+            <input class="form-range flex-fill"
+                   type="range"
+                   id="customRange1"
+                   min="1"
+                   max=@ViewBag.NoOfProducts
+                   step="1"
+                   value=@Model.DisplayOrder />
         </div>
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.images, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div id="imgs" class="col-md-10">
-            @foreach (var img in Model.images)
-            {
-                <div class="imgCard">
-                    <img class="img" src="@img" />
-                    <button type="button" class="btn btn-default">刪除</button>
-                    <input name="images" hidden value="@img" />
-                </div>
-            }
-        </div>
-    </div>
 
-    <div id="imgPreview" class="d-flex">
-
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-10">
-            <input id="imgInput" type="file" name="files" class="form-control" multiple="multiple" accept="image/*" />
-        </div>
-    </div>
-    @{
-
-    }
+</div>
 
 
-    <div id="specsArea">
-
-        <div class="row">
-            <div class="col-md-2">
-                <label class="control-label" for="specs">規格</label>
+        <div class="form-group">
+            @Html.LabelFor(model => model.tags, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.tags, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.tags, "", new { @class = "text-danger" })
             </div>
-            <div class="col-md-8 text-right"><button type="button" id="addSpecBtn" class=" btn btn-default mb-1">新增規格</button></div>
         </div>
-        @{int i = 0; }
-        @{foreach (var spec in Model.specs)
-            {
-                List<SelectListItem> list = new List<SelectListItem>
-                    {
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.images, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div id="imgs" class="col-md-10">
+                @foreach (var img in Model.images)
+                {
+                    <div class="imgCard">
+                        <img class="img" src="@img" />
+                        <button type="button" class="btn btn-default">刪除</button>
+                        <input name="images" hidden value="@img" />
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div id="imgPreview" class="d-flex">
+
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <input id="imgInput" type="file" name="files" class="form-control" multiple="multiple" accept="image/*" />
+            </div>
+        </div>
+        @{
+
+        }
+
+
+        <div id="specsArea">
+
+            <div class="row">
+                <div class="col-md-2">
+                    <label class="control-label" for="specs">規格</label>
+                </div>
+                <div class="col-md-8 text-right"><button type="button" id="addSpecBtn" class=" btn btn-default mb-1">新增規格</button></div>
+            </div>
+            @{int i = 0; }
+            @{foreach (var spec in Model.specs)
+                {
+                    List<SelectListItem> list = new List<SelectListItem>
+                {
                                         new SelectListItem{Value="XL", Text="XL"},
                                         new SelectListItem{Value="L", Text="L"},
                                         new SelectListItem{Value="M", Text="M"},
                                         new SelectListItem{Value="S", Text="S"},
                                         new SelectListItem{Value="XS", Text="XS"},
                                     };
-                foreach (var item in list)
-                {
-                    if (spec.Size == item.Value) { item.Selected = true; }
-                }
-                <div class="form-group spec">
-                    <div class="col-md-10 input-group specs mb-2">
-                        <input class="form-control text-box Color" name="" type="text" value="@spec.Color" placeholder="顏色">
-                        @Html.DropDownList("Size", list, new { @class = "form-control text-box Size" })
-
-                        @*<input class="form-control text-box Size" name="" type="text" value="@spec.Size" placeholder="尺寸">*@
-                        <input class="form-control text-box Stock" name="" type="number" value="@spec.Stock" placeholder="庫存">
-                        <button type="button" class="btn btn-default delSpecBtn">刪除</button>
-                    </div>
-
-                    @{i++;
+                    foreach (var item in list)
+                    {
+                        if (spec.Size == item.Value) { item.Selected = true; }
                     }
+                    <div class="form-group spec">
+                        <div class="col-md-10 input-group specs mb-2">
+                            <input class="form-control text-box Color" name="" type="text" value="@spec.Color" placeholder="顏色">
+                            @Html.DropDownList("Size", list, new { @class = "form-control text-box Size" })
 
-                </div>
+                            @*<input class="form-control text-box Size" name="" type="text" value="@spec.Size" placeholder="尺寸">*@
+                            <input class="form-control text-box Stock" name="" type="number" value="@spec.Stock" placeholder="庫存">
+                            <button type="button" class="btn btn-default delSpecBtn">刪除</button>
+                        </div>
+
+                        @{i++;
+                        }
+
+                    </div>
+                }
             }
-        }
-    </div>
+        </div>
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input id="submit" type="submit" value="儲存" class="btn btn-default" />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input id="submit" type="submit" value="儲存" class="btn btn-default" />
+            </div>
         </div>
     </div>
-</div>
-}
+    }
 
-<div>
-    @Html.ActionLink("返回列表", "Index")
-</div>
+    <div>
+        @Html.ActionLink("返回列表", "Index")
+    </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
 
-    <script>
-
-        $("#addSpecBtn").on("click", function () {
-            let template =
-                `<div class="col-md-10 input-group specs">
-                          <input class="form-control text-box Color" id="" name="" type="text" value="" placeholder="顏色">
-                          <select class="form-control text-box Size" id="Size" name="Size"><option value="XL">XL</option>
-            <option value="L">L</option>
-            <option value="M">M</option>
-            <option value="S">S</option>
-            <option value="XS">XS</option>
-        </select>
-                          <input class="form-control text-box Stock " id="" name="" type="number" value="" placeholder="庫存">
-                          <button type="button" class="btn btn-default delSpecBtn">刪除</button>
-                    </div>`;
-            const dom = document.createElement("div");
-            dom.setAttribute('class', `form-group spec`);
-            dom.innerHTML = template;
-            $("#specsArea").append(dom);
-
-        });
-
-        $("#specsArea").on("click", "[type = button]", function () {
-            if ($("#specsArea").children('.spec').length <= 1) {
-                alert("至少需要一組規格");
-            } else {
-                if ($(this).attr("id") != "addSpecBtn") {
-                    $(this).parent().parent().remove();
-                }
-            }
-            
-
-        });
-
-        $("#submit").on("click", function () {
-            var i = 0;
-            $(".Color").each(function () {
-                $(this).attr('name', `Specs[${i}].Color`);
-                i++;
-            });
-            var j = 0;
-            $(".Size").each(function () {
-                $(this).attr('name', `Specs[${j}].Size`);
-                j++;
-            });
-            var k = 0;
-            $(".Stock").each(function () {
-                $(this).attr('name', `Specs[${k}].Stock`);
-                k++;
+        <script>
+            const range = document.querySelector("input[type=range]");
+            const rangeValue = document.querySelector("#rangeValue");
+            range.addEventListener("input", function (e) {
+                rangeValue.value = range.value;
             });
 
-        });
+            $("#addSpecBtn").on("click", function () {
+                let template =
+                    `<div class="col-md-10 input-group specs">
+                                  <input class="form-control text-box Color" id="" name="" type="text" value="" placeholder="顏色">
+                                  <select class="form-control text-box Size" id="Size" name="Size"><option value="XL">XL</option>
+                    <option value="L">L</option>
+                    <option value="M">M</option>
+                    <option value="S">S</option>
+                    <option value="XS">XS</option>
+                </select>
+                                  <input class="form-control text-box Stock " id="" name="" type="number" value="" placeholder="庫存">
+                                  <button type="button" class="btn btn-default delSpecBtn">刪除</button>
+                            </div>`;
+                const dom = document.createElement("div");
+                dom.setAttribute('class', `form-group spec`);
+                dom.innerHTML = template;
+                $("#specsArea").append(dom);
 
-        $("#imgs").on("click", "[type = button]", function () {
-            $(this).parent().remove();
-        });
+            });
 
-        $("#imgInput").change(function () {
-            $("#imgPreview").empty();
-            readURL(this);
-        });
-
-        function readURL(input) {
-
-            if (input.files && input.files[0]) {
-
-                Array.from(input.files).forEach(element => {
-                    var reader = new FileReader();
-                    reader.onload = function (e) {
-
-                        let template = `<img class="img" src="${e.target.result}" />`;
-                        const dom = document.createElement("div");
-                        dom.setAttribute('class', `imgCard`);
-                        dom.innerHTML = template;
-                        $("#imgPreview").append(dom);
-
+            $("#specsArea").on("click", "[type = button]", function () {
+                if ($("#specsArea").children('.spec').length <= 1) {
+                    alert("至少需要一組規格");
+                } else {
+                    if ($(this).attr("id") != "addSpecBtn") {
+                        $(this).parent().parent().remove();
                     }
+                }
 
-                    reader.readAsDataURL(element);
 
+            });
+
+            $("#submit").on("click", function () {
+                var i = 0;
+                $(".Color").each(function () {
+                    $(this).attr('name', `Specs[${i}].Color`);
+                    i++;
+                });
+                var j = 0;
+                $(".Size").each(function () {
+                    $(this).attr('name', `Specs[${j}].Size`);
+                    j++;
+                });
+                var k = 0;
+                $(".Stock").each(function () {
+                    $(this).attr('name', `Specs[${k}].Stock`);
+                    k++;
                 });
 
-            }
+            });
 
-        }
-    </script>
-}
+            $("#imgs").on("click", "[type = button]", function () {
+                $(this).parent().remove();
+            });
+
+            $("#imgInput").change(function () {
+                $("#imgPreview").empty();
+                readURL(this);
+            });
+
+            function readURL(input) {
+
+                if (input.files && input.files[0]) {
+
+                    Array.from(input.files).forEach(element => {
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+
+                            let template = `<img class="img" src="${e.target.result}" />`;
+                            const dom = document.createElement("div");
+                            dom.setAttribute('class', `imgCard`);
+                            dom.innerHTML = template;
+                            $("#imgPreview").append(dom);
+
+                        }
+
+                        reader.readAsDataURL(element);
+
+                    });
+
+                }
+
+            }
+        </script>
+    }

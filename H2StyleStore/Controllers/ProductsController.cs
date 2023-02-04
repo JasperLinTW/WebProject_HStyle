@@ -78,6 +78,7 @@ namespace H2StyleStore.Controllers
 		public ActionResult NewProduct()
 		{
 			ViewBag.PCategoryItems = new ProductRepository(new AppDbContext()).GetCategories(null);
+			ViewBag.NoOfProducts = productService.GetNoOfProducts()+1;
 			return View();
 		}
 		[HttpPost]
@@ -85,6 +86,7 @@ namespace H2StyleStore.Controllers
 		{
 
 			ViewBag.PCategoryItems = new ProductRepository(new AppDbContext()).GetCategories(null);
+			ViewBag.NoOfProducts = productService.GetNoOfProducts()+1;
 
 			try
 			{
@@ -171,6 +173,7 @@ namespace H2StyleStore.Controllers
 			var categories = new ProductRepository(new AppDbContext()).GetCategories(data.Category_Id).ToList();
 			
 			ViewBag.PCategoryItems = categories;
+			ViewBag.NoOfProducts = productService.GetNoOfProducts();
 
 			return View(data);
 		}
@@ -179,10 +182,11 @@ namespace H2StyleStore.Controllers
 		{
 
 			ViewBag.PCategoryItems = new ProductRepository(new AppDbContext()).GetCategories(null);
-			
-			
+			ViewBag.NoOfProducts = productService.GetNoOfProducts();
 
-			if(files[0] != null)
+
+
+			if (files[0] != null)
 			{
 				string path = Server.MapPath("/Images/ProductImages");
 				var helper = new UploadFileHelper();

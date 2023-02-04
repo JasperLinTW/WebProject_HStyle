@@ -32,19 +32,23 @@ namespace H2StyleStore.Models.Services
 		{
 			return _repository.GetProduct(productId);
 		}
-
-		public (bool, string ) Create(ProductDto dto)
+		public int GetNoOfProducts()
 		{
-			if (_repository.IsExist(dto.Product_Name))
-			{
-				return (false, "商品名稱已使用，請更改名稱");
-			}
-
-			_repository.Create(dto);
-
-			return (true, null);
-
+			return _repository.GetNoOfProducts();
 		}
+
+		//public (bool, string ) Create(ProductDto dto)
+		//{
+		//	if (_repository.IsExist(dto.Product_Name))
+		//	{
+		//		return (false, "商品名稱已使用，請更改名稱");
+		//	}
+
+		//	_repository.Create(dto);
+
+		//	return (true, null);
+
+		//}
 
 		public (bool, string) Create(CreateProductDto dto)
 		{

@@ -49,6 +49,10 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 
 			return item;
 		}
+		public int GetNoOfProducts()
+		{
+			return _db.Products.Count();
+		}
 
 		public IEnumerable<SelectListItem> GetCategories(int? categoryId)
 		{
@@ -79,29 +83,29 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			return (product != null);
 		}
 
-		public void Create(ProductDto dto)
-		{
-			int.TryParse(dto.PCategoryName, out int catgoryId);
-			Product product = new Product
-			{
-				Product_Name = dto.Product_Name,
-				UnitPrice = dto.UnitPrice,
-				Description = dto.Description,
-				Create_at = DateTime.Now,
-				Discontinued = dto.Discontinued,
-				DisplayOrder = dto.DisplayOrder,
-				Category_Id = catgoryId,
-			};
-			_db.Products.Add(product);
+		//public void Create(ProductDto dto)
+		//{
+		//	int.TryParse(dto.PCategoryName, out int catgoryId);
+		//	Product product = new Product
+		//	{
+		//		Product_Name = dto.Product_Name,
+		//		UnitPrice = dto.UnitPrice,
+		//		Description = dto.Description,
+		//		Create_at = DateTime.Now,
+		//		Discontinued = dto.Discontinued,
+		//		DisplayOrder = dto.DisplayOrder,
+		//		Category_Id = catgoryId,
+		//	};
+		//	_db.Products.Add(product);
 			
 
 			
-			//b.Images.Add();
-			//_db.Tags.Add()
-			_db.SaveChanges();
+		//	//b.Images.Add();
+		//	//_db.Tags.Add()
+		//	_db.SaveChanges();
 
 
-		}
+		//}
 		public void Create(CreateProductDto dto)
 		{
 			Product product = new Product
@@ -114,6 +118,17 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 				DisplayOrder = dto.DisplayOrder,
 				Category_Id = dto.Category_Id,
 			};
+			bool isBigest = dto.DisplayOrder > _db.Products.Max(x => x.DisplayOrder);
+			
+			if(isBigest == false)
+			{
+				var refreshProduct = _db.Products.Where(x => x.DisplayOrder >= dto.DisplayOrder).ToArray();
+				for (int i = 0; i < refreshProduct.Count(); i++)
+				{
+					refreshProduct[i].DisplayOrder = dto.DisplayOrder + 1 + i;
+				}
+			}
+
 			_db.Products.Add(product);
 
 			
@@ -176,9 +191,27 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			product.UnitPrice = dto.UnitPrice;
 			product.Description = dto.Description;
 			product.Discontinued = dto.Discontinued;
+
+			bool isBigger =dto.DisplayOrder  > product.DisplayOrder;
+			int refreshPoint = isBigger ? product.DisplayOrder : dto.DisplayOrder;
+			if (isBigger)
+			{
+				var refreshProduct = _db.Products.Where(x => x.DisplayOrder > refreshPoint && x.DisplayOrder<=dto.DisplayOrder).ToArray();
+				for (int i = 0; i < refreshProduct.Count(); i++)
+				{
+					refreshProduct[i].DisplayOrder = refreshPoint + i;
+				}
+			}
+			else
+			{
+				var refreshProduct = _db.Products.Where(x => x.DisplayOrder >= refreshPoint).ToArray();
+				for (int i = 0; i < refreshProduct.Count(); i++)
+				{
+					refreshProduct[i].DisplayOrder = refreshPoint + 1+ i;
+				}
+			}			
 			product.DisplayOrder = dto.DisplayOrder;
-			//product.Images = dto.images;
-		
+
 			foreach (var dbTag in product.Tags.ToArray())
 			{
 				product.Tags.Remove(dbTag);

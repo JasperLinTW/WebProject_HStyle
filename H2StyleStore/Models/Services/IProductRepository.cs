@@ -13,11 +13,11 @@ namespace H2StyleStore.Models.Services
 		IEnumerable<ProductDto> GetProducts();
 		IEnumerable<ProductDto> GetProducts(string term);
 		CreateProductDto GetProduct(int id);
-
+		int GetNoOfProducts();
 		bool IsExist(string productName);
 		bool EditIsExist(string productName, int id);
 
-		void Create(ProductDto product);
+		//void Create(ProductDto product);
 
 		void Create(CreateProductDto product);
 
