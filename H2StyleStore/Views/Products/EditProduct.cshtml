@@ -100,10 +100,10 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.images, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div id="imgs" class="col-md-10">
+            <div id="imgs" class="col-md-10 d-flex">
                 @foreach (var img in Model.images)
                 {
-                    <div class="imgCard">
+                    <div class="imgCard m-2">
                         <img class="img" src="@img" />
                         <button type="button" class="btn btn-default">刪除</button>
                         <input name="images" hidden value="@img" />
@@ -112,18 +112,16 @@
             </div>
         </div>
 
-        <div id="imgPreview" class="d-flex">
-
-        </div>
+        
 
         <div class="form-group">
             <div class="col-md-10">
                 <input id="imgInput" type="file" name="files" class="form-control" multiple="multiple" accept="image/*" />
             </div>
         </div>
-        @{
+        <div id="imgPreview" class="d-flex">
 
-        }
+        </div>
 
 
         <div id="specsArea">
@@ -259,7 +257,7 @@
 
                             let template = `<img class="img" src="${e.target.result}" />`;
                             const dom = document.createElement("div");
-                            dom.setAttribute('class', `imgCard`);
+                            dom.setAttribute('class', `imgCard m-2`);
                             dom.innerHTML = template;
                             $("#imgPreview").append(dom);
 

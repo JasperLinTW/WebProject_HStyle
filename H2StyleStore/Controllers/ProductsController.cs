@@ -68,6 +68,7 @@ namespace H2StyleStore.Controllers
 			return "儲存成功";
 		}
 
+		//取得商品名稱自動跳出選項
 		public JsonResult QueryProducts(string term)
 		{
 			var items = productService.GetProducts(term).ToList();
@@ -87,22 +88,6 @@ namespace H2StyleStore.Controllers
 
 			ViewBag.PCategoryItems = new ProductRepository(new AppDbContext()).GetCategories(null);
 			ViewBag.NoOfProducts = productService.GetNoOfProducts()+1;
-
-			try
-			{
-				foreach (var spec in model.specs)
-				{
-					if (spec.Color == null || spec.Stock < 1)
-					{
-						throw new Exception("規格格式有誤，請檢查");
-					}
-				}
-			}
-			catch(Exception ex)
-			{
-				ModelState.AddModelError("specs", ex.Message);
-				return View(model);
-			}
 
 			if (files[0] != null)
 			{
@@ -132,15 +117,8 @@ namespace H2StyleStore.Controllers
 			else
 			{
 				ModelState.AddModelError("images", "必須上傳商品照片");
-			}
-
-			if (ModelState.IsValid == false)
-			{
 				return View(model);
 			}
-
-
-
 
 			try
 			{
@@ -149,20 +127,16 @@ namespace H2StyleStore.Controllers
 
 				if(result.IsSuccess == false)
 				{
-					ModelState.AddModelError("Product_Name", result.ErrorMessage);
+					throw new Exception(result.ErrorMessage);
 				}
 			}
 			catch (Exception ex)
 			{
 				ModelState.AddModelError(string.Empty, ex.Message);
+				
 			}
 
-
-			if (ModelState.IsValid)
-			{
-				return RedirectToAction("Index");
-			}
-
+			if(ModelState.IsValid) return RedirectToAction("Index");
 
 			return View(model);
 		}
@@ -213,6 +187,7 @@ namespace H2StyleStore.Controllers
 			{
 				var productDto = model.ToCreateDto();
 				(bool IsSuccess, string ErrorMessage) result = productService.Edit(productDto);
+				if (result.IsSuccess == false) throw new Exception(result.ErrorMessage);
 			}
 			catch (Exception ex)
 			{

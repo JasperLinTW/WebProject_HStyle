@@ -57,6 +57,12 @@ namespace H2StyleStore.Models.Services
 				return (false, "商品名稱已使用，請更改名稱");
 			}
 
+			if (dto.UnitPrice <= 0) return (false, "商品價格須為正整數");
+
+			foreach (var spec in dto.specs)
+			{
+				if (spec.Stock <= 0) return (false, "商品數量須為正整數");
+			}
 
 
 			_repository.Create(dto);
@@ -71,6 +77,14 @@ namespace H2StyleStore.Models.Services
 			{
 				return (false, "商品名稱已使用，請更改名稱");
 			}
+
+			if (dto.UnitPrice <= 0) return (false, "商品價格須為正整數");
+
+			foreach (var spec in dto.specs)
+			{
+				if (spec.Stock <= 0) return (false, "商品數量須為正整數");
+			}
+
 			_repository.Edit(dto);
 
 			return (true, null);

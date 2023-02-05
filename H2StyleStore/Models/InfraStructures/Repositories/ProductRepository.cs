@@ -122,7 +122,7 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			
 			if(isBigest == false)
 			{
-				var refreshProduct = _db.Products.Where(x => x.DisplayOrder >= dto.DisplayOrder).ToArray();
+				var refreshProduct = _db.Products.Where(x => x.DisplayOrder >= dto.DisplayOrder).OrderBy(x => x.DisplayOrder).ToArray();
 				for (int i = 0; i < refreshProduct.Count(); i++)
 				{
 					refreshProduct[i].DisplayOrder = dto.DisplayOrder + 1 + i;
@@ -196,7 +196,7 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			int refreshPoint = isBigger ? product.DisplayOrder : dto.DisplayOrder;
 			if (isBigger)
 			{
-				var refreshProduct = _db.Products.Where(x => x.DisplayOrder > refreshPoint && x.DisplayOrder<=dto.DisplayOrder).ToArray();
+				var refreshProduct = _db.Products.Where(x => x.DisplayOrder > refreshPoint && x.DisplayOrder<=dto.DisplayOrder).OrderBy(x =>x.DisplayOrder).ToArray();
 				for (int i = 0; i < refreshProduct.Count(); i++)
 				{
 					refreshProduct[i].DisplayOrder = refreshPoint + i;
@@ -204,7 +204,7 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			}
 			else
 			{
-				var refreshProduct = _db.Products.Where(x => x.DisplayOrder >= refreshPoint).ToArray();
+				var refreshProduct = _db.Products.Where(x => x.DisplayOrder >= refreshPoint && x.Product_Id != dto.ProductID).OrderBy(x => x.DisplayOrder).ToArray();
 				for (int i = 0; i < refreshProduct.Count(); i++)
 				{
 					refreshProduct[i].DisplayOrder = refreshPoint + 1+ i;
