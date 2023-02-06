@@ -17,11 +17,12 @@ namespace H2StyleStore.filter
 		}
 		protected override bool AuthorizeCore(HttpContextBase httpContext)
 		{
+			var test = httpContext.Request.Cookies[FormsAuthentication.FormsCookieName];
+			if (test == null) { return false; }
 			var role = FormsAuthentication.Decrypt(httpContext.Request.Cookies[FormsAuthentication.FormsCookieName].Value).UserData;  //抓出cookie  跟  roles比較
 
 
-			//var test = System.Web.HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName];
-			//if (test == null) { return false; }
+			
 			return _identity.Contains(role);//用來判斷權限
 
 
