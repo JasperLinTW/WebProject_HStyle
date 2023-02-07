@@ -51,9 +51,11 @@
         </div>
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Category_Id, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="form-group row">
+        <div class="col-2">@Html.LabelFor(model => model.Category_Id, htmlAttributes: new { @class = "control-label" })</div>
+        <div class="text-right col-8 p-2"><button id="newCategory" class="btn btn-success" type="button">新增類別</button></div>
         <div class="col-md-10">
+
             @Html.DropDownListFor(x => x.Category_Id, pCategories, new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.Category_Id, "", new { @class = "text-danger" })
         </div>
@@ -180,7 +182,31 @@
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
 
-        <script>
+<script>
+            $("#newCategory").on("click", function () {
+                var newCategory = prompt("請輸入新的類別名稱");
+                if (newCategory == null || newCategory == "") {
+                    alert("您沒有輸入任何文字");
+                } else {
+
+                    $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("NewCategory", "Products")',
+                            contentType: "application/json",
+                            data: JSON.stringify({ newCategory })
+                    }).done(function (result) {
+
+                        const dom = document.createElement("option");
+                        dom.setAttribute('value', result[0]);
+                        dom.textContent = result[1];
+                        $("#Category_Id").append(dom);
+                        alert("新增類別成功");
+                    }).fail(function (err) {
+                        alert(err.statusText)
+                    })
+                }
+
+             });
             const range = document.querySelector("input[type=range]");
             const rangeValue = document.querySelector("#rangeValue");
             range.addEventListener("input", function (e) {
@@ -270,5 +296,5 @@
                 }
 
             }
-        </script>
+</script>
     }

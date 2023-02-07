@@ -17,8 +17,8 @@ namespace H2StyleStore.filter
 		}
 		protected override bool AuthorizeCore(HttpContextBase httpContext)
 		{
-			var test = httpContext.Request.Cookies[FormsAuthentication.FormsCookieName];
-			if (test == null) { return false; }
+			var token = httpContext.Request.Cookies[FormsAuthentication.FormsCookieName];
+			if (token == null) { return false; }
 			var role = FormsAuthentication.Decrypt(httpContext.Request.Cookies[FormsAuthentication.FormsCookieName].Value).UserData;  //抓出cookie  跟  roles比較
 
 
