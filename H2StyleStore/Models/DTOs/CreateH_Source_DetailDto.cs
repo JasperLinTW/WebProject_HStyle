@@ -1,4 +1,5 @@
-﻿using H2StyleStore.Models.ViewModels;
+﻿using H2StyleStore.Models.EFModels;
+using H2StyleStore.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -40,6 +41,20 @@ namespace H2StyleStore.Models.DTOs
 				//Total_H_SoFar= source.Total_H_SoFar,
 				Remark = source.Remark,
 				Employee_Name = source.Employee_Name
+			};
+		}
+		public static CreateH_Source_DetailDto ToEditDto(this H_Source_Details source)
+		{
+			return new CreateH_Source_DetailDto
+			{
+				Source_H_Id = source.Source_H_Id,
+				Member_Id = source.Member_Id,
+				Activity_Id = source.Activity_Id,
+				Difference_H = source.Difference_H,
+				//Event_Time= DateTime.Now,
+				//Total_H_SoFar= source.Total_H_SoFar,
+				Remark = source.Remark,
+				//Employee_Name = source.Employee_Name,				
 			};
 		}
 	}

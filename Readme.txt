@@ -38,7 +38,7 @@
 
 -- add ActivityController/DeleteActivity, H_Source_DetailsController/DeleteDetail
 
--- 實作註冊活動功能
+-/- 實作註冊活動功能 revise(將新增的H幣與註冊活動同時新增)
 [V?] add H_ActivityService/HcoinRegister
 [V?] add H_Source_DetailService/CreateDetail, 
                  IH_Source_DetailRepository/CreateHDetail,
@@ -62,7 +62,7 @@
    add EfModel connect HStyleDataBase
    add HcoinForBirth/HcoinForBirth Method
 
--- 實作打卡活動
+-- 實作打卡活動 (前台做驗證)
 [V?] add H_ActivityService/HcoinCheckIn
          IH_ActivityRepository/GetCheckInById
          H_activityRepository/GetCheckInById
@@ -81,6 +81,7 @@
        H_ActivityRepository/AddH_valueInMember
 
 -- 在Member中加入註冊活動的優惠
+   [V] update MemberRepository/Create
 
 -- H_Source_Detail加入了 Total_H_SorFar, Remark, Employee 的欄位
    重新建立EFModel和修改H_Source_DetailVM, H_Source_DetailDto
@@ -92,3 +93,5 @@
 -- 取得員工(使用者)的身分，自動記錄到資料表中
 
 -- 活動紀錄增加排序功能
+
+-- 建立修改活動紀錄

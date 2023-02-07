@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EFModel\AppDbContext.cs" />
+    <Compile Include="EFModel\Employee.cs" />
     <Compile Include="EFModel\H_Activities.cs" />
     <Compile Include="EFModel\H_CheckIns.cs" />
     <Compile Include="EFModel\H_Source_Details.cs" />

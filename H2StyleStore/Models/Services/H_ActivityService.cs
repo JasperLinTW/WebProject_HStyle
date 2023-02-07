@@ -145,8 +145,6 @@ namespace H2StyleStore.Models.Services
 
 			// 修改打卡紀錄
 			_repository.EditCheckIn(id, checkInTimes);
-			// 修改H幣總額
-			//TotalHcoin(id);
 
 			return "打卡成功";
 		}

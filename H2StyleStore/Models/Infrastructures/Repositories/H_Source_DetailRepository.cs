@@ -61,14 +61,20 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 
 		public void CreateHDetail(H_Source_DetailDto dto)
 		{
+			Member member = _db.Members.SingleOrDefault(m => m.Id == dto.Member_Id);
+
 			H_Source_Details detail = new H_Source_Details
 			{
 				Member_Id = dto.Member_Id,
 				Activity_Id = dto.Activity_Id,
 				Difference_H = dto.Difference_H,
 				Event_Time = dto.Event_Time,
+				Total_H_SoFar = member.Total_H + dto.Difference_H,
 			};
 			_db.H_Source_Details.Add(detail);
+			_db.SaveChanges();
+
+			member.Total_H = detail.Total_H_SoFar;
 			_db.SaveChanges();
 		}
 
@@ -120,6 +126,33 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 				.Prepend(new SelectListItem { Value = string.Empty, Text = "請選擇" });
 
 			return items;
+		}
+
+		public CreateH_Source_DetailDto GetSourceById(int? id)
+		{
+			H_Source_Details detail = _db.H_Source_Details
+				.SingleOrDefault(d => d.Source_H_Id == id);
+
+			var data = detail.ToEditDto();
+
+			return data;
+		}
+
+		public void UpdateHDetail(CreateH_Source_DetailDto dto)
+		{
+			H_Source_Details detail = _db.H_Source_Details.SingleOrDefault(d => d.Source_H_Id == dto.Source_H_Id);
+			int employeeId = _db.Employees.SingleOrDefault(e => e.Account == dto.Employee_Name).Employee_id;
+
+			detail = new H_Source_Details
+			{
+				Member_Id = dto.Member_Id,
+				Activity_Id = dto.Activity_Id,
+				Difference_H = dto.Difference_H,
+				Event_Time = dto.Event_Time,
+				Remark = dto.Remark,
+				Employee_Id = employeeId,
+			};
+			_db.SaveChanges();
 		}
 
 		/// <summary>

@@ -72,12 +72,19 @@ namespace HcoinForBirth
 				{
 					if (!memberBirthInActivity.Any(a => a.Member_Id == member.Id))
 					{
+						// 加入Member中的Total_H
+						Member memberData = _db.Members.SingleOrDefault(m=>m.Id== member.Id);
+						memberData.Total_H += activity_value;
+						_db.SaveChanges();
+
+						// 新增一筆紀錄
 						H_Source_Details detail = new H_Source_Details()
 						{
 							Member_Id = member.Id,
 							Activity_Id = activityId,
 							Difference_H = activity_value,
-							Event_Time = today
+							Event_Time = today,
+							Total_H_SoFar = memberData.Total_H
 						};
 
 						_db.H_Source_Details.Add(detail);

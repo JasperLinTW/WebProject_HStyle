@@ -49,6 +49,18 @@ namespace H2StyleStore.Models.Services
 				return ex.Message;
 			}
 		}
+		public void UpdateDetail(CreateH_Source_DetailDto dto)
+		{
+			CreateH_Source_DetailDto entity = _repository.GetSourceById(dto.Source_H_Id);
+			if (entity == null) throw new Exception("找不到要修改的紀錄");
+
+			entity.Member_Id = dto.Member_Id;
+			entity.Activity_Id = dto.Activity_Id;
+			entity.Difference_H = dto.Difference_H;
+			entity.Remark = dto.Remark;
+			entity.Employee_Name = dto.Employee_Name;
+			_repository.UpdateHDetail(entity);
+		}
 
 		/// <summary>
 		/// 計算所有 H coin
