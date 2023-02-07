@@ -109,5 +109,10 @@ namespace H2StyleStore.Models.Services
 				return (data);
 			}
 		}
+
+		public int NewCategory(string newCategory)
+		{
+			return _repository.NewCategory(newCategory);
+		}
 	}
 }

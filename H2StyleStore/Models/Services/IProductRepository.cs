@@ -25,5 +25,6 @@ namespace H2StyleStore.Models.Services
 
 		void EditDiscontinued(List<EditAllDto> newItems);
 		List<ProductDto> GetFiltedProducts(string filterStr);
+		int NewCategory(string newCategory);
 	}
 }

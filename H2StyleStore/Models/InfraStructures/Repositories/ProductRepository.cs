@@ -307,5 +307,16 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 
 			return data;
 		}
+
+		public int NewCategory(string categoryName)
+		{
+			var categories = _db.PCategories;
+			var newCategory = new PCategory { PCategoryName= categoryName };
+			categories.Add(newCategory);
+
+			_db.SaveChanges();
+			
+			return _db.PCategories.Max(x => x.PCategory_Id);
+		}
 	}
 }

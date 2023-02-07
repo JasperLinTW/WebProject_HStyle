@@ -68,6 +68,24 @@ namespace H2StyleStore.Controllers
 			return "儲存成功";
 		}
 
+		[HttpPost]
+		public JsonResult NewCategory(string newCategory)
+		{
+			int newId = -1;
+			try
+			{
+				newId = productService.NewCategory(newCategory);
+			}
+			catch (Exception ex)
+			{
+				return Json( "儲存失敗，原因: " + ex.Message);
+			}
+			List<string> result = new List<string>();
+			result.Add(newId.ToString());
+			result.Add(newCategory);
+			return Json(result);
+		}
+
 		//取得商品名稱自動跳出選項
 		public JsonResult QueryProducts(string term)
 		{
