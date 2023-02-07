@@ -610,6 +610,7 @@
     <Content Include="Views\Employees\permissions_failed1.cshtml" />
     <Content Include="Views\Employees\permissions_failed.cshtml" />
     <Content Include="Views\Employees\Details_Employees.cshtml" />
+    <Content Include="Views\Order\PartialPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

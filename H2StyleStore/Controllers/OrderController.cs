@@ -10,6 +10,7 @@ using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Reflection;
 using System.Web;
@@ -30,20 +31,31 @@ namespace H2StyleStore.Controllers
 		}
 
 		// GET: Order
-		public ActionResult Index(int? status_id, string searchString, string sortOrder, string currentFilter, int? page, int? pageSize)
+		public ActionResult Index(int? status_id, int? pageSize)
 		{
 			ViewBag.Status = orderService.GetStatus(status_id);
+			List<SelectListItem> pageSizeList = new List<SelectListItem>
+			{
+			new SelectListItem{ Text = "5", Value = "5", Selected = pageSize == 5},
+			new SelectListItem{ Text = "10", Value = "10", Selected = pageSize == 10},
+			new SelectListItem{ Text = "15", Value = "15", Selected = pageSize == 15},
+			};
+			ViewBag.pageSizeList = pageSizeList;
+			var data = orderService.Load()
+				.Select(x => x.ToVM());
+
+			return View(data);
+		}
+
+
+		public ActionResult PartialPage(int? status_id, string searchString, string sortOrder, string currentFilter, int? page, int? pageSize)
+		{
+			
 			ViewBag.Status_order = orderService.GetStatus();
 			ViewBag.CurrentSort = sortOrder;
 			ViewBag.CreatetimeSortParm = sortOrder == "Date" ? "date_desc" : "Date";
 			ViewBag.TotalSortParm = sortOrder == "total" ? "total_desc" : "total";
-			List<SelectListItem> pageSizeList = new List<SelectListItem>
-            {
-		    new SelectListItem{ Text = "5", Value = "5", Selected = pageSize == 5},
-		    new SelectListItem{ Text = "10", Value = "10", Selected = pageSize == 10},
-		    new SelectListItem{ Text = "15", Value = "15", Selected = pageSize == 15}, 
-			};
-			ViewBag.pageSizeList = pageSizeList;
+			
 			var data = orderService.Load();
 
 			//可排序
@@ -94,7 +106,7 @@ namespace H2StyleStore.Controllers
 			pageSize = pageSize ?? 10;
 			int pageNumber = (page ?? 1);
 
-			return View(list.ToPagedList(pageNumber, (int)pageSize));
+			return PartialView(list.ToPagedList(pageNumber, (int)pageSize));
 		}
 
 		public ActionResult Details(int? id)
