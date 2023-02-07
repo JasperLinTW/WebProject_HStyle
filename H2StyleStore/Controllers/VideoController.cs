@@ -17,7 +17,7 @@ using H2StyleStore.filter;
 
 namespace H2StyleStore.Controllers
 {
-	[AuthrizeHelper("1", "3")]
+	//[AuthrizeHelper("1", "3")]
 	public class VideoController : Controller
 	{
 		private VideoService _videoService;
@@ -117,12 +117,12 @@ namespace H2StyleStore.Controllers
 		{
 			ViewBag.VideoCategoryItems = _videoRepository.GetVideoCategories();
 
-
+			
 			if (videoFile == null || string.IsNullOrEmpty(videoFile.FileName) || videoFile.ContentLength == 0)
 			{
 				model.Image = string.Empty;
 			}
-
+			
 			if (imageFile == null || string.IsNullOrEmpty(imageFile.FileName) || imageFile.ContentLength == 0)
 			{
 				model.FilePath = string.Empty;
@@ -146,7 +146,7 @@ namespace H2StyleStore.Controllers
 
 			try
 			{
-				(bool IsSuccess, string ErrorMessage) response = _videoService.CreateVideo(model.ToCreateDto());
+				(bool IsSuccess, string ErrorMessage) response =_videoService.CreateVideo(model.ToCreateDto());
 			}
 			catch (Exception ex)
 			{
