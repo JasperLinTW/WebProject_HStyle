@@ -10,7 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "方案項目", "方案項�
 		Readme.txt = Readme.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HcoinForBirth", "HcoinForBirth\HcoinForBirth.csproj", "{EAACF929-DBFD-49B9-AA77-E98536B372A1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScheduleWork", "HcoinForBirth\ScheduleWork.csproj", "{EAACF929-DBFD-49B9-AA77-E98536B372A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
