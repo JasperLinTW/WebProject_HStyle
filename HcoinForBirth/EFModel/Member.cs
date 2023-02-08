@@ -8,6 +8,12 @@ namespace HcoinForBirth.EFModel
 
     public partial class Member
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Member()
+        {
+            Orders = new HashSet<Order>();
+        }
+
         public int Id { get; set; }
 
         [Required]
@@ -48,5 +54,8 @@ namespace HcoinForBirth.EFModel
 
         [StringLength(100)]
         public string EncryptedPassword { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

@@ -17,6 +17,11 @@ namespace HcoinForBirth.EFModel
 		public virtual DbSet<H_CheckIns> H_CheckIns { get; set; }
 		public virtual DbSet<H_Source_Details> H_Source_Details { get; set; }
 		public virtual DbSet<Member> Members { get; set; }
+		public virtual DbSet<Order_Details> Order_Details { get; set; }
+		public virtual DbSet<Order_Log> Order_Log { get; set; }
+		public virtual DbSet<Order_Status> Order_Status { get; set; }
+		public virtual DbSet<Order_StatusDescription> Order_StatusDescription { get; set; }
+		public virtual DbSet<Order> Orders { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
@@ -51,6 +56,17 @@ namespace HcoinForBirth.EFModel
 			modelBuilder.Entity<Member>()
 				.Property(e => e.EncryptedPassword)
 				.IsUnicode(false);
+
+			modelBuilder.Entity<Member>()
+				.HasMany(e => e.Orders)
+				.WithRequired(e => e.Member)
+				.HasForeignKey(e => e.Member_id)
+				.WillCascadeOnDelete(false);
+
+			modelBuilder.Entity<Order>()
+				.HasMany(e => e.Order_Details)
+				.WithRequired(e => e.Order)
+				.WillCascadeOnDelete(false);
 		}
 	}
 }

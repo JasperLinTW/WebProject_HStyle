@@ -1,50 +1,24 @@
 ﻿using HcoinForBirth.EFModel;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 
-namespace HcoinForBirth
+namespace ScheduleWork
 {
 	internal class Program
 	{
 		private static AppDbContext _db = new AppDbContext();
 		static void Main(string[] args)
 		{
-			// 測試用
-			// TestAddItem();
-
-			// 發放生日H幣
 			DateTime today = DateTime.Now;
+			// 發放生日H幣
 			HcoinForBirth(today);
-
-			// 計算Total H幣
-			//var member = _db.Members.ToList();
-			//for (int i = 0; i < member.Count; i++)
-			//{
-			//	TotalHcoin(member[i].Id);
-			//}
-		}
-
-		/// <summary>
-		/// For Test
-		/// </summary>
-		private static void TestAddItem()
-		{
-			AppDbContext _db = new AppDbContext();
-
-			H_Source_Details detail = new H_Source_Details()
-			{
-				Member_Id = 5,
-				Activity_Id = 2,
-				Difference_H = 1111,
-				Event_Time = DateTime.Now
-			};
-
-			_db.H_Source_Details.Add(detail);
-			_db.SaveChanges();
+			// 發放購物活動H幣
+			HcoinForOrder(today);
 		}
 
 		/// <summary>
@@ -53,7 +27,7 @@ namespace HcoinForBirth
 		/// <param name="today">今天的日期</param>
 		private static void HcoinForBirth(DateTime today)
 		{
-			AppDbContext _db = new AppDbContext();
+			//AppDbContext _db = new AppDbContext();
 			int activityId = 2; // 生日活動Id
 			int activity_value = _db.H_Activities
 				.SingleOrDefault(a => a.H_Activity_Id.Equals(activityId))
@@ -73,7 +47,7 @@ namespace HcoinForBirth
 					if (!memberBirthInActivity.Any(a => a.Member_Id == member.Id))
 					{
 						// 加入Member中的Total_H
-						Member memberData = _db.Members.SingleOrDefault(m=>m.Id== member.Id);
+						Member memberData = _db.Members.SingleOrDefault(m => m.Id == member.Id);
 						memberData.Total_H += activity_value;
 						_db.SaveChanges();
 
@@ -90,10 +64,10 @@ namespace HcoinForBirth
 						_db.H_Source_Details.Add(detail);
 						_db.SaveChanges();
 					}
-					else
-					{
-						Console.WriteLine("今年已發送過了");
-					}
+					//else
+					//{
+					//	Console.WriteLine("今年已發送過了");
+					//}
 				}
 				catch (Exception ex)
 				{
@@ -103,6 +77,69 @@ namespace HcoinForBirth
 		}
 
 		/// <summary>
+		/// 購物滿額，就送H幣，訂單結案且已送貨後30天發放，若有人退訂就手動新增刪除H幣的紀錄
+		/// </summary>
+		/// <param name="today">今天的時間</param>
+		private static void HcoinForOrder(DateTime today)
+		{
+			//AppDbContext _db = new AppDbContext();
+			// 購物額滿的金額
+			int fullPriceId = 4;
+			int fullPrice = _db.H_Activities.SingleOrDefault(a => a.H_Activity_Id == fullPriceId).H_Value;
+			// 購物滿額發送的H幣
+			int hCoinId = 5;
+			int hCoin = _db.H_Activities.SingleOrDefault(a => a.H_Activity_Id == hCoinId).H_Value;
+			// 已發送過H幣的訂單(三個月內)
+			DateTime inDays = today.AddDays(-90);
+			var orderInSources = _db.H_Source_Details
+				.Where(d => d.Event_Time > inDays && d.Activity_Id.Equals(hCoinId))
+				.ToList();
+			// 取得符合條件(發貨時間一個月後，訂單狀態為已完成)的訂單資訊
+			int orderState = 5; // 訂單狀態為"已完成"的Id
+			DateTime beforeDays = Convert.ToDateTime(today.AddDays(-30).ToString("yyyy-MM-dd")); // 送貨時間為30天前
+			var orders = _db.Orders
+				.Where(o => DbFunctions.TruncateTime(o.ShippedDate).Value.CompareTo(beforeDays) < 1
+				&& DbFunctions.TruncateTime(o.ShippedDate).Value.CompareTo(beforeDays) > -1
+				&& o.Status_id.Equals(orderState))
+				.ToList();
+
+			foreach (var order in orders)
+			{
+				try
+				{
+					if (!orderInSources.Any(s => s.Remark.Contains("訂單編號:" + order.Order_id.ToString())))
+					{
+						// 加入Member中的Total_H
+						Member memberData = _db.Members.SingleOrDefault(m => m.Id == order.Member_id);
+						memberData.Total_H += hCoin;
+						_db.SaveChanges();
+
+						// 新增一筆紀錄
+						H_Source_Details detail = new H_Source_Details()
+						{
+							Member_Id = order.Member_id,
+							Activity_Id = hCoinId,
+							Difference_H = hCoin,
+							Event_Time = today,
+							Total_H_SoFar = memberData.Total_H,
+							Remark = "訂單編號:" + order.Order_id.ToString()
+						};
+
+						_db.H_Source_Details.Add(detail);
+						_db.SaveChanges();
+					}
+					//else
+					//{
+					//	Console.WriteLine("今年已發送過了");
+					//}
+				}
+				catch (Exception ex)
+				{
+					throw new Exception(ex.Message);
+				}
+			}
+		}
+
 		/// 計算所有 H coin
 		/// </summary>
 		/// <param name="id"></param>
@@ -115,10 +152,12 @@ namespace HcoinForBirth
 
 			// 計算H幣總額
 			int total = 0;
-			foreach (var item in detail)
-			{
-				total += item.Difference_H;
-			}
+
+			total = detail.Sum(d => d.Difference_H);
+			//foreach (var item in detail)
+			//{
+			//	total += item.Difference_H;
+			//}
 
 			// 修改Member的Total_H
 			var member = _db.Members.Find(id);

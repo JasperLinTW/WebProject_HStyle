@@ -38,17 +38,18 @@
 
 -- add ActivityController/DeleteActivity, H_Source_DetailsController/DeleteDetail
 
--/- 實作註冊活動功能 revise(將新增的H幣與註冊活動同時新增)
-[V?] add H_ActivityService/HcoinRegister
-[V?] add H_Source_DetailService/CreateDetail, 
+-- 實作註冊活動功能 revise(將新增的H幣與註冊活動同時新增)
+[V] add H_ActivityService/HcoinRegister
+[V] add H_Source_DetailService/CreateDetail, 
                  IH_Source_DetailRepository/CreateHDetail,
 				 H_Source_DetailService/CreateHDetail
 
--/- 實作購物滿額送H幣  --->需要考慮送貨狀態並且貨物送達要一個月後才可發放H幣
-[V?] add H_ActivityService/HcoinOrderPrice
-[V?] use H_Source_DetailService/CreateDetail, 
+-/- 實作購物滿額送H幣  --->需要考慮送貨狀態並且貨物送達後一個月才可發放H幣
+[X] add H_ActivityService/HcoinOrderPrice
+[X] use H_Source_DetailService/CreateDetail, 
                  IH_Source_DetailRepository/CreateHDetail,
 				 H_Source_DetailService/CreateHDetail
+[V] add ScheduleWork/Program.cs/HcoinForOrder
 
 -- add H_Source_Detail Searchs
    [V] SelectListItem 
@@ -61,6 +62,7 @@
    add HcoinForBirth.exe
    add EfModel connect HStyleDataBase
    add HcoinForBirth/HcoinForBirth Method
+   Modify HcoinForBirth==>ScheduleWork.exe
 
 -- 實作打卡活動 (前台做驗證)
 [V?] add H_ActivityService/HcoinCheckIn
@@ -68,15 +70,16 @@
          H_activityRepository/GetCheckInById
 
 -- 計算各個會員的H幣總和
-   add H_ActivityService/TotalHcoin
+[X] add H_ActivityService/TotalHcoin
        IH_Source_DetailRepository/AddH_valueInMember
 	   H_Source_DetailRepository/AddH_valueInMember
+[V] 改為每一個活動完成後同時修改H幣的總和
 
 -- Modify H_Source_DetailsController/HDetail
           加入Total欄位
 
 -- 計算ToTal Hcoin，傳入Member Table 的 H_value欄位
-   add H_ActivityService/TotalHcoin
+[X] add H_ActivityService/TotalHcoin
        IH_ActivityRepository/AddH_valueInMember
        H_ActivityRepository/AddH_valueInMember
 
@@ -90,7 +93,7 @@
 
 -- 將活動從activityService改到detailService
 
--- 取得員工(使用者)的身分，自動記錄到資料表中
+-- 取得員工(使用者)的身分，自動記錄到資料表中 
 
 -- 活動紀錄增加排序功能
 
