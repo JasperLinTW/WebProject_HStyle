@@ -32,6 +32,15 @@
 @section Scripts {
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js" integrity="sha256-6XMVI0zB8cRzfZjqKcD01PBsAy3FlDASrlC8SxCpInY=" crossorigin="anonymous"></script>
     <script>
+        $("#OrderData").on("click", "#sortOrder", function () {
+            if ($(this).attr("value") == "total" || $(this).attr("value") == "null") {
+                $(this).attr("value", "total_desc");
+            } else {
+                $(this).attr("value", "total");  
+            }
+            search();
+        });
+
 
         //一改下拉式選單的pagesize馬上更新
         $("#pageSize").on("change",  function () {
@@ -57,7 +66,8 @@
                     searchString: $("#searchString").val(),
                     page: page,
                     pageSize: $("#pageSize").val(),
-                    status_id: $("#status_id").val()
+                    status_id: $("#status_id").val(),
+                    sortOrder: $("#sortOrder").attr("value")
                 }
                 // Ajax 呼叫
                 $.ajax({

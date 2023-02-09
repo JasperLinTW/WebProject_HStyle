@@ -30,7 +30,7 @@
                     會員名稱
                 </th>
                 <th style="width: 6%;">
-                    @Html.ActionLink("總額", "Index", new { sortOrder = ViewBag.TotalSortParm }, new { @class = "text-dark fa-solid fa-sort" })
+                    總額 <i class="fa-solid fa-sort cursor-pointer" id="sortOrder" value=""></i>
                 </th>
                 <th style="width: 6%;">
                     付款金額
@@ -60,7 +60,7 @@
                     退貨
                 </th>
                 <th style="width:150px;">
-                    @Html.ActionLink("訂單成立日期", "Index", new { sortOrder = ViewBag.CreatetimeSortParm }, new { @class = "text-dark fa-solid fa-sort" })
+                    @*@Html.ActionLink("訂單成立日期", "Index", new { sortOrder = ViewBag.CreatetimeSortParm }, new { @class = "text-dark fa-solid fa-sort" })*@
                 <th>
                     訂單狀態
                 </th>
@@ -192,7 +192,15 @@
                         </a>
                     </td>
                     <td class="pt-2 pb-1">
-                        <input type="checkbox" class="form-control pb-5" />
+                        @if (item.Status_id < 4)
+                        {
+                            <input type="checkbox" class="form-control pb-5" />
+                        }
+                        else
+                        {
+                            <input type="checkbox" class="form-control pb-5" disabled/>
+                        }
+
                     </td>
                 </tr>
                 <tr class="no-hover list">
@@ -268,6 +276,6 @@
 <br />
 <div style="text-align:right">
     Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
 </div>
 
