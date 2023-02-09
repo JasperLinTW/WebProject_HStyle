@@ -31,16 +31,11 @@
 
 @section Scripts {
     <script>
-
-        $("#OrderData").on("change", "#pageSize", function () {
-            search();
-        });
-
          function search() {
             // 若 hash 沒資料，預設取第 1 頁
             // hash = #，瀏覽器解讀為位置識別符號
             // # 是用來指導瀏覽器動作的，對伺服器端完全無用。所以，HTTP請求中不包括 #
-             var page = window.location.hash = 1;
+            var page = window.location.hash = 1;
 
             // 取資料
                  fetchPage(page);

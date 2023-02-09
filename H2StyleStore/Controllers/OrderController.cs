@@ -78,8 +78,15 @@ namespace H2StyleStore.Controllers
 					data = data.OrderBy(o => o.Order_id);
 					break;
 			}
-				
-			searchString = currentFilter;
+			//分頁
+			if (searchString != null)
+			{
+				page = 1;
+			}
+			else
+			{
+				searchString = currentFilter;
+			}
 
 			ViewBag.CurrentFilter = searchString;
 

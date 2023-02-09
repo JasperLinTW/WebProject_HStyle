@@ -1,10 +1,9 @@
-﻿@using PagedList.Mvc;
-@model PagedList.IPagedList<H2StyleStore.Models.ViewModels.OrderVM>
-
+﻿@model PagedList.IPagedList<H2StyleStore.Models.ViewModels.OrderVM>
+@using PagedList.Mvc;
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
-
+    
     IEnumerable<SelectListItem> status_order = ViewBag.Status_order;
     var statusInDb = status_order.ToList();
     int total = 0;
@@ -269,7 +268,7 @@
 <br />
 <div style="text-align:right">
     Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort }))
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
 </div>
 
 @section Scripts{
