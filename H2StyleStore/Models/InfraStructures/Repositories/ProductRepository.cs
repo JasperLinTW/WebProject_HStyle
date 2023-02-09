@@ -118,20 +118,21 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 				DisplayOrder = dto.DisplayOrder,
 				Category_Id = dto.Category_Id,
 			};
-			bool isBigest = dto.DisplayOrder > _db.Products.Max(x => x.DisplayOrder);
-			
-			if(isBigest == false)
+			if (_db.Products.Count() != 0)
 			{
+				bool isBigest = dto.DisplayOrder > _db.Products.Max(x => x.DisplayOrder);
+			
+				if(isBigest == false)
+				{
 				var refreshProduct = _db.Products.Where(x => x.DisplayOrder >= dto.DisplayOrder).OrderBy(x => x.DisplayOrder).ToArray();
 				for (int i = 0; i < refreshProduct.Count(); i++)
 				{
 					refreshProduct[i].DisplayOrder = dto.DisplayOrder + 1 + i;
 				}
 			}
+			}
 
 			_db.Products.Add(product);
-
-			
 
 			foreach(string tag in dto.tags)
 			{
