@@ -271,15 +271,3 @@
     @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
 </div>
 
-@section Scripts{
-    <script>
-        $('.edit').on('click', function (event) {
-            window.location.href = "https://localhost:44313/Order/Edit/" + parseFloat($(this).siblings('#Order_id').text());
-        });
-        $('.list').on('click', '#detail', function (event) {
-            window.location.href = "https://localhost:44313/Order/Details/" + parseFloat($('#Order_id').text());
-        });
-    </script>
-
-}
-

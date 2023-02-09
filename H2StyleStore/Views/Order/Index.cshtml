@@ -109,7 +109,6 @@
                 data: {
                     key: request.term    //Name欄位輸入的資訊傳給後端
                 },
-                //成功取得資料後用Map來整理回傳的資料
                 success: function (data) {
                     response(data);
                 }
@@ -117,6 +116,17 @@
         },
         });
 
+    </script>
+
+    <script>
+
+        $('#OrderData').on('click', '.edit', function (event) {
+            window.location.href = "https://localhost:44313/Order/Edit/" + parseFloat($(this).siblings('#Order_id').text());
+        });
+
+        $('#OrderData').on('click', '.list', function (event) {
+            window.location.href = "https://localhost:44313/Order/Details/" + parseFloat($(this).prev().children('#Order_id').text());
+        });
     </script>
 
 
