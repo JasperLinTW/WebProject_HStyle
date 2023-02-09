@@ -50,12 +50,12 @@ namespace H2StyleStore.Controllers
 
 		public ActionResult PartialPage(int? status_id, string searchString, string sortOrder, string currentFilter, int? page, int? pageSize)
 		{
-			
+
 			ViewBag.Status_order = orderService.GetStatus();
 			ViewBag.CurrentSort = sortOrder;
 			ViewBag.CreatetimeSortParm = sortOrder == "Date" ? "date_desc" : "Date";
 			ViewBag.TotalSortParm = sortOrder == "total" ? "total_desc" : "total";
-			
+
 			var data = orderService.Load();
 
 			//可排序
@@ -78,15 +78,8 @@ namespace H2StyleStore.Controllers
 					data = data.OrderBy(o => o.Order_id);
 					break;
 			}
-			//分頁
-			if (searchString != null)
-			{
-				page = 1;
-			}
-			else
-			{
-				searchString = currentFilter;
-			}
+
+			searchString = currentFilter;
 
 			ViewBag.CurrentFilter = searchString;
 
@@ -108,7 +101,24 @@ namespace H2StyleStore.Controllers
 
 			return PartialView(list.ToPagedList(pageNumber, (int)pageSize));
 		}
+		[HttpGet]
+		public ActionResult Search(string key)
+		{
+			//參數key為使用者輸入在input的資訊
+			var dataIds = orderService.Load()
+				.Select(x => x.Order_id.ToString())
+				.Where(x=> x.StartsWith(key))
+				.Take(5).ToList(); //拿取前五筆資料配對的資料
 
+			var dataNames = orderService.Load()
+				.Select(x => x.MemberName)
+				.Where(x => x.StartsWith(key))
+				.Take(5).ToList(); //拿取前五筆資料配對的資料
+
+			var data = dataIds.Union(dataNames);
+
+			return Json(data.DefaultIfEmpty(), JsonRequestBehavior.AllowGet);
+		}
 		public ActionResult Details(int? id)
 		{
 			var data = orderService.FindById(id).Select(x => x.ToVM());
