@@ -139,7 +139,7 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.CreatedTime)
                     </td>
-                    <td>
+                    <td id="status">
                         @if (item.Status == "取消")
                         {<select name="orders[@i].Status" readonly="readonly" style="width: 145px">
                                 <option value="@item.Status">@item.Status</option>
@@ -191,7 +191,7 @@
                             <i class="fa fa-angle-up fa-lg menu__icon--close"></i>
                         </a>
                     </td>
-                    <td class="pt-2 pb-1">
+                    <td class="pt-2 pb-1 checkbox">
                         @if (item.Status_id < 4)
                         {
                             <input type="checkbox" class="form-control pb-5" />
