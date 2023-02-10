@@ -32,6 +32,7 @@
 @section Scripts {
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js" integrity="sha256-6XMVI0zB8cRzfZjqKcD01PBsAy3FlDASrlC8SxCpInY=" crossorigin="anonymous"></script>
     <script>
+
         //一改下拉式選單的pagesize馬上更新
         $("#pageSize").on("change",  function () {
             search();
@@ -47,8 +48,7 @@
 
             // 取資料
                  fetchPage(page);
-             }
-
+        }
 
             var fetchPage = function (page) {
                 // 準備搜尋條件資料
@@ -120,19 +120,14 @@
             if ($(this).attr("value") == "total") {
                 $(this).attr("value", "total_desc");
             }
-            else if ($(this).attr("value") == "total_desc") {
-                $(this).attr("value", "total");
-            }
-            else if ($(this).attr("value") == "date") {
-                $(this).attr("value", "date_desc");
-            }
-            else if ($(this).attr("value") == "date_desc") {
-                $(this).attr("value", "date");
-            }
             else {
                 $(this).attr("value", "total");
             }
-            console.log($("#OrderData .sortOrder").attr("value"));
+        });
+
+        $("#OrderData").on("click", ".reset", function () {
+            $("#OrderData .sortOrder").attr("value", "");
+            search();
         });
 
     </script>

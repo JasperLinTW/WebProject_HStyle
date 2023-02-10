@@ -23,14 +23,14 @@
     <table class="table table-bordered table-hover borderless">
         <thead>
             <tr>
-                <th style="width:6%;">
+                <th style="width:6%;" class="reset cursor-pointer">
                     訂單編號
                 </th>
                 <th style="width: 6%;">
                     會員名稱
                 </th>
-                <th style="width: 6%;">
-                    總額 <i class="fa-solid fa-sort cursor-pointer sortOrder" value="@ViewBag.TotalSortParm"></i>
+                <th style="width: 6%;" class="sortOrder cursor-pointer" value="@ViewBag.TotalSortParm">
+                    總額 <i class="fa-solid fa-sort "></i>
                 </th>
                 <th style="width: 6%;">
                     付款金額
@@ -60,7 +60,7 @@
                     退貨
                 </th>
                 <th style="width:150px;">
-                    訂單成立日期 <i class="fa-solid fa-sort cursor-pointer sortOrder" value="@ViewBag.CreatetimeSortParm"></i>
+                    訂單成立日期
                 <th>
                     訂單狀態
                 </th>
