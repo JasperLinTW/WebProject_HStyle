@@ -48,12 +48,12 @@ namespace H2StyleStore.Controllers
 		}
 
 
-		public ActionResult PartialPage(int? status_id, string searchString, string sortOrder, string currentFilter, int? page, int? pageSize)
+		public ActionResult PartialPage(int? status_id, string searchString, string sortOrder, int? page, int? pageSize)
 		{
 
 			ViewBag.Status_order = orderService.GetStatus();
-			ViewBag.CurrentSort = sortOrder;
-			ViewBag.CreatetimeSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+
+			ViewBag.CreatetimeSortParm = sortOrder == "date" ? "date_desc" : "date";
 			ViewBag.TotalSortParm = sortOrder == "total" ? "total_desc" : "total";
 
 			var data = orderService.Load();
@@ -62,7 +62,7 @@ namespace H2StyleStore.Controllers
 			switch (sortOrder)
 			{
 
-				case "Date":
+				case "date":
 					data = data.OrderBy(o => o.CreatedTime);
 					break;
 				case "date_desc":
@@ -79,9 +79,6 @@ namespace H2StyleStore.Controllers
 					break;
 			}
 
-			searchString = currentFilter;
-
-			ViewBag.CurrentFilter = searchString;
 
 			//可篩選
 			if (status_id.HasValue)

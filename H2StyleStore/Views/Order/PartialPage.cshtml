@@ -3,7 +3,7 @@
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
-    
+
     IEnumerable<SelectListItem> status_order = ViewBag.Status_order;
     var statusInDb = status_order.ToList();
     int total = 0;
@@ -30,7 +30,7 @@
                     會員名稱
                 </th>
                 <th style="width: 6%;">
-                    總額 <i class="fa-solid fa-sort cursor-pointer" id="sortOrder" value=""></i>
+                    總額 <i class="fa-solid fa-sort cursor-pointer sortOrder" value="@ViewBag.TotalSortParm"></i>
                 </th>
                 <th style="width: 6%;">
                     付款金額
@@ -60,7 +60,7 @@
                     退貨
                 </th>
                 <th style="width:150px;">
-                    @*@Html.ActionLink("訂單成立日期", "Index", new { sortOrder = ViewBag.CreatetimeSortParm }, new { @class = "text-dark fa-solid fa-sort" })*@
+                    訂單成立日期 <i class="fa-solid fa-sort cursor-pointer sortOrder" value="@ViewBag.CreatetimeSortParm"></i>
                 <th>
                     訂單狀態
                 </th>
@@ -198,7 +198,7 @@
                         }
                         else
                         {
-                            <input type="checkbox" class="form-control pb-5" disabled/>
+                            <input type="checkbox" class="form-control pb-5" disabled />
                         }
 
                     </td>
