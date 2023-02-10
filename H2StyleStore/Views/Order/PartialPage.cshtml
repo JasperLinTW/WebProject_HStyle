@@ -68,7 +68,8 @@
                 </th>
                 <th>
                 </th>
-                <th>
+                <th style="width: 3%;">
+                    <label for="checkAll" class="cursor-pointer">全選</label><input type="checkbox" id="checkAll" name="checkAll" style="width: 15px; height: 15px;"/>
                 </th>
             </tr>
         </thead>
@@ -103,7 +104,7 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Payment)
                     </td>
-                    <td>
+                    <td id="shippedDate">
                         @if (item.Status_id > 4)
                         {
                             <input type="datetime-local" readonly="readonly" value="@shippedDate" name="orders[@i].ShippedDate" />
@@ -191,14 +192,14 @@
                             <i class="fa fa-angle-up fa-lg menu__icon--close"></i>
                         </a>
                     </td>
-                    <td class="pt-2 pb-1 checkbox">
-                        @if (item.Status_id < 4)
+                    <td class="checkbox">
+                        @if (item.Status_id == 3)
                         {
-                            <input type="checkbox" class="form-control pb-5" />
+                            <input type="checkbox" style="margin-bottom: 150px; margin-top: 6px; width:15px; height: 15px;" />
                         }
                         else
                         {
-                            <input type="checkbox" class="form-control pb-5" disabled />
+                            <input type="checkbox" style="margin-bottom: 150px; margin-top: 6px; width: 15px; height: 15px; "  disabled />
                         }
 
                     </td>

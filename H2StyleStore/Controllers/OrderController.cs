@@ -14,6 +14,7 @@ using System.Drawing.Printing;
 using System.Linq;
 using System.Reflection;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 
 namespace H2StyleStore.Controllers
@@ -52,7 +53,6 @@ namespace H2StyleStore.Controllers
 		{
 
 			ViewBag.Status_order = orderService.GetStatus();
-
 			ViewBag.CreatetimeSortParm = sortOrder == "date" ? "date_desc" : "date";
 			ViewBag.TotalSortParm = sortOrder == "total" ? "total_desc" : "total";
 
@@ -153,7 +153,6 @@ namespace H2StyleStore.Controllers
 
 
 		}
-
 		public ActionResult Edit(int id)
 		{
 			ViewBag.Status_order = orderService.GetStatus();
