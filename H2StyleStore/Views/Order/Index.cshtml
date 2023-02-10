@@ -32,8 +32,21 @@
 @section Scripts {
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js" integrity="sha256-6XMVI0zB8cRzfZjqKcD01PBsAy3FlDASrlC8SxCpInY=" crossorigin="anonymous"></script>
     <script>
+        let cheboxlist = [];
         $("#OrderData").on("click", "#ship", function () {
-            
+            $(".checkbox > input").each(function () {      
+                cheboxlist.push({
+                    id: $(this).parent().prevAll("#Order_id").children().val(),
+                    shipped: $(this)[0].checked,
+                });
+            });
+            //看你自己要回傳什麼，我這邊傳所有的ID+有沒有打勾，你可以寫if else選出有勾的就好
+            console.log(cheboxlist);
+
+            //這邊接$ajax
+
+            //ajax結束後要重置，不然每案一次都會累積
+            cheboxlist = [];
         });
         //一改下拉式選單的pagesize馬上更新
         $("#pageSize").on("change",  function () {
