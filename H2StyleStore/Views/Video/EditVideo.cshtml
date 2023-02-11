@@ -110,7 +110,7 @@
                     @Html.ValidationMessageFor(model => model.FilePath, "", new { @class = "text-danger" })
                 </div>
                 <label class="control-label col-md-2" for="File">上傳影片檔案</label>
-                <input type="file" name="videoFile" id="upload" onchange="setPreview(this)" clss="form-control" />
+                <input type="file" name="videoFile" id="upload" onchange="setPreview(this)"  accept = "video/*" clss="form-control" />
             </div>
 
 
@@ -126,7 +126,7 @@
                         <img id="previewI" src="#" alt="" width="700" />
                     </div>*@
                 <label class="control-label col-md-2" for="File">上傳圖片檔案</label>
-                <input type="file" id="upload" name="imageFile" onchange="setPreviewI(this);" />
+                <input type="file" id="upload" name="imageFile"  accept = "image/*" onchange="setPreviewI(this);" />
             </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">

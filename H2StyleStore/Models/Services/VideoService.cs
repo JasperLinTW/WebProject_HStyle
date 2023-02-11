@@ -25,6 +25,7 @@ namespace H2StyleStore.Models.Services
 
         public (bool IsSuccess,string ErrorMessage) CreateVideo(CreateVideoDto dto)
         {
+
 			if (_repository.IsExist(dto.Image,dto.FilePath))
 			{
 				return (false, "這部影片已經上傳過了");

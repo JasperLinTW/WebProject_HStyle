@@ -11,7 +11,7 @@
 
 <style>
     .width {
-        width:100px;
+        width: 100px;
     }
 </style>
 
@@ -78,12 +78,20 @@
                 </div>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.OnShelffTime)
+                @*<div id = "OnShelf">
+                    @item.OnShelffTime
+                </div>*@
+                @Html.DisplayFor(modelItem => item.OnShelffTime, new { id = "OnShelf" })
+                <p id="onValue"></p>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.OffShelffTime)
+                @Html.DisplayFor(modelItem => item.OffShelffTime, new { id = "OffShelf" })
+                @*<div id="OffShelf">
+                    @item.OffShelffTime
+                </div>*@
+                <p id="offValue"></p>
             </td>
-            <td>
+            <td> 
                 @Html.ActionLink("修改", "EditVideo", new { id = item.Id }, new { @class = "btn btn-default" })
             </td>
         </tr>
@@ -93,4 +101,36 @@
 <div style="text-align:right">
     Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
     @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
-</div>
+</div> 
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            let onShelfTime = $("#OnShelf").val();
+            let offShelfTime = $("#OffShelf").val();
+            if (onShelfTime==null) {
+                $("#onValue").text("無");
+            }
+            if (offShelfTime == null) {
+                $("#offValue").text("無");
+            }
+        })
+        //function setPreview(input) {
+        //    $('#preview').show();
+        //    if (input.files && input.files[0]) {
+        //        var reader = new FileReader();
+        //        reader.onload = function (e) {
+        //            $('#preview')
+        //                .attr('src', e.target.result)
+        //                .maxHeight(150) // 設定圖片最大高度
+        //                .maxWidth(200);
+        //        };
+        //        reader.readAsDataURL(input.files[0]);
+        //    } else {
+        //        preview.innerHTML = "檔案格式未支援";
+        //    }
+        //}
+    </script>
+}
