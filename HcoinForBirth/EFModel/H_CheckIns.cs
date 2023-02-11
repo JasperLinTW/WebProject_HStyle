@@ -20,7 +20,5 @@ namespace HcoinForBirth.EFModel
         public DateTime Last_Time { get; set; }
 
         public virtual H_Activities H_Activities { get; set; }
-
-        public virtual Member Member { get; set; }
     }
 }

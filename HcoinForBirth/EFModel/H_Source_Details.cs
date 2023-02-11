@@ -19,8 +19,13 @@ namespace HcoinForBirth.EFModel
 
         public DateTime Event_Time { get; set; }
 
-        public virtual H_Activities H_Activities { get; set; }
+        public int? Total_H_SoFar { get; set; }
 
-        public virtual Member Member { get; set; }
+        [StringLength(500)]
+        public string Remark { get; set; }
+
+        public int? Employee_Id { get; set; }
+
+        public virtual H_Activities H_Activities { get; set; }
     }
 }

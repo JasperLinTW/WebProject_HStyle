@@ -115,6 +115,45 @@ namespace H2StyleStore.Controllers
 			return View(model);
 		}
 
+		public ActionResult EditDetail(int id)
+		{
+			CreateH_Source_DetailVM detail = _repository.GetSourceById(id).ToVM();
+			if (detail == null) return HttpNotFound();
+
+			return View(detail);
+		}
+
+		[HttpPost]
+		public ActionResult EditDetail(CreateH_Source_DetailVM model)
+		{
+			string user = User.Identity.Name;
+			model.Employee_Name = user;
+
+			if(!ModelState.IsValid)
+			{
+				return View(model);
+			}
+			CreateH_Source_DetailDto request = model.ToDto();
+
+			try
+			{
+				_detailService.UpdateDetail(request);
+			}
+			catch(Exception ex)
+			{
+				ModelState.AddModelError(string.Empty, ex.Message);
+			}
+
+			if(ModelState.IsValid)
+			{
+				return RedirectToAction("Index");
+			}
+			else
+			{
+				return View(model);
+			}
+		}
+
 
 		public ActionResult CheckIn()
 		{

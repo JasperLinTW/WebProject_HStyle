@@ -35,9 +35,27 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 
             db.Members.Add(member);
             db.SaveChanges();
-        }
 
-        public MemberDto Load(int memberId)
+
+			// H幣活動，註冊成功就送H幣
+			int activityId_register = 1; // Hcoin的活動ID
+            int difference_H = db.H_Activities.SingleOrDefault(a => a.H_Activity_Id == activityId_register).H_Value; // Hcoin的值
+            var memberHcoin = db.Members.SingleOrDefault(m => m.Account == dto.Account); // 新註冊會員的ID
+            H_Source_Details detail = new H_Source_Details
+            {
+                Member_Id = memberHcoin.Id,
+                Activity_Id = activityId_register,
+                Difference_H = difference_H,
+                Event_Time = DateTime.Now,
+                Total_H_SoFar = difference_H,
+            }; // 新增此會員的註冊Hcoin
+			db.H_Source_Details.Add(detail);
+			db.SaveChanges();
+            member.Total_H += difference_H;
+			db.SaveChanges();
+		}
+
+		public MemberDto Load(int memberId)
         {
             Member entity = db.Members.SingleOrDefault(x => x.Id == memberId);
             if (entity == null) return null;

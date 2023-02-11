@@ -110,12 +110,18 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 
 		public void CreateHDetail(H_Source_DetailDto dto)
 		{
+			// 找出會員總Hcoin
+			Member member = _db.Members.SingleOrDefault(m => m.Id == dto.Member_Id);
+			member.Total_H += dto.Difference_H;
+			_db.SaveChanges();
+
 			H_Source_Details detail = new H_Source_Details
 			{
 				Member_Id = dto.Member_Id,
 				Activity_Id = dto.Activity_Id,
 				Difference_H = dto.Difference_H,
 				Event_Time = dto.Event_Time,
+				Total_H_SoFar = member.Total_H + dto.Difference_H,
 			};
 			_db.H_Source_Details.Add(detail);
 			_db.SaveChanges();

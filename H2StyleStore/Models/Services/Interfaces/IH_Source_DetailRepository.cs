@@ -1,5 +1,6 @@
 ﻿using H2StyleStore.Models.DTOs;
 using H2StyleStore.Models.EFModels;
+using H2StyleStore.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -75,6 +76,19 @@ namespace H2StyleStore.Models.Services.Interfaces
 		/// <param name="id">會員Id</param>
 		/// <param name="total">總H_Value</param>
 		void AddH_valueInMember(int id, int total);
+
+		/// <summary>
+		/// 取得單筆活動資料
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
+		CreateH_Source_DetailDto GetSourceById(int? id);
+
+		/// <summary>
+		/// 修改單筆活動紀錄
+		/// </summary>
+		/// <param name="dto"></param>
+		void UpdateHDetail(CreateH_Source_DetailDto dto);
 
 	}
 }

@@ -82,7 +82,7 @@ namespace H2StyleStore.Models.Services
 		/// <param name="price">訂單總金額</param>
 		public string HcoinOrderPrice(int id, int price)
 		{
-			// todo 需要修改規則，改為排程
+			// todo 需要修改規則，改為排程==>已改
 			// 花費滿額
 			int activityId_fullPrice = 4;
 			// 得到的H幣
@@ -145,8 +145,6 @@ namespace H2StyleStore.Models.Services
 
 			// 修改打卡紀錄
 			_repository.EditCheckIn(id, checkInTimes);
-			// 修改H幣總額
-			//TotalHcoin(id);
 
 			return "打卡成功";
 		}
