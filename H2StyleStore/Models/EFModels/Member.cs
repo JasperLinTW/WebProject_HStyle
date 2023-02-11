@@ -46,7 +46,6 @@ namespace H2StyleStore.Models.EFModels
 
         [Column(TypeName = "datetime2")]
         public DateTime Birthday { get; set; }
-
         public int? Permission_Id { get; set; }
 
         public DateTime Jointime { get; set; }

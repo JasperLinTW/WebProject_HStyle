@@ -39,7 +39,7 @@ namespace H2StyleStore.Models.Infrastructures
             SendFromGmail(from, to, subject, body);
         }
 
-        public virtual void SendFromGmail(string from, string to, string subject, string body)
+        public virtual void SendFromGmail(string from, string to, string subject, string body)  //註冊會員後呼叫這一支寄信
         {
             // todo 
             string path = HttpContext.Current.Server.MapPath("~/files/");
