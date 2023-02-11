@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "方案項目", "方案項�
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HcoinForBirth", "HcoinForBirth\HcoinForBirth.csproj", "{EAACF929-DBFD-49B9-AA77-E98536B372A1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HStyleApi", "HStyleApi\HStyleApi.csproj", "{EBEB8862-4B7F-4A1B-B7C4-0F35BAFAB61C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +28,10 @@ Global
 		{EAACF929-DBFD-49B9-AA77-E98536B372A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EAACF929-DBFD-49B9-AA77-E98536B372A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EAACF929-DBFD-49B9-AA77-E98536B372A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBEB8862-4B7F-4A1B-B7C4-0F35BAFAB61C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBEB8862-4B7F-4A1B-B7C4-0F35BAFAB61C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBEB8862-4B7F-4A1B-B7C4-0F35BAFAB61C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBEB8862-4B7F-4A1B-B7C4-0F35BAFAB61C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
