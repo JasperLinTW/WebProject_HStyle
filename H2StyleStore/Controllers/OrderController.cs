@@ -10,9 +10,11 @@ using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Reflection;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 
 namespace H2StyleStore.Controllers
@@ -30,12 +32,28 @@ namespace H2StyleStore.Controllers
 		}
 
 		// GET: Order
-		public ActionResult Index(int? status_id, string searchString, string sortOrder, string currentFilter, int? page)
+		public ActionResult Index(int? status_id, int? pageSize)
 		{
 			ViewBag.Status = orderService.GetStatus(status_id);
+			List<SelectListItem> pageSizeList = new List<SelectListItem>
+			{
+			new SelectListItem{ Text = "5", Value = "5", Selected = pageSize == 5},
+			new SelectListItem{ Text = "10", Value = "10", Selected = pageSize == 10},
+			new SelectListItem{ Text = "15", Value = "15", Selected = pageSize == 15},
+			};
+			ViewBag.pageSizeList = pageSizeList;
+			var data = orderService.Load()
+				.Select(x => x.ToVM());
+
+			return View(data);
+		}
+
+
+		public ActionResult PartialPage(int? status_id, string searchString, string sortOrder, int? page, int? pageSize)
+		{
+
 			ViewBag.Status_order = orderService.GetStatus();
-			ViewBag.CurrentSort = sortOrder;
-			ViewBag.CreatetimeSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+			ViewBag.CreatetimeSortParm = sortOrder == "date" ? "date_desc" : "date";
 			ViewBag.TotalSortParm = sortOrder == "total" ? "total_desc" : "total";
 
 			var data = orderService.Load();
@@ -44,7 +62,7 @@ namespace H2StyleStore.Controllers
 			switch (sortOrder)
 			{
 
-				case "Date":
+				case "date":
 					data = data.OrderBy(o => o.CreatedTime);
 					break;
 				case "date_desc":
@@ -60,17 +78,7 @@ namespace H2StyleStore.Controllers
 					data = data.OrderBy(o => o.Order_id);
 					break;
 			}
-			//分頁
-			if (searchString != null)
-			{
-				page = 1;
-			}
-			else
-			{
-				searchString = currentFilter;
-			}
 
-			ViewBag.CurrentFilter = searchString;
 
 			//可篩選
 			if (status_id.HasValue)
@@ -84,12 +92,30 @@ namespace H2StyleStore.Controllers
 			}
 			var list = data.Select(x => x.ToVM());
 
-			int pageSize = 5;
+			//檢視頁數
+			pageSize = pageSize ?? 10;
 			int pageNumber = (page ?? 1);
 
-			return View(list.ToPagedList(pageNumber, pageSize));
+			return PartialView(list.ToPagedList(pageNumber, (int)pageSize));
 		}
+		[HttpGet]
+		public ActionResult Search(string key)
+		{
+			//參數key為使用者輸入在input的資訊
+			var dataIds = orderService.Load()
+				.Select(x => x.Order_id.ToString())
+				.Where(x=> x.StartsWith(key))
+				.Take(5).ToList(); //拿取前五筆資料配對的資料
 
+			var dataNames = orderService.Load()
+				.Select(x => x.MemberName)
+				.Where(x => x.StartsWith(key))
+				.Take(5).ToList(); //拿取前五筆資料配對的資料
+
+			var data = dataIds.Union(dataNames);
+
+			return Json(data.DefaultIfEmpty(), JsonRequestBehavior.AllowGet);
+		}
 		public ActionResult Details(int? id)
 		{
 			var data = orderService.FindById(id).Select(x => x.ToVM());
@@ -100,16 +126,6 @@ namespace H2StyleStore.Controllers
 
 			return View(data);
 		}
-
-		//public ActionResult Update()
-		//{
-		//	ViewBag.Status = orderService.GetStatus();
-
-		//	var data = orderService.Load()
-		//			   .Select(x => x.ToVM());
-		//	data.OrderBy(x => x.CreatedTime);
-		//	return View(data.ToArray());
-		//}
 
 		[HttpPost]
 		public ActionResult Update(OrderUpdateVM[] orders)
@@ -137,7 +153,6 @@ namespace H2StyleStore.Controllers
 
 
 		}
-
 		public ActionResult Edit(int id)
 		{
 			ViewBag.Status_order = orderService.GetStatus();
