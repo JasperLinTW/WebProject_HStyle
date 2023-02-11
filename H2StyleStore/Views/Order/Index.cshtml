@@ -47,8 +47,7 @@
 
         //全選
         $("#OrderData").on("click", "#checkAll", function () {
-
-            $(".checkbox > input").prop("checked", $(this).is(":checked"));
+            $(".checkbox > input.enable").prop("checked", $(this).is(":checked"));
         });
 
         //一改下拉式選單的pagesize馬上更新
