@@ -23,7 +23,7 @@ namespace H2StyleStore.Models.ViewModels
 		public string Description { get; set; }
 
 		[Display(Name = "檔案上傳")]
-		[Required(ErrorMessage = "請上傳影片檔案")]
+		//[Required(ErrorMessage = "請上傳影片檔案")]
 		public string FilePath { get; set; }
 
 		[Display(Name = "上架時間")]
@@ -33,7 +33,7 @@ namespace H2StyleStore.Models.ViewModels
 		public DateTime? OffShelffTime { get; set; }
 
 		[Display(Name = "影片縮圖")]
-		[Required(ErrorMessage = "請上傳影片縮圖")]
+		//[Required(ErrorMessage = "請上傳影片縮圖")]
 		public string Image { get; set; }
 
 		[Display(Name = "類別")]
@@ -41,6 +41,7 @@ namespace H2StyleStore.Models.ViewModels
 		public int CategoryId{ get; set; }
 
 		[Display(Name = "標籤")]
+		[Required(ErrorMessage = "請輸入標籤")]
 		public string Tags { get; set; }
 	}
 

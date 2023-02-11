@@ -31,13 +31,6 @@ namespace H2StyleStore.Controllers
 			this._videoService = new VideoService(repo);
 		}
 
-		// GET: Video
-		//public ActionResult Index()
-		//{
-		//	var data = _videoService.GetVideos().Select(v => v.ToVM());
-		//	return View(data);
-		//}
-
 		public ActionResult Index(int? categoryId, string videoTitle, string tagName, 
 			string sortOrder, string currentFilter, string searchString, int? page)
 		{
@@ -108,7 +101,7 @@ namespace H2StyleStore.Controllers
 
 		public ActionResult CreateVideo()          
 		{
-			ViewBag.VideoCategoryItems = _videoRepository.GetVideoCategories();
+			ViewBag.VideoCategoryItems = _videoRepository.GetVideoCategories(null);
 			return View();
 		}
 
@@ -117,27 +110,74 @@ namespace H2StyleStore.Controllers
 		{
 			ViewBag.VideoCategoryItems = _videoRepository.GetVideoCategories();
 
-			
-			if (videoFile == null || string.IsNullOrEmpty(videoFile.FileName) || videoFile.ContentLength == 0)
+			try
 			{
-				model.Image = string.Empty;
+				if (model.OffShelffTime<=DateTime.Now)
+				{
+					throw new Exception("下架時間不能小於今天");
+				}else if (model.OffShelffTime <= model.OnShelffTime)
+				{
+					throw new Exception("下架時間不能小於上架時間");
+				}
 			}
-			
-			if (imageFile == null || string.IsNullOrEmpty(imageFile.FileName) || imageFile.ContentLength == 0)
+			catch (Exception ex)
 			{
-				model.FilePath = string.Empty;
+				ModelState.AddModelError("OffShelffTime", ex.Message);
+				return View(model);
+			}
+
+			try
+			{
+				if (model.OnShelffTime <= DateTime.Now)
+				{
+					throw new Exception("上架時間不能小於今天");
+				}
+			}
+			catch (Exception ex)
+			{
+				ModelState.AddModelError("OffShelffTime", ex.Message);
+				return View(model);
 			}
 
 			var imagePath = Server.MapPath("/Images/VideoImages");
-			var videoPath = Server.MapPath("/videos");
+			var videoPath = Server.MapPath("/Videos");
 			var helper = new UploadFileHelper();
 
 			try
 			{
-				string imageSave = helper.SaveAs(imagePath, imageFile);
-				model.Image = imageSave;
 				string videoSave = helper.SaveAs(videoPath, videoFile);
-				model.FilePath = videoSave;
+				string videoFileName = videoSave;
+				model.FilePath=$"../../Videos/{videoFileName}";
+
+				string imageSave = helper.SaveAs(imagePath, imageFile);
+				string imageFileName = imageSave;
+				model.Image = $"../../Images/VideoImages/{imageFileName}";
+
+				try
+				{
+					if (model.Image == null)
+					{
+						throw new Exception("請上傳影片縮圖檔");
+					}
+				}
+				catch (Exception ex)
+				{
+					ModelState.AddModelError("Image", ex.Message);
+					return View(model);
+				}
+
+				try
+				{
+					if (model.Image == null)
+					{
+						throw new Exception("請上傳影片縮圖檔");
+					}
+				}
+				catch (Exception ex)
+				{
+					ModelState.AddModelError("Image", ex.Message);
+					return View(model);
+				}
 			}
 			catch (Exception ex)
 			{
@@ -171,12 +211,8 @@ namespace H2StyleStore.Controllers
 		[HttpPost]
 		public ActionResult EditVideo(EditVideoVM model, HttpPostedFileBase videoFile, HttpPostedFileBase imageFile)
 		{
-			//var data=_videoRepository.GetVideoById(model.Id);
 			var videoCategory = _videoRepository.GetVideoCategories(model.Id);
 			ViewBag.VideoCategoryItems = videoCategory;
-
-
-			//---------test---------
 
 			var imagePath = Server.MapPath("/Images/VideoImages");
 			var videoPath = Server.MapPath("/videos");
@@ -190,7 +226,8 @@ namespace H2StyleStore.Controllers
 				try
 				{
 					string videoSave = helper.SaveAs(videoPath, videoFile);
-					model.FilePath = videoSave;
+					string videoFileName = videoSave;
+					model.FilePath = $"../../Videos/{videoFileName}";
 				}
 				catch (Exception ex)
 				{
@@ -207,7 +244,8 @@ namespace H2StyleStore.Controllers
 				try
 				{
 					string imageSave = helper.SaveAs(imagePath, imageFile);
-					model.Image = imageSave;
+					string imageFileName = imageSave;
+					model.Image = $"../../Images/VideoImages/{imageFileName}";
 				}
 				catch (Exception ex)
 				{
@@ -215,7 +253,6 @@ namespace H2StyleStore.Controllers
 				}
 
 			}
-
 
 			if (ModelState.IsValid == false) return View(model);
 
