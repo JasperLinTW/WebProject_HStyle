@@ -15,7 +15,7 @@ namespace H2StyleStore.Models.Infrastructures
 		///<exception cref="UploadFileNullException">沒有上傳檔案,或檔案大小為 0 byte 時, 丟出本例外</exception>
 		///<returns></returns>>
 		public string SaveAs(string path, HttpPostedFileBase file)
-		{
+		 {
 
 			if (file == null || string.IsNullOrEmpty(file.FileName) || file.ContentLength == 0)
 			{
