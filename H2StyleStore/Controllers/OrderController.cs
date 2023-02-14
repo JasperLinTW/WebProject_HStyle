@@ -16,6 +16,7 @@ using System.Reflection;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using System.Net;
 using System.Net.Mail;
 using System.Web.UI.WebControls;
 
@@ -203,32 +204,44 @@ namespace H2StyleStore.Controllers
 
 
 		}
-        [HttpPost]
-        private void SendMail(int status_Description, int order_id)
-		{ 
+   	
+		[HttpPost]
+		public void SendMail(int status_Description, int order_id)
+		{
 			var member = orderService.GetMember(order_id);
 			var content = orderService.GetCancelDescription(status_Description);
-			MailMessage msg = new MailMessage();
-            //收件者，以逗號分隔不同收件者 ex "test@gmail.com,test2@gmail.com"
-            msg.From = new MailAddress("h11830123@gmail.com", "測試郵件", System.Text.Encoding.UTF8);
-            //郵件標題 
-            msg.Subject = $"您於H'style購買的訂單#{order_id}已遭取消";
-            //郵件標題編碼  
-            msg.SubjectEncoding = System.Text.Encoding.UTF8;
-            //郵件內容
-            msg.Body = $"訂單取消原因:{content}，如有疑慮請來電客服，若造成您的不便敬請見諒！";
-            msg.IsBodyHtml = true;
-            msg.BodyEncoding = System.Text.Encoding.UTF8;//郵件內容編碼 
-            msg.Priority = MailPriority.Normal;//郵件優先級 
-                                               //建立 SmtpClient 物件 並設定 Gmail的smtp主機及Port 
-            SmtpClient MySmtp = new SmtpClient("smtp-relay.gmail.com", 587);
+			//設定smtp主機
+			string smtpAddress = "smtp.gmail.com";
+			//設定Port
+			int portNumber = 587;
+			bool enableSSL = true;
+			//填入寄送方email和密碼
+			string emailFrom = "h11830123@gmail.com";
+			string password = "yetzwlvxoejigxns";
+			//收信方email 可以用逗號區分多個收件人
+			string emailTo = "h11830123@gmail.com";
+			//主旨
+			string subject = $"您於H'style購買的訂單#{order_id}訂單狀態改為:已取消";
+			//內容
+			string body = $"訂單取消原因:{content}\r\n如有疑慮請來電客服，若造成您的不便敬請見諒！";
 
-            //設定你的帳號密碼
-            MySmtp.Credentials = new System.Net.NetworkCredential("h11830123@gmail.com", "qkkhnbtngmerzzvl");
-            //Gmial 的 smtp 使用 SSL
-            MySmtp.EnableSsl = true;
-            MySmtp.Send(msg);
-        }
+			using (MailMessage mail = new MailMessage())
+			{
+				mail.From = new MailAddress(emailFrom);
+				mail.To.Add(emailTo);
+				mail.Subject = subject;
+				mail.Body = body;
+				// 若你的內容是HTML格式，則為True
+				mail.IsBodyHtml = false;
+
+				using (SmtpClient smtp = new SmtpClient(smtpAddress, portNumber))
+				{
+					smtp.Credentials = new NetworkCredential(emailFrom, password);
+					smtp.EnableSsl = enableSSL;
+					smtp.Send(mail);
+				}
+			}
+		}
 
 	}
 }

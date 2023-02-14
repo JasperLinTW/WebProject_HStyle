@@ -283,9 +283,9 @@
                 type: "POST",
                 contentType: "application/json"
             }).done(function (result) {
-                alert(result); 
+                alert("寄信成功"); 
             }).fail(function (err) {
-                alert(err.statusText)
+                alert("寄信失敗")
             })
 
                 $('#exampleModal').modal('hide');
