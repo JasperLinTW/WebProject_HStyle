@@ -16,6 +16,8 @@ using System.Reflection;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using System.Net.Mail;
+using System.Web.UI.WebControls;
 
 namespace H2StyleStore.Controllers
 {
@@ -201,6 +203,32 @@ namespace H2StyleStore.Controllers
 
 
 		}
+        [HttpPost]
+        private void SendMail(int status_Description, int order_id)
+		{ 
+			var member = orderService.GetMember(order_id);
+			var content = orderService.GetCancelDescription(status_Description);
+			MailMessage msg = new MailMessage();
+            //收件者，以逗號分隔不同收件者 ex "test@gmail.com,test2@gmail.com"
+            msg.From = new MailAddress("h11830123@gmail.com", "測試郵件", System.Text.Encoding.UTF8);
+            //郵件標題 
+            msg.Subject = $"您於H'style購買的訂單#{order_id}已遭取消";
+            //郵件標題編碼  
+            msg.SubjectEncoding = System.Text.Encoding.UTF8;
+            //郵件內容
+            msg.Body = $"訂單取消原因:{content}，如有疑慮請來電客服，若造成您的不便敬請見諒！";
+            msg.IsBodyHtml = true;
+            msg.BodyEncoding = System.Text.Encoding.UTF8;//郵件內容編碼 
+            msg.Priority = MailPriority.Normal;//郵件優先級 
+                                               //建立 SmtpClient 物件 並設定 Gmail的smtp主機及Port 
+            SmtpClient MySmtp = new SmtpClient("smtp-relay.gmail.com", 587);
+
+            //設定你的帳號密碼
+            MySmtp.Credentials = new System.Net.NetworkCredential("h11830123@gmail.com", "qkkhnbtngmerzzvl");
+            //Gmial 的 smtp 使用 SSL
+            MySmtp.EnableSsl = true;
+            MySmtp.Send(msg);
+        }
 
 	}
 }

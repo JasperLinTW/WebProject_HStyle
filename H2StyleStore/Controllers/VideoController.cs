@@ -17,7 +17,7 @@ using H2StyleStore.filter;
 
 namespace H2StyleStore.Controllers
 {
-	//[AuthrizeHelper("1", "3")]
+	[AuthrizeHelper("1", "3")]
 	public class VideoController : Controller
 	{
 		private VideoService _videoService;

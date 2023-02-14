@@ -25,5 +25,7 @@ namespace H2StyleStore.Models.Services.Interfaces
 		int StatusTransfer(string status);
 		IEnumerable<SelectListItem> GetStatusDescription();
 		void Cancel(int status_Description, int order_id);
-	}
+        string GetCancelDescription(int status_Description);
+		MemberDto GetMember(int order_id);
+    }
 }

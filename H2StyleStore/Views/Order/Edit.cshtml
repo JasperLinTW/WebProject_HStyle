@@ -115,13 +115,13 @@
                 <div class="form-group col-md-4">
                     @Html.LabelFor(model => model.ShippedDate, htmlAttributes: new { @class = "control-label" })
                     <div class="col-md-12">
-                        @if (Model.Status_id > 4 )
+                        @if (Model.Status_id > 4)
                         {
                             <input id="shippeddate" type="datetime-local" class="form-control" readonly="readonly" value="@shippedDate" name="ShippedDate" />
                         }
                         else
                         {
-                            <input id="shippeddate" type="datetime-local" class="form-control"  value="@shippedDate" name="ShippedDate" />
+                            <input id="shippeddate" type="datetime-local" class="form-control" value="@shippedDate" name="ShippedDate" />
                         }
                     </div>
                 </div>
@@ -241,7 +241,7 @@
 
     <script>
 
-        $('#exampleModal').on('click', '#cancel', function () {
+        @*$('#exampleModal').on('click', '#cancel', function () {
             var obj = {
                 Order_id: $('#Order_id').val(),
                 Status_Description: $('#Status_Description').val()
@@ -260,7 +260,7 @@
 
             $('#exampleModal').modal('hide');
 
-        });
+        });*@
 
         $('#ship').on('click', function () {
             $('#status').val("已出貨")
@@ -269,6 +269,31 @@
             $('#shippeddate').val(dateStringWithTime)
         })
 
+        $('#exampleModal').on('click', '#cancel', function () {
+            let object = {
+                Order_id: $('#Order_id').val(),
+                Status_Description: $('#Status_Description').val()
+            }
+            var confirm = $("#chk_1")[0].checked;
+            if (confirm == true) {
+
+            $.ajax({
+                url: '@Url.Action("SendMail", "Order")',
+                data: JSON.stringify(object),
+                type: "POST",
+                contentType: "application/json"
+            }).done(function (result) {
+                alert(result); 
+            }).fail(function (err) {
+                alert(err.statusText)
+            })
+
+                $('#exampleModal').modal('hide');
+
+            }
+
+
+        })
 
 
 
