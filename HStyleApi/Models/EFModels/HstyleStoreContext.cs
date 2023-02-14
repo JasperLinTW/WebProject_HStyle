@@ -19,6 +19,7 @@ namespace HStyleApi.Models.EFModels
         }
 
         public virtual DbSet<Address> Addresses { get; set; }
+        public virtual DbSet<Cart> Carts { get; set; }
         public virtual DbSet<EassyFollow> EassyFollows { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<Essay> Essays { get; set; }
@@ -83,6 +84,25 @@ namespace HStyleApi.Models.EFModels
                     .HasForeignKey(d => d.MemberId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Address_Members");
+            });
+
+            modelBuilder.Entity<Cart>(entity =>
+            {
+                entity.HasKey(e => new { e.SpecId, e.MemberId });
+
+                entity.ToTable("Cart");
+
+                entity.HasOne(d => d.Member)
+                    .WithMany(p => p.Carts)
+                    .HasForeignKey(d => d.MemberId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Cart_Members");
+
+                entity.HasOne(d => d.Spec)
+                    .WithMany(p => p.Carts)
+                    .HasForeignKey(d => d.SpecId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Cart_Spec");
             });
 
             modelBuilder.Entity<EassyFollow>(entity =>
