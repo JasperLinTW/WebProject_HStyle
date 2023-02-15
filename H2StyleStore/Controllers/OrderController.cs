@@ -219,7 +219,7 @@ namespace H2StyleStore.Controllers
 			string emailFrom = "h11830123@gmail.com";
 			string password = "yetzwlvxoejigxns";
 			//收信方email 可以用逗號區分多個收件人
-			string emailTo = "h11830123@gmail.com";
+			string emailTo = member.Email;
 			//主旨
 			string subject = $"您於H'style購買的訂單#{order_id}訂單狀態改為:已取消";
 			//內容
@@ -227,7 +227,7 @@ namespace H2StyleStore.Controllers
 
 			using (MailMessage mail = new MailMessage())
 			{
-				mail.From = new MailAddress(emailFrom);
+				mail.From = new MailAddress(emailFrom, "H'style");
 				mail.To.Add(emailTo);
 				mail.Subject = subject;
 				mail.Body = body;
