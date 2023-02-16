@@ -12,7 +12,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "方案項目", "方案項�
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScheduleWork", "HcoinForBirth\ScheduleWork.csproj", "{EAACF929-DBFD-49B9-AA77-E98536B372A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HStyleApi", "HStyleApi\HStyleApi.csproj", "{EBEB8862-4B7F-4A1B-B7C4-0F35BAFAB61C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HStyleApi", "HStyleApi\HStyleApi.csproj", "{EBEB8862-4B7F-4A1B-B7C4-0F35BAFAB61C}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "hstylebuyer", "HStyleBuyer\hstylebuyer.esproj", "{1551E4E7-6846-4FC2-8717-EC7F68E8CCAE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +34,12 @@ Global
 		{EBEB8862-4B7F-4A1B-B7C4-0F35BAFAB61C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EBEB8862-4B7F-4A1B-B7C4-0F35BAFAB61C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EBEB8862-4B7F-4A1B-B7C4-0F35BAFAB61C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1551E4E7-6846-4FC2-8717-EC7F68E8CCAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1551E4E7-6846-4FC2-8717-EC7F68E8CCAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1551E4E7-6846-4FC2-8717-EC7F68E8CCAE}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{1551E4E7-6846-4FC2-8717-EC7F68E8CCAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1551E4E7-6846-4FC2-8717-EC7F68E8CCAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1551E4E7-6846-4FC2-8717-EC7F68E8CCAE}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

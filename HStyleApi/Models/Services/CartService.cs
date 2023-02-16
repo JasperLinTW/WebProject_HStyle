@@ -1,4 +1,5 @@
-﻿using HStyleApi.Models.EFModels;
+﻿using HStyleApi.Models.DTOs;
+using HStyleApi.Models.EFModels;
 using HStyleApi.Models.InfraStructures.Repositories;
 
 namespace HStyleApi.Models.Services
@@ -10,27 +11,27 @@ namespace HStyleApi.Models.Services
         {
             _repo = repo;
         }
-    }
-    public CartEntity Current(string customerAccount)
-    {
-        if (_repository.IsExists(customerAccount))
+		public IEnumerable<CartDTO> GetCart(int memberId)
         {
-            return _repository.Load(customerAccount);
+            return _repo.GetCart(memberId);
         }
-        else
+
+		public void AddItem(int memberId, int specId, int qty = 1)
         {
-            return _repository.CreateNewCart(customerAccount);
+            bool isExit = _repo.IsExit(memberId, specId);
+            if (!isExit)
+            {
+                _repo.AddItem(memberId,specId, qty = 1);
+            }
+            else
+            {
+				_repo.UpdateItem(memberId, specId, qty = 1);
+			}
+            
+            //cart.AddItem(cartProd, qty);
+
+            
         }
     }
-    public void AddItem(int memberId, int productId, int qty = 1)
-    {
-        var cart = Current(customerAccount);
-
-        var product = _productRepo.Load(productId, true);
-        var cartProd = new CartProductEntity { Id = productId, Name = product.Name, Price = product.Price };
-
-        cart.AddItem(cartProd, qty);
-
-        _repository.Save(cart);
-    }
+    
 }
