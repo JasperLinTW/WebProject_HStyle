@@ -10,10 +10,12 @@ namespace HStyleApi.Models.EFModels
         public Member()
         {
             Addresses = new HashSet<Address>();
+            Carts = new HashSet<Cart>();
             EssaysComments = new HashSet<EssaysComment>();
             HCheckIns = new HashSet<HCheckIn>();
             HSourceDetails = new HashSet<HSourceDetail>();
             Orders = new HashSet<Order>();
+            ProductLikes = new HashSet<ProductLike>();
             Comments = new HashSet<EssaysComment>();
             Essays = new HashSet<Essay>();
         }
@@ -36,10 +38,12 @@ namespace HStyleApi.Models.EFModels
         public virtual PermissionsM Permission { get; set; }
         public virtual EassyFollow EassyFollow { get; set; }
         public virtual ICollection<Address> Addresses { get; set; }
+        public virtual ICollection<Cart> Carts { get; set; }
         public virtual ICollection<EssaysComment> EssaysComments { get; set; }
         public virtual ICollection<HCheckIn> HCheckIns { get; set; }
         public virtual ICollection<HSourceDetail> HSourceDetails { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
+        public virtual ICollection<ProductLike> ProductLikes { get; set; }
 
         public virtual ICollection<EssaysComment> Comments { get; set; }
         public virtual ICollection<Essay> Essays { get; set; }

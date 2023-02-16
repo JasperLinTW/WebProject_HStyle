@@ -10,6 +10,7 @@ namespace HStyleApi.Models.EFModels
         public Order()
         {
             OrderDetails = new HashSet<OrderDetail>();
+            ProductComments = new HashSet<ProductComment>();
         }
 
         public int OrderId { get; set; }
@@ -34,5 +35,6 @@ namespace HStyleApi.Models.EFModels
         public virtual OrderStatus Status { get; set; }
         public virtual OrderStatusDescription StatusDescription { get; set; }
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+        public virtual ICollection<ProductComment> ProductComments { get; set; }
     }
 }

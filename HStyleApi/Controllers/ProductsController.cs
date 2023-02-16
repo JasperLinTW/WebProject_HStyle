@@ -14,7 +14,7 @@ namespace HStyleApi.Controllers
 	{
 		private readonly ProductServices _Service;
 
-		public ProductsController(HstyleStoreContext db)
+		public ProductsController(AppDbContext db)
 		{
 			_Service = new ProductServices(db);
 		}
@@ -22,17 +22,26 @@ namespace HStyleApi.Controllers
 
 		// GET: api/<ProductsController>
 		[HttpGet]
-		public IEnumerable<ProductDto> Get()
+		public IEnumerable<ProductDto> LoadProducts()
 		{
-			var data = _Service.Get();
+			var data = _Service.LoadProducts();
 			return data;
 		}
 
 		// GET api/<ProductsController>/5
-		[HttpGet("{id}")]
-		public string Get(int id)
+		[HttpGet("{product_id}")]
+		public ProductDto GetProduct(int product_id)
 		{
-			return "value";
+			var data = _Service.GetProduct(product_id);
+			return data;
+		}
+
+
+		[HttpGet("{member_id/product_id}")]
+		public ProductDto ProductRecommend(int product_id)
+		{
+			var data = _Service.GetProduct(product_id);
+			return data;
 		}
 
 		// POST api/<ProductsController>

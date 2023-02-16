@@ -221,9 +221,9 @@ namespace H2StyleStore.Controllers
 			//收信方email 可以用逗號區分多個收件人
 			string emailTo = member.Email;
 			//主旨
-			string subject = $"您於H'style購買的訂單#{order_id}訂單狀態改為:已取消";
+			string subject = $"您於H'style購買的訂單編號#{order_id}訂單狀態改為:已取消";
 			//內容
-			string body = $"訂單取消原因:{content}\r\n如有疑慮請來電客服，若造成您的不便敬請見諒！";
+			string body = $"親愛的{member.Name}您好,\r\n 訂單編號#{order_id}訂單狀態改為:已取消。\r\n取消原因:{content}\r\n如有疑慮請來電客服，若造成您的不便敬請見諒！";
 
 			using (MailMessage mail = new MailMessage())
 			{

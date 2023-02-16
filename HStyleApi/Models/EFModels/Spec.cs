@@ -7,6 +7,11 @@ namespace HStyleApi.Models.EFModels
 {
     public partial class Spec
     {
+        public Spec()
+        {
+            Carts = new HashSet<Cart>();
+        }
+
         public int Id { get; set; }
         public int ProductId { get; set; }
         public string Color { get; set; }
@@ -14,5 +19,6 @@ namespace HStyleApi.Models.EFModels
         public int Stock { get; set; }
 
         public virtual Product Product { get; set; }
+        public virtual ICollection<Cart> Carts { get; set; }
     }
 }

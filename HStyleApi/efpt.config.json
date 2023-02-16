@@ -1,6 +1,6 @@
 ﻿{
    "CodeGenerationMode": 2,
-   "ContextClassName": "HstyleStoreContext",
+   "ContextClassName": "AppDbContext",
    "ContextNamespace": null,
    "DefaultDacpacSchema": null,
    "FilterSchemas": false,
@@ -16,6 +16,10 @@
    "Tables": [
       {
          "Name": "[dbo].[Address]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Cart]",
          "ObjectType": 0
       },
       {
@@ -103,11 +107,27 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[PComments_Helpful]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[PComments_Imgs]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[PermissionsE]",
          "ObjectType": 0
       },
       {
          "Name": "[dbo].[PermissionsM]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Product_Comments]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Product_Likes]",
          "ObjectType": 0
       },
       {
@@ -147,11 +167,10 @@
          "ObjectType": 0
       }
    ],
-   "UiHint": "AppDbContext (H2StyleStore)",
+   "UiHint": "fuen25team3.HstyleStore",
    "UncountableWords": null,
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": false,
-   "UseDateOnlyTimeOnly": false,
    "UseDbContextSplitting": false,
    "UseFluentApiOnly": true,
    "UseHandleBars": false,
