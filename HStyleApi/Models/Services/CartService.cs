@@ -21,7 +21,7 @@ namespace HStyleApi.Models.Services
             bool isExit = _repo.IsExit(memberId, specId);
             if (!isExit)
             {
-                _repo.AddItem(memberId,specId, qty = 1);
+                _repo.AddItem(memberId,specId);
             }
             else
             {
@@ -32,6 +32,22 @@ namespace HStyleApi.Models.Services
 
             
         }
-    }
+		public void MinusItem(int memberId, int specId, int qty = -1)
+		{
+			bool isOne = _repo.IsOne(memberId, specId);
+			if (isOne)
+			{
+				_repo.DeleteItem(memberId, specId);
+			}
+			else
+			{
+				_repo.UpdateItem(memberId, specId, -1);
+			}
+
+			//cart.AddItem(cartProd, qty);
+
+
+		}
+	}
     
 }

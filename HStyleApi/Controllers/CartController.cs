@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HStyleApi.Controllers
 {
-    [Route("api/{memberId}/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class CartController : ControllerBase
     {
@@ -19,7 +19,7 @@ namespace HStyleApi.Controllers
         {
             _repo= new CartRepo(db);
             _CartService = new CartService(_repo);
-			_memberId = 1;
+			_memberId = 1;//TODO從COOKIE取
 		}
 
         // GET: api/<CartController>
@@ -51,14 +51,34 @@ namespace HStyleApi.Controllers
 
             }catch(Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest("商品缺貨中");
             }
             
             return Ok("新增成功");
         }
+		[HttpPost("Minus/{specId}")]
+		public ActionResult Minus(int specId)
+		{
 
-        // PUT api/<CartController>/5
-        [HttpPut("{id}")]
+			if (_memberId <= 0)
+			{
+				return Unauthorized("請先登入帳戶");
+			}
+			try
+			{
+				_CartService.MinusItem(_memberId, specId, 1);
+
+			}
+			catch (Exception ex)
+			{
+				return BadRequest("商品已不存在");
+			}
+
+			return Ok("刪除成功");
+		}
+
+		// PUT api/<CartController>/5
+		[HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }

@@ -11,13 +11,13 @@ namespace HStyleApi.Models.InfraStructures.Repositories
             _db= db;
         }
         
-        public void AddItem(int memberId, int specId, int qty = 1)
+        public void AddItem(int memberId, int specId)
 		{
             var newItem = new Cart()
             {
                 MemberId = memberId,
                 SpecId = specId,
-                Quantity = qty
+                Quantity = 1
             };
             _db.Add(newItem);
             _db.SaveChanges();
@@ -39,13 +39,25 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 			var cartItems = _db.Carts.Where(x => x.MemberId == memberId && x.SpecId == specId);
             return cartItems.Any();
 		}
-        public void UpdateItem(int memberId, int specId, int qty = 1)
+		public bool IsOne(int memberId, int specId)
+		{
+			var cartItems = _db.Carts.Where(x => x.MemberId == memberId && x.SpecId == specId).SingleOrDefault();
+			return cartItems.Quantity==1;
+		}
+		public void UpdateItem(int memberId, int specId, int qty)
         {
             var cart = _db.Carts.Where(x => x.MemberId == memberId && x.SpecId == specId).SingleOrDefault();
-            cart.Quantity += 1; 
+            cart.Quantity += qty; 
 
             _db.SaveChanges();
         }
+		public void DeleteItem(int memberId, int specId)
+		{
+			var cart = _db.Carts.Where(x => x.MemberId == memberId && x.SpecId == specId).SingleOrDefault();
+			_db.Carts.Remove(cart);
+
+			_db.SaveChanges();
+		}
 
 	}
 }
