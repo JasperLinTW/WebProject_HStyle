@@ -27,12 +27,14 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 
 		public ProductDto GetProduct(int product_id)
 		{
+
 			IEnumerable<Product> data = _db.Products.Include(product => product.Category)
 										.Include(product => product.Imgs)
 										.Include(product => product.Specs)
 										.Include(product => product.Tags);
-			var product = data.FirstOrDefault(x => x.ProductId == product_id).ToDto();
 
+			var product = data.FirstOrDefault(x => x.ProductId == product_id).ToDto();
+			
 			return product;
 
 		}

@@ -22,27 +22,46 @@ namespace HStyleApi.Controllers
 
 		// GET: api/<ProductsController>
 		[HttpGet]
-		public IEnumerable<ProductDto> LoadProducts()
+		public ActionResult<ProductDto> LoadProducts()
 		{
-			var data = _Service.LoadProducts();
-			return data;
+			try
+			{
+				var data = _Service.LoadProducts();
+			}
+			catch (Exception ex)
+			{
+
+				return BadRequest(ex.Message);
+			}
+
+			return Ok("取得全部商品");
 		}
 
 		// GET api/<ProductsController>/5
 		[HttpGet("{product_id}")]
-		public ProductDto GetProduct(int product_id)
+		public ActionResult GetProduct(int product_id)
 		{
-			var data = _Service.GetProduct(product_id);
-			return data;
+			try
+			{
+				var data = _Service.GetProduct(product_id);
+			}
+			catch (Exception ex)
+			{
+
+				return BadRequest(ex.Message);
+			}
+
+
+			return Ok("取得單一商品");
 		}
 
 
-		[HttpGet("{member_id/product_id}")]
-		public ProductDto ProductRecommend(int product_id)
-		{
-			var data = _Service.GetProduct(product_id);
-			return data;
-		}
+		//[HttpGet("{member_id/product_id}")]
+		//public ProductDto ProductRecommend(int product_id, int member_id)
+		//{
+		//	var data = _Service.GetRecommend(product_id, member_id);
+		//	return data;
+		//}
 
 		// POST api/<ProductsController>
 		[HttpPost]

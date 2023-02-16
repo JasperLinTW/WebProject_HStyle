@@ -7,9 +7,11 @@ namespace HStyleApi.Models.Services
 	public class ProductServices
 	{
 		private readonly ProductRepo _repo;
+		private readonly AppDbContext _db;
 		public ProductServices(AppDbContext db)
 		{
 			_repo = new ProductRepo(db);
+			_db = db;
 		}
 
 		public IEnumerable<ProductDto> LoadProducts()
@@ -20,8 +22,16 @@ namespace HStyleApi.Models.Services
 
 		public ProductDto GetProduct(int product_id)
 		{
-			var data = _repo.GetProduct(product_id);
-			return data;
+			if (_db.Products.Find(product_id) == null)
+			{
+				throw new Exception("查無此商品");
+			}
+			else
+			{
+				var data = _repo.GetProduct(product_id);
+				return data;
+			}
+			
 		}
 	}
 }
