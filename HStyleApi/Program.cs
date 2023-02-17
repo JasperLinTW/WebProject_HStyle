@@ -13,7 +13,18 @@ builder.Services.AddSwaggerGen();
 var HstoreconnectString = builder.Configuration.GetConnectionString("HstyleStore");
 builder.Services.AddDbContext<HstyleStoreContext> (option => option.UseSqlServer(HstoreconnectString));
 
+string MyAllowOrigins = "AllowAny";
+builder.Services.AddCors(options => {
+	options.AddPolicy(
+			name: MyAllowOrigins,
+			policy => policy.WithOrigins("*")
+			.WithHeaders("*")
+			.WithMethods("*"));
+});
+
 var app = builder.Build();
+app.UseCors();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
