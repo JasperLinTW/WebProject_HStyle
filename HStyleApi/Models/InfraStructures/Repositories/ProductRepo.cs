@@ -27,6 +27,10 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 
 		public ProductDto GetProduct(int product_id)
 		{
+			if (_db.Products.Find(product_id) == null)
+			{
+				throw new Exception("查無此商品");
+			}
 
 			IEnumerable<Product> data = _db.Products.Include(product => product.Category)
 										.Include(product => product.Imgs)
