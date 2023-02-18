@@ -12,6 +12,7 @@ namespace H2StyleStore.Models.EFModels
         public Order()
         {
             Order_Details = new HashSet<Order_Details>();
+            Product_Comments = new HashSet<Product_Comments>();
         }
 
         [Key]
@@ -65,5 +66,8 @@ namespace H2StyleStore.Models.EFModels
         public virtual Order_Status Order_Status { get; set; }
 
         public virtual Order_StatusDescription Order_StatusDescription { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Product_Comments> Product_Comments { get; set; }
     }
 }

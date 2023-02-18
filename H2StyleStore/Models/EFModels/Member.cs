@@ -12,12 +12,14 @@ namespace H2StyleStore.Models.EFModels
         public Member()
         {
             Addresses = new HashSet<Address>();
+            Carts = new HashSet<Cart>();
             Essays_Comments = new HashSet<Essays_Comments>();
             H_CheckIns = new HashSet<H_CheckIns>();
             H_Source_Details = new HashSet<H_Source_Details>();
             Orders = new HashSet<Order>();
             Essays_Comments1 = new HashSet<Essays_Comments>();
             Essays = new HashSet<Essay>();
+            Products = new HashSet<Product>();
         }
 
         public int Id { get; set; }
@@ -46,6 +48,7 @@ namespace H2StyleStore.Models.EFModels
 
         [Column(TypeName = "datetime2")]
         public DateTime Birthday { get; set; }
+
         public int? Permission_Id { get; set; }
 
         public DateTime Jointime { get; set; }
@@ -62,6 +65,9 @@ namespace H2StyleStore.Models.EFModels
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Address> Addresses { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Cart> Carts { get; set; }
 
         public virtual Eassy_Follows Eassy_Follows { get; set; }
 
@@ -84,5 +90,8 @@ namespace H2StyleStore.Models.EFModels
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Essay> Essays { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Product> Products { get; set; }
     }
 }

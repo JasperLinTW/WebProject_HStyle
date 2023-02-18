@@ -13,6 +13,7 @@ namespace H2StyleStore.Models.EFModels
         {
             Specs = new HashSet<Spec>();
             Images = new HashSet<Image>();
+            Members = new HashSet<Member>();
             Tags = new HashSet<Tag>();
         }
 
@@ -44,6 +45,9 @@ namespace H2StyleStore.Models.EFModels
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Image> Images { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Member> Members { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tag> Tags { get; set; }
