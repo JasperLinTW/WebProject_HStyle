@@ -25,7 +25,6 @@ namespace HStyleApi.Models.EFModels
         public int CategoryId { get; set; }
 
         public virtual Pcategory Category { get; set; }
-        public virtual ProductLike ProductLike { get; set; }
         public virtual ICollection<Spec> Specs { get; set; }
 
         public virtual ICollection<Image> Imgs { get; set; }

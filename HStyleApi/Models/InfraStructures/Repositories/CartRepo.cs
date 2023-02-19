@@ -5,8 +5,8 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 {
     public class CartRepo
     {
-        private readonly HstyleStoreContext _db;
-        public CartRepo(HstyleStoreContext db)
+        private readonly AppDbContext _db;
+        public CartRepo(AppDbContext db)
         {
             _db= db;
         }
