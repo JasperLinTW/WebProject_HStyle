@@ -18,6 +18,7 @@ namespace HStyleApi.Models.EFModels
             ProductLikes = new HashSet<ProductLike>();
             Comments = new HashSet<EssaysComment>();
             Essays = new HashSet<Essay>();
+            Products = new HashSet<Product>();
         }
 
         public int Id { get; set; }
@@ -47,5 +48,6 @@ namespace HStyleApi.Models.EFModels
 
         public virtual ICollection<EssaysComment> Comments { get; set; }
         public virtual ICollection<Essay> Essays { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
     }
 }

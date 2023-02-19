@@ -33,6 +33,22 @@ namespace H2StyleStore.Models.Services
 
             if (dto.FilePath == null) return (false, "請上傳影片檔案");
 
+			if (dto.OnShelffTime == null && dto.OffShelffTime == null)
+			{
+				dto.IsOnShelff = true;
+			}
+			else
+			{
+				if (DateTime.Now >= dto.OnShelffTime && DateTime.Now < dto.OffShelffTime)
+				{
+					dto.IsOnShelff = true;
+				}
+				else
+				{
+					dto.IsOnShelff = false;
+				}
+			}
+
 			_repository.CreateVideo(dto);
             return (true, null);
         }
@@ -45,17 +61,33 @@ namespace H2StyleStore.Models.Services
                 throw new Exception("找不到此影片");
             }
 
-            entity.Title = request.Title;
-            entity.Description = request.Description;
-            entity.CategoryId = request.CategoryId;
-            entity.FilePath = request.FilePath;
-            entity.OffShelffTime = request.OffShelffTime;
-            entity.OnShelffTime = request.OnShelffTime;
-            entity.CreatedTime = request.CreatedTime;
-            entity.Tags = request.Tags;
-            entity.Image = request.Image;
+			if (request.OnShelffTime == null && request.OffShelffTime == null)
+			{
+				request.IsOnShelff = true;
+			}
+			else
+			{
+				//TODO驗證待改
+				if (DateTime.Now >= request.OnShelffTime && DateTime.Now < request.OffShelffTime)
+				{
+					request.IsOnShelff = true;
+				}else
+				{
+					request.IsOnShelff=false;
+				}
+			}
+			entity.Title = request.Title;
+			entity.Description = request.Description;
+			entity.CategoryId = request.CategoryId;
+			entity.FilePath = request.FilePath;
+			entity.OffShelffTime = request.OffShelffTime;
+			entity.OnShelffTime = request.OnShelffTime;
+			entity.CreatedTime = request.CreatedTime;
+			entity.Tags = request.Tags;
+			entity.Image = request.Image;
+			entity.IsOnShelff = request.IsOnShelff;
 
-            _repository.Update(entity);
+			_repository.Update(entity);
 		}
 	}
 }

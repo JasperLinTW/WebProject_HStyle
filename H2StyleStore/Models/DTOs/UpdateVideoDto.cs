@@ -28,6 +28,8 @@ namespace H2StyleStore.Models.DTOs
 
 		public DateTime CreatedTime { get; set; }
 
+		public bool? IsOnShelff { get; set; }
+
 		public string Image { get; set; }
 
 		public string VideoCategory { get; set; }
@@ -49,6 +51,7 @@ namespace H2StyleStore.Models.DTOs
 				Image = source.Image.Path,
 				OnShelffTime = source.OnShelffTime,
 				OffShelffTime = source.OffShelffTime,
+				IsOnShelff=source.IsOnShelff,
 				//CreatedTime = source.CreatedTime,
 				Tags = source.Tags.Select(t => t.TagName).ToList()
 			};

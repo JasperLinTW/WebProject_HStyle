@@ -1,6 +1,6 @@
 ﻿{
    "CodeGenerationMode": 2,
-   "ContextClassName": "AppDbContext",
+   "ContextClassName": "HstyleStoreContext",
    "ContextNamespace": null,
    "DefaultDacpacSchema": null,
    "FilterSchemas": false,
@@ -167,10 +167,11 @@
          "ObjectType": 0
       }
    ],
-   "UiHint": "fuen25team3.HstyleStore",
+   "UiHint": "ispanteam3.HstyleStore",
    "UncountableWords": null,
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": false,
+   "UseDateOnlyTimeOnly": false,
    "UseDbContextSplitting": false,
    "UseFluentApiOnly": true,
    "UseHandleBars": false,

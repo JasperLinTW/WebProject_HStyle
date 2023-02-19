@@ -11,6 +11,7 @@ namespace HStyleApi.Models.EFModels
         {
             Specs = new HashSet<Spec>();
             Imgs = new HashSet<Image>();
+            Members = new HashSet<Member>();
             Tags = new HashSet<Tag>();
         }
 
@@ -28,6 +29,7 @@ namespace HStyleApi.Models.EFModels
         public virtual ICollection<Spec> Specs { get; set; }
 
         public virtual ICollection<Image> Imgs { get; set; }
+        public virtual ICollection<Member> Members { get; set; }
         public virtual ICollection<Tag> Tags { get; set; }
     }
 }
