@@ -4,6 +4,7 @@ using HStyleApi.Models.InfraStructures.Repositories;
 using HStyleApi.Models.Services;
 using Microsoft.AspNetCore.Mvc;
 
+
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace HStyleApi.Controllers
@@ -56,17 +57,19 @@ namespace HStyleApi.Controllers
 		}
 
 
-		//[HttpGet("{member_id/product_id}")]
-		//public ProductDto ProductRecommend(int product_id, int member_id)
-		//{
-		//	var data = _Service.GetRecommend(product_id, member_id);
-		//	return data;
-		//}
+		[HttpGet("{product_id}")]
+		public ProductDto ProductRecommend(int product_id, [FromBody]int member_id)
+		{
+			var data = _Service.GetRecommend(product_id, member_id);
+
+			return data;
+		}
 
 		// POST api/<ProductsController>
 		[HttpPost]
-		public void Post([FromBody] string value)
+		public ActionResult CreateComment([FromBody] string comment, int score, List<IFormFile> files)
 		{
+			
 		}
 
 		// PUT api/<ProductsController>/5

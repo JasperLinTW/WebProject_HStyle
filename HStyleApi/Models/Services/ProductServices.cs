@@ -23,7 +23,20 @@ namespace HStyleApi.Models.Services
 			var data = _repo.GetProduct(product_id);
 
 			return data;
-			
+
+		}
+
+		public ProductDto GetRecommend(int product_id, int member_id)
+		{
+
+			//若無登入或無購買紀錄就以目前瀏覽的商品有相同tag作為推薦
+
+			//取得member有買過的商品資料
+
+			//以member購買過的商品具相同tag作為推薦
+
+			return null;
+
 		}
 	}
 }

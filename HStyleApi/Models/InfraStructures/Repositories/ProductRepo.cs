@@ -42,5 +42,6 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 			return product;
 
 		}
+
 	}
 }
