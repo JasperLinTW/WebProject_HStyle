@@ -2,20 +2,22 @@
 using HStyleApi.Models.EFModels;
 using HStyleApi.Models.InfraStructures.Repositories;
 using HStyleApi.Models.Services;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace HStyleApi.Controllers
 {
-    [Route("api/[controller]")]
+	[EnableCors("AllowAny")]
+	[Route("api/[controller]")]
     [ApiController]
     public class CartController : ControllerBase
     {
         private readonly CartService _CartService;
         private readonly CartRepo _repo;
         private readonly int _memberId;
-        public CartController(HstyleStoreContext db)
+        public CartController(AppDbContext db)
         {
             _repo= new CartRepo(db);
             _CartService = new CartService(_repo);

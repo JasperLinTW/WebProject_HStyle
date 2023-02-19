@@ -1,18 +1,20 @@
 ﻿using HStyleApi.Models.DTOs;
 using HStyleApi.Models.EFModels;
 using HStyleApi.Models.Services;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace HStyleApi.Controllers
 {
+	[EnableCors("AllowAny")]
 	[Route("api/[controller]")]
 	[ApiController]
 	public class VideoController : ControllerBase
 	{
 		private VideoService _service;
-		public VideoController(HstyleStoreContext db)
+		public VideoController(AppDbContext db)
 		{
 			 _service = new VideoService(db);
 		}

@@ -7,9 +7,9 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 {
 	public class VideoRepository
 	{
-		private HstyleStoreContext _db;
+		private AppDbContext _db;
 
-		public VideoRepository(HstyleStoreContext db)
+		public VideoRepository(AppDbContext db)
 		{
 			_db = db;
 		}

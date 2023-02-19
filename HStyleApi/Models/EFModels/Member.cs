@@ -15,7 +15,6 @@ namespace HStyleApi.Models.EFModels
             HCheckIns = new HashSet<HCheckIn>();
             HSourceDetails = new HashSet<HSourceDetail>();
             Orders = new HashSet<Order>();
-            ProductLikes = new HashSet<ProductLike>();
             Comments = new HashSet<EssaysComment>();
             Essays = new HashSet<Essay>();
             Products = new HashSet<Product>();
@@ -44,7 +43,6 @@ namespace HStyleApi.Models.EFModels
         public virtual ICollection<HCheckIn> HCheckIns { get; set; }
         public virtual ICollection<HSourceDetail> HSourceDetails { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
-        public virtual ICollection<ProductLike> ProductLikes { get; set; }
 
         public virtual ICollection<EssaysComment> Comments { get; set; }
         public virtual ICollection<Essay> Essays { get; set; }

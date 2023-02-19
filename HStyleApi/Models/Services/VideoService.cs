@@ -11,7 +11,7 @@ namespace HStyleApi.Models.Services
 	{
 		private VideoRepository _videoRepository;
 
-		public VideoService(HstyleStoreContext db)
+		public VideoService(AppDbContext db)
 		{
 			_videoRepository = new VideoRepository(db);
 		}
