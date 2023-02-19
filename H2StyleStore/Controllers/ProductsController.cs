@@ -123,7 +123,7 @@ namespace H2StyleStore.Controllers
 						//string OriginalFileName = System.IO.Path.GetFileName(file.FileName);
 						string FileName = result;
 
-						model.images.Add($"../../Images/ProductImages/{FileName}");
+						model.images.Add($"{FileName}");
 					}
 					catch (Exception ex)
 					{
@@ -191,7 +191,7 @@ namespace H2StyleStore.Controllers
 						//string OriginalFileName = System.IO.Path.GetFileName(file.FileName);
 						string FileName = result;
 
-						model.images.Add($"../../Images/ProductImages/{FileName}");
+						model.images.Add($"{FileName}");
 					}
 					catch (Exception ex)
 					{

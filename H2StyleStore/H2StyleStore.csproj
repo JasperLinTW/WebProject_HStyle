@@ -196,6 +196,7 @@
     <Compile Include="Models\DTOs\VideoDTO.cs" />
     <Compile Include="Models\EFModels\Address.cs" />
     <Compile Include="Models\EFModels\AppDbContext.cs" />
+    <Compile Include="Models\EFModels\Cart.cs" />
     <Compile Include="Models\EFModels\Eassy_Follows.cs" />
     <Compile Include="Models\EFModels\Employee.cs" />
     <Compile Include="Models\EFModels\Essay.cs" />
@@ -212,9 +213,12 @@
     <Compile Include="Models\EFModels\Order_Status.cs" />
     <Compile Include="Models\EFModels\Order_StatusDescription.cs" />
     <Compile Include="Models\EFModels\PCategory.cs" />
+    <Compile Include="Models\EFModels\PComments_Helpful.cs" />
+    <Compile Include="Models\EFModels\PComments_Imgs.cs" />
     <Compile Include="Models\EFModels\PermissionsE.cs" />
     <Compile Include="Models\EFModels\PermissionsM.cs" />
     <Compile Include="Models\EFModels\Product.cs" />
+    <Compile Include="Models\EFModels\Product_Comments.cs" />
     <Compile Include="Models\EFModels\Spec.cs" />
     <Compile Include="Models\EFModels\Tag.cs" />
     <Compile Include="Models\EFModels\Video.cs" />

@@ -106,9 +106,9 @@
                 @foreach (var img in Model.images)
                 {
                     <div class="imgCard m-2">
-                        <img class="img" src="@img" />
+                        <img class="img" src="../../Images/ProductImages/@img" />
                         <button type="button" class="btn btn-default">刪除</button>
-                        <input name="images" hidden value="@img" />
+                        <input name="images" hidden value="../../Images/ProductImages/@img" />
                     </div>
                 }
             </div>

@@ -18,5 +18,7 @@ namespace H2StyleStore.Models.EFModels
         [Required]
         [StringLength(50)]
         public string Status { get; set; }
+
+        public int? Employee_id { get; set; }
     }
 }
