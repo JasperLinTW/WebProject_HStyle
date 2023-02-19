@@ -31,6 +31,8 @@ namespace H2StyleStore.Models.DTOs
 
 		public ImageDto Image { get; set; }
 
+		public bool? IsOnShelff { get; set; }
+
 		public IEnumerable<TagDTO> Tags { get; set; }
 
 		public string CategoryName { get; set; }
@@ -53,6 +55,7 @@ namespace H2StyleStore.Models.DTOs
 				CreatedTime = source.CreatedTime,
 				Image = source.Image.ToDto(),
 				Tags = source.Tags.Select(t => t.ToDto()),
+				IsOnShelff = source.IsOnShelff
 			};
 		}
 	}

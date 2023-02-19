@@ -11,5 +11,6 @@ namespace HStyleApi.Models.EFModels
         public int OrderId { get; set; }
         public DateTime StatusChangedTime { get; set; }
         public string Status { get; set; }
+        public int? EmployeeId { get; set; }
     }
 }

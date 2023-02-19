@@ -19,6 +19,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[Cart]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Eassy_Follows]",
          "ObjectType": 0
       },
@@ -103,11 +107,27 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[PComments_Helpful]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[PComments_Imgs]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[PermissionsE]",
          "ObjectType": 0
       },
       {
          "Name": "[dbo].[PermissionsM]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Product_Comments]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Product_Likes]",
          "ObjectType": 0
       },
       {
@@ -147,7 +167,7 @@
          "ObjectType": 0
       }
    ],
-   "UiHint": "AppDbContext (H2StyleStore)",
+   "UiHint": "ispanteam3.HstyleStore",
    "UncountableWords": null,
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": false,

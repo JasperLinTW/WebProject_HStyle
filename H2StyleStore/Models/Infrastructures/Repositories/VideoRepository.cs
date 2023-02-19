@@ -43,6 +43,7 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 				ImageId = imageid.Image_Id,
 				OnShelffTime = dto.OnShelffTime,
 				OffShelffTime = dto.OffShelffTime,
+				IsOnShelff=dto.IsOnShelff,
 				CreatedTime = DateTime.Now
 			};
 			_db.Videos.Add(video);
@@ -75,7 +76,7 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 		}
 
 		public IEnumerable<SelectListItem> GetVideoCategories(int? categoryId)
-		{
+		{ 
 			var data = _db.VideoCategories.Select(x => new SelectListItem
 			{ Value = x.Id.ToString(), Text = x.CategoryName, Selected = (categoryId.HasValue && x.Id == categoryId) })
 			.ToList().Prepend(new SelectListItem { Value = string.Empty, Text = "請選擇" });
@@ -112,6 +113,7 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			video.ImageId = imageid.Image_Id;
 			video.OnShelffTime = dto.OnShelffTime;
 			video.OffShelffTime = dto.OffShelffTime;
+			video.IsOnShelff = dto.IsOnShelff;
 
 			foreach (var dbTag in video.Tags.ToArray())
 			{

@@ -19,6 +19,7 @@ namespace HStyleApi.Models.EFModels
         }
 
         public virtual DbSet<Address> Addresses { get; set; }
+        public virtual DbSet<Cart> Carts { get; set; }
         public virtual DbSet<EassyFollow> EassyFollows { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<Essay> Essays { get; set; }
@@ -35,9 +36,12 @@ namespace HStyleApi.Models.EFModels
         public virtual DbSet<OrderStatus> OrderStatuses { get; set; }
         public virtual DbSet<OrderStatusDescription> OrderStatusDescriptions { get; set; }
         public virtual DbSet<Pcategory> Pcategories { get; set; }
+        public virtual DbSet<PcommentsHelpful> PcommentsHelpfuls { get; set; }
+        public virtual DbSet<PcommentsImg> PcommentsImgs { get; set; }
         public virtual DbSet<PermissionsE> PermissionsEs { get; set; }
         public virtual DbSet<PermissionsM> PermissionsMs { get; set; }
         public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<ProductComment> ProductComments { get; set; }
         public virtual DbSet<Spec> Specs { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<Video> Videos { get; set; }
@@ -83,6 +87,25 @@ namespace HStyleApi.Models.EFModels
                     .HasForeignKey(d => d.MemberId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Address_Members");
+            });
+
+            modelBuilder.Entity<Cart>(entity =>
+            {
+                entity.HasKey(e => new { e.SpecId, e.MemberId });
+
+                entity.ToTable("Cart");
+
+                entity.HasOne(d => d.Member)
+                    .WithMany(p => p.Carts)
+                    .HasForeignKey(d => d.MemberId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Cart_Members");
+
+                entity.HasOne(d => d.Spec)
+                    .WithMany(p => p.Carts)
+                    .HasForeignKey(d => d.SpecId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Cart_Spec");
             });
 
             modelBuilder.Entity<EassyFollow>(entity =>
@@ -535,6 +558,8 @@ namespace HStyleApi.Models.EFModels
 
                 entity.Property(e => e.LogId).HasColumnName("Log_id");
 
+                entity.Property(e => e.EmployeeId).HasColumnName("Employee_id");
+
                 entity.Property(e => e.OrderId).HasColumnName("Order_id");
 
                 entity.Property(e => e.Status)
@@ -589,6 +614,34 @@ namespace HStyleApi.Models.EFModels
                     .HasColumnName("PCategoryName");
             });
 
+            modelBuilder.Entity<PcommentsHelpful>(entity =>
+            {
+                entity.HasKey(e => new { e.MemberId, e.CommentId });
+
+                entity.ToTable("PComments_Helpful");
+
+                entity.Property(e => e.MemberId).HasColumnName("Member_id");
+
+                entity.Property(e => e.CommentId).HasColumnName("Comment_id");
+            });
+
+            modelBuilder.Entity<PcommentsImg>(entity =>
+            {
+                entity.HasKey(e => e.PcommentImgId);
+
+                entity.ToTable("PComments_Imgs");
+
+                entity.Property(e => e.PcommentImgId).HasColumnName("PComment_img_id");
+
+                entity.Property(e => e.CommentId).HasColumnName("Comment_id");
+
+                entity.HasOne(d => d.Comment)
+                    .WithMany(p => p.PcommentsImgs)
+                    .HasForeignKey(d => d.CommentId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_PComments_Imgs_Product_Comments");
+            });
+
             modelBuilder.Entity<PermissionsE>(entity =>
             {
                 entity.HasKey(e => e.PermissionMId);
@@ -636,6 +689,47 @@ namespace HStyleApi.Models.EFModels
                     .HasForeignKey(d => d.CategoryId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Products_PCategories");
+
+                entity.HasMany(d => d.Members)
+                    .WithMany(p => p.Products)
+                    .UsingEntity<Dictionary<string, object>>(
+                        "ProductLike",
+                        l => l.HasOne<Member>().WithMany().HasForeignKey("MemberId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_Product_Likes_Members"),
+                        r => r.HasOne<Product>().WithMany().HasForeignKey("ProductId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_Product_Likes_Products"),
+                        j =>
+                        {
+                            j.HasKey("ProductId", "MemberId");
+
+                            j.ToTable("Product_Likes");
+
+                            j.IndexerProperty<int>("ProductId").HasColumnName("Product_id");
+
+                            j.IndexerProperty<int>("MemberId").HasColumnName("Member_id");
+                        });
+            });
+
+            modelBuilder.Entity<ProductComment>(entity =>
+            {
+                entity.HasKey(e => e.CommentId);
+
+                entity.ToTable("Product_Comments");
+
+                entity.Property(e => e.CommentId).HasColumnName("Comment_id");
+
+                entity.Property(e => e.CommentContent)
+                    .IsRequired()
+                    .HasMaxLength(1000)
+                    .HasColumnName("Comment_content");
+
+                entity.Property(e => e.CreatedTime).HasColumnType("datetime");
+
+                entity.Property(e => e.OrderId).HasColumnName("Order_id");
+
+                entity.HasOne(d => d.Order)
+                    .WithMany(p => p.ProductComments)
+                    .HasForeignKey(d => d.OrderId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Product_Comments_Orders");
             });
 
             modelBuilder.Entity<Spec>(entity =>

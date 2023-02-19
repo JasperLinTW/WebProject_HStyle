@@ -19,7 +19,7 @@ namespace H2StyleStore.Models.EFModels
         public int Id { get; set; }
 
         [Required]
-        [StringLength(50)]
+        [StringLength(200)]
         public string Title { get; set; }
 
         public string Description { get; set; }
