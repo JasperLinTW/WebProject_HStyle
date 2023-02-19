@@ -59,7 +59,7 @@ namespace HStyleApi.Controllers
 		}
 
 
-		[HttpGet("{product_id}")]
+		[HttpGet("ProdRec/{product_id}")]
 		public ProductDto ProductRecommend(int product_id, [FromBody]int member_id)
 		{
 			var data = _Service.GetRecommend(product_id, member_id);
@@ -71,7 +71,7 @@ namespace HStyleApi.Controllers
 		[HttpPost]
 		public ActionResult CreateComment([FromBody] string comment, int score, List<IFormFile> files)
 		{
-			
+			return NoContent();//Todo
 		}
 
 		// PUT api/<ProductsController>/5
