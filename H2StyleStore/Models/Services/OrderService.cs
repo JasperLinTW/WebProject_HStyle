@@ -66,5 +66,15 @@ namespace H2StyleStore.Models.Services
 		{
 		    _repository.Cancel(status_Description, order_id);
 		}
-	}
+
+        public MemberDto GetMember(int order_id)
+        {
+            return _repository.GetMember(order_id);
+        }
+
+        public string GetCancelDescription(int status_Description)
+        {
+            return _repository.GetCancelDescription(status_Description);
+        }
+    }
 }

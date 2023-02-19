@@ -20,10 +20,10 @@ namespace HStyleApi.Models.DTOs
 
 		public string PCategoryName { get; set; }
 
-		public IEnumerable<string> imgs { get; set; }
+		public IEnumerable<string> Imgs { get; set; }
 
-		public IEnumerable<SpecDto> specs { get; set; }
-		public IEnumerable<string> tags { get; set; }
+		public IEnumerable<SpecDto> Specs { get; set; }
+		public IEnumerable<string> Tags { get; set; }
 	}
 
 	public static class ProductExts
@@ -39,9 +39,9 @@ namespace HStyleApi.Models.DTOs
 			Discontinued = source.Discontinued,
 			DisplayOrder = source.DisplayOrder,
 			PCategoryName = source.Category.PcategoryName,
-			imgs = source.Imgs.Select(x => x.Path),
-			specs = source.Specs.Select(x => x.ToDto()),
-			tags = source.Tags.Select(x => x.TagName),
+			Imgs = source.Imgs.Select(x => x.Path),
+			Specs = source.Specs.Select(x => x.ToDto()),
+			Tags = source.Tags.Select(x => x.TagName),
 
 		};
 	}

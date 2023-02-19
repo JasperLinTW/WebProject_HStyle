@@ -21,6 +21,10 @@ namespace H2StyleStore.Models.EFModels
         [StringLength(50)]
         public string PCategoryName { get; set; }
 
+        [Required]
+        [StringLength(100)]
+        public string PCategory_Description { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Products { get; set; }
     }

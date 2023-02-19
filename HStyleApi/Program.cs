@@ -11,7 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var HstoreconnectString = builder.Configuration.GetConnectionString("HstyleStore");
-builder.Services.AddDbContext<HstyleStoreContext> (option => option.UseSqlServer(HstoreconnectString));
+builder.Services.AddDbContext<AppDbContext> (option => option.UseSqlServer(HstoreconnectString));
 
 string MyAllowOrigins = "AllowAny";
 builder.Services.AddCors(options => {

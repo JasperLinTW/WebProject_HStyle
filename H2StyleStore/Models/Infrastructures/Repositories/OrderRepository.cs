@@ -10,6 +10,7 @@ using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
 using PagedList;
+using H2StyleStore.Models.Infrastructures.ExtensionMethods;
 
 namespace H2StyleStore.Models.Infrastructures.Repositories
 {
@@ -25,18 +26,20 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 		public void Update(OrderDTO entity)
 		{
 			Order order = _db.Orders.Find(entity.Order_id);
+            Employee employee = _db.Employees.Where(x => x.Account == entity.EmployeeAccount).FirstOrDefault();
 
-			var log = new Order_Log
+            var log = new Order_Log
 			{
 				Order_id = entity.Order_id,
 				Status = entity.Status,
+				Employee_id= employee.Employee_id,
 				Status_ChangedTime = DateTime.Now,
 			};
 
 			_db.Order_Log.Add(log);
 			Order_Status newStatus = _db.Order_Status.Where(x => x.Status == entity.Status).FirstOrDefault();
 
-			Employee employee = _db.Employees.Where(x => x.Account == entity.EmployeeAccount).FirstOrDefault();
+			
 
 			order.Status_id = newStatus.Status_id;
 			order.ShippedDate = entity.ShippedDate;
@@ -158,5 +161,20 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			_db.SaveChanges();
 
 		}
-	}
+
+        public MemberDto GetMember(int order_id)
+        {
+            OrderDTO order = _db.Orders.Find(order_id).ToDTO();
+            MemberDto member = _db.Members.FirstOrDefault(x => x.Id == order.Member_id).ToDto();
+
+			return member;
+        }
+
+        public string GetCancelDescription(int status_Description)
+        {
+            Order_StatusDescription description = _db.Order_StatusDescription.Find(status_Description);
+			string content = description.Description;
+			return content;
+        }
+    }
 }

@@ -16,6 +16,9 @@ using System.Reflection;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using System.Net;
+using System.Net.Mail;
+using System.Web.UI.WebControls;
 
 namespace H2StyleStore.Controllers
 {
@@ -200,6 +203,44 @@ namespace H2StyleStore.Controllers
 			return "取消訂單成功";
 
 
+		}
+   	
+		[HttpPost]
+		public void SendMail(int status_Description, int order_id)
+		{
+			var member = orderService.GetMember(order_id);
+			var content = orderService.GetCancelDescription(status_Description);
+			//設定smtp主機
+			string smtpAddress = "smtp.gmail.com";
+			//設定Port
+			int portNumber = 587;
+			bool enableSSL = true;
+			//填入寄送方email和密碼
+			string emailFrom = "h11830123@gmail.com";
+			string password = "yetzwlvxoejigxns";
+			//收信方email 可以用逗號區分多個收件人
+			string emailTo = member.Email;
+			//主旨
+			string subject = $"您於H'style購買的訂單編號#{order_id}訂單狀態改為:已取消";
+			//內容
+			string body = $"親愛的{member.Name}您好,\r\n 訂單編號#{order_id}訂單狀態改為:已取消。\r\n取消原因:{content}\r\n如有疑慮請來電客服，若造成您的不便敬請見諒！";
+
+			using (MailMessage mail = new MailMessage())
+			{
+				mail.From = new MailAddress(emailFrom, "H'style");
+				mail.To.Add(emailTo);
+				mail.Subject = subject;
+				mail.Body = body;
+				// 若你的內容是HTML格式，則為True
+				mail.IsBodyHtml = false;
+
+				using (SmtpClient smtp = new SmtpClient(smtpAddress, portNumber))
+				{
+					smtp.Credentials = new NetworkCredential(emailFrom, password);
+					smtp.EnableSsl = enableSSL;
+					smtp.Send(mail);
+				}
+			}
 		}
 
 	}
