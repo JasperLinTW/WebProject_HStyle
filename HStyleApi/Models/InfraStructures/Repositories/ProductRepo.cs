@@ -43,5 +43,25 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 
 		}
 
+		public void CreateComment(PCommentPostDTO dto)
+		{
+			ProductComment pcomment = new ProductComment
+			{
+				OrderId= dto.OrderId, //要自動帶入商品和購買尺寸
+				CommentContent= dto.CommentContent,
+				Score= dto.Score,
+				CreatedTime = DateTime.Now,
+			};
+
+			_db.ProductComments.Add(pcomment);
+
+			foreach (string path in dto.PcommentImgs)
+			{
+				Image image = new Image { Path = path, };
+				pcomment.PcommentImgs.Add(image);
+			}
+
+			_db.SaveChanges();
+		}
 	}
 }

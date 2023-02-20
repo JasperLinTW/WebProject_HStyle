@@ -12,6 +12,7 @@ namespace HStyleApi.Models.EFModels
         public int MemberId { get; set; }
         public DateTime CreatedTime { get; set; }
 
+        public virtual Member Member { get; set; }
         public virtual Video Video { get; set; }
     }
 }

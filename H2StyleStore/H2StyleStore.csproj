@@ -567,6 +567,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="files\" />
+    <Folder Include="Images\PCommentImages\" />
     <Folder Include="Images\ProductImages\" />
     <Folder Include="obj\" />
   </ItemGroup>

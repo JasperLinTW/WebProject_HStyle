@@ -38,5 +38,14 @@ namespace HStyleApi.Models.Services
 			return null;
 
 		}
+
+		public (bool, string) CreateComment(PCommentPostDTO dto)
+		{
+			//TODO驗證
+
+			_repo.CreateComment(dto);
+
+			return (true, "新增成功");
+		}
 	}
 }

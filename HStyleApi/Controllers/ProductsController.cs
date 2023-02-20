@@ -1,8 +1,10 @@
-﻿using HStyleApi.Models.DTOs;
+﻿using H2StyleStore.Models.Infrastructures;
+using HStyleApi.Models.DTOs;
 using HStyleApi.Models.EFModels;
 using HStyleApi.Models.InfraStructures.Repositories;
 using HStyleApi.Models.Services;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -59,19 +61,47 @@ namespace HStyleApi.Controllers
 		}
 
 
-		[HttpGet("ProdRec/{product_id}")]
-		public ProductDto ProductRecommend(int product_id, [FromBody]int member_id)
-		{
-			var data = _Service.GetRecommend(product_id, member_id);
+		//[HttpGet("ProdRec/{product_id}")]
+		//public ProductDto ProductRecommend(int product_id, [FromBody]int member_id)
+		//{
+		//	var data = _Service.GetRecommend(product_id, member_id);
 
-			return data;
-		}
+		//	return data;
+		//}
 
 		// POST api/<ProductsController>
-		[HttpPost]
-		public ActionResult CreateComment([FromBody] string comment, int score, List<IFormFile> files)
+
+
+		[HttpPost("Comment")]
+		public async Task<IActionResult> CreateComment([FromForm] PCommentPostDTO comment, List<IFormFile> files)
 		{
-			return NoContent();//Todo
+			long size = files.Sum(f => f.Length);
+			string path = "../H2StyleStore/Images/PCommentImages/";
+
+			comment.PcommentImgs = new List<string>();
+
+			foreach (var file in files)
+			{
+				try
+				{
+					if (file.Length > 0)
+					{
+						var helper = new UploadFileHelper();
+						string result = helper.SaveAs(path, file);
+						string FileName = result;
+						comment.PcommentImgs.Add($"{FileName}");
+					}
+				}
+				catch (Exception ex)
+				{
+
+					return BadRequest(ex.Message);
+				}
+
+			}
+			var data = _Service.CreateComment(comment);
+
+			return Ok("新增成功");
 		}
 
 		// PUT api/<ProductsController>/5
