@@ -23,10 +23,48 @@ namespace HStyleApi.Controllers
             _CartService = new CartService(_repo);
 			_memberId = 1;//TODO從COOKIE取
 		}
+        [HttpPost("Checkout")]
+        public IActionResult Checkout(CheckoutDTO value)
+        {
+			CheckoutDTO data = new CheckoutDTO
+            {
+                MemberId = _memberId,
+                CartItems = new List<CheckoutItemsDTO>
+                {
+                    new CheckoutItemsDTO{ Quantity = 1, SpecId =1},
+                    new CheckoutItemsDTO{ Quantity = 3, SpecId =3}
+                },
+                Payment = value.Payment,
+                ShipVia= value.ShipVia,
+                ShipName= value.ShipName,
+                ShipPhone= value.ShipPhone,
+                ShipAddress= value.ShipAddress,
+                CreatedTime = DateTime.Now,
+                StatusId = 1,
+                StatusDescriptionId= 2,
+                
+            };
+            data.Total = data.CartItems.Sum(x => x.Quantity * 1000);
+            data.Freight = data.Total > 10000 ? 0 : 100;//todo換成變數
+
+			return Ok(data);
+        }
+
+        [HttpPost("upload")]
+        public IActionResult Upload(IFormFile file)
+        {
+            string basePath = "https://localhost:44313/Images/";
+            using (var stream = System.IO.File.Create(basePath + file.Name))
+            {
+                file.CopyTo(stream);
+            }
+            return Ok("新增成功");
+        }
+
 
         // GET: api/<CartController>
         [HttpGet]
-        public IEnumerable<CartDTO> Get(int memberId)
+        public CartListDTO Get(int memberId)
         {
             return _CartService.GetCart(memberId);
         }

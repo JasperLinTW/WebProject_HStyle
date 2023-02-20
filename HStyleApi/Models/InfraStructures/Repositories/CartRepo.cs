@@ -1,15 +1,18 @@
 ﻿using HStyleApi.Models.DTOs;
 using HStyleApi.Models.EFModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace HStyleApi.Models.InfraStructures.Repositories
 {
     public class CartRepo
     {
         private readonly AppDbContext _db;
+        private string _basePath;
         public CartRepo(AppDbContext db)
         {
             _db= db;
-        }
+		    _basePath = "https://localhost:44313/Images";
+		}
         
         public void AddItem(int memberId, int specId)
 		{
@@ -23,15 +26,32 @@ namespace HStyleApi.Models.InfraStructures.Repositories
             _db.SaveChanges();
         }
 
-        public IEnumerable<CartDTO> GetCart(int memberId)
+        public CartListDTO GetCart(int memberId)
         {
-            var cartItems =_db.Carts.Where(x => x.MemberId==memberId).Select(x => new CartDTO()
+            var cartItems =_db.Carts
+                .Include(c => c.Spec)
+                .ThenInclude(s => s.Product)
+                .ThenInclude(p => p.Imgs)
+                .Select(x => new CartDTO()
             {
                 MemberId = x.MemberId,
+                ProductId=x.Spec.ProductId,
+                ProductName = x.Spec.Product.ProductName,
+                Image =$"{_basePath}/ProductImages/{x.Spec.Product.Imgs.FirstOrDefault().Path}",
                 SpecId= x.SpecId,
+                Size= x.Spec.Size,
+                Color= x.Spec.Color,
                 Quantity= x.Quantity,
+				UnitPrice = x.Spec.Product.UnitPrice,
+
             });
-            return cartItems; 
+
+            var cartList = new CartListDTO()
+            {
+                CartItems = cartItems,
+
+            };
+            return cartList; 
         }
 
         public bool IsExit(int memberId, int specId)

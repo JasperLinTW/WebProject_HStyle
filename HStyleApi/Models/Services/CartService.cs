@@ -11,7 +11,7 @@ namespace HStyleApi.Models.Services
         {
             _repo = repo;
         }
-		public IEnumerable<CartDTO> GetCart(int memberId)
+		public CartListDTO GetCart(int memberId)
         {
             return _repo.GetCart(memberId);
         }
