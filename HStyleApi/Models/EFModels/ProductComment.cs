@@ -13,12 +13,14 @@ namespace HStyleApi.Models.EFModels
         }
 
         public int CommentId { get; set; }
+        public int ProductId { get; set; }
         public int OrderId { get; set; }
         public string CommentContent { get; set; }
         public int Score { get; set; }
         public DateTime CreatedTime { get; set; }
 
         public virtual Order Order { get; set; }
+        public virtual Product Product { get; set; }
 
         public virtual ICollection<Image> PcommentImgs { get; set; }
     }

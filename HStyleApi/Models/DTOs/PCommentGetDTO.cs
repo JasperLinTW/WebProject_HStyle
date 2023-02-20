@@ -5,6 +5,7 @@ namespace HStyleApi.Models.DTOs
 	public class PCommentGetDTO
 	{
 		public int CommentId { get; set; }
-		public OrderDetail OrderDetail { get; set; }
+		public OrderDetail Order_Details { get; set; }
+
 	}
 }

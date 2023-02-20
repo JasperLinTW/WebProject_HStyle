@@ -45,13 +45,16 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 
 		public void CreateComment(PCommentPostDTO dto)
 		{
+			
 			ProductComment pcomment = new ProductComment
 			{
-				OrderId= dto.OrderId, //要自動帶入商品和購買尺寸
+				OrderId = dto.OrderId,
+				ProductId = dto.ProductId,
 				CommentContent= dto.CommentContent,
 				Score= dto.Score,
 				CreatedTime = DateTime.Now,
 			};
+
 
 			_db.ProductComments.Add(pcomment);
 

@@ -728,11 +728,19 @@ namespace HStyleApi.Models.EFModels
 
                 entity.Property(e => e.OrderId).HasColumnName("Order_id");
 
+                entity.Property(e => e.ProductId).HasColumnName("Product_id");
+
                 entity.HasOne(d => d.Order)
                     .WithMany(p => p.ProductComments)
                     .HasForeignKey(d => d.OrderId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Product_Comments_Orders");
+
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.ProductComments)
+                    .HasForeignKey(d => d.ProductId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Product_Comments_Products");
             });
 
             modelBuilder.Entity<Spec>(entity =>
