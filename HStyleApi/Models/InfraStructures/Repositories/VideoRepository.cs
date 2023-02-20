@@ -17,41 +17,12 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 		public async Task<IEnumerable<VideoDTO>> GetVideos()
 		{
 			var data = await _db.Videos.Select(v => v.ToVideoDTO()).ToListAsync();
-
-			//var data= await _db.Videos.Select(v => new VideoDTO
-			//{
-			//	Id = v.Id,
-			//	Title = v.Title,
-			//	CategoryId = v.CategoryId,
-			//	ImageId= v.ImageId,
-			//	CreatedTime = v.CreatedTime,
-			//	Description = v.Description,
-			//	FilePath = v.FilePath,
-			//	OnShelffTime = v.OnShelffTime,
-			//	OffShelffTime = v.OffShelffTime,
-			//	Tags=v.Tags.Select(t=>t.TagName)
-			//}). ToListAsync();
 			return data;
 		}
 
 		public async Task<IEnumerable<VideoDTO>> GetVideo(int id)
 		{
 			IEnumerable<VideoDTO> data = await _db.Videos.Where(x => x.Id == id).Select(v => v.ToVideoDTO()).ToListAsync();
-
-			//var video= await _db.Videos.Where(v=>v.Id==id).Select(v => new VideoDTO
-			//{
-			//	Id = v.Id,
-			//	Title = v.Title,
-			//	CategoryId = v.CategoryId,
-			//	ImageId = v.ImageId,
-			//	//CreatedTime = v.CreatedTime,
-			//	Description = v.Description,
-			//	FilePath = v.FilePath,
-			//	//OnShelffTime = v.OnShelffTime,
-			//	//OffShelffTime = v.OffShelffTime,
-			//	Tags = v.Tags.Select(t => t.TagName)
-			//}).ToListAsync();
-
 			if (data == null)
 			{
 				throw new Exception();
@@ -59,9 +30,27 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 			return data;
 		}
 
-		public void PostLike(VideoLikeDTO value)
+		public int GetVideoLikes()
 		{
-			VideoLike like = value.ToVideoLike();
+			var likes = _db.VideoLikes.OrderBy(x => x.Id).Count();
+			return likes;
+		}
+
+		public int GetVideoLike(int id)
+		{
+			var likes = _db.VideoLikes.Where(x=>x.VideoId==id).OrderBy(x=>x.Id).Count();
+			return likes;
+		}
+
+		public void PostLike(int memberId,int videoId)
+		{
+			VideoLike like = new VideoLike
+			{
+				MemberId = memberId,
+				VideoId = videoId,
+				CreatedTime = DateTime.Now,
+			};
+
 			_db.VideoLikes.Add(like);
 			_db.SaveChanges();
 		}

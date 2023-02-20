@@ -28,15 +28,10 @@ namespace HStyleApi.Models.Services
 			return await data;
 		}
 
-		public void PostLike(VideoLikeDTO value)
+		public void PostLike(int memberId, int videoId)
 		{
-			if (value == null)
-			{
-				throw new Exception();
-			}else
-			{
-				_videoRepository.PostLike(value);
-			}
+			if (memberId == 0 || videoId == 0) throw new Exception();
+			else _videoRepository.PostLike(memberId, videoId);
 		}
 	}
 }

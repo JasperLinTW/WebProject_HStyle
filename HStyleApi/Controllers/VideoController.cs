@@ -1,5 +1,6 @@
 ﻿using HStyleApi.Models.DTOs;
 using HStyleApi.Models.EFModels;
+using HStyleApi.Models.InfraStructures.Repositories;
 using HStyleApi.Models.Services;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -14,18 +15,23 @@ namespace HStyleApi.Controllers
 	public class VideoController : ControllerBase
 	{
 		private VideoService _service;
+		private VideoRepository _VideoRepository;
 		public VideoController(AppDbContext db)
 		{
 			 _service = new VideoService(db);
+			_VideoRepository= new VideoRepository(db);
 		}
 		// GET: api/<VideoController>
 		[HttpGet]
-		public async Task<IEnumerable<VideoDTO>> GetVideos() 
+		public async Task<IEnumerable<VideoDTO>> GetVideos()
 		{
-			return await _service.GetVideos();
+			IEnumerable<VideoDTO> data = await _service.GetVideos();
+			var like = _VideoRepository.GetLikes();
+			
+			return data;
 		}
 
-		// GET api/<VideoController>/5
+		// GET api/<VideoController>/5  
 		[HttpGet("{id}")]
 		public async Task<IEnumerable<VideoDTO>> GetVideo(int id)
 		{
@@ -34,9 +40,9 @@ namespace HStyleApi.Controllers
 
 		// POST api/<VideoController>
 		[HttpPost]
-		public void PostLike([FromBody] VideoLikeDTO value)
+		public void PostLike(int memberId, int videoId)
 		{ 
-			_service.PostLike(value);
+			_service.PostLike(memberId, videoId);
 		}
 
 		// PUT api/<VideoController>/5

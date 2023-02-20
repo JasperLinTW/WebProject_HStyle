@@ -23,5 +23,15 @@ namespace HStyleApi.Models.DTOs
 				CreatedTime = source.CreatedTime
 			};
 		}
+		public static VideoLikeDTO ToLikeDTO(this VideoLike source)
+		{
+			return new VideoLikeDTO()
+			{
+				Id = source.Id,
+				VideoId = source.VideoId,
+				MemberId = source.MemberId,
+				CreatedTime = source.CreatedTime
+			};
+		}
 	}
 }

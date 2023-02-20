@@ -9,7 +9,7 @@ namespace HStyleApi.Models.EFModels
     {
         public ProductComment()
         {
-            PcommentsImgs = new HashSet<PcommentsImg>();
+            PcommentImgs = new HashSet<Image>();
         }
 
         public int CommentId { get; set; }
@@ -19,6 +19,7 @@ namespace HStyleApi.Models.EFModels
         public DateTime CreatedTime { get; set; }
 
         public virtual Order Order { get; set; }
-        public virtual ICollection<PcommentsImg> PcommentsImgs { get; set; }
+
+        public virtual ICollection<Image> PcommentImgs { get; set; }
     }
 }

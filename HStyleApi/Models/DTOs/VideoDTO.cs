@@ -26,7 +26,9 @@ namespace HStyleApi.Models.DTOs
 
 		public IEnumerable<string>? Tags { get; set; }
 
-		//public string CategoryName { get; set; }
+		public virtual ICollection<VideoLike> VideoLikes { get; set; }
+
+		public string CategoryName { get; set; }
 	}
 
 	public static class VideoExts
@@ -44,7 +46,9 @@ namespace HStyleApi.Models.DTOs
 				OnShelffTime = source.OnShelffTime,
 				OffShelffTime = source.OffShelffTime,
 				CreatedTime = source.CreatedTime,
-				Tags = source.Tags.Select(x => x.TagName)
+				Tags = source.Tags.Select(x => x.TagName),
+				VideoLikes=source.VideoLikes,
+				CategoryName=source.Category.CategoryName
 			};
 		}
 	}

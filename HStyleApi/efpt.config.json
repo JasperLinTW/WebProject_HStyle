@@ -23,6 +23,14 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[CommonQuestions]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CustomerQuestions]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Eassy_Follows]",
          "ObjectType": 0
       },
@@ -135,6 +143,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[Question_Categories]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Spec]",
          "ObjectType": 0
       },
@@ -171,7 +183,6 @@
    "UncountableWords": null,
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": false,
-   "UseDateOnlyTimeOnly": false,
    "UseDbContextSplitting": false,
    "UseFluentApiOnly": true,
    "UseHandleBars": false,

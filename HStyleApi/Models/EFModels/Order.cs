@@ -17,7 +17,7 @@ namespace HStyleApi.Models.EFModels
         public int MemberId { get; set; }
         public int? EmployeeId { get; set; }
         public int Total { get; set; }
-        public int Payment { get; set; }
+        public string Payment { get; set; }
         public DateTime? ShippedDate { get; set; }
         public string ShipVia { get; set; }
         public int Freight { get; set; }

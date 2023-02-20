@@ -54,7 +54,7 @@
                     string OffShelffTime = string.Empty;
                     if (Model.OffShelffTime.HasValue)
                     {
-                        OffShelffTime = Model.OnShelffTime.Value.ToString("yyyy-MM-ddTHH:mm:ss");
+                        OffShelffTime = Model.OffShelffTime.Value.ToString("yyyy-MM-ddTHH:mm:ss");
                     }
                 }
                 <div class="form-group col-md-6">
@@ -100,7 +100,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.FilePath, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="mx-auto">
-                    <video controls width="700" id="videoPath" src="@Model.FilePath">
+                    <video controls width="700" id="videoPath" src="../../Videos/@Model.FilePath">
                         @*<source src="@Model.FilePath" type="video/mp4;codecs='avc1, mp4a'">*@
                     </video>
                     <video controls width="700" id="preview">
@@ -117,7 +117,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    <img id="imagePath" src="@Model.Image" width="700" name="" />
+                    <img id="imagePath" src="../../Images/VideoImages/@Model.Image" width="700" name="" />
                     <img id="previewI" src="#" width="700" />
                     @Html.EditorFor(model => model.Image, new { htmlAttributes = new { @class = "form-control invisible" } })
                     @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
