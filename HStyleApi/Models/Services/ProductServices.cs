@@ -59,5 +59,11 @@ namespace HStyleApi.Models.Services
 		{
 			_repo.HelpfulComment(comment_id, member_id);
 		}
+
+		internal IEnumerable<PCommentDTO> LoadComments()
+		{
+			var data = _repo.LoadComments();
+			return data;
+		}
 	}
 }

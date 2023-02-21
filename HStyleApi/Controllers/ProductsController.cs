@@ -23,12 +23,12 @@ namespace HStyleApi.Controllers
 		public ProductsController(AppDbContext db)
 		{
 			_Service = new ProductServices(db);
-			_member_id = 1;
+			_member_id = 1; //之後用Cookie取
 		}
 
 
 		// 商品總覽
-		[HttpGet]
+		[HttpGet("products")]
 		public ActionResult<ProductDto> LoadProducts()
 		{
 			try
@@ -115,13 +115,31 @@ namespace HStyleApi.Controllers
 			return Ok("新增成功");
 		}
 
-		//評論有幫助
+		//評論是否有幫助
 		[HttpPost("HelpfulComment")]
 		public ActionResult HelpfulComment(int comment_id)
 		{
 			_Service.HelpfulComment(comment_id, _member_id);
 
 			return Ok();
+		}
+
+		//瀏覽所有評論
+		[HttpGet("Comments")]
+		public ActionResult<PCommentDTO> LoadComments()
+		{
+			try
+			{
+				var data = _Service.LoadComments();
+				return Ok(data);
+			}
+			catch (Exception ex)
+			{
+
+				return BadRequest(ex.Message);
+			}
+
+			
 		}
 	}
 }

@@ -111,5 +111,14 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 
 			_db.SaveChanges();
 		}
+
+		public IEnumerable<PCommentDTO> LoadComments()
+		{
+			IEnumerable<ProductComment> data = _db.ProductComments.Include(x => x.PcommentImgs);
+
+			var comments = data.Select(x => x.ToDto());	
+
+			return comments;
+		}
 	}
 }
