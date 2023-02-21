@@ -37,7 +37,6 @@ namespace HStyleApi.Models.EFModels
         public virtual DbSet<OrderStatusDescription> OrderStatusDescriptions { get; set; }
         public virtual DbSet<Pcategory> Pcategories { get; set; }
         public virtual DbSet<PcommentsHelpful> PcommentsHelpfuls { get; set; }
-        public virtual DbSet<PcommentsImg> PcommentsImgs { get; set; }
         public virtual DbSet<PermissionsE> PermissionsEs { get; set; }
         public virtual DbSet<PermissionsM> PermissionsMs { get; set; }
         public virtual DbSet<Product> Products { get; set; }
@@ -327,6 +326,23 @@ namespace HStyleApi.Models.EFModels
                     .HasMaxLength(200)
                     .IsUnicode(false);
 
+                entity.HasMany(d => d.Comments)
+                    .WithMany(p => p.PcommentImgs)
+                    .UsingEntity<Dictionary<string, object>>(
+                        "PcommentsImg",
+                        l => l.HasOne<ProductComment>().WithMany().HasForeignKey("CommentId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_PComments_Imgs_Product_Comments1"),
+                        r => r.HasOne<Image>().WithMany().HasForeignKey("PcommentImgId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_PComments_Imgs_Images"),
+                        j =>
+                        {
+                            j.HasKey("PcommentImgId", "CommentId").HasName("PK_PComments_Imgs_1");
+
+                            j.ToTable("PComments_Imgs");
+
+                            j.IndexerProperty<int>("PcommentImgId").ValueGeneratedOnAdd().HasColumnName("PComment_img_id");
+
+                            j.IndexerProperty<int>("CommentId").HasColumnName("Comment_id");
+                        });
+
                 entity.HasMany(d => d.Essays)
                     .WithMany(p => p.Imgs)
                     .UsingEntity<Dictionary<string, object>>(
@@ -482,6 +498,10 @@ namespace HStyleApi.Models.EFModels
 
                 entity.Property(e => e.MemberId).HasColumnName("Member_id");
 
+                entity.Property(e => e.Payment)
+                    .IsRequired()
+                    .HasMaxLength(20);
+
                 entity.Property(e => e.RequestRefundTime).HasColumnType("datetime");
 
                 entity.Property(e => e.ShipAddress)
@@ -539,9 +559,19 @@ namespace HStyleApi.Models.EFModels
 
                 entity.Property(e => e.ProductId).HasColumnName("Product_id");
 
+                entity.Property(e => e.Color)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .IsFixedLength();
+
                 entity.Property(e => e.ProductName)
                     .IsRequired()
                     .HasMaxLength(50);
+
+                entity.Property(e => e.Size)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .IsFixedLength();
 
                 entity.HasOne(d => d.Order)
                     .WithMany(p => p.OrderDetails)
@@ -623,23 +653,6 @@ namespace HStyleApi.Models.EFModels
                 entity.Property(e => e.MemberId).HasColumnName("Member_id");
 
                 entity.Property(e => e.CommentId).HasColumnName("Comment_id");
-            });
-
-            modelBuilder.Entity<PcommentsImg>(entity =>
-            {
-                entity.HasKey(e => e.PcommentImgId);
-
-                entity.ToTable("PComments_Imgs");
-
-                entity.Property(e => e.PcommentImgId).HasColumnName("PComment_img_id");
-
-                entity.Property(e => e.CommentId).HasColumnName("Comment_id");
-
-                entity.HasOne(d => d.Comment)
-                    .WithMany(p => p.PcommentsImgs)
-                    .HasForeignKey(d => d.CommentId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_PComments_Imgs_Product_Comments");
             });
 
             modelBuilder.Entity<PermissionsE>(entity =>
@@ -725,11 +738,19 @@ namespace HStyleApi.Models.EFModels
 
                 entity.Property(e => e.OrderId).HasColumnName("Order_id");
 
+                entity.Property(e => e.ProductId).HasColumnName("Product_id");
+
                 entity.HasOne(d => d.Order)
                     .WithMany(p => p.ProductComments)
                     .HasForeignKey(d => d.OrderId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Product_Comments_Orders");
+
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.ProductComments)
+                    .HasForeignKey(d => d.ProductId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Product_Comments_Products");
             });
 
             modelBuilder.Entity<Spec>(entity =>
@@ -850,6 +871,12 @@ namespace HStyleApi.Models.EFModels
             modelBuilder.Entity<VideoLike>(entity =>
             {
                 entity.Property(e => e.CreatedTime).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Member)
+                    .WithMany(p => p.VideoLikes)
+                    .HasForeignKey(d => d.MemberId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_VideoLikes_Members");
 
                 entity.HasOne(d => d.Video)
                     .WithMany(p => p.VideoLikes)

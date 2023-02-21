@@ -79,5 +79,34 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 			_db.SaveChanges();
 		}
 
+		public void CreateOrder(OrderDTO value)
+		{
+			var order = new Order()
+            {
+				MemberId = value.MemberId,
+				OrderDetails = value.OrderDetails
+				.Select(x => new OrderDetail
+				{
+					ProductId = x.ProductId,
+					ProductName = x.ProductName,
+					Quantity = x.Quantity,
+					UnitPrice = x.UnitPrice,
+					SubTotal = x.Quantity * x.UnitPrice,
+					Color = x.Color,
+					Size = x.Size,
+				}).ToList(),
+				Total = value.Total,
+				Payment = value.Payment,
+				ShipVia = value.ShipVia,
+				ShipName = value.ShipName,
+				ShipPhone = value.ShipPhone,
+				ShipAddress = value.ShipAddress,
+				CreatedTime = DateTime.Now,
+				StatusId = 1,//有待付款狀態
+				StatusDescriptionId = 2,
+			};
+            _db.Orders.Add(order);
+            _db.SaveChanges();
+		}
 	}
 }

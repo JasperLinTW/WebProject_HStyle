@@ -26,28 +26,11 @@ namespace HStyleApi.Controllers
         [HttpPost("Checkout")]
         public IActionResult Checkout(CheckoutDTO value)
         {
-			CheckoutDTO data = new CheckoutDTO
-            {
-                MemberId = _memberId,
-                CartItems = new List<CheckoutItemsDTO>
-                {
-                    new CheckoutItemsDTO{ Quantity = 1, SpecId =1},
-                    new CheckoutItemsDTO{ Quantity = 3, SpecId =3}
-                },
-                Payment = value.Payment,
-                ShipVia= value.ShipVia,
-                ShipName= value.ShipName,
-                ShipPhone= value.ShipPhone,
-                ShipAddress= value.ShipAddress,
-                CreatedTime = DateTime.Now,
-                StatusId = 1,
-                StatusDescriptionId= 2,
-                
-            };
-            data.Total = data.CartItems.Sum(x => x.Quantity * 1000);
-            data.Freight = data.Total > 10000 ? 0 : 100;//todo換成變數
+			OrderDTO checkoutList = _CartService.GetCheckout(_memberId, value);
 
-			return Ok(data);
+			_CartService.CreateOrder(checkoutList);
+
+			return Ok("訂單完成");
         }
 
         [HttpPost("upload")]
@@ -64,17 +47,12 @@ namespace HStyleApi.Controllers
 
         // GET: api/<CartController>
         [HttpGet]
-        public CartListDTO Get(int memberId)
+        public CartListDTO Get()
         {
-            return _CartService.GetCart(memberId);
+            return _CartService.GetCart(_memberId);
         }
 
-        // GET api/<CartController>/5
-        [HttpGet("{id}")]
-        public string Get()
-        {
-            return "value";
-        }
+        
 
         // POST api/<CartController>
         [HttpPost("{specId}")]
@@ -96,7 +74,7 @@ namespace HStyleApi.Controllers
             
             return Ok("新增成功");
         }
-		[HttpPost("Minus/{specId}")]
+		[HttpDelete("{specId}")]
 		public ActionResult Minus(int specId)
 		{
 
@@ -123,10 +101,6 @@ namespace HStyleApi.Controllers
         {
         }
 
-        // DELETE api/<CartController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+       
     }
 }

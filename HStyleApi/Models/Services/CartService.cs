@@ -16,6 +16,41 @@ namespace HStyleApi.Models.Services
             return _repo.GetCart(memberId);
         }
 
+        public OrderDTO GetCheckout(int memberId, CheckoutDTO value)
+        {
+			var cartlist = GetCart(memberId);
+			int freight = 100;
+			OrderDTO data = new OrderDTO
+			{
+				MemberId = memberId,
+				OrderDetails = cartlist
+				.CartItems
+				.Select(x => new OrderDetailsDTO
+				{
+					ProductId = x.ProductId,
+					ProductName = x.ProductName,
+					Quantity = x.Quantity,
+					UnitPrice = x.UnitPrice,
+					SubTotal = x.Quantity * x.UnitPrice,
+					Color= x.Color,
+					Size= x.Size,
+				}),
+				Total = cartlist.Total,
+				Payment = value.Payment,
+				ShipVia = value.ShipVia,
+				ShipName = value.ShipName,
+				ShipPhone = value.ShipPhone,
+				ShipAddress = value.ShipAddress,
+				CreatedTime = DateTime.Now,
+				StatusId = 1,//有待付款狀態
+				StatusDescriptionId = 2,
+
+			};
+			data.Freight = data.Total > 10000 ? 0 : freight;//todo換成變數
+
+			return data;
+		}
+
 		public void AddItem(int memberId, int specId, int qty = 1)
         {
             bool isExit = _repo.IsExit(memberId, specId);
@@ -47,6 +82,11 @@ namespace HStyleApi.Models.Services
 			//cart.AddItem(cartProd, qty);
 
 
+		}
+
+		public void CreateOrder(OrderDTO checkoutList)
+		{
+			_repo.CreateOrder(checkoutList);
 		}
 	}
     
