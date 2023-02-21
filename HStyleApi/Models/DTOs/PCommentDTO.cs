@@ -23,6 +23,7 @@ namespace HStyleApi.Models.DTOs
 			   CommentContent = source.CommentContent,
 			   PcommentImgs = source.PcommentImgs,
 			   Score = source.Score,
+		
 			};
 
 		}

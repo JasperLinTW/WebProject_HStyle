@@ -114,7 +114,9 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 
 		public IEnumerable<PCommentDTO> LoadComments()
 		{
-			IEnumerable<ProductComment> data = _db.ProductComments.Include(x => x.PcommentImgs);
+			IEnumerable<ProductComment> data = _db.ProductComments.Include(x => x.PcommentImgs)
+				                                                  .Include(x => x.Order).ThenInclude(x => x.OrderDetails)
+																  .Include(x => x.ProductId);
 
 			var comments = data.Select(x => x.ToDto());	
 
