@@ -129,7 +129,7 @@
                         <nav class="mt-2">
                             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                                 <!-- Add icons to the links using the .nav-icon class
-                    with font-awesome or any other icon font library -->
+                                with font-awesome or any other icon font library -->
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
                                         <i class="nav-icon fa-solid fa-user"></i>
@@ -165,7 +165,7 @@
                                         <i class="nav-icon fa-sharp fa-solid fa-bag-shopping"></i>
                                         <p>
                                             商品管理
-                                            
+
                                         </p>
                                     </a>
 
@@ -189,49 +189,73 @@
                                         </p>
                                     </a>
                                     <ul class="nav nav-treeview" style="display:none;">
-                                <li class="nav-item">
-                                    <a href="/H_Activities/Index" class="nav-link">
-                                        <i class="far fa-circle nav-icon">
-                                        </i>
-                                        <p>活動項目</p>
-                                    </a>
+                                        <li class="nav-item">
+                                            <a href="/H_Activities/Index" class="nav-link">
+                                                <i class="far fa-circle nav-icon">
+                                                </i>
+                                                <p>活動項目</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="/H_Source_Details/HDetail" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>活動紀錄</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="/H_Source_Details/CheckIn" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>打卡活動</p>
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="/H_Source_Details/HDetail" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>活動紀錄</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="/H_Source_Details/CheckIn" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>打卡活動</p>
-                                    </a>
-                                </li>
-                            </ul>
-                                </li>
-                                <li class="nav-item">
-                            <a href="../../Essays/Index" class="nav-link">
-                                <i class="nav-icon fas fa-edit"></i>
-                                <p>
-                                    部落格文章管理
-                                </p>
-                            </a>
-                        </li>
-                                <li class="nav-item">
-                            <a href="../../Video/Index" class="nav-link">
-                                <i class="nav-icon fa-solid fa-film"></i>
-                                <p>
-                                    部落格影片管理
-                                </p>
-                            </a>
-                        </li>
 
+                                <li class="nav-item">
+                                    <a href="../../Essays/Index" class="nav-link">
+                                        <i class="nav-icon fas fa-edit"></i>
+                                        <p>
+                                            部落格文章管理
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="../../Video/Index" class="nav-link">
+                                        <i class="nav-icon fa-solid fa-film"></i>
+                                        <p>
+                                            部落格影片管理
+                                        </p>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon fa-solid fa-headset"> </i>
+                                        <p>
+                                            客服管理
+                                            <i class="fas fa-angle-left right"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview" style="display:none;">
+                                        <li class="nav-item">
+                                            <a href="/Question/Index" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>常見問題</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="/Question/Index" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>回覆顧客</p>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
                             </ul>
                         </nav>
                         @*<li class="mt-3 btn btn-secondary hide-on-collapse" style="align-content:center; justify-content:center">
-                    <i class="fa-solid fa-right-from-bracket mt-1" style="margin-right:13.5px">@Html.ActionLink("登出", "Logout", "Employees")</i>
-                </li>*@
+                                <i class="fa-solid fa-right-from-bracket mt-1" style="margin-right:13.5px">@Html.ActionLink("登出", "Logout", "Employees")</i>
+                            </li>*@
                         <div>
                             <a class="mt-3 btn btn-secondary hide-on-collapse" href="/Employees/Logout?Length=9" style="align-content:center; justify-content:center"> <i class="fa-solid fa-right-from-bracket mt-1" style="margin-right:13.5px"></i>登出</a>
                         </div>
@@ -241,10 +265,10 @@
                         </div>
                         @*<li>@Html.ActionLink("登出", "Logout", "Members")</li>*@
                         @*<ul>
-                            <li class="mt-3 btn btn-secondary hide-on-collapse" style="align-content:center; justify-content:center">
-                                <i class="fa-sharp fa-solid fa-user"><a href="/Members/Index/">使用者名稱：@(User.Identity.Name)</a></i>
-                            </li>
-                        </ul>*@
+                                <li class="mt-3 btn btn-secondary hide-on-collapse" style="align-content:center; justify-content:center">
+                                    <i class="fa-sharp fa-solid fa-user"><a href="/Members/Index/">使用者名稱：@(User.Identity.Name)</a></i>
+                                </li>
+                            </ul>*@
                         @*<li>@Html.ActionLink("購物車", "Info", "Cart")</li>*@
                     }
                     else
@@ -254,16 +278,16 @@
                         </div>
 
                         @*<button type="button" class="mt-3 btn btn-secondary hide-on-collapse" style="align-content:center; justify-content:center" onclick=location.href ="https://localhost:44313/Employees/Login">
-                    登入
-                </button>*@
+                                登入
+                            </button>*@
                         <div>
                             <a class="mt-3 btn btn-secondary hide-on-collapse" href="/Employees/Register_Employees?Length=9" style="align-content:center; justify-content:center"> <i class="fa-solid fa-user-plus mt-1" style="margin-right:13.5px"></i>員工註冊</a>
                         </div>
                         @*<ul>
-                    <li class="mt-3 btn btn-secondary hide-on-collapse" style="align-content:center; justify-content:center">
-                        <i class="fa-solid fa-right-from-bracket mt-1" style="margin-right:13.5px">@Html.ActionLink("註冊員工帳號密碼", "Register_Employees", "Employees")</i>
-                    </li>
-                </ul>*@
+                                <li class="mt-3 btn btn-secondary hide-on-collapse" style="align-content:center; justify-content:center">
+                                    <i class="fa-solid fa-right-from-bracket mt-1" style="margin-right:13.5px">@Html.ActionLink("註冊員工帳號密碼", "Register_Employees", "Employees")</i>
+                                </li>
+                            </ul>*@
 
                     }
                 }

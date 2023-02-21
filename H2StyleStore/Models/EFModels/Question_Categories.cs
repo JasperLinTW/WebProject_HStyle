@@ -6,22 +6,21 @@ namespace H2StyleStore.Models.EFModels
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class PCategory
+    public partial class Question_Categories
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PCategory()
+        public Question_Categories()
         {
-            Products = new HashSet<Product>();
+            CommonQuestions = new HashSet<CommonQuestion>();
         }
 
         [Key]
-        public int PCategory_Id { get; set; }
+        public int QCategory_Id { get; set; }
 
         [Required]
-        [StringLength(50)]
-        public string PCategoryName { get; set; }
+        public string Category_Name { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Product> Products { get; set; }
+        public virtual ICollection<CommonQuestion> CommonQuestions { get; set; }
     }
 }

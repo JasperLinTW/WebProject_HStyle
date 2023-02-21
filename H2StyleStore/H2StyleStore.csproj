@@ -177,12 +177,14 @@
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\MembersController.cs" />
+    <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Controllers\VideoController.cs" />
     <Compile Include="filter\AuthrizeHelper.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\DTOs\CategoryDTO.cs" />
+    <Compile Include="Models\DTOs\CommonQuestionDTO.cs" />
     <Compile Include="Models\DTOs\CreateEssayDTO.cs" />
     <Compile Include="Models\DTOs\CreateH_Source_DetailDto.cs" />
     <Compile Include="Models\DTOs\CreateVideoDto.cs" />
@@ -197,6 +199,8 @@
     <Compile Include="Models\EFModels\Address.cs" />
     <Compile Include="Models\EFModels\AppDbContext.cs" />
     <Compile Include="Models\EFModels\Cart.cs" />
+    <Compile Include="Models\EFModels\CommonQuestion.cs" />
+    <Compile Include="Models\EFModels\CustomerQuestion.cs" />
     <Compile Include="Models\EFModels\Eassy_Follows.cs" />
     <Compile Include="Models\EFModels\Employee.cs" />
     <Compile Include="Models\EFModels\Essay.cs" />
@@ -214,11 +218,11 @@
     <Compile Include="Models\EFModels\Order_StatusDescription.cs" />
     <Compile Include="Models\EFModels\PCategory.cs" />
     <Compile Include="Models\EFModels\PComments_Helpful.cs" />
-    <Compile Include="Models\EFModels\PComments_Imgs.cs" />
     <Compile Include="Models\EFModels\PermissionsE.cs" />
     <Compile Include="Models\EFModels\PermissionsM.cs" />
     <Compile Include="Models\EFModels\Product.cs" />
     <Compile Include="Models\EFModels\Product_Comments.cs" />
+    <Compile Include="Models\EFModels\Question_Categories.cs" />
     <Compile Include="Models\EFModels\Spec.cs" />
     <Compile Include="Models\EFModels\Tag.cs" />
     <Compile Include="Models\EFModels\Video.cs" />
@@ -228,6 +232,7 @@
     <Compile Include="Models\Infrastructures\Repositories\EssayRepository.cs" />
     <Compile Include="Models\Infrastructures\Repositories\H_ActivityRepository.cs" />
     <Compile Include="Models\Infrastructures\Repositories\H_Source_DetailRepository.cs" />
+    <Compile Include="Models\Infrastructures\Repositories\QuestionRepository.cs" />
     <Compile Include="Models\Infrastructures\Repositories\VideoRepository.cs" />
     <Compile Include="Models\Services\EssayService.cs" />
     <Compile Include="Models\Services\H_ActivityService.cs" />
@@ -235,8 +240,12 @@
     <Compile Include="Models\Services\Interfaces\IEssayRepository.cs" />
     <Compile Include="Models\Services\Interfaces\IH_ActivityRepository.cs" />
     <Compile Include="Models\Services\Interfaces\IH_Source_DetailRepository.cs" />
+    <Compile Include="Models\Services\Interfaces\IQuestionRepository.cs" />
     <Compile Include="Models\Services\Interfaces\IVideoRepository.cs" />
+    <Compile Include="Models\Services\QuestionService.cs" />
     <Compile Include="Models\Services\VideoService.cs" />
+    <Compile Include="Models\ViewModels\CommonQuestionVM.cs" />
+    <Compile Include="Models\ViewModels\CreateCommonQVM.cs" />
     <Compile Include="Models\ViewModels\CreateEssayVM.cs" />
     <Compile Include="Models\ViewModels\CreateH_Source_DetailVM.cs" />
     <Compile Include="Models\ViewModels\CreateVideoVM.cs" />
@@ -563,6 +572,10 @@
     <Content Include="Views\Employees\permissions_failed.cshtml" />
     <Content Include="Views\Employees\Details_Employees.cshtml" />
     <Content Include="Views\Order\PartialPage.cshtml" />
+    <Content Include="Views\Question\Index.cshtml" />
+    <Content Include="Views\Question\CreateCommonQ.cshtml" />
+    <Content Include="Views\Question\EditCommonQ.cshtml" />
+    <Content Include="Views\Question\DeleteCommonQ.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -24,7 +24,9 @@ namespace H2StyleStore.Models.EFModels
 
         public int Total { get; set; }
 
-        public int Payment { get; set; }
+        [Required]
+        [StringLength(20)]
+        public string Payment { get; set; }
 
         public DateTime? ShippedDate { get; set; }
 
@@ -55,6 +57,8 @@ namespace H2StyleStore.Models.EFModels
         public int Status_id { get; set; }
 
         public int? Status_Description_id { get; set; }
+
+        public int? Discount { get; set; }
 
         public virtual Employee Employee { get; set; }
 

@@ -11,7 +11,7 @@ namespace H2StyleStore.Models.EFModels
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Product_Comments()
         {
-            PComments_Imgs = new HashSet<PComments_Imgs>();
+            Images = new HashSet<Image>();
         }
 
         [Key]
@@ -30,6 +30,6 @@ namespace H2StyleStore.Models.EFModels
         public virtual Order Order { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PComments_Imgs> PComments_Imgs { get; set; }
+        public virtual ICollection<Image> Images { get; set; }
     }
 }
