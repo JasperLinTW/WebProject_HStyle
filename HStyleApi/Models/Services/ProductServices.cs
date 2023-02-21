@@ -39,13 +39,20 @@ namespace HStyleApi.Models.Services
 
 		}
 
-		public (bool, string) CreateComment(PCommentPostDTO dto)
+		public (bool, string) CreateComment(PCommentPostDTO dto, int orderId, int productId)
 		{
 			//TODO驗證
 
-			_repo.CreateComment(dto);
+			_repo.CreateComment(dto, orderId, productId);
 
 			return (true, "新增成功");
+		}
+
+		public PCommentGetDTO GetComment(int productId, int orderId)
+		{
+			var data = _repo.GetComment(productId, orderId);
+
+			return data;
 		}
 	}
 }

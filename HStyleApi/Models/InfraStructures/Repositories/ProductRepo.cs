@@ -43,13 +43,13 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 
 		}
 
-		public void CreateComment(PCommentPostDTO dto)
+		public void CreateComment(PCommentPostDTO dto, int orderId, int productId)
 		{
 			
 			ProductComment pcomment = new ProductComment
 			{
-				OrderId = dto.OrderId,
-				ProductId = dto.ProductId,
+				OrderId = orderId,
+				ProductId = productId,
 				CommentContent= dto.CommentContent,
 				Score= dto.Score,
 				CreatedTime = DateTime.Now,
@@ -65,6 +65,30 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 			}
 
 			_db.SaveChanges();
+		}
+
+		public PCommentGetDTO GetComment(int productId, int orderId)
+		{
+			IEnumerable<Product> data = _db.Products.Include(product => product.Category)
+										.Include(product => product.Imgs)
+										.Include(product => product.Specs)
+										.Include(product => product.Tags);
+			var product = data.FirstOrDefault(x => x.ProductId == productId).ToDto();
+
+			var orderDetail = _db.OrderDetails.Where(x => x.OrderId == orderId).FirstOrDefault(x => x.ProductId == productId);
+
+			PCommentGetDTO comment = new PCommentGetDTO
+			{
+				ProductId = productId,
+				OrderId = orderId,
+				ProductName = product.Product_Name,
+				ProductPhoto = product.Imgs.ToList()[0],
+				Color = orderDetail.Color,
+				Size= orderDetail.Size,
+			};
+
+			return comment;
+
 		}
 	}
 }

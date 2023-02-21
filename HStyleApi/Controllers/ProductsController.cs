@@ -69,18 +69,24 @@ namespace HStyleApi.Controllers
 		//	return data;
 		//}
 
-		// POST api/<ProductsController>
+		[HttpGet("Comment")]
+		public ActionResult GetComment( int orderId,  int productId)
+		{
 
+		    var data = _Service.GetComment(productId, orderId);
+
+			return Ok(data);
+		}
 
 		[HttpPost("Comment")]
-		public async Task<IActionResult> CreateComment([FromForm] PCommentPostDTO comment, List<IFormFile> files)
+		public async Task<IActionResult> CreateComment([FromForm]PCommentPostDTO comment,int orderId, int productId)
 		{
-			long size = files.Sum(f => f.Length);
+			long size = comment.files.Sum(f => f.Length);
 			string path = "../H2StyleStore/Images/PCommentImages/";
 
 			comment.PcommentImgs = new List<string>();
 
-			foreach (var file in files)
+			foreach (var file in comment.files)
 			{
 				try
 				{
@@ -99,7 +105,7 @@ namespace HStyleApi.Controllers
 				}
 
 			}
-			var data = _Service.CreateComment(comment);
+			var data = _Service.CreateComment(comment, orderId, productId);
 
 			return Ok("新增成功");
 		}

@@ -330,15 +330,15 @@ namespace HStyleApi.Models.EFModels
                     .WithMany(p => p.PcommentImgs)
                     .UsingEntity<Dictionary<string, object>>(
                         "PcommentsImg",
-                        l => l.HasOne<ProductComment>().WithMany().HasForeignKey("CommentId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_PComments_Imgs_Product_Comments1"),
-                        r => r.HasOne<Image>().WithMany().HasForeignKey("PcommentImgId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_PComments_Imgs_Images"),
+                        l => l.HasOne<ProductComment>().WithMany().HasForeignKey("CommentId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_PComments_Imgs_Product_Comments"),
+                        r => r.HasOne<Image>().WithMany().HasForeignKey("PcommentImgId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_PComments_Imgs_Images1"),
                         j =>
                         {
                             j.HasKey("PcommentImgId", "CommentId").HasName("PK_PComments_Imgs_1");
 
                             j.ToTable("PComments_Imgs");
 
-                            j.IndexerProperty<int>("PcommentImgId").ValueGeneratedOnAdd().HasColumnName("PComment_img_id");
+                            j.IndexerProperty<int>("PcommentImgId").HasColumnName("PComment_img_id");
 
                             j.IndexerProperty<int>("CommentId").HasColumnName("Comment_id");
                         });
@@ -559,9 +559,19 @@ namespace HStyleApi.Models.EFModels
 
                 entity.Property(e => e.ProductId).HasColumnName("Product_id");
 
+                entity.Property(e => e.Color)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .IsFixedLength();
+
                 entity.Property(e => e.ProductName)
                     .IsRequired()
                     .HasMaxLength(50);
+
+                entity.Property(e => e.Size)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .IsFixedLength();
 
                 entity.HasOne(d => d.Order)
                     .WithMany(p => p.OrderDetails)
