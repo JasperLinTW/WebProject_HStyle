@@ -1,4 +1,5 @@
 ﻿using HStyleApi.Models.EFModels;
+using System.Drawing;
 using System.Runtime.CompilerServices;
 
 namespace HStyleApi.Models.DTOs
@@ -10,7 +11,7 @@ namespace HStyleApi.Models.DTOs
 		public string Size { get; set; }
 		public string CommentContent { get; set; }
 		public int Score { get; set; }
-		public virtual ICollection<Image> PcommentImgs { get; set; }
+		public IEnumerable<string> PcommentImgs { get; set; }
 	}
 
 	public static class ProductCommentExts
@@ -21,9 +22,10 @@ namespace HStyleApi.Models.DTOs
 			{
 			   CommentId = source.CommentId,
 			   CommentContent = source.CommentContent,
-			   PcommentImgs = source.PcommentImgs,
+			   PcommentImgs = source.PcommentImgs.Select(x => x.Path),
 			   Score = source.Score,
-		
+			   Color = source.Order.OrderDetails.Where(x => x.OrderId == source.OrderId).FirstOrDefault(x => x.ProductId == source.ProductId).Color,
+			   Size = source.Order.OrderDetails.Where(x => x.OrderId == source.OrderId).FirstOrDefault(x => x.ProductId == source.ProductId).Size
 			};
 
 		}
