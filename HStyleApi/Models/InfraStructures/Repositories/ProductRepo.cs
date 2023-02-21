@@ -90,5 +90,26 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 			return comment;
 
 		}
+
+		public void HelpfulComment(int comment_id, int member_id)
+		{
+			var data = _db.PcommentsHelpfuls.Where(x => x.CommentId == comment_id).FirstOrDefault(x => x.MemberId == member_id);
+
+			if (data == null)
+			{
+				PcommentsHelpful source = new PcommentsHelpful
+				{
+					CommentId = comment_id,
+					MemberId = member_id
+				};
+				_db.PcommentsHelpfuls.Add(source);
+			}
+			else
+			{
+				_db.PcommentsHelpfuls.Remove(data);
+			}
+
+			_db.SaveChanges();
+		}
 	}
 }

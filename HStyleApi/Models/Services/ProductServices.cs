@@ -54,5 +54,10 @@ namespace HStyleApi.Models.Services
 
 			return data;
 		}
+
+		public void HelpfulComment(int comment_id, int member_id)
+		{
+			_repo.HelpfulComment(comment_id, member_id);
+		}
 	}
 }

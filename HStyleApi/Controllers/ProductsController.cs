@@ -18,14 +18,16 @@ namespace HStyleApi.Controllers
 	public class ProductsController : ControllerBase
 	{
 		private readonly ProductServices _Service;
+		private readonly int _member_id;
 
 		public ProductsController(AppDbContext db)
 		{
 			_Service = new ProductServices(db);
+			_member_id = 1;
 		}
 
 
-		// GET: api/<ProductsController>
+		// 商品總覽
 		[HttpGet]
 		public ActionResult<ProductDto> LoadProducts()
 		{
@@ -42,35 +44,37 @@ namespace HStyleApi.Controllers
 			return Ok("取得全部商品");
 		}
 
-		// GET api/<ProductsController>/5
+		//單一商品頁
 		[HttpGet("{product_id}")]
 		public ActionResult GetProduct(int product_id)
 		{
 			try
 			{
 				var data = _Service.GetProduct(product_id);
+				return Ok(data);
+
 			}
 			catch (Exception ex)
 			{
-
 				return BadRequest(ex.Message);
 			}
 
 
-			return Ok("取得單一商品");
+			
 		}
 
 
 		//[HttpGet("ProdRec/{product_id}")]
-		//public ProductDto ProductRecommend(int product_id, [FromBody]int member_id)
+		//public ProductDto ProductRecommend(int product_id, [FromBody] int member_id)
 		//{
 		//	var data = _Service.GetRecommend(product_id, member_id);
 
 		//	return data;
 		//}
 
+		//評論頁
 		[HttpGet("Comment")]
-		public ActionResult GetComment( int orderId,  int productId)
+		public ActionResult GetComment(int orderId,  int productId)
 		{
 
 		    var data = _Service.GetComment(productId, orderId);
@@ -78,6 +82,7 @@ namespace HStyleApi.Controllers
 			return Ok(data);
 		}
 
+		//新增評論
 		[HttpPost("Comment")]
 		public async Task<IActionResult> CreateComment([FromForm]PCommentPostDTO comment,int orderId, int productId)
 		{
@@ -110,16 +115,13 @@ namespace HStyleApi.Controllers
 			return Ok("新增成功");
 		}
 
-		// PUT api/<ProductsController>/5
-		[HttpPut("{id}")]
-		public void Put(int id, [FromBody] string value)
+		//評論有幫助
+		[HttpPost("HelpfulComment")]
+		public ActionResult HelpfulComment(int comment_id)
 		{
-		}
+			_Service.HelpfulComment(comment_id, _member_id);
 
-		// DELETE api/<ProductsController>/5
-		[HttpDelete("{id}")]
-		public void Delete(int id)
-		{
+			return Ok();
 		}
 	}
 }
