@@ -20,14 +20,14 @@ namespace HStyleApi.Models.Services
             return  _hCoinRepo.GetCheckInByMemberId(id, activityId_checkIn);
         }
 
-        public string PutCheckInById(int memberId)
+        public async Task<string> PutCheckInById(int memberId)
         {
             // 活動Id和項目
             int activityId_checkIn = 3;
             var activity = _hCoinRepo.FindActivityById(activityId_checkIn);
 
             // 找出member打卡紀錄
-            var memberCheckIn = _hCoinRepo.GetCheckInByMemberId(memberId, activityId_checkIn);
+            var memberCheckIn = await _hCoinRepo.GetCheckInByMemberId(memberId, activityId_checkIn);
 
             // 打卡次數加一
             var checkInTimes = memberCheckIn.CheckInTimes + 1;

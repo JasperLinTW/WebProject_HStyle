@@ -32,9 +32,9 @@ namespace HStyleApi.Models.InfraStructures.Repositories
             return activity.ToDTO();
         }
 
-        public HCheckInDTO GetCheckInByMemberId(int memberId, int activityId_checkIn)
+        public async Task< HCheckInDTO> GetCheckInByMemberId(int memberId, int activityId_checkIn)
         {
-            HCheckIn? checkIn = _db.HCheckIns.SingleOrDefault(c => c.MemberId == memberId);
+            HCheckIn? checkIn =  _db.HCheckIns.SingleOrDefault(c => c.MemberId == memberId);
 
             // 若沒有此會員的打卡紀錄，就新增一筆次數為0的打卡紀錄
             if (checkIn == null)
@@ -47,10 +47,10 @@ namespace HStyleApi.Models.InfraStructures.Repositories
                     LastTime = DateTime.UtcNow,
                 };
                 _db.HCheckIns.Add(checkIn);
-                _db.SaveChanges();
+               await _db.SaveChangesAsync();
             }
 
-            return checkIn.ToHCheckInDTO();
+            return  checkIn.ToHCheckInDTO();
         }
 
         public void CreateHDetail(HSourceDetailDTO dto)
