@@ -143,9 +143,14 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 			_db.SaveChanges();
 		}
 
-		public IEnumerable<Product_LikeDTO> LoadLikeProducts()
+		public IEnumerable<Product_LikeDTO> LoadLikeProducts(int member_id)
 		{
-			throw new NotImplementedException();
+			IEnumerable<ProductLike> data = _db.ProductLikes.Include(x => x.Product).ThenInclude(x => x.Imgs)
+				                                            .Where(x => x.MemberId == member_id);
+
+			var productsLike = data.Select(x => x.ToDto());
+
+			return productsLike;
 		}
 	}
 }

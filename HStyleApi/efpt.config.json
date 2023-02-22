@@ -167,7 +167,7 @@
          "ObjectType": 0
       }
    ],
-   "UiHint": "ispanteam3.HstyleStore",
+   "UiHint": "AppDbContext (H2StyleStore)",
    "UncountableWords": null,
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": false,

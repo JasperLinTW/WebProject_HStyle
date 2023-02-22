@@ -100,7 +100,7 @@ namespace HStyleApi.Controllers
 
 		//新增評論
 		[HttpPost("comment")]
-		public async Task<IActionResult> CreateComment([FromForm]PCommentPostDTO comment,int orderId, int productId)
+		public IActionResult CreateComment([FromForm] PCommentPostDTO comment, int orderId, int productId)
 		{
 			long size = comment.files.Sum(f => f.Length);
 			string path = "../H2StyleStore/Images/PCommentImages/";

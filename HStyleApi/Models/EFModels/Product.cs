@@ -10,6 +10,7 @@ namespace HStyleApi.Models.EFModels
         public Product()
         {
             ProductComments = new HashSet<ProductComment>();
+            ProductLikes = new HashSet<ProductLike>();
             Specs = new HashSet<Spec>();
             Imgs = new HashSet<Image>();
             Tags = new HashSet<Tag>();
@@ -26,6 +27,7 @@ namespace HStyleApi.Models.EFModels
 
         public virtual Pcategory Category { get; set; }
         public virtual ICollection<ProductComment> ProductComments { get; set; }
+        public virtual ICollection<ProductLike> ProductLikes { get; set; }
         public virtual ICollection<Spec> Specs { get; set; }
 
         public virtual ICollection<Image> Imgs { get; set; }

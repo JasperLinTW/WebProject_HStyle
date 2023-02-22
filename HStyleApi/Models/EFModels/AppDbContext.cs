@@ -744,6 +744,12 @@ namespace HStyleApi.Models.EFModels
                 entity.Property(e => e.ProductId).HasColumnName("Product_id");
 
                 entity.Property(e => e.MemberId).HasColumnName("Member_id");
+
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.ProductLikes)
+                    .HasForeignKey(d => d.ProductId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Product_Likes_Products");
             });
 
             modelBuilder.Entity<Spec>(entity =>
@@ -880,13 +886,15 @@ namespace HStyleApi.Models.EFModels
 
             modelBuilder.Entity<VideoView>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.VideoId);
+
+                entity.Property(e => e.VideoId).ValueGeneratedNever();
 
                 entity.HasOne(d => d.Video)
-                    .WithMany()
-                    .HasForeignKey(d => d.VideoId)
+                    .WithOne(p => p.VideoView)
+                    .HasForeignKey<VideoView>(d => d.VideoId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_VideoViews_Videos");
+                    .HasConstraintName("FK_VideoViews_Videos1");
             });
 
             OnModelCreatingPartial(modelBuilder);

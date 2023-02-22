@@ -73,7 +73,7 @@ namespace HStyleApi.Models.Services
 
 		public IEnumerable<Product_LikeDTO> LoadLikeProducts(int member_id)
 		{
-			var data = _repo.LoadLikeProducts();
+			var data = _repo.LoadLikeProducts(member_id);
 
 			return data;
 		}
