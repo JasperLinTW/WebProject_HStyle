@@ -26,12 +26,13 @@ namespace HStyleApi.Models.Services
 
 		}
 
-		public ProductDto GetRecommend(int product_id, int member_id)
+		public IEnumerable<ProductDto> GetRecommend(int product_id, int member_id)
 		{
 
 			//若無登入或無購買紀錄就以目前瀏覽的商品有相同tag作為推薦
 
 			//取得member有買過的商品資料
+			var data = _repo.GetOrderProducts(member_id);
 
 			//以member購買過的商品具相同tag作為推薦
 

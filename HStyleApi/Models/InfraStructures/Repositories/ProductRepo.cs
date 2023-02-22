@@ -152,5 +152,14 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 
 			return productsLike;
 		}
+
+		public IEnumerable<OrderDetailsDTO> GetOrderProducts(int member_id)
+		{
+			//此會員的所有訂單
+			var orders = _db.Orders.Include(x => x.OrderDetails).Where(x => x.MemberId == member_id).ToList(); 
+
+			//回傳此會員
+			
+		}
 	}
 }

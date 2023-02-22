@@ -80,13 +80,14 @@ namespace HStyleApi.Controllers
 			return Ok(data);
 		}
 
-		//[HttpGet("ProdRec/{product_id}")]
-		//public ProductDto ProductRecommend(int product_id, [FromBody] int member_id)
-		//{
-		//	var data = _Service.GetRecommend(product_id, member_id);
+		//商品專屬推薦
+		[HttpGet("ProdRec/{product_id}")]
+		public IEnumerable<ProductDto> ProductRecommend(int product_id)
+		{
+			var data = _Service.GetRecommend(product_id, _member_id);
 
-		//	return data;
-		//}
+			return data;
+		}
 
 		//評論頁
 		[HttpGet("comment")]
