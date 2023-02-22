@@ -63,6 +63,22 @@ namespace HStyleApi.Controllers
 			
 		}
 
+		//商品收藏
+		[HttpPost("product/like")]
+		public ActionResult LikesProduct (int product_id)
+		{
+			_Service.LikesProduct(product_id, _member_id);
+			return Ok();
+		}
+
+		//商品收藏瀏覽
+		[HttpPost("products/likes")]
+		public ActionResult LoadLikeProducts()
+		{
+			var data = _Service.LoadLikeProducts(_member_id);
+
+			return Ok(data);
+		}
 
 		//[HttpGet("ProdRec/{product_id}")]
 		//public ProductDto ProductRecommend(int product_id, [FromBody] int member_id)
@@ -73,7 +89,7 @@ namespace HStyleApi.Controllers
 		//}
 
 		//評論頁
-		[HttpGet("Comment")]
+		[HttpGet("comment")]
 		public ActionResult GetComment(int orderId,  int productId)
 		{
 
@@ -83,7 +99,7 @@ namespace HStyleApi.Controllers
 		}
 
 		//新增評論
-		[HttpPost("Comment")]
+		[HttpPost("comment")]
 		public async Task<IActionResult> CreateComment([FromForm]PCommentPostDTO comment,int orderId, int productId)
 		{
 			long size = comment.files.Sum(f => f.Length);
@@ -116,7 +132,7 @@ namespace HStyleApi.Controllers
 		}
 
 		//評論是否有幫助
-		[HttpPost("HelpfulComment")]
+		[HttpPost("helpfulComment")]
 		public ActionResult HelpfulComment(int comment_id)
 		{
 			_Service.HelpfulComment(comment_id, _member_id);
@@ -124,8 +140,8 @@ namespace HStyleApi.Controllers
 			return Ok();
 		}
 
-		//瀏覽所有評論
-		[HttpGet("Comments")]
+		//所有評論瀏覽
+		[HttpGet("comments")]
 		public ActionResult<PCommentDTO> LoadComments()
 		{
 			try
@@ -141,5 +157,6 @@ namespace HStyleApi.Controllers
 
 			
 		}
+
 	}
 }

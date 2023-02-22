@@ -60,9 +60,21 @@ namespace HStyleApi.Models.Services
 			_repo.HelpfulComment(comment_id, member_id);
 		}
 
-		internal IEnumerable<PCommentDTO> LoadComments()
+		public IEnumerable<PCommentDTO> LoadComments()
 		{
 			var data = _repo.LoadComments();
+			return data;
+		}
+
+		public void LikesProduct(int product_id, int member_id)
+		{
+			_repo.LikesProduct(product_id, member_id);
+		}
+
+		public IEnumerable<Product_LikeDTO> LoadLikeProducts(int member_id)
+		{
+			var data = _repo.LoadLikeProducts();
+
 			return data;
 		}
 	}

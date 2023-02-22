@@ -122,5 +122,30 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 
 			return comments;
 		}
+
+		public void LikesProduct(int product_id, int member_id)
+		{
+			var data = _db.ProductLikes.Where(x => x.ProductId == product_id).FirstOrDefault(x => x.MemberId == member_id);
+			if (data == null)
+			{
+				ProductLike source = new ProductLike
+				{
+					ProductId = product_id,
+					MemberId = member_id
+				};
+				_db.ProductLikes.Add(source);
+			}
+			else
+			{
+				_db.ProductLikes.Remove(data);
+			}
+
+			_db.SaveChanges();
+		}
+
+		public IEnumerable<Product_LikeDTO> LoadLikeProducts()
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

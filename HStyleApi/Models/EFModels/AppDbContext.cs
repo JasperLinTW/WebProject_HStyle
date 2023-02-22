@@ -41,6 +41,7 @@ namespace HStyleApi.Models.EFModels
         public virtual DbSet<PermissionsM> PermissionsMs { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<ProductComment> ProductComments { get; set; }
+        public virtual DbSet<ProductLike> ProductLikes { get; set; }
         public virtual DbSet<Spec> Specs { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<Video> Videos { get; set; }
@@ -561,8 +562,7 @@ namespace HStyleApi.Models.EFModels
 
                 entity.Property(e => e.Color)
                     .IsRequired()
-                    .HasMaxLength(10)
-                    .IsFixedLength();
+                    .HasMaxLength(50);
 
                 entity.Property(e => e.ProductName)
                     .IsRequired()
@@ -570,8 +570,7 @@ namespace HStyleApi.Models.EFModels
 
                 entity.Property(e => e.Size)
                     .IsRequired()
-                    .HasMaxLength(10)
-                    .IsFixedLength();
+                    .HasMaxLength(50);
 
                 entity.HasOne(d => d.Order)
                     .WithMany(p => p.OrderDetails)
@@ -702,23 +701,6 @@ namespace HStyleApi.Models.EFModels
                     .HasForeignKey(d => d.CategoryId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Products_PCategories");
-
-                entity.HasMany(d => d.Members)
-                    .WithMany(p => p.Products)
-                    .UsingEntity<Dictionary<string, object>>(
-                        "ProductLike",
-                        l => l.HasOne<Member>().WithMany().HasForeignKey("MemberId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_Product_Likes_Members"),
-                        r => r.HasOne<Product>().WithMany().HasForeignKey("ProductId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_Product_Likes_Products"),
-                        j =>
-                        {
-                            j.HasKey("ProductId", "MemberId");
-
-                            j.ToTable("Product_Likes");
-
-                            j.IndexerProperty<int>("ProductId").HasColumnName("Product_id");
-
-                            j.IndexerProperty<int>("MemberId").HasColumnName("Member_id");
-                        });
             });
 
             modelBuilder.Entity<ProductComment>(entity =>
@@ -751,6 +733,17 @@ namespace HStyleApi.Models.EFModels
                     .HasForeignKey(d => d.ProductId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Product_Comments_Products");
+            });
+
+            modelBuilder.Entity<ProductLike>(entity =>
+            {
+                entity.HasKey(e => new { e.ProductId, e.MemberId });
+
+                entity.ToTable("Product_Likes");
+
+                entity.Property(e => e.ProductId).HasColumnName("Product_id");
+
+                entity.Property(e => e.MemberId).HasColumnName("Member_id");
             });
 
             modelBuilder.Entity<Spec>(entity =>

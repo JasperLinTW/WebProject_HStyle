@@ -2,7 +2,6 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
 namespace HStyleApi.Models.EFModels
 {
@@ -20,10 +19,9 @@ namespace HStyleApi.Models.EFModels
         public int Score { get; set; }
         public DateTime CreatedTime { get; set; }
 
-		public virtual Order Order { get; set; }
+        public virtual Order Order { get; set; }
+        public virtual Product Product { get; set; }
 
-		public virtual Product Product { get; set; }
-
-		public virtual ICollection<Image> PcommentImgs { get; set; }
+        public virtual ICollection<Image> PcommentImgs { get; set; }
     }
 }
