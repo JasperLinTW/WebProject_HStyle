@@ -29,9 +29,11 @@ namespace HStyleApi.Controllers
 
 		// GET api/<HCoinController>/5
 		[HttpGet("CheckIn/{memberId}")]
-		public async Task<IEnumerable<HCheckInDTO>> GetHCheckIn(int memberId)
-		{
-			return await _service.GetHCheckIn(memberId);
+		public async Task<HCheckInDTO> GetHCheckIn(int memberId)
+        {
+			// 活動Id和項目
+            int activityId_checkIn = 3;
+            return await _service.GetHCheckIn(memberId, activityId_checkIn);
 		}
 
 		// POST api/<HCoinController>
@@ -41,9 +43,10 @@ namespace HStyleApi.Controllers
 		}
 
 		// PUT api/<HCoinController>/5
-		[HttpPut("{id}")]
-		public void Put(int id, [FromBody] string value)
+		[HttpPut("CheckIn/{id}")]
+		public void PutCheckIn(int id, [FromBody] string value)
 		{
+            string response = _service.PutCheckInById(id);			
 		}
 
 		// DELETE api/<HCoinController>/5
