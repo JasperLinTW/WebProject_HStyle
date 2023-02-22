@@ -15,19 +15,16 @@ namespace HStyleApi.Controllers
 	public class VideoController : ControllerBase
 	{
 		private VideoService _service;
-		private VideoRepository _VideoRepository;
+
 		public VideoController(AppDbContext db)
 		{
 			 _service = new VideoService(db);
-			_VideoRepository= new VideoRepository(db);
 		}
 		// GET: api/<VideoController>
 		[HttpGet]
 		public async Task<IEnumerable<VideoDTO>> GetVideos()
 		{
-			IEnumerable<VideoDTO> data = await _service.GetVideos();
-			var like = _VideoRepository.GetLikes();
-			
+			IEnumerable<VideoDTO> data =_service.GetVideos();
 			return data;
 		}
 
@@ -38,6 +35,13 @@ namespace HStyleApi.Controllers
 			return await _service.GetVideo(id); ;
 		}
 
+		// GET api/<VideoController>/Like/5  
+		[HttpGet("/Like/{id}")]
+		public async Task<IEnumerable<VideoDTO>> GetLikeVideos(int id)
+		{
+			return await _service.GetLikeVideos(id); ;
+		}
+
 		// POST api/<VideoController>
 		[HttpPost]
 		public void PostLike(int memberId, int videoId)
@@ -45,16 +49,25 @@ namespace HStyleApi.Controllers
 			_service.PostLike(memberId, videoId);
 		}
 
+		// POST api/<VideoController>/5
+		[HttpPost]
+		public void PostView(int videoId)
+		{
+			_service.PostView(videoId);
+		}
+
 		// PUT api/<VideoController>/5
 		[HttpPut("{id}")]
-		public void Put(int id, [FromBody] string value)
+		public void PutView(int id, [FromBody] string value)
 		{
+
 		}
 
 		// DELETE api/<VideoController>/5
 		[HttpDelete("{id}")]
-		public void Delete(int id)
+		public void DeleteLike(int id)
 		{
+
 		}
 	}
 }

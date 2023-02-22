@@ -28,7 +28,15 @@ namespace HStyleApi.Models.DTOs
 
 		public virtual ICollection<VideoLike> VideoLikes { get; set; }
 
+		public virtual VideoView VideoView { get; set; }
+
 		public string CategoryName { get; set; }
+
+		public int Likes { get; set; }
+
+		public int Views{ get; set; }
+
+		public VideoLike MemberId { get; set; }
 	}
 
 	public static class VideoExts
@@ -47,8 +55,11 @@ namespace HStyleApi.Models.DTOs
 				OffShelffTime = source.OffShelffTime,
 				CreatedTime = source.CreatedTime,
 				Tags = source.Tags.Select(x => x.TagName),
-				VideoLikes=source.VideoLikes,
-				CategoryName=source.Category.CategoryName
+				VideoLikes = source.VideoLikes,
+				CategoryName = source.Category.CategoryName,
+				Likes = source.VideoLikes.GroupBy(x => x.VideoId).Count(),
+				Views=source.VideoView.Views,
+				
 			};
 		}
 	}

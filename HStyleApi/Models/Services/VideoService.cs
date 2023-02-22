@@ -16,15 +16,21 @@ namespace HStyleApi.Models.Services
 			_videoRepository = new VideoRepository(db);
 		}
 
-		public async Task <IEnumerable<VideoDTO>> GetVideos()
+		public IEnumerable<VideoDTO> GetVideos()
 		{
 			var data=_videoRepository.GetVideos();
-			return await data;
+			return data;
 		}
 
 		public async Task<IEnumerable<VideoDTO>> GetVideo(int id)
 		{
 			var data = _videoRepository.GetVideo(id);
+			return await data;
+		}
+
+		public async Task<IEnumerable<VideoDTO>> GetLikeVideos(int id)
+		{
+			var data = _videoRepository.GetLikeVideo(id);
 			return await data;
 		}
 

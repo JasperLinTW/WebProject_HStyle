@@ -26,6 +26,7 @@ namespace HStyleApi.Models.EFModels
 
         public virtual VideoCategory Category { get; set; }
         public virtual Image Image { get; set; }
+        public virtual VideoView VideoView { get; set; }
         public virtual ICollection<VideoLike> VideoLikes { get; set; }
 
         public virtual ICollection<Tag> Tags { get; set; }
