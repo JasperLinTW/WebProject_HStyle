@@ -172,9 +172,26 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 
 		}
 
-		public IEnumerable<ProductDto> GetRecommendByProducts(int product_id)
+		public IEnumerable<int> GetProductTags(int product_id)
 		{
-			throw new NotImplementedException();
+			var data = _db.Products.Include(x => x.Tags)
+				                   .FirstOrDefault(x => x.ProductId == product_id).Tags
+				                   .Select(x => x.Id);
+
+			return data;
+
+		}
+
+		public IEnumerable<ProductDto> GetProductByTags(IEnumerable<int> data)
+		{
+			var products = _db.Products.Include(product => product.Category)
+										.Include(product => product.Imgs)
+										.Include(product => product.Specs)
+										.Include(product => product.Tags);
+
+			var results = products.Select(x => x.Tags.Select(x => x.Id));
+
+			return null;
 		}
 	}
 }

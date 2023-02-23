@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography.Xml;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -30,33 +31,51 @@ namespace HStyleApi.Controllers
 		}
 
 		[HttpGet("test")]
-		public dynamic GetTags(int member_id)
+		public dynamic GetTags(int product_id)
 		{
-			var orders = _db.Orders.Where(x => x.MemberId == member_id);
+			//var orders = _db.Orders.Where(x => x.MemberId == member_id);
 
-			var productsId = orders.Select(x => x.OrderDetails.Select(x => x.ProductId)).ToArray();
-			List<int> products = new List<int>();
-			foreach (var order in productsId)
+			//var productsId = orders.Select(x => x.OrderDetails.Select(x => x.ProductId)).ToArray();
+			//List<int> products = new List<int>();
+			//foreach (var order in productsId)
+			//{
+			//	foreach (var pId in order)
+			//	{
+			//		products.Add(pId);
+			//	}
+			//}
+			//var dbPro = _db.Products.Include(x => x.Tags);
+
+
+			//var tags = new List<int>();
+			//foreach (var product in products)
+			//{
+			//	var ts = dbPro.Where(x => x.ProductId == product).SingleOrDefault().Tags;
+			//	foreach (var t in ts)
+			//	{
+			//		tags.Add(t.Id);
+			//	}
+			//}
+			//return tags;
+
+			var data = _db.Products.Include(x => x.Tags)
+								   .FirstOrDefault(x => x.ProductId == product_id).Tags
+								   .Select(x => x.Id);
+
+			var products = _db.Products.Include(product => product.Category)
+										.Include(product => product.Imgs)
+										.Include(product => product.Specs)
+										.Include(product => product.Tags);
+
+			foreach (var item in products)
 			{
-				foreach (var pId in order)
+				foreach (var id in item.Tags)
 				{
-					products.Add(pId);
+					
 				}
 			}
-			var dbPro = _db.Products.Include(x => x.Tags);
 			
-			
-			var tags = new List<int>();
-			foreach (var product in products)
-			{
-				var ts = dbPro.Where(x => x.ProductId == product).SingleOrDefault().Tags;
-				foreach (var t in ts)
-				{
-					tags.Add(t.Id);
-				}
-			}
-			return tags;
-			
+
 		}
 
 		// 商品總覽

@@ -83,9 +83,16 @@ namespace HStyleApi.Models.Services
 
 		public IEnumerable<ProductDto> GetRecommendByProducts(int product_id)
 		{
-			var data = _repo.GetRecommendByProducts(product_id);
+			//取得此筆product的所有tag Id
+			var data = _repo.GetProductTags(product_id);
 
-			return data;
+			//找出其他有這個tag的商品
+
+			var products = _repo.GetProductByTags(data);
+
+			//如果有這個tag的商品小於三件則用顏色去補
+
+			return null;
 		}
 	}
 }
