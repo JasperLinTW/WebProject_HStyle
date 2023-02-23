@@ -1,6 +1,7 @@
 ﻿using HStyleApi.Models.DTOs;
 using HStyleApi.Models.EFModels;
 using HStyleApi.Models.InfraStructures.Repositories;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HStyleApi.Models.Services
 {
@@ -13,9 +14,15 @@ namespace HStyleApi.Models.Services
 			_questionRepository = new QuestionRepository(db);
 		}
 
-		public async Task<IEnumerable<CommonQuestionDTO>> GetCommonQuestion()
+		public async Task<IEnumerable<CommonQuestionDTO>> GetCommonQuestion(string? keyword)
 		{
-			var data = _questionRepository.GetCommonQuestion();
+			var data = _questionRepository.GetCommonQuestion(keyword);
+			return await data;
+		}
+
+		public async Task<IEnumerable<QuestionCategoryDTO>> GetQuestionCategory()
+		{
+			var data = _questionRepository.GetQuestionCategory();
 			return await data;
 		}
 
@@ -30,5 +37,7 @@ namespace HStyleApi.Models.Services
 				_questionRepository.PostCustomerQuestion(dto);
 			}
 		}
+
+
 	}
 }

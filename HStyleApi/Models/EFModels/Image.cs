@@ -10,6 +10,7 @@ namespace HStyleApi.Models.EFModels
         public Image()
         {
             Videos = new HashSet<Video>();
+            Comments = new HashSet<ProductComment>();
             Essays = new HashSet<Essay>();
             Products = new HashSet<Product>();
         }
@@ -19,6 +20,7 @@ namespace HStyleApi.Models.EFModels
 
         public virtual ICollection<Video> Videos { get; set; }
 
+        public virtual ICollection<ProductComment> Comments { get; set; }
         public virtual ICollection<Essay> Essays { get; set; }
         public virtual ICollection<Product> Products { get; set; }
     }

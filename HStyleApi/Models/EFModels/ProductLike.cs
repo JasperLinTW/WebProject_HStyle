@@ -5,11 +5,11 @@ using System.Collections.Generic;
 
 namespace HStyleApi.Models.EFModels
 {
-    public partial class PcommentsImg
+    public partial class ProductLike
     {
-        public int PcommentImgId { get; set; }
-        public int CommentId { get; set; }
+        public int ProductId { get; set; }
+        public int MemberId { get; set; }
 
-        public virtual ProductComment Comment { get; set; }
+        public virtual Product Product { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using HStyleApi.Models.DTOs;
 using HStyleApi.Models.EFModels;
+using Microsoft.CodeAnalysis.Operations;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
@@ -45,7 +46,7 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 					MemberId = memberId,
 					ActivityId = activityId_checkIn,
 					CheckInTimes = 0,
-					LastTime = DateTime.Now,
+					LastTime = DateTime.Now.AddDays(-1),
 				};
 				_db.HCheckIns.Add(checkIn);
 				await _db.SaveChangesAsync();
@@ -81,7 +82,7 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 			HCheckIn? oldData = _db.HCheckIns.SingleOrDefault(c => c.MemberId == memberId);
 			if (oldData == null) throw new Exception("找不到此會員的紀錄");
 
-			// 修改此會員的筆紀錄
+			// 修改此會員的打卡次數
 			oldData.CheckInTimes = checkInTimes;
 			oldData.LastTime = DateTime.Now;
 			_db.SaveChanges();
@@ -104,13 +105,14 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 		{
 			Member member = _db.Members.SingleOrDefault(m => m.Id == memberId);
 			if (member == null) throw new Exception("找不到此會員");
-			return member.TotalH == null ? 0 : (int)member.TotalH;
+			int totalH = member.TotalH == null ? 0 : (int)member.TotalH;
+			return  totalH;
 		}
 
 		// 取得會員的總HCoin金額，同步
 		public int GetTotalHByMemberId(int memberId)
 		{
-			Member member = _db.Members.SingleOrDefault(m => m.Id == memberId);
+			Member member =  _db.Members.SingleOrDefault(m => m.Id == memberId);
 			if (member == null) throw new Exception("找不到此會員");
 			return member.TotalH == null ? 0 : (int)member.TotalH;
 		}

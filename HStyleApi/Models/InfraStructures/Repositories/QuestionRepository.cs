@@ -13,9 +13,26 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 			_db = db;
 		}
 
-		public async Task<IEnumerable<CommonQuestionDTO>> GetCommonQuestion()
+		public async Task<IEnumerable<CommonQuestionDTO>> GetCommonQuestion(string? keyword)
 		{
-			var data = await _db.CommonQuestions.Select(q => q.ToCommonQuestionDTO()).ToListAsync();
+			if (keyword==null)
+			{
+				IEnumerable<CommonQuestionDTO> question = await _db.CommonQuestions
+					.Select(q => q.ToCommonQuestionDTO()).ToListAsync();
+				return question;
+			}
+			else
+			{
+				IEnumerable<CommonQuestionDTO> question = await _db.CommonQuestions
+				.Where(q => q.Question.Contains(keyword) || q.Answer.Contains(keyword))
+				.Select(q => q.ToCommonQuestionDTO()).ToListAsync();
+				return question;
+			}
+		}
+
+		public async Task<IEnumerable<QuestionCategoryDTO>> GetQuestionCategory()
+		{
+			var data = await _db.QuestionCategories.Select(q => q.ToQCDTO()).ToListAsync();
 
 			return data;
 		}

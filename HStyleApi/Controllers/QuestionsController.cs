@@ -22,9 +22,16 @@ namespace HStyleApi.Controllers
 		// GET: api/<QuestionsController>
 		// 得到所有常見問題
 		[HttpGet("/CommonQ")]
-		public async Task< IEnumerable<CommonQuestionDTO>> GetCommonQuestion()
+		public async Task< IEnumerable<CommonQuestionDTO>> GetCommonQuestion([FromQuery]string? keyword)
 		{
-			return await _service.GetCommonQuestion();
+			return await _service.GetCommonQuestion(keyword);
+		}
+
+		// 得到所有問題類別
+		[HttpGet("/CommonQCategory")]
+		public async Task<IEnumerable<QuestionCategoryDTO>> GetQuestionCategory()
+		{
+			return await _service.GetQuestionCategory();
 		}
 
 		// GET api/<QuestionsController>/5
