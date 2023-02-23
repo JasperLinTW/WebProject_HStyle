@@ -50,6 +50,7 @@ namespace HStyleApi.Controllers
 						href = x.Href,
 						method = x.Method
 					})
+			
 			});
 		}
 
@@ -61,7 +62,8 @@ namespace HStyleApi.Controllers
 				ApplicationContext = new ApplicationContext
 				{
 					ReturnUrl = "https://www.google.com.tw/?hl=zh_TW",
-					CancelUrl = "https://www.google.com.tw/?hl=zh_TW"
+					CancelUrl = "https://www.google.com.tw/?hl=zh_TW",
+					Locale= "zh-TW",
 				},
 				PurchaseUnits = new List<PurchaseUnitRequest>
 				{
@@ -71,11 +73,13 @@ namespace HStyleApi.Controllers
 						Description = "HStyle商城付款頁面",//顯示給消費者看得描述
 						AmountWithBreakdown = new AmountWithBreakdown
 						{
-							CurrencyCode = "USD",
+							CurrencyCode = "TWD",
 							Value = "92.00"
 						}
+					
 					}
 				}
+			
 			};
 			return order;
 		}
