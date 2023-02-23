@@ -1,4 +1,5 @@
-﻿using HStyleApi.Models.EFModels;
+﻿using HStyleApi.Models.DTOs;
+using HStyleApi.Models.EFModels;
 using HStyleApi.Models.InfraStructures.Repositories;
 
 namespace HStyleApi.Models.Services
@@ -10,15 +11,15 @@ namespace HStyleApi.Models.Services
         {
             _MemberRepositories = new MemberRepositories(db);
         }
-        public async Task<IEnumerable<MemberDTO>> GetVideos()
+        public async Task<IEnumerable<MemberDTO>> GetMember()
         {
-            var data = _videoRepository.GetVideos();
+            var data = _MemberRepositories.GetMember();
             return await data;
         }
 
-        public async Task<IEnumerable<VideoDTO>> GetVideo(int id)
+        public async Task<IEnumerable<MemberDTO>> GetMember(int id)
         {
-            var data = _videoRepository.GetVideo(id);
+            var data = _MemberRepositories.GetMember(id);
             return await data;
         }
 
