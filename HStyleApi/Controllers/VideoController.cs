@@ -18,13 +18,13 @@ namespace HStyleApi.Controllers
 
 		public VideoController(AppDbContext db)
 		{
-			 _service = new VideoService(db);
+			_service = new VideoService(db);
 		}
 		// GET: api/<VideoController>
-		[HttpGet]
-		public async Task<IEnumerable<VideoDTO>> GetVideos()
+		[HttpGet()]
+		public async Task<IEnumerable<VideoDTO>> GetVideos([FromQuery] string? keyword)
 		{
-			IEnumerable<VideoDTO> data =_service.GetVideos();
+			IEnumerable<VideoDTO> data = await _service.GetVideos(keyword);
 			return data;
 		}
 
@@ -35,39 +35,31 @@ namespace HStyleApi.Controllers
 			return await _service.GetVideo(id); ;
 		}
 
-		// GET api/<VideoController>/Like/5  
-		[HttpGet("/Like/{id}")]
-		public async Task<IEnumerable<VideoDTO>> GetLikeVideos(int id)
+		//熱門影片
+		//public async Task<IEnumerable<VideoDTO>> GetNews()
+		//{
+		//	//return await _service.GetNews();
+		//}
+
+		// GET api/<VideoController>/MyLike/5  
+		[HttpGet("/MyLike/{id}")]
+		public async Task<IEnumerable<VideoLikeDTO>> GetLikeVideos(int memberId)
 		{
-			return await _service.GetLikeVideos(id); ;
+			return await _service.GetLikeVideos(memberId);
 		}
 
-		// POST api/<VideoController>
-		[HttpPost]
+		// POST api/<VideoController>/Like
+		[HttpPost("Like")]
 		public void PostLike(int memberId, int videoId)
 		{ 
 			_service.PostLike(memberId, videoId);
 		}
 
-		// POST api/<VideoController>/5
-		[HttpPost]
+		// POST api/<VideoController>/View/5
+		[HttpPost("/View/{id}")]
 		public void PostView(int videoId)
 		{
 			_service.PostView(videoId);
-		}
-
-		// PUT api/<VideoController>/5
-		[HttpPut("{id}")]
-		public void PutView(int id, [FromBody] string value)
-		{
-
-		}
-
-		// DELETE api/<VideoController>/5
-		[HttpDelete("{id}")]
-		public void DeleteLike(int id)
-		{
-
 		}
 	}
 }

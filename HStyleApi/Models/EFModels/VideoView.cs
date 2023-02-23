@@ -8,7 +8,7 @@ namespace HStyleApi.Models.EFModels
     public partial class VideoView
     {
         public int VideoId { get; set; }
-        public int Views { get; set; }
+        public int? Views { get; set; }
 
         public virtual Video Video { get; set; }
     }

@@ -6,11 +6,11 @@ namespace HStyleApi.Models.DTOs
 	{
 		public int Id { get; set; }
 
-		public string? Title { get; set; }
+		public string Title { get; set; }
 
 		public string? Description { get; set; }
 
-		public string? FilePath { get; set; }
+		public string FilePath { get; set; }
 
 		public int CategoryId { get; set; }
 
@@ -24,7 +24,7 @@ namespace HStyleApi.Models.DTOs
 
 		public string? Image { get; set; }
 
-		public IEnumerable<string>? Tags { get; set; }
+		public IEnumerable<string> Tags { get; set; }
 
 		public virtual ICollection<VideoLike> VideoLikes { get; set; }
 
@@ -34,9 +34,9 @@ namespace HStyleApi.Models.DTOs
 
 		public int Likes { get; set; }
 
-		public int Views{ get; set; }
+		public int? Views{ get; set; }
 
-		public VideoLike MemberId { get; set; }
+		public IEnumerable<int> MemberId { get; set; }
 	}
 
 	public static class VideoExts
@@ -58,8 +58,8 @@ namespace HStyleApi.Models.DTOs
 				VideoLikes = source.VideoLikes,
 				CategoryName = source.Category.CategoryName,
 				Likes = source.VideoLikes.GroupBy(x => x.VideoId).Count(),
-				Views=source.VideoView.Views,
-				
+				Views = source.VideoView.Views,
+				MemberId = source.VideoLikes.Select(x => x.MemberId)
 			};
 		}
 	}

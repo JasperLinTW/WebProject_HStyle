@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace HStyleApi.Models.InfraStructures.Repositories
@@ -17,37 +19,39 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 			_db = db;
 		}
 
-		//影片列表：取出所有影片
-		public async Task<IEnumerable<VideoDTO>> GetVideos()
+		//影片列表：取出所有影片、篩選
+		public async Task<IEnumerable<VideoDTO>> GetVideos(string? keyword)
 		{
-			IEnumerable<Video> data =await _db.Videos.Include(v => v.Title)
-												.Include(v => v.ImageId)
-												.Include(v => v.CategoryId)
-												.Include(v => v.Tags)
-												.Include(v => v.VideoLikes)
-												.Include(v => v.VideoView).ToListAsync();
-
+			IEnumerable<Video> data = await _db.Videos.Include(v => v.Image)
+															.Include(v => v.Tags)
+															.Include(v => v.VideoLikes)
+															.Include(v => v.VideoView).Where(v=>v.IsOnShelff==true)
+															.ToListAsync();
 			if (data == null)
 			{
-				throw new Exception();
+					throw new Exception();
 			}
 
-			IEnumerable<VideoDTO> videos= data.Select(x=>x.ToVideoDTO());
-			return videos;
+			if (keyword == null)
+			{
+				return data.Select(x => x.ToVideoDTO()); ;
+			}
+			else
+			{
+				IEnumerable<VideoDTO> selectVideos = data.Where(v => v.Title.Contains(keyword)||v.Tags.Select(t=>t.TagName).Contains(keyword)).Select(x => x.ToVideoDTO());
+				return selectVideos;
+			}			
 		}
 
 		//單一影片資訊
 		public async Task<IEnumerable<VideoDTO>> GetVideo(int id)
 		{
 			IEnumerable<Video> data = await _db.Videos.Where(x => x.Id == id)
-												.Include(v => v.Title)
-												.Include(v => v.ImageId)
-												.Include(v => v.CategoryId)
+												.Include(v => v.Image) 
 												.Include(v => v.Tags)
 												.Include(v => v.VideoLikes)
-												.Include(v => v.VideoView)
-												.Include(v => v.FilePath)
-												.Include(v => v.Description).ToListAsync();
+												.Include(v => v.VideoView).Where(v => v.IsOnShelff == true)
+												.ToListAsync();
 
 			if (data == null)
 			{
@@ -60,30 +64,55 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 		}
 
 		//使用者收藏的影片
-		public async Task <IEnumerable<VideoLikeDTO>> GetLikeVideos(int id)
+		public async Task <IEnumerable<VideoLikeDTO>> GetLikeVideos(int memberId)
 		{
-			IEnumerable<Video> data = await _db.Videos
-												.Include(v => v.Title)
-												.Include(v => v.ImageId)
-												.Include(v => v.CategoryId)
-												.Include(v => v.Tags)
-												.Include(v => v.VideoLikes)
-												.Include(v => v.VideoView).ToListAsync();
-
-			IEnumerable<VideoDTO> likeVideos = data.Where(x => x.MemberId == id).Select(x => x.ToLikeDTO());
-			return likeVideos;
+			IEnumerable<VideoLike> data = await _db.VideoLikes
+												.Include(v => v.Video)
+												.ThenInclude(v => v.Image)
+												.Include(v=>v.Video)
+												.ThenInclude(v=>v.Tags)
+												.Include(v=>v.Video)
+												.ThenInclude(v=>v.VideoView)
+												.Where(v=>v.MemberId==memberId)
+												.ToListAsync();
+			//TODO isOnshelf
+			IEnumerable<VideoLikeDTO> likeVideo = data.Select(v=>v.ToLikeDTO());
+			return likeVideo;
 		}
 
+		//收藏影片
 		public void PostLike(int memberId, int videoId)
 		{
-			VideoLike like = new VideoLike
+			var data = _db.VideoLikes.Where(v=>v.MemberId==memberId).FirstOrDefault(v => v.VideoId == videoId);
+			if (data == null)
 			{
-				MemberId = memberId,
-				VideoId = videoId,
-				CreatedTime = DateTime.Now,
-			};
+				VideoLike like = new VideoLike
+				{
+					MemberId = memberId,
+					VideoId = videoId,
+				};
+				_db.VideoLikes.Add(like);
+			}
+			else _db.VideoLikes.Remove(data);	
+			_db.SaveChanges();
+		}
 
-			_db.VideoLikes.Add(like);
+		//瀏覽次數
+		public void PostView(int videoId) 
+		{
+			var data = _db.VideoViews.Find(videoId);
+			if (data == null)
+			{
+				VideoView view = new VideoView()
+				{
+					VideoId= videoId,
+					Views= 1
+				};
+				_db.VideoViews.Add(view);
+			}else
+			{
+				data.Views++;
+			}
 			_db.SaveChanges();
 		}
 	}

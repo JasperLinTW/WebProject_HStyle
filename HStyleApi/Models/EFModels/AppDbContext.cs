@@ -157,6 +157,17 @@ namespace HStyleApi.Models.EFModels
                 entity.Property(e => e.Title)
                     .IsRequired()
                     .HasMaxLength(100);
+
+                entity.HasOne(d => d.Member)
+                    .WithMany(p => p.CustomerQuestions)
+                    .HasForeignKey(d => d.MemberId)
+                    .HasConstraintName("FK_CustomerQuestions_Members");
+
+                entity.HasOne(d => d.Qcategory)
+                    .WithMany(p => p.CustomerQuestions)
+                    .HasForeignKey(d => d.QcategoryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CustomerQuestions_Question_Categories");
             });
 
             modelBuilder.Entity<EassyFollow>(entity =>
@@ -795,6 +806,12 @@ namespace HStyleApi.Models.EFModels
                 entity.Property(e => e.ProductId).HasColumnName("Product_id");
 
                 entity.Property(e => e.MemberId).HasColumnName("Member_id");
+
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.ProductLikes)
+                    .HasForeignKey(d => d.ProductId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Product_Likes_Products");
             });
 
             modelBuilder.Entity<QuestionCategory>(entity =>
@@ -927,19 +944,16 @@ namespace HStyleApi.Models.EFModels
 
             modelBuilder.Entity<VideoLike>(entity =>
             {
-                entity.Property(e => e.CreatedTime).HasColumnType("datetime");
+                entity.HasKey(e => new { e.VideoId, e.MemberId })
+                    .HasName("PK_VideoLikes_1");
 
-                entity.HasOne(d => d.Member)
-                    .WithMany(p => p.VideoLikes)
-                    .HasForeignKey(d => d.MemberId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_VideoLikes_Members");
+                entity.HasIndex(e => e.MemberId, "IX_VideoLikes");
 
                 entity.HasOne(d => d.Video)
                     .WithMany(p => p.VideoLikes)
                     .HasForeignKey(d => d.VideoId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_VideoLikes_Videos");
+                    .HasConstraintName("FK_VideoLikes_Videos1");
             });
 
             modelBuilder.Entity<VideoView>(entity =>

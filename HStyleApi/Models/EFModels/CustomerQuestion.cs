@@ -17,5 +17,8 @@ namespace HStyleApi.Models.EFModels
         public string SolutionDescription { get; set; }
         public DateTime? SolveTime { get; set; }
         public int? EmployeeId { get; set; }
+
+        public virtual Member Member { get; set; }
+        public virtual QuestionCategory Qcategory { get; set; }
     }
 }

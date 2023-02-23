@@ -16,9 +16,9 @@ namespace HStyleApi.Models.Services
 			_videoRepository = new VideoRepository(db);
 		}
 
-		public IEnumerable<VideoDTO> GetVideos()
+		public async Task<IEnumerable<VideoDTO>> GetVideos(string? keyword)
 		{
-			var data=_videoRepository.GetVideos();
+			var data = await _videoRepository.GetVideos(keyword);
 			return data;
 		}
 
@@ -28,16 +28,21 @@ namespace HStyleApi.Models.Services
 			return await data;
 		}
 
-		public async Task<IEnumerable<VideoDTO>> GetLikeVideos(int id)
+		public async Task<IEnumerable<VideoLikeDTO>> GetLikeVideos(int memberId)
 		{
-			var data = _videoRepository.GetLikeVideo(id);
-			return await data;
+			var data = await _videoRepository.GetLikeVideos(memberId);
+			return  data;
 		}
 
 		public void PostLike(int memberId, int videoId)
 		{
 			if (memberId == 0 || videoId == 0) throw new Exception();
 			else _videoRepository.PostLike(memberId, videoId);
+		}
+
+		public void PostView(int videoId)
+		{
+			_videoRepository.PostView(videoId);
 		}
 	}
 }

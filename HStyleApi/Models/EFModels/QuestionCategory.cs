@@ -10,11 +10,13 @@ namespace HStyleApi.Models.EFModels
         public QuestionCategory()
         {
             CommonQuestions = new HashSet<CommonQuestion>();
+            CustomerQuestions = new HashSet<CustomerQuestion>();
         }
 
         public int QcategoryId { get; set; }
         public string CategoryName { get; set; }
 
         public virtual ICollection<CommonQuestion> CommonQuestions { get; set; }
+        public virtual ICollection<CustomerQuestion> CustomerQuestions { get; set; }
     }
 }

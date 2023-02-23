@@ -1,15 +1,16 @@
-﻿using HStyleApi.Models.EFModels;
+﻿using HStyleApi.Models.DTOs;
+using HStyleApi.Models.EFModels;
 
 namespace HStyleApi.Models.DTOs
 {
 	public class VideoLikeDTO
 	{
-		public int Id { get; set; }
 		public int VideoId { get; set; }
 		public int MemberId { get; set; }
-		public DateTime CreatedTime { get; set; }
 
 		public virtual Video Video { get; set; }
+
+		public bool IsOnShelff  { get; set; }
 	}
 	public static class VideoLikeExts
 	{
@@ -17,20 +18,16 @@ namespace HStyleApi.Models.DTOs
 		{
 			return new VideoLike()
 			{
-				Id = source.Id,
 				VideoId = source.VideoId,
-				MemberId = source.MemberId,
-				CreatedTime = source.CreatedTime
+				MemberId = source.MemberId
 			};
 		}
 		public static VideoLikeDTO ToLikeDTO(this VideoLike source)
 		{
 			return new VideoLikeDTO()
 			{
-				Id = source.Id,
 				VideoId = source.VideoId,
 				MemberId = source.MemberId,
-				CreatedTime = source.CreatedTime
 			};
 		}
 	}
