@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PayPalCheckoutSdk.Core;
 using PayPalCheckoutSdk.Orders;
+using PayPalHttp;
 using System.Net;
 
 namespace HStyleApi.Controllers
@@ -32,6 +34,7 @@ namespace HStyleApi.Controllers
 			request.RequestBody(BuildRequestBody());
 
 			var response = await client.Execute(request);
+			
 
 			if (response.StatusCode != System.Net.HttpStatusCode.Created)
 			{
@@ -39,18 +42,16 @@ namespace HStyleApi.Controllers
 			}
 
 			var result = response.Result<Order>();
+			//TODO，要把orderId和付款url存起來，避免取消付款
+			var orderId = result.Id;
+			var payLink = result.Links
+					.Where(x => x.Rel == "approve")
+				.Select(x => x.Href).FirstOrDefault();
 
 			return Ok(new
 			{
-				orderId = result.Id,
-				links = result.Links
-					.Where(x => x.Rel == "approve")
-					.Select(x => new
-					{
-						href = x.Href,
-						method = x.Method
-					})
-			
+				orderId,
+				payLink
 			});
 		}
 
@@ -61,20 +62,21 @@ namespace HStyleApi.Controllers
 				CheckoutPaymentIntent = "CAPTURE",//表示消費者按下付款後會立即處理，AUTHORIZE則是僅授權，之後再手動處理
 				ApplicationContext = new ApplicationContext
 				{
-					ReturnUrl = "https://www.google.com.tw/?hl=zh_TW",
-					CancelUrl = "https://www.google.com.tw/?hl=zh_TW",
+					ReturnUrl = "https://localhost:7243/api/Paypal/return",
+					CancelUrl = "https://localhost:7243/api/Paypal/cancel",
 					Locale= "zh-TW",
+
 				},
 				PurchaseUnits = new List<PurchaseUnitRequest>
 				{
 					new PurchaseUnitRequest
 					{
-						ReferenceId = "PUHF",//識別用，可以亂取
-						Description = "HStyle商城付款頁面",//顯示給消費者看得描述
+						ReferenceId = "test1",//識別用，可以亂取
+						Description = "HStyle1",//顯示給消費者看得描述
 						AmountWithBreakdown = new AmountWithBreakdown
 						{
 							CurrencyCode = "TWD",
-							Value = "92.00"
+							Value = "92.00"//todo傳入本次訂單的金額
 						}
 					
 					}
@@ -99,16 +101,17 @@ namespace HStyleApi.Controllers
 
 			if (response.StatusCode != System.Net.HttpStatusCode.Created)
 			{
-				return BadRequest();
+				return BadRequest("付款失敗");
 			}
-
-			return Ok("Payment successful.");
+			//todo紀錄付款人，修改訂單狀態，改向畫面網址
+			return Ok("付款成功");
 		}
 
 		[HttpGet("cancel")]
 		public IActionResult Cancel()
 		{
-			return Ok("Payment cancelled.");
+			//todo導向訂單頁面
+			return Redirect("https://www.youtube.com/");
 		}
 
 		[HttpPost("{orderId}")]
@@ -120,20 +123,76 @@ namespace HStyleApi.Controllers
 			));
 			var request = new OrdersCaptureRequest(orderId);
 			request.RequestBody(new OrderActionRequest());
-			var response = await client.Execute(request);
 
-			if (response.StatusCode == HttpStatusCode.Created)
+			try
 			{
-				// 付款成功，更新訂單狀態
-				
-				return Ok("付款成功");
+				var response = await client.Execute(request);
+
+				if (response.StatusCode == HttpStatusCode.Created)
+				{
+					// 付款成功，更新訂單狀態
+
+					return Ok("付款成功");
+				}
+				else
+				{
+					// 付款失敗
+					return BadRequest();
+				}
 			}
-			else
+			catch
 			{
-				// 付款失敗
-				return BadRequest();
-			}
+				return NotFound("找不到新的付款紀錄，您尚未付款或紀錄已存檔");
+			};
 		}
+
+		//private async Task RegisterWebhook()
+		//{
+		//	try
+		//	{
+		//		var request = new WebhooksCreateRequest();
+		//		request.RequestBody(new Webhook()
+		//		{
+		//			Url = "https://your-app.com/paypal-webhook", // Replace with your webhook URL
+		//			EventTypes = new List<WebhookEventType>()
+		//			{
+		//				new WebhookEventType()
+		//				{
+		//					Name = "CHECKOUT.ORDER.APPROVED"
+		//				}
+		//			}
+		//		});
+		//		var response = await _client.Execute(request);
+		//		var statusCode = response.StatusCode;
+		//		var result = await response.Result<Webhook>();
+
+		//		if (statusCode == HttpStatusCode.Created)
+		//		{
+		//			// Webhook registered successfully
+		//		}
+		//		else
+		//		{
+		//			// Webhook registration failed
+		//		}
+		//	}
+		//	catch (HttpException ex)
+		//	{
+		//		throw new Exception(ex.Message);
+		//	}
+		//}
+
+		//[HttpPost("Webhook")]
+		//public IActionResult PayPalWebhook()
+		//{
+		//	var webhookId = Request.Headers["Paypal-Transmission-Id"];
+		//	var webhookEvent = Request.Headers["Paypal-Transmission-Event"];
+		//	var webhookTime = Request.Headers["Paypal-Transmission-Time"];
+
+		//	// Process the webhook event here
+		//	// ...
+
+		//	return Ok();
+		//}
 
 	}
 }
