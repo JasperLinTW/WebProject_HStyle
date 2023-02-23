@@ -6,6 +6,7 @@ using HStyleApi.Models.Services;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -19,13 +20,44 @@ namespace HStyleApi.Controllers
 	{
 		private readonly ProductServices _Service;
 		private readonly int _member_id;
+		private readonly AppDbContext _db;
 
 		public ProductsController(AppDbContext db)
 		{
 			_Service = new ProductServices(db);
+			_db = db;
 			_member_id = 1; //之後用Cookie取
 		}
 
+		[HttpGet("test")]
+		public dynamic GetTags(int member_id)
+		{
+			var orders = _db.Orders.Where(x => x.MemberId == member_id);
+
+			var productsId = orders.Select(x => x.OrderDetails.Select(x => x.ProductId)).ToArray();
+			List<int> products = new List<int>();
+			foreach (var order in productsId)
+			{
+				foreach (var pId in order)
+				{
+					products.Add(pId);
+				}
+			}
+			var dbPro = _db.Products.Include(x => x.Tags);
+			
+			
+			var tags = new List<int>();
+			foreach (var product in products)
+			{
+				var ts = dbPro.Where(x => x.ProductId == product).SingleOrDefault().Tags;
+				foreach (var t in ts)
+				{
+					tags.Add(t.Id);
+				}
+			}
+			return tags;
+			
+		}
 
 		// 商品總覽
 		[HttpGet("products")]
@@ -80,11 +112,11 @@ namespace HStyleApi.Controllers
 			return Ok(data);
 		}
 
-		//商品專屬推薦
+		//商品專屬推薦(根據此商品特徵篩選) //用在你可能會喜歡(商品頁)
 		[HttpGet("ProdRec/{product_id}")]
 		public IEnumerable<ProductDto> ProductRecommend(int product_id)
 		{
-			var data = _Service.GetRecommend(product_id, _member_id);
+			var data = _Service.GetRecommendByProducts(product_id);
 
 			return data;
 		}

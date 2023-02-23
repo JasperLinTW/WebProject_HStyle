@@ -153,13 +153,28 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 			return productsLike;
 		}
 
-		public IEnumerable<OrderDetailsDTO> GetOrderProducts(int member_id)
+		public IEnumerable<ProductDto> GetOrderProducts(int member_id)
 		{
-			//此會員的所有訂單
-			var orders = _db.Orders.Include(x => x.OrderDetails).Where(x => x.MemberId == member_id).ToList(); 
+			//此會員的所有訂單的商品Id
+			var orderproductsId = _db.Orders
+								.Include(o => o.OrderDetails)
+								.Where(x => x.MemberId == member_id)
+								.Select(x => x.OrderDetails.Select(x => x.ProductId));
 
-			//回傳此會員
+
+
+			//var tags = _db.Tags.Include(x => x.Products);
+
+			return null;
+
 			
+
+
+		}
+
+		public IEnumerable<ProductDto> GetRecommendByProducts(int product_id)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

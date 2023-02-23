@@ -26,19 +26,21 @@ namespace HStyleApi.Models.Services
 
 		}
 
-		public IEnumerable<ProductDto> GetRecommend(int product_id, int member_id)
-		{
+		//public IEnumerable<ProductDto> GetRecommend(int product_id, int member_id)
+		//{
 
-			//若無登入或無購買紀錄就以目前瀏覽的商品有相同tag作為推薦
+		//	//若無登入或無購買紀錄就以目前瀏覽的商品有相同tag作為推薦
 
-			//取得member有買過的商品資料
-			var data = _repo.GetOrderProducts(member_id);
+		//	//取得member有買過的商品資料
+		//	var data = _repo.GetOrderProducts(member_id);
 
-			//以member購買過的商品具相同tag作為推薦
+		//	//以member購買過的商品具相同tag作為推薦
 
-			return null;
+		//	return null;
 
-		}
+		//}
+
+
 
 		public (bool, string) CreateComment(PCommentPostDTO dto, int orderId, int productId)
 		{
@@ -75,6 +77,13 @@ namespace HStyleApi.Models.Services
 		public IEnumerable<Product_LikeDTO> LoadLikeProducts(int member_id)
 		{
 			var data = _repo.LoadLikeProducts(member_id);
+
+			return data;
+		}
+
+		public IEnumerable<ProductDto> GetRecommendByProducts(int product_id)
+		{
+			var data = _repo.GetRecommendByProducts(product_id);
 
 			return data;
 		}
