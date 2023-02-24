@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore;
+﻿using HStyleApi.Models.EFModels;
+using HStyleApi.Models.InfraStructures.Repositories;
+using HStyleApi.Models.Services;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PayPalCheckoutSdk.Core;
@@ -13,16 +16,20 @@ namespace HStyleApi.Controllers
 	public class PaypalController : ControllerBase
 	{
 		private readonly IConfiguration _config;
+		private readonly OrderService _orderService;
 
-		public PaypalController(IConfiguration config)
+		public PaypalController(IConfiguration config, AppDbContext db)
 		{
 			_config = config;
+			_orderService = new OrderService(new OrderRepo(db));
 		}
 		
 
-		[HttpPost]
-		public async Task<IActionResult> CreateOrder()
+		[HttpPost("{orderId}")]
+		public async Task<IActionResult> CreateOrder(int orderId)
 		{
+			
+			var orderInfo = _orderService.GetOrder(orderId);
 			//client是指我們申請的商城帳號，由appsetting設定，注入_config，包含ClientId和Secret
 			var client = new PayPalHttpClient(new SandboxEnvironment(
 				_config["PayPal:ClientId"],
@@ -31,31 +38,34 @@ namespace HStyleApi.Controllers
 
 			var request = new OrdersCreateRequest();
 			request.Prefer("return=representation");//這句表示請求發給paypal時，要返回詳細資訊而不是只有付款url
-			request.RequestBody(BuildRequestBody());
+			request.RequestBody(BuildRequestBody(orderInfo.Total));
 
 			var response = await client.Execute(request);
 			
 
 			if (response.StatusCode != System.Net.HttpStatusCode.Created)
 			{
-				return BadRequest();
+                return BadRequest();
 			}
 
-			var result = response.Result<Order>();
-			//TODO，要把orderId和付款url存起來，避免取消付款
-			var orderId = result.Id;
-			var payLink = result.Links
+			var result = response.Result<PayPalCheckoutSdk.Orders.Order>();
+			
+			var paypalId = result.Id;
+			var paypalLink = result.Links
 					.Where(x => x.Rel == "approve")
 				.Select(x => x.Href).FirstOrDefault();
+			
 
+			
+			_orderService.SavePayInfo(orderId, paypalId);
 			return Ok(new
 			{
-				orderId,
-				payLink
+				paypalId,
+				paypalLink
 			});
 		}
 
-		private OrderRequest BuildRequestBody()
+		private OrderRequest BuildRequestBody(int total)
 		{
 			var order = new OrderRequest()
 			{
@@ -64,7 +74,7 @@ namespace HStyleApi.Controllers
 				{
 					ReturnUrl = "https://localhost:7243/api/Paypal/return",
 					CancelUrl = "https://localhost:7243/api/Paypal/cancel",
-					Locale= "zh-TW",
+					Locale = "zh-TW",
 
 				},
 				PurchaseUnits = new List<PurchaseUnitRequest>
@@ -76,9 +86,8 @@ namespace HStyleApi.Controllers
 						AmountWithBreakdown = new AmountWithBreakdown
 						{
 							CurrencyCode = "TWD",
-							Value = "92.00"//todo傳入本次訂單的金額
+							Value = total.ToString()
 						}
-					
 					}
 				}
 			
@@ -104,6 +113,8 @@ namespace HStyleApi.Controllers
 				return BadRequest("付款失敗");
 			}
 			//todo紀錄付款人，修改訂單狀態，改向畫面網址
+
+			_orderService.UpdateOrder(token);
 			return Ok("付款成功");
 		}
 
@@ -114,37 +125,37 @@ namespace HStyleApi.Controllers
 			return Redirect("https://www.youtube.com/");
 		}
 
-		[HttpPost("{orderId}")]
-		public async Task<IActionResult> ConfirmOrder(string orderId)
-		{
-			var client = new PayPalHttpClient(new SandboxEnvironment(
-				_config["PayPal:ClientId"],
-				_config["PayPal:ClientSecret"]
-			));
-			var request = new OrdersCaptureRequest(orderId);
-			request.RequestBody(new OrderActionRequest());
+		//[HttpPost("{orderId}")]
+		//public async Task<IActionResult> ConfirmOrder(string orderId)
+		//{
+		//	var client = new PayPalHttpClient(new SandboxEnvironment(
+		//		_config["PayPal:ClientId"],
+		//		_config["PayPal:ClientSecret"]
+		//	));
+		//	var request = new OrdersCaptureRequest(orderId);
+		//	request.RequestBody(new OrderActionRequest());
 
-			try
-			{
-				var response = await client.Execute(request);
+		//	try
+		//	{
+		//		var response = await client.Execute(request);
 
-				if (response.StatusCode == HttpStatusCode.Created)
-				{
-					// 付款成功，更新訂單狀態
+		//		if (response.StatusCode == HttpStatusCode.Created)
+		//		{
+		//			// 付款成功，更新訂單狀態
 
-					return Ok("付款成功");
-				}
-				else
-				{
-					// 付款失敗
-					return BadRequest();
-				}
-			}
-			catch
-			{
-				return NotFound("找不到新的付款紀錄，您尚未付款或紀錄已存檔");
-			};
-		}
+		//			return Ok("付款成功");
+		//		}
+		//		else
+		//		{
+		//			// 付款失敗
+		//			return BadRequest();
+		//		}
+		//	}
+		//	catch
+		//	{
+		//		return NotFound("找不到新的付款紀錄，您尚未付款或紀錄已存檔");
+		//	};
+		//}
 
 		//private async Task RegisterWebhook()
 		//{

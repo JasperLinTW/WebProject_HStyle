@@ -27,22 +27,22 @@ namespace HStyleApi.Controllers
         public IActionResult Checkout(CheckoutDTO value)
         {
 			OrderDTO checkoutList = _CartService.GetCheckout(_memberId, value);
+            int orderId = 0;
 
-			_CartService.CreateOrder(checkoutList);
-
-			return Ok("訂單完成");
-        }
-
-        [HttpPost("upload")]
-        public IActionResult Upload(IFormFile file)
-        {
-            string basePath = "https://localhost:44313/Images/";
-            using (var stream = System.IO.File.Create(basePath + file.Name))
+			try
             {
-                file.CopyTo(stream);
+				orderId = _CartService.CreateOrder(checkoutList);
+			}
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
-            return Ok("新增成功");
+			
+            
+			return Ok(orderId);
         }
+
+        
 
 
         // GET: api/<CartController>

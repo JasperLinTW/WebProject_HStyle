@@ -23,7 +23,19 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[CommonQuestions]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CustomerQuestions]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Eassy_Follows]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ECommentlikes]",
          "ObjectType": 0
       },
       {
@@ -135,6 +147,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[Question_Categories]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Spec]",
          "ObjectType": 0
       },
@@ -151,7 +167,15 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[VCommentLike]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[VideoCategories]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[VideoComments]",
          "ObjectType": 0
       },
       {

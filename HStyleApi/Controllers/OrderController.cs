@@ -59,9 +59,10 @@ namespace HStyleApi.Controllers
 
 		// GET api/<OrderController>/5
 		[HttpGet("{id}")]
-		public string Get(int id)
+		public OrderDTO Get(int orderId)
 		{
-			return "value";
+			var order = _orderService.GetOrder(orderId);
+			return order;
 		}
 
 		// POST api/<OrderController>

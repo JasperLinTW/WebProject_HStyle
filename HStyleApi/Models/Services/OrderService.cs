@@ -17,5 +17,21 @@ namespace HStyleApi.Models.Services
 			var orders = _repo.GetOrders(memberId);
 			return orders;
 		}
-	}
+
+		public OrderDTO GetOrder(int orderId)
+		{
+			var order = _repo.GetOrder(orderId);
+			return order;
+		}
+
+		public void SavePayInfo(int orderId, string payInfo)
+		{
+			_repo.SavePayInfo( orderId, payInfo);
+		}
+
+        public void UpdateOrder(string palpaltoken)
+        {
+            _repo.UpdateOrder(palpaltoken);
+        }
+    }
 }

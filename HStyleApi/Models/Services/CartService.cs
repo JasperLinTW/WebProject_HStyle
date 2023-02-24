@@ -43,7 +43,7 @@ namespace HStyleApi.Models.Services
 				ShipAddress = value.ShipAddress,
 				CreatedTime = DateTime.Now,
 				StatusId = 1,//有待付款狀態
-				StatusDescriptionId = 2,
+				StatusDescriptionId = 9,
 
 			};
 			data.Freight = data.Total > 10000 ? 0 : freight;//todo換成變數
@@ -84,9 +84,12 @@ namespace HStyleApi.Models.Services
 
 		}
 
-		public void CreateOrder(OrderDTO checkoutList)
+		public int CreateOrder(OrderDTO checkoutList)
 		{
-			_repo.CreateOrder(checkoutList);
+			//todo，取有多少幣、判斷是否大於20%、扣除本次使用量
+			int orderId = _repo.CreateOrder(checkoutList);
+			
+			return orderId;
 		}
 	}
     

@@ -17,10 +17,10 @@ namespace HStyleApi.Models.DTOs
 		{
 			return new VideoLike()
 			{
-				Id = source.Id,
+			
 				VideoId = source.VideoId,
-				MemberId = source.MemberId,
-				CreatedTime = source.CreatedTime
+				MemberId = source.MemberId
+				
 			};
 		}
 	}

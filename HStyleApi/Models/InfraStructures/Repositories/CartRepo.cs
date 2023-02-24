@@ -79,8 +79,12 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 			_db.SaveChanges();
 		}
 
-		public void CreateOrder(OrderDTO value)
+		public int CreateOrder(OrderDTO value)
 		{
+            if (value.Total <= 0)
+            {
+                throw new Exception("購物車內沒有商品");
+            }
 			var order = new Order()
             {
 				MemberId = value.MemberId,
@@ -102,11 +106,22 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 				ShipPhone = value.ShipPhone,
 				ShipAddress = value.ShipAddress,
 				CreatedTime = DateTime.Now,
-				StatusId = 1,//有待付款狀態
-				StatusDescriptionId = 2,
+				StatusId = value.StatusId,//有待付款狀態
+				StatusDescriptionId = value.StatusDescriptionId,
 			};
             _db.Orders.Add(order);
+            var dataLog = new OrderLog
+            {
+                OrderId = value.OrderId,
+                StatusChangedTime = DateTime.Now,
+                Status = "待處理",
+            };
+            _db.OrderLogs.Add(dataLog);
+            var cartItems = _db.Carts.Where(x => x.MemberId == order.MemberId);
+            _db.RemoveRange(cartItems);
+
             _db.SaveChanges();
+            return order.OrderId;
 		}
 	}
 }
