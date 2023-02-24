@@ -1,3 +1,4 @@
+using HStyleApi.Controllers;
 using HStyleApi.Models.EFModels;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,6 +13,8 @@ builder.Services.AddSwaggerGen();
 
 var HstoreconnectString = builder.Configuration.GetConnectionString("HstyleStore");
 builder.Services.AddDbContext<AppDbContext> (option => option.UseSqlServer(HstoreconnectString));
+
+builder.Services.AddSingleton<WebSocketController>();
 
 string MyAllowOrigins = "AllowAny";
 builder.Services.AddCors(options => {
@@ -36,6 +39,11 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseWebSockets(new WebSocketOptions
+{
+	KeepAliveInterval = TimeSpan.FromSeconds(60),
+});
 
 app.MapControllers();
 
