@@ -32,11 +32,12 @@ namespace HStyleApi.Controllers
             return await _Service.GetMember();
         }
 
-        [HttpGet("{id}")]
-        public async Task<IEnumerable<VideoDTO>> GetVideo(int id)
-        {
-            return await _Service.GetMember(id); ;
-        }
+        //[HttpGet("{id}")]
+        //public async Task<IEnumerable<VideoDTO>> GetVideo(int id)
+        //{
+        //    return await _Service.GetMember(id); ;
+        //}
+
 
         // GET api/<MemberController>/5
         [HttpGet("{id}")]

@@ -51,9 +51,9 @@ namespace H2StyleStore.Models.Infrastructures
 			string smtpAccount = from;
 
             // TODO
-            string smtpPassword = "yvupanwipdifkupw";
+            string smtpPassword = "yvupanwipdifkupw"; //二次驗證密碼
 
-            string smtpServer = "smtp.gmail.com";
+            string smtpServer = "smtp.gmail.com"; //不用理他
             int SmtpPort = 587;
 
             MailMessage mms = new MailMessage();

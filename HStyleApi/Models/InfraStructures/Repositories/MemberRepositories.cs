@@ -21,7 +21,7 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 
             var members = data.OrderBy(x => x.DisplayOrder).Select(x => x.ToDto());
 
-            return products;
+            return members;
         }
 
 
