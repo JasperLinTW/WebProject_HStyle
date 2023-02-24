@@ -65,11 +65,11 @@ namespace HStyleApi.Controllers
 
 		// 商品總覽
 		[HttpGet("products")]
-		public ActionResult<ProductDto> LoadProducts()
+		public ActionResult<ProductDto> LoadProducts([FromQuery] string? keyword)
 		{
 			try
 			{
-				var data = _Service.LoadProducts();
+				var data = _Service.LoadProducts(keyword);
 			}
 			catch (Exception ex)
 			{

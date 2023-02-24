@@ -13,17 +13,28 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 			_db = db;
 		}
 
-		public IEnumerable<ProductDto> LoadProducts()
+		public IEnumerable<ProductDto> LoadProducts(string? keyword)
 		{
 			IEnumerable<Product> data = _db.Products
 										.Include(product => product.Category)
 										.Include(product => product.Imgs)
 										.Include(product => product.Specs)
 										.Include(product => product.Tags);
+			if (keyword == null)
+			{
+				
+				var products = data.OrderBy(x => x.DisplayOrder).Select(x => x.ToDto());
 
-			var  products = data.OrderBy(x => x.DisplayOrder).Select(x => x.ToDto());
+				return products;
+			}
+			else
+			{
+				var products = data.Where(x => x.ProductName.Contains(keyword))
+					               .OrderBy(x => x.DisplayOrder).Select(x => x.ToDto());
 
-			return products;
+				return products;
+			}
+			
 		}
 
 		public ProductDto GetProduct(int product_id)

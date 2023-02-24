@@ -13,9 +13,9 @@ namespace HStyleApi.Models.Services
 			_repo = new ProductRepo(db);
 		}
 
-		public IEnumerable<ProductDto> LoadProducts()
+		public IEnumerable<ProductDto> LoadProducts(string? keyword)
 		{
-			var data = _repo.LoadProducts();
+			var data = _repo.LoadProducts(keyword);
 			return data;
 		}
 
