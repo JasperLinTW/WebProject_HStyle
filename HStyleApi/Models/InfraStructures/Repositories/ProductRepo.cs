@@ -1,6 +1,7 @@
 ﻿using HStyleApi.Models.DTOs;
 using HStyleApi.Models.EFModels;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace HStyleApi.Models.InfraStructures.Repositories
 {
@@ -172,26 +173,77 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 
 		}
 
-		public IEnumerable<int> GetProductTags(int product_id)
+		public Product GetProductInfo(int product_id)
 		{
-			var data = _db.Products.Include(x => x.Tags)
-				                   .FirstOrDefault(x => x.ProductId == product_id).Tags
-				                   .Select(x => x.Id);
+			var data = _db.Products.Include(x => x.Tags).Include(x => x.Specs)
+								   .FirstOrDefault(x => x.ProductId == product_id);
 
 			return data;
 
 		}
 
-		public IEnumerable<ProductDto> GetProductByTags(IEnumerable<int> data)
+		public List<int> GetProductByTags(IEnumerable<int> data, int product_id)
 		{
-			var products = _db.Products.Include(product => product.Category)
+			var products = _db.Products.Include(x => x.Tags).Where(x => x.ProductId != product_id);
+
+			List<int> products_id = new List<int>();
+
+			foreach (var item in products)
+			{
+				foreach (var tag in data)
+				{
+					if (item.Tags.Any(x => x.Id == tag) == true)
+					{
+						products_id.Add(item.ProductId);
+					}
+				}
+			}
+			return products_id;
+		}
+
+		public IEnumerable<ProductDto> GetProducts(List<int> recommendlist)
+		{
+			IEnumerable<Product> data = _db.Products
+										.Include(product => product.Category)
 										.Include(product => product.Imgs)
 										.Include(product => product.Specs)
 										.Include(product => product.Tags);
 
-			var results = products.Select(x => x.Tags.Select(x => x.Id));
+			List<ProductDto> source = new List<ProductDto>();
 
-			return null;
+			foreach (var id in recommendlist)
+			{
+				var product = data.FirstOrDefault(x => x.ProductId == id).ToDto();
+
+				source.Add(product);
+			}
+
+			return source;
+		}
+
+		public List<int> GetProductByColor(IEnumerable<string> colors, List<int> list_id)
+		{
+			var products = _db.Products.Include(x => x.Specs).Where(x => !list_id.Contains(x.ProductId));
+
+
+			if (products == null)
+			{
+				return null;
+			}
+
+			List<int> products_id = new List<int>();
+
+			foreach (var item in products)
+			{
+				foreach (var color in colors)
+				{
+					if (item.Specs.Any(x => x.Color.Contains(color.Replace("色", string.Empty)) == true))
+					{
+						products_id.Add(item.ProductId);
+					}
+				}
+			}
+			return products_id;
 		}
 	}
 }

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Security.Cryptography.Xml;
 
 
@@ -58,23 +59,7 @@ namespace HStyleApi.Controllers
 			//}
 			//return tags;
 
-			var data = _db.Products.Include(x => x.Tags)
-								   .FirstOrDefault(x => x.ProductId == product_id).Tags
-								   .Select(x => x.Id);
-
-			var products = _db.Products.Include(product => product.Category)
-										.Include(product => product.Imgs)
-										.Include(product => product.Specs)
-										.Include(product => product.Tags);
-
-			foreach (var item in products)
-			{
-				foreach (var id in item.Tags)
-				{
-					
-				}
-			}
-			
+			return null;
 
 		}
 
