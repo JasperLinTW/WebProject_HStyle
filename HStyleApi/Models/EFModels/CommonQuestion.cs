@@ -11,8 +11,8 @@ namespace HStyleApi.Models.EFModels
         public int QcategoryId { get; set; }
         public string Question { get; set; }
         public string Answer { get; set; }
-        public int SatiafactionClick { get; set; }
-        public int SatiafactionYes { get; set; }
+        public int SatisfactionYes { get; set; }
+        public int SatisfactionNo { get; set; }
 
         public virtual QuestionCategory Qcategory { get; set; }
     }

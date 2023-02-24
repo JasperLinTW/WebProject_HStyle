@@ -23,6 +23,7 @@ namespace HStyleApi.Models.EFModels
         public virtual DbSet<CommonQuestion> CommonQuestions { get; set; }
         public virtual DbSet<CustomerQuestion> CustomerQuestions { get; set; }
         public virtual DbSet<EassyFollow> EassyFollows { get; set; }
+        public virtual DbSet<Elike> Elikes { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<Essay> Essays { get; set; }
         public virtual DbSet<EssaysComment> EssaysComments { get; set; }
@@ -121,9 +122,9 @@ namespace HStyleApi.Models.EFModels
 
                 entity.Property(e => e.Question).IsRequired();
 
-                entity.Property(e => e.SatiafactionClick).HasColumnName("Satiafaction_Click");
+                entity.Property(e => e.SatisfactionNo).HasColumnName("Satisfaction_No");
 
-                entity.Property(e => e.SatiafactionYes).HasColumnName("Satiafaction_Yes");
+                entity.Property(e => e.SatisfactionYes).HasColumnName("Satisfaction_Yes");
 
                 entity.HasOne(d => d.Qcategory)
                     .WithMany(p => p.CommonQuestions)
@@ -197,6 +198,23 @@ namespace HStyleApi.Models.EFModels
                     .HasForeignKey<EassyFollow>(d => d.MemberId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Eassy_Follows_Members");
+            });
+
+            modelBuilder.Entity<Elike>(entity =>
+            {
+                entity.HasKey(e => new { e.MemberId, e.EssayId });
+
+                entity.Property(e => e.MemberId)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("Member_Id");
+
+                entity.Property(e => e.EssayId).HasColumnName("Essay_Id");
+
+                entity.HasOne(d => d.Essay)
+                    .WithMany(p => p.Elikes)
+                    .HasForeignKey(d => d.EssayId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Elikes_Essays");
             });
 
             modelBuilder.Entity<Employee>(entity =>
@@ -506,23 +524,6 @@ namespace HStyleApi.Models.EFModels
                             j.IndexerProperty<int>("MemberId").HasColumnName("Member_Id");
 
                             j.IndexerProperty<int>("CommentId").HasColumnName("Comment_Id");
-                        });
-
-                entity.HasMany(d => d.Essays)
-                    .WithMany(p => p.Members)
-                    .UsingEntity<Dictionary<string, object>>(
-                        "Elike",
-                        l => l.HasOne<Essay>().WithMany().HasForeignKey("EssayId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_Elikes_Essays"),
-                        r => r.HasOne<Member>().WithMany().HasForeignKey("MemberId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_Elikes_Members"),
-                        j =>
-                        {
-                            j.HasKey("MemberId", "EssayId");
-
-                            j.ToTable("Elikes");
-
-                            j.IndexerProperty<int>("MemberId").ValueGeneratedOnAdd().HasColumnName("Member_Id");
-
-                            j.IndexerProperty<int>("EssayId").HasColumnName("Essay_Id");
                         });
             });
 

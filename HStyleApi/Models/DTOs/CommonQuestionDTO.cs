@@ -8,8 +8,8 @@ namespace HStyleApi.Models.DTOs
 		public int QcategoryId { get; set; }
 		public string? Question { get; set; }
 		public string? Answer { get; set; }
-		public int SatiafactionClick { get; set; }
-		public int SatiafactionYes { get; set; }
+		public int SatisfactionNo { get; set; }
+		public int SatisfactionYes { get; set; }
 	}
 
 	public static class CommonQuestionDTOExts
@@ -22,8 +22,8 @@ namespace HStyleApi.Models.DTOs
 				QcategoryId = source.QcategoryId,
 				Question = source.Question,
 				Answer = source.Answer,
-				SatiafactionClick = source.SatiafactionClick,
-				SatiafactionYes = source.SatiafactionYes,
+				SatisfactionNo = source.SatisfactionNo,
+				SatisfactionYes = source.SatisfactionYes,
 			};
 		}
 	}

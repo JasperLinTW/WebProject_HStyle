@@ -38,6 +38,16 @@ namespace HStyleApi.Models.Services
 			}
 		}
 
+		public void PutSatisfactionYes(int CommonQId)
+		{
+			_questionRepository.PutSatisfactionYes(CommonQId);
+		}
+
+		public void PutSatisfactionNo(int CommonQId)
+		{
+			_questionRepository.PutSatisfactionNo(CommonQId);
+		}
+
 
 	}
 }

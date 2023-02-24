@@ -34,13 +34,6 @@ namespace HStyleApi.Controllers
 			return await _service.GetQuestionCategory();
 		}
 
-		// GET api/<QuestionsController>/5
-		[HttpGet("{id}")]
-		public string Get(int id)
-		{
-			return "value";
-		}
-
 		// POST api/<QuestionsController>
 		// 傳送顧客提的問題(新增資料)
 		[HttpPost("/CustomerQ")]
@@ -50,15 +43,24 @@ namespace HStyleApi.Controllers
 		}
 
 		// PUT api/<QuestionsController>/5
-		[HttpPut("{id}")]
-		public void Put(int id, [FromBody] string value)
+		// 傳送滿意度好的紀錄
+		[HttpPut("SatisfYes/{CommonQId}")]
+		public void PutSatisfactionYes(int CommonQId)
 		{
+			_service.PutSatisfactionYes(CommonQId);
 		}
 
-		// DELETE api/<QuestionsController>/5
-		[HttpDelete("{id}")]
-		public void Delete(int id)
+		// 傳送滿意度差的紀錄
+		[HttpPut("SatisfNo/{CommonQId}")]
+		public void PutSatisfactionNo(int CommonQId)
 		{
+			_service.PutSatisfactionNo(CommonQId);
 		}
+
+		//// DELETE api/<QuestionsController>/5
+		//[HttpDelete("{id}")]
+		//public void Delete(int id)
+		//{
+		//}
 	}
 }

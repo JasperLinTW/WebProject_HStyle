@@ -43,5 +43,23 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 			_db.CustomerQuestions.Add(question);
 			_db.SaveChanges();
 		}
+
+		public void PutSatisfactionYes(int CommonQId)
+		{
+			CommonQuestion question = _db.CommonQuestions.SingleOrDefault(q => q.CommonQuestionId == CommonQId);
+			if (question == null) throw new Exception("找不到紀錄");
+
+			question.SatisfactionYes += 1;
+			_db.SaveChanges();
+		}
+
+		public void PutSatisfactionNo(int CommonQId)
+		{
+			CommonQuestion question = _db.CommonQuestions.SingleOrDefault(q => q.CommonQuestionId == CommonQId);
+			if (question == null) throw new Exception("找不到紀錄");
+
+			question.SatisfactionNo += 1;
+			_db.SaveChanges();
+		}
 	}
 }

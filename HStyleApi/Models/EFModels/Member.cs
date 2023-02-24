@@ -17,7 +17,6 @@ namespace HStyleApi.Models.EFModels
             HSourceDetails = new HashSet<HSourceDetail>();
             Orders = new HashSet<Order>();
             Comments = new HashSet<EssaysComment>();
-            Essays = new HashSet<Essay>();
         }
 
         public int Id { get; set; }
@@ -46,6 +45,5 @@ namespace HStyleApi.Models.EFModels
         public virtual ICollection<Order> Orders { get; set; }
 
         public virtual ICollection<EssaysComment> Comments { get; set; }
-        public virtual ICollection<Essay> Essays { get; set; }
     }
 }
