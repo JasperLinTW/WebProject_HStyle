@@ -17,7 +17,7 @@ namespace HStyleApi.Models.EFModels
         public int MemberId { get; set; }
         public int? EmployeeId { get; set; }
         public int Total { get; set; }
-        public int Payment { get; set; }
+        public string Payment { get; set; }
         public DateTime? ShippedDate { get; set; }
         public string ShipVia { get; set; }
         public int Freight { get; set; }
@@ -29,6 +29,7 @@ namespace HStyleApi.Models.EFModels
         public DateTime CreatedTime { get; set; }
         public int StatusId { get; set; }
         public int? StatusDescriptionId { get; set; }
+        public int? Discount { get; set; }
 
         public virtual Employee Employee { get; set; }
         public virtual Member Member { get; set; }

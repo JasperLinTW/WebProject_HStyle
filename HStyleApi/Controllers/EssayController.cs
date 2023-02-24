@@ -19,27 +19,31 @@ namespace HStyleApi.Controllers
 		}
 		// GET: api/<EssayController>
 		[HttpGet]
-		public async Task<IEnumerable<EssayDTO>> GetEssays()
+		//FromQuery  =傳value篩選 代 service rpst
+		public async Task<IEnumerable<EssayDTO>> GetEssays([FromQuery]  string keyword)
 		{
-			return await _service.GetEssays();
+			return await _service.GetEssays(keyword);
 		}
 
 		// GET api/<EssayController>/5
 		[HttpGet("{id}")]
-		public async Task<IEnumerable<EssayDTO>> GetEssays(int id)
+		public async Task<IEnumerable<EssayDTO>> GetEssay(int id)
 		{
-			var Essay = await _service.GetEssays(id);
-			if(Essay == null)
-			{
-				return NotFound();
-			}
-			return Essay;
+			
+			return await _service.GetEssays(id);
 		}
 
-		// POST api/<EssayController>
-		[HttpPost]
-		public void Post([FromBody] string value)
+		// GET api/<EssayController>/EssayLike/5
+		[HttpGet("/Elike/{id}")]
+		public async Task<IEnumerable<EssayLikeDTO>> GetlikeEssays(int memberId)
 		{
+			return await _service.GetlikeEssays(memberId);
+		}
+		// POST api/<EssayController>
+		[HttpPost("Elike")]
+		public void PostELike(int memberId, int essayId)
+		{
+			_service.PostELike(memberId, essayId);
 		}
 
 		// PUT api/<EssayController>/5

@@ -15,10 +15,10 @@ namespace HStyleApi.Models.Services
 		{
 		_essayReposity= new EssayReposity(db);
 		}
-		public async Task <IEnumerable<EssayDTO>> GetEssays()
+		public async Task <IEnumerable<EssayDTO>> GetEssays(string? keyword)
 		{
-			var data=_essayReposity.GetEssays();
-			return await data;
+			var data= await _essayReposity.GetEssays(keyword);
+			return  data;
 		}
 		public async Task<IEnumerable<EssayDTO>>GetEssays(int id)
 		{
@@ -26,5 +26,16 @@ namespace HStyleApi.Models.Services
 			return await data;	
 		}
 
+		public async Task<IEnumerable<EssayLikeDTO>> GetlikeEssays(int MemberId)
+		{
+			var data = _essayReposity.GetlikeEssays(MemberId);
+			return await data;
+		}
+		public void PostELike(int memberId, int essayId)
+		{
+			if (memberId == 0 || essayId == 0) throw new Exception();
+			else _essayReposity.PostELike(memberId, essayId);
+
+		}
 	}
 }
