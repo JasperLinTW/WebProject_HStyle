@@ -30,6 +30,7 @@ namespace HStyleApi.Models.EFModels
         public int StatusId { get; set; }
         public int? StatusDescriptionId { get; set; }
         public int? Discount { get; set; }
+        public string PayInfo { get; set; }
 
         public virtual Employee Employee { get; set; }
         public virtual Member Member { get; set; }

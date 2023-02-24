@@ -20,11 +20,15 @@ namespace HStyleApi.Models.DTOs
 
 		public DateTime? OffShelffTime { get; set; }
 
+		public bool? IsOnShelff { get; set; }
+
 		public DateTime CreatedTime { get; set; }
 
 		public string? Image { get; set; }
 
 		public IEnumerable<string> Tags { get; set; }
+
+		public string TagName { get; set; }
 
 		public virtual ICollection<VideoLike> VideoLikes { get; set; }
 
@@ -56,10 +60,12 @@ namespace HStyleApi.Models.DTOs
 				CreatedTime = source.CreatedTime,
 				Tags = source.Tags.Select(x => x.TagName),
 				VideoLikes = source.VideoLikes,
-				CategoryName = source.Category.CategoryName,
+				//CategoryName = source.Category.CategoryName,
 				Likes = source.VideoLikes.GroupBy(x => x.VideoId).Count(),
 				Views = source.VideoView.Views,
-				MemberId = source.VideoLikes.Select(x => x.MemberId)
+				MemberId = source.VideoLikes.Select(x => x.MemberId),
+				IsOnShelff= source.IsOnShelff,
+				//TagName=source.Tags.Select(x => x.TagName),
 			};
 		}
 	}

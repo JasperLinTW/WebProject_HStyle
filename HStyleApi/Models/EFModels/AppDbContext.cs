@@ -23,6 +23,8 @@ namespace HStyleApi.Models.EFModels
         public virtual DbSet<CommonQuestion> CommonQuestions { get; set; }
         public virtual DbSet<CustomerQuestion> CustomerQuestions { get; set; }
         public virtual DbSet<EassyFollow> EassyFollows { get; set; }
+        public virtual DbSet<Ecommentlike> Ecommentlikes { get; set; }
+        public virtual DbSet<Elike> Elikes { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<Essay> Essays { get; set; }
         public virtual DbSet<EssaysComment> EssaysComments { get; set; }
@@ -47,8 +49,10 @@ namespace HStyleApi.Models.EFModels
         public virtual DbSet<QuestionCategory> QuestionCategories { get; set; }
         public virtual DbSet<Spec> Specs { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
+        public virtual DbSet<VcommentLike> VcommentLikes { get; set; }
         public virtual DbSet<Video> Videos { get; set; }
         public virtual DbSet<VideoCategory> VideoCategories { get; set; }
+        public virtual DbSet<VideoComment> VideoComments { get; set; }
         public virtual DbSet<VideoLike> VideoLikes { get; set; }
         public virtual DbSet<VideoView> VideoViews { get; set; }
 
@@ -121,9 +125,9 @@ namespace HStyleApi.Models.EFModels
 
                 entity.Property(e => e.Question).IsRequired();
 
-                entity.Property(e => e.SatiafactionClick).HasColumnName("Satiafaction_Click");
+                entity.Property(e => e.SatisfactionNo).HasColumnName("Satisfaction_No");
 
-                entity.Property(e => e.SatiafactionYes).HasColumnName("Satiafaction_Yes");
+                entity.Property(e => e.SatisfactionYes).HasColumnName("Satisfaction_Yes");
 
                 entity.HasOne(d => d.Qcategory)
                     .WithMany(p => p.CommonQuestions)
@@ -197,6 +201,40 @@ namespace HStyleApi.Models.EFModels
                     .HasForeignKey<EassyFollow>(d => d.MemberId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Eassy_Follows_Members");
+            });
+
+            modelBuilder.Entity<Ecommentlike>(entity =>
+            {
+                entity.HasKey(e => new { e.EssayId, e.CommentId });
+
+                entity.ToTable("ECommentlikes");
+
+                entity.Property(e => e.EssayId).HasColumnName("Essay_Id");
+
+                entity.Property(e => e.CommentId).HasColumnName("Comment_Id");
+
+                entity.HasOne(d => d.Comment)
+                    .WithMany(p => p.Ecommentlikes)
+                    .HasForeignKey(d => d.CommentId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ECommentlikes_ECommentlikes");
+            });
+
+            modelBuilder.Entity<Elike>(entity =>
+            {
+                entity.HasKey(e => new { e.MemberId, e.EssayId });
+
+                entity.Property(e => e.MemberId)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("Member_Id");
+
+                entity.Property(e => e.EssayId).HasColumnName("Essay_Id");
+
+                entity.HasOne(d => d.Essay)
+                    .WithMany(p => p.Elikes)
+                    .HasForeignKey(d => d.EssayId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Elikes_Essays");
             });
 
             modelBuilder.Entity<Employee>(entity =>
@@ -507,23 +545,6 @@ namespace HStyleApi.Models.EFModels
 
                             j.IndexerProperty<int>("CommentId").HasColumnName("Comment_Id");
                         });
-
-                entity.HasMany(d => d.Essays)
-                    .WithMany(p => p.Members)
-                    .UsingEntity<Dictionary<string, object>>(
-                        "Elike",
-                        l => l.HasOne<Essay>().WithMany().HasForeignKey("EssayId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_Elikes_Essays"),
-                        r => r.HasOne<Member>().WithMany().HasForeignKey("MemberId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_Elikes_Members"),
-                        j =>
-                        {
-                            j.HasKey("MemberId", "EssayId");
-
-                            j.ToTable("Elikes");
-
-                            j.IndexerProperty<int>("MemberId").ValueGeneratedOnAdd().HasColumnName("Member_Id");
-
-                            j.IndexerProperty<int>("EssayId").HasColumnName("Essay_Id");
-                        });
             });
 
             modelBuilder.Entity<News>(entity =>
@@ -560,6 +581,8 @@ namespace HStyleApi.Models.EFModels
                 entity.Property(e => e.EmployeeId).HasColumnName("Employee_id");
 
                 entity.Property(e => e.MemberId).HasColumnName("Member_id");
+
+                entity.Property(e => e.PayInfo).HasMaxLength(50);
 
                 entity.Property(e => e.Payment)
                     .IsRequired()
@@ -889,6 +912,19 @@ namespace HStyleApi.Models.EFModels
                         });
             });
 
+              modelBuilder.Entity<VcommentLike>(entity =>
+            {
+                entity.HasKey(e => new { e.MemberId, e.CommentId });
+
+                entity.ToTable("VCommentLike");
+
+                entity.HasOne(d => d.Comment)
+                    .WithMany(p => p.VcommentLikes)
+                    .HasForeignKey(d => d.CommentId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_VCommentLike_VCommentLike");
+            });
+
             modelBuilder.Entity<Video>(entity =>
             {
                 entity.Property(e => e.CreatedTime)
@@ -940,6 +976,27 @@ namespace HStyleApi.Models.EFModels
                 entity.Property(e => e.CategoryName)
                     .IsRequired()
                     .HasMaxLength(20);
+            });
+
+            modelBuilder.Entity<VideoComment>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Comment).IsRequired();
+
+                entity.Property(e => e.CreatedTime).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Member)
+                    .WithMany(p => p.VideoComments)
+                    .HasForeignKey(d => d.MemberId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_VideoComments_Members");
+
+                entity.HasOne(d => d.Video)
+                    .WithMany(p => p.VideoComments)
+                    .HasForeignKey(d => d.VideoId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_VideoComments_Videos");
             });
 
             modelBuilder.Entity<VideoLike>(entity =>

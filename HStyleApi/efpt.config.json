@@ -35,6 +35,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[ECommentlikes]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[EComments_Likes]",
          "ObjectType": 0
       },
@@ -163,7 +167,15 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[VCommentLike]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[VideoCategories]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[VideoComments]",
          "ObjectType": 0
       },
       {

@@ -28,6 +28,12 @@ namespace HStyleApi.Models.Services
 			return await data;
 		}
 
+		public async Task<IEnumerable<VideoDTO>> GetNews()
+		{
+			var data = _videoRepository.GetNews();
+			return await data;
+		}
+
 		public async Task<IEnumerable<VideoLikeDTO>> GetLikeVideos(int memberId)
 		{
 			var data = await _videoRepository.GetLikeVideos(memberId);
@@ -43,6 +49,16 @@ namespace HStyleApi.Models.Services
 		public void PostView(int videoId)
 		{
 			_videoRepository.PostView(videoId);
+		}
+
+		public async Task<IEnumerable<VideoCommentDTO>> GetComments(int videoId)
+		{
+			return await _videoRepository.GetComments(videoId);
+		}
+
+		public void CreateComment(string comment, int memberId, int videoId)
+		{
+			_videoRepository.CreateComment(comment, memberId, videoId);
 		}
 	}
 }

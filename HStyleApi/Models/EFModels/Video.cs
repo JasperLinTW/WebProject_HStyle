@@ -9,6 +9,7 @@ namespace HStyleApi.Models.EFModels
     {
         public Video()
         {
+            VideoComments = new HashSet<VideoComment>();
             VideoLikes = new HashSet<VideoLike>();
             Tags = new HashSet<Tag>();
         }
@@ -27,6 +28,7 @@ namespace HStyleApi.Models.EFModels
         public virtual VideoCategory Category { get; set; }
         public virtual Image Image { get; set; }
         public virtual VideoView VideoView { get; set; }
+        public virtual ICollection<VideoComment> VideoComments { get; set; }
         public virtual ICollection<VideoLike> VideoLikes { get; set; }
 
         public virtual ICollection<Tag> Tags { get; set; }

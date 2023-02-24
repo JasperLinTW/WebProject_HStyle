@@ -64,12 +64,13 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			}
 			_db.SaveChanges();
 
-			var videoToView = _db.Videos.SingleOrDefault(v => v.Title == dto.Title && v.ImageId == dto.ImageId);
+			var videoOther = _db.Videos.SingleOrDefault(v => v.Title == dto.Title && v.ImageId == dto.ImageId);
 			VideoView videoView = new VideoView()
 			{
-				VideoId = videoToView.Id,
+				VideoId = videoOther.Id,
 				Views = 0,
 			};
+
 			_db.VideoViews.Add(videoView);
 			_db.SaveChanges();
 		}

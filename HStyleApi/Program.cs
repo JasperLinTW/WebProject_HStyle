@@ -10,11 +10,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var HstoreconnectString = builder.Configuration.GetConnectionString("HstyleStore");
-builder.Services.AddDbContext<AppDbContext> (option => option.UseLazyLoadingProxies().UseSqlServer(HstoreconnectString));
-
 //var HstoreconnectString = builder.Configuration.GetConnectionString("HstyleStore");
-//builder.Services.AddDbContext<AppDbContext>(option => option.UseSqlServer(HstoreconnectString));
+//builder.Services.AddDbContext<AppDbContext> (option => option.UseLazyLoadingProxies().UseSqlServer(HstoreconnectString));
+
+var HstoreconnectString = builder.Configuration.GetConnectionString("HstyleStore");
+builder.Services.AddDbContext<AppDbContext>(option => option.UseSqlServer(HstoreconnectString));
 
 
 string MyAllowOrigins = "AllowAny";

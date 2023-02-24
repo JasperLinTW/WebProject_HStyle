@@ -2,6 +2,7 @@
 using HStyleApi.Models.EFModels;
 using HStyleApi.Models.InfraStructures.Repositories;
 using HStyleApi.Models.Services;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,17 +33,18 @@ namespace HStyleApi.Controllers
 		[HttpGet("{id}")]
 		public async Task<IEnumerable<VideoDTO>> GetVideo(int id)
 		{
-			return await _service.GetVideo(id); ;
+			return await _service.GetVideo(id);
 		}
 
-		//熱門影片
-		//public async Task<IEnumerable<VideoDTO>> GetNews()
-		//{
-		//	//return await _service.GetNews();
-		//}
+		// GET api/<VideoController>/5 
+		[HttpGet("News")]
+		public async Task<IEnumerable<VideoDTO>> GetNews()
+		{
+			return await _service.GetNews();
+		}
 
-		// GET api/<VideoController>/MyLike/5  
-		[HttpGet("/MyLike/{id}")]
+		//GET api/<VideoController>/MyLike/5  
+		[HttpGet("MyLike/{id}")]
 		public async Task<IEnumerable<VideoLikeDTO>> GetLikeVideos(int memberId)
 		{
 			return await _service.GetLikeVideos(memberId);
@@ -56,10 +58,26 @@ namespace HStyleApi.Controllers
 		}
 
 		// POST api/<VideoController>/View/5
-		[HttpPost("/View/{id}")]
+		[HttpPost("View/{id}")]
 		public void PostView(int videoId)
 		{
 			_service.PostView(videoId);
+		}
+
+		//GET api/<VideoController>/5 
+		//GET 所有評論
+		[HttpGet("Comments")]
+		public async Task<IEnumerable<VideoCommentDTO>> GetComments( int videoId)
+		{
+			return await _service.GetComments(videoId);
+		}
+
+		//POST api/<VideoController>/Comment/5
+		//POST 評論
+		[HttpPost("Comment")]
+		public void CreateComment([FromBody] string comment, int memberId, int videoId)
+		{
+			_service.CreateComment(comment,memberId,videoId);
 		}
 	}
 }
