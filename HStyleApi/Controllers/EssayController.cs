@@ -18,11 +18,12 @@ namespace HStyleApi.Controllers
 			_service= new EssayService(db);
 		}
 		// GET: api/<EssayController>
-		[HttpGet]
+		[HttpGet()]
 		//FromQuery  =傳value篩選 代 service rpst
 		public async Task<IEnumerable<EssayDTO>> GetEssays([FromQuery]  string keyword)
 		{
-			return await _service.GetEssays(keyword);
+			IEnumerable<EssayDTO> data = await _service.GetEssays(keyword);
+			return data;
 		}
 
 		// GET api/<EssayController>/5
@@ -32,6 +33,10 @@ namespace HStyleApi.Controllers
 			
 			return await _service.GetEssays(id);
 		}
+
+		//[HttpGet("News")]
+
+		
 
 		// GET api/<EssayController>/EssayLike/5
 		[HttpGet("/Elike/{id}")]
@@ -46,8 +51,13 @@ namespace HStyleApi.Controllers
 			_service.PostELike(memberId, essayId);
 		}
 
-		// PUT api/<EssayController>/5
-		[HttpPut("{id}")]
+        //GET api/<VideoController>/5 
+        //GET 所有評論
+        [HttpGet("Comments")]
+        public async Task<IEnumerable<EssayLikeDTO>> GetComments(int memberId)
+
+        // PUT api/<EssayController>/5
+        [HttpPut("{id}")]
 		public void Put(int id, [FromBody] string value)
 		{
 		}
