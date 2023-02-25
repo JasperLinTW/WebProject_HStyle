@@ -29,6 +29,7 @@ namespace HStyleApi.Models.InfraStructures.Repositories
         public CartListDTO GetCart(int memberId)
         {
             var cartItems =_db.Carts
+                .Where(c => c.MemberId == memberId)
                 .Include(c => c.Spec)
                 .ThenInclude(s => s.Product)
                 .ThenInclude(p => p.Imgs)
@@ -48,13 +49,32 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 
             var cartList = new CartListDTO()
             {
+                MemberId= memberId,
                 CartItems = cartItems,
 
             };
             return cartList; 
         }
 
-        public bool IsExit(int memberId, int specId)
+        public int CheckStock(int specId)
+        {
+            var stock = (from product in _db.Products
+                       join spec in _db.Specs
+                       on product.ProductId equals spec.ProductId
+                       where spec.Id == specId
+                       select spec.Stock).FirstOrDefault();
+            return stock;
+        }
+		public bool CheckStocks(int memberId)
+		{
+            var shortItems = _db.Carts.Include(x => x.Spec).Where(x => x.MemberId == memberId && x.Quantity > x.Spec.Stock);
+            bool isShort = shortItems.Count() > 0;
+            _db.Carts.RemoveRange(shortItems);
+            _db.SaveChanges();
+            
+			return !isShort;
+		}
+		public bool IsExit(int memberId, int specId)
         {
 			var cartItems = _db.Carts.Where(x => x.MemberId == memberId && x.SpecId == specId);
             return cartItems.Any();
@@ -62,12 +82,14 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 		public bool IsOne(int memberId, int specId)
 		{
 			var cartItems = _db.Carts.Where(x => x.MemberId == memberId && x.SpecId == specId).SingleOrDefault();
+
+            if (cartItems == null) throw new Exception("購物車中沒有此商品");
 			return cartItems.Quantity==1;
 		}
 		public void UpdateItem(int memberId, int specId, int qty)
         {
             var cart = _db.Carts.Where(x => x.MemberId == memberId && x.SpecId == specId).SingleOrDefault();
-            cart.Quantity += qty; 
+            cart.Quantity = qty; 
 
             _db.SaveChanges();
         }

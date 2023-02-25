@@ -26,11 +26,10 @@ namespace HStyleApi.Controllers
         [HttpPost("Checkout")]
         public IActionResult Checkout(CheckoutDTO value)
         {
-			OrderDTO checkoutList = _CartService.GetCheckout(_memberId, value);
             int orderId = 0;
-
 			try
             {
+				OrderDTO checkoutList = _CartService.GetCheckout(_memberId, value);
 				orderId = _CartService.CreateOrder(checkoutList);
 			}
             catch(Exception ex)
@@ -65,7 +64,7 @@ namespace HStyleApi.Controllers
             }
             try
             {
-                _CartService.AddItem(_memberId, specId, 1);
+                _CartService.AddItem(_memberId, specId);
 
             }catch(Exception ex)
             {
@@ -84,7 +83,7 @@ namespace HStyleApi.Controllers
 			}
 			try
 			{
-				_CartService.MinusItem(_memberId, specId, 1);
+				_CartService.MinusItem(_memberId, specId);
 
 			}
 			catch (Exception ex)

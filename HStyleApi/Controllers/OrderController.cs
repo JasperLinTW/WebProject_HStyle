@@ -34,27 +34,14 @@ namespace HStyleApi.Controllers
 			return orders;
 		}
 		[HttpGet("test")]
-		public dynamic GetTags()
+		public int CheckStock(int specId)
 		{
-			Dictionary<int, int> tagsCount = new Dictionary<int, int>();
-			var data = _db.Products.Include(x => x.Tags).Select(x => x.Tags.Select(x => x.Id));
-			foreach (var item in data)
-			{
-				foreach (var id in item)
-				{
-					if (tagsCount.ContainsKey(id))
-					{
-						tagsCount[id]++;
-					}
-					else
-					{
-						tagsCount.Add(id, 1);
-					}
-				}
-				
-			}
-			
-			return data;
+			var stock = (from product in _db.Products
+						 join spec in _db.Specs
+						 on product.ProductId equals spec.ProductId
+						 where spec.Id == specId
+						 select spec.Stock).FirstOrDefault();
+			return stock;
 		}
 
 		// GET api/<OrderController>/5

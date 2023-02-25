@@ -2,6 +2,7 @@
 {
 	public class CartListDTO
 	{
+		public int MemberId { get; set; }
 		public IEnumerable<CartDTO> CartItems { get;set; }
 		private int _total = 0;
 		
