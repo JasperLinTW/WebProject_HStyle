@@ -4,6 +4,7 @@ using HStyleApi.Models.EFModels;
 using HStyleApi.Models.InfraStructures.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Query.Internal;
+using Newtonsoft.Json;
 
 namespace HStyleApi.Models.Services
 {
@@ -59,6 +60,11 @@ namespace HStyleApi.Models.Services
 		public void CreateComment(string comment, int memberId, int videoId)
 		{
 			_videoRepository.CreateComment(comment, memberId, videoId);
+		}
+
+		public void PostCommentLike(int memberId, int commentId)
+		{
+			_videoRepository.PostCommentLike(memberId, commentId);
 		}
 	}
 }

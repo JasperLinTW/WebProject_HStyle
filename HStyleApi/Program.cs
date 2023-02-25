@@ -1,20 +1,26 @@
-using HStyleApi.Models.EFModels;
+﻿using HStyleApi.Models.EFModels;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+//在ConfigureServices方法中添加这个NewtonsoftJson方法引用
+builder.Services.AddControllers().AddNewtonsoftJson(option =>
+//忽略循环引用
+option.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//var HstoreconnectString = builder.Configuration.GetConnectionString("HstyleStore");
-//builder.Services.AddDbContext<AppDbContext> (option => option.UseLazyLoadingProxies().UseSqlServer(HstoreconnectString));
-
 var HstoreconnectString = builder.Configuration.GetConnectionString("HstyleStore");
-builder.Services.AddDbContext<AppDbContext>(option => option.UseSqlServer(HstoreconnectString));
+builder.Services.AddDbContext<AppDbContext>(option => option.UseLazyLoadingProxies().UseSqlServer(HstoreconnectString));
+
+//var HstoreconnectString = builder.Configuration.GetConnectionString("HstyleStore");
+//builder.Services.AddDbContext<AppDbContext>(option => option.UseSqlServer(HstoreconnectString));
 
 
 string MyAllowOrigins = "AllowAny";

@@ -5,6 +5,7 @@ using HStyleApi.Models.Services;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -44,7 +45,7 @@ namespace HStyleApi.Controllers
 		}
 
 		//GET api/<VideoController>/MyLike/5  
-		[HttpGet("MyLike/{id}")]
+		[HttpGet("MyLike/{memberId}")]
 		public async Task<IEnumerable<VideoLikeDTO>> GetLikeVideos(int memberId)
 		{
 			return await _service.GetLikeVideos(memberId);
@@ -58,7 +59,7 @@ namespace HStyleApi.Controllers
 		}
 
 		// POST api/<VideoController>/View/5
-		[HttpPost("View/{id}")]
+		[HttpPost("View/{videoId}")]
 		public void PostView(int videoId)
 		{
 			_service.PostView(videoId);
@@ -78,6 +79,13 @@ namespace HStyleApi.Controllers
 		public void CreateComment([FromBody] string comment, int memberId, int videoId)
 		{
 			_service.CreateComment(comment,memberId,videoId);
+		}
+
+		//POST api/<VideoController>/CommentLike
+		[HttpPost("CommentLike")]
+		public void PostCommentLike(int memberId,int CommentId)
+		{
+			_service.PostCommentLike(memberId,CommentId);
 		}
 	}
 }

@@ -38,7 +38,7 @@ namespace HStyleApi.Models.DTOs
 
 		public int Likes { get; set; }
 
-		public int? Views{ get; set; }
+		public int Views{ get; set; }
 
 		public IEnumerable<int> MemberId { get; set; }
 	}
@@ -60,12 +60,11 @@ namespace HStyleApi.Models.DTOs
 				CreatedTime = source.CreatedTime,
 				Tags = source.Tags.Select(x => x.TagName),
 				VideoLikes = source.VideoLikes,
-				//CategoryName = source.Category.CategoryName,
+				CategoryName = source.Category.CategoryName,
 				Likes = source.VideoLikes.GroupBy(x => x.VideoId).Count(),
 				Views = source.VideoView.Views,
 				MemberId = source.VideoLikes.Select(x => x.MemberId),
-				IsOnShelff= source.IsOnShelff,
-				//TagName=source.Tags.Select(x => x.TagName),
+				IsOnShelff= source.IsOnShelff
 			};
 		}
 	}

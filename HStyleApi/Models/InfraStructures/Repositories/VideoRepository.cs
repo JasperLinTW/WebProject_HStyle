@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Newtonsoft.Json;
 
 namespace HStyleApi.Models.InfraStructures.Repositories
 {
@@ -26,12 +27,13 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 			IEnumerable<Video> data = await _db.Videos.Include(v => v.Image)
 															.Include(v => v.Tags)
 															.Include(v => v.VideoLikes)
+															.Include(v=>v.Category)
 															.Include(v => v.VideoView).Where(v=>v.IsOnShelff==true)
 															.ToListAsync();
 
 			if (data == null)
 			{
-					throw new Exception();
+				throw new Exception();
 			}
 
 			if (keyword == null)
@@ -50,7 +52,8 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 		public async Task<IEnumerable<VideoDTO>> GetVideo(int id)
 		{
 			IEnumerable<VideoDTO> video = await _db.Videos.Where(v => v.Id == id)
-												.Include(v => v.Image) 
+												.Include(v => v.Image)
+												.Include(v => v.Category)
 												.Include(v => v.Tags)
 												.Include(v => v.VideoLikes)
 												.Include(v => v.VideoView).Where(v => v.IsOnShelff == true).Select(v=>v.ToVideoDTO())
@@ -68,7 +71,7 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 		public async Task <IEnumerable<VideoDTO>> GetNews()
 		{
 			//TODO 把雅婷資料加進來
-			IEnumerable<Video> data = await _db.Videos.Include(v => v.Image)
+			IEnumerable<Video> data = await _db.Videos.Include(v=>v.VideoView). Include(v => v.Category).Include(v => v.Image)
 				 										.Include(v => v.Tags)
 														.ThenInclude(v => v.Essays)
 														.ToListAsync();
@@ -83,16 +86,20 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 		//使用者收藏的影片
 		public async Task <IEnumerable<VideoLikeDTO>> GetLikeVideos(int memberId)
 		{
-			IEnumerable<VideoLikeDTO> likeVideos = await _db.VideoLikes.Include(v => v.Video)
+			IEnumerable<VideoLike> data =await _db.VideoLikes.Include(v => v.Video)
 																.ThenInclude(v => v.Image)
+																.Include(v=>v.Video)
+																.ThenInclude(v=>v.Category)
 																.Include(v=>v.Video)
 																.ThenInclude(v=>v.Tags)
 																.Include(v=>v.Video)
 																.ThenInclude(v=>v.VideoView)
-																.Where(v=>v.MemberId==memberId).Select(v=>v.ToLikeDTO())
-																.Where(v=>v.IsOnShelff==true)
+																.Where(v=>v.MemberId==memberId)
 																.ToListAsync();
-			
+
+			IEnumerable<VideoLikeDTO> likeVideos = data.Select(v => v.ToLikeDTO());
+																//.Where(v=>v.IsOnShelff==true)
+
 			return likeVideos;
 		}
 
@@ -135,7 +142,7 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 		//Get評論
 		public async Task<IEnumerable<VideoCommentDTO>> GetComments(int videoId)
 		{
-			IEnumerable < VideoCommentDTO > data= await _db.VideoComments
+			IEnumerable < VideoCommentDTO > data= await _db.VideoComments	
 														.Where(v => v.VideoId == videoId)
 														.Select(v => v.ToCommentDTO()).ToListAsync();
 			return data;
@@ -151,9 +158,28 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 				VideoId=videoId,
 				MemberId=memberId,
 				CreatedTime=DateTime.Now,
+				Comment=comment,
 				Like=0
 			};
 			_db.Add(videoComment);
+			_db.SaveChanges();
+		}
+
+		public void PostCommentLike(int memberId, int commentId)
+		{
+			var data = _db.VideoComments.SingleOrDefault(v => v.Id == commentId);
+
+			if (data != null)
+			{
+				VcommentLike commentlike = new VcommentLike()
+				{
+					MemberId = memberId,
+					CommentId = commentId
+				};
+				_db.Add(commentlike);
+				data.Like++;
+			}
+
 			_db.SaveChanges();
 		}
 	}

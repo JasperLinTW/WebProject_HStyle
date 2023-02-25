@@ -9,7 +9,7 @@ namespace HStyleApi.Models.EFModels
     {
         public int NewsId { get; set; }
         public string Ntitle { get; set; }
-        public DateTime Ntme { get; set; }
+        public DateTime Ntime { get; set; }
         public string Ncontent { get; set; }
         public int NproductId { get; set; }
         public int PhotoId { get; set; }
