@@ -22,7 +22,7 @@ namespace HStyleApi.Models.EFModels
         public int ImageId { get; set; }
         public DateTime? OnShelffTime { get; set; }
         public DateTime? OffShelffTime { get; set; }
-        public bool? IsOnShelff { get; set; }
+        public bool IsOnShelff { get; set; }
         public DateTime CreatedTime { get; set; }
 
         public virtual VideoCategory Category { get; set; }

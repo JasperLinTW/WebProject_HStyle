@@ -300,16 +300,16 @@ namespace HStyleApi.Models.EFModels
 
                 entity.Property(e => e.CommentId).HasColumnName("Comment_Id");
 
-                entity.Property(e => e.Ccomment)
+                entity.Property(e => e.Ecomment)
                     .IsRequired()
                     .HasMaxLength(50)
-                    .HasColumnName("CComment");
-
-                entity.Property(e => e.Ctime)
-                    .HasColumnType("datetime")
-                    .HasColumnName("CTime");
+                    .HasColumnName("EComment");
 
                 entity.Property(e => e.EssayId).HasColumnName("Essay_Id");
+
+                entity.Property(e => e.Etime)
+                    .HasColumnType("datetime")
+                    .HasColumnName("ETime");
 
                 entity.Property(e => e.MemberId).HasColumnName("Member_Id");
 
@@ -558,14 +558,14 @@ namespace HStyleApi.Models.EFModels
 
                 entity.Property(e => e.NproductId).HasColumnName("NProduct_Id");
 
+                entity.Property(e => e.Ntime)
+                    .HasColumnType("datetime")
+                    .HasColumnName("NTime");
+
                 entity.Property(e => e.Ntitle)
                     .IsRequired()
                     .HasMaxLength(1000)
                     .HasColumnName("NTitle");
-
-                entity.Property(e => e.Ntme)
-                    .HasColumnType("datetime")
-                    .HasColumnName("NTme");
 
                 entity.Property(e => e.PhotoId).HasColumnName("Photo_Id");
 

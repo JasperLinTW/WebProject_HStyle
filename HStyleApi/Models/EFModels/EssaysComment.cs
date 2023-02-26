@@ -16,8 +16,9 @@ namespace HStyleApi.Models.EFModels
         public int CommentId { get; set; }
         public int MemberId { get; set; }
         public int EssayId { get; set; }
-        public string Ccomment { get; set; }
-        public DateTime Ctime { get; set; }
+        public string Ecomment { get; set; }
+        public DateTime Etime { get; set; }
+        public int Elike { get; set; }
 
         public virtual Essay Essay { get; set; }
         public virtual Member Member { get; set; }
