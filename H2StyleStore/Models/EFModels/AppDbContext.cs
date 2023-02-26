@@ -14,6 +14,8 @@ namespace H2StyleStore.Models.EFModels
 
 		public virtual DbSet<Address> Addresses { get; set; }
 		public virtual DbSet<Cart> Carts { get; set; }
+		public virtual DbSet<CommonQuestion> CommonQuestions { get; set; }
+		public virtual DbSet<CustomerQuestion> CustomerQuestions { get; set; }
 		public virtual DbSet<Eassy_Follows> Eassy_Follows { get; set; }
 		public virtual DbSet<Employee> Employees { get; set; }
 		public virtual DbSet<Essay> Essays { get; set; }
@@ -31,11 +33,11 @@ namespace H2StyleStore.Models.EFModels
 		public virtual DbSet<Order> Orders { get; set; }
 		public virtual DbSet<PCategory> PCategories { get; set; }
 		public virtual DbSet<PComments_Helpful> PComments_Helpful { get; set; }
-		public virtual DbSet<PComments_Imgs> PComments_Imgs { get; set; }
 		public virtual DbSet<PermissionsE> PermissionsEs { get; set; }
 		public virtual DbSet<PermissionsM> PermissionsMs { get; set; }
 		public virtual DbSet<Product_Comments> Product_Comments { get; set; }
 		public virtual DbSet<Product> Products { get; set; }
+		public virtual DbSet<Question_Categories> Question_Categories { get; set; }
 		public virtual DbSet<Spec> Specs { get; set; }
 		public virtual DbSet<Tag> Tags { get; set; }
 		public virtual DbSet<VideoCategory> VideoCategories { get; set; }
@@ -48,6 +50,10 @@ namespace H2StyleStore.Models.EFModels
 			modelBuilder.Entity<Address>()
 				.Property(e => e.destination_THE)
 				.IsUnicode(false);
+
+			modelBuilder.Entity<CustomerQuestion>()
+				.HasOptional(e => e.CustomerQuestions1)
+				.WithRequired(e => e.CustomerQuestion1);
 
 			modelBuilder.Entity<Employee>()
 				.Property(e => e.Account)
@@ -121,6 +127,11 @@ namespace H2StyleStore.Models.EFModels
 				.WithMany(e => e.Images)
 				.Map(m => m.ToTable("Imgs_Products").MapLeftKey("Img_Id").MapRightKey("Product_Id"));
 
+			modelBuilder.Entity<Image>()
+				.HasMany(e => e.Product_Comments)
+				.WithMany(e => e.Images)
+				.Map(m => m.ToTable("PComments_Imgs").MapLeftKey("PComment_img_id").MapRightKey("Comment_id"));
+
 			modelBuilder.Entity<Member>()
 				.Property(e => e.Account)
 				.IsUnicode(false);
@@ -173,6 +184,11 @@ namespace H2StyleStore.Models.EFModels
 				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<Member>()
+				.HasMany(e => e.VideoLikes)
+				.WithRequired(e => e.Member)
+				.WillCascadeOnDelete(false);
+
+			modelBuilder.Entity<Member>()
 				.HasMany(e => e.Products)
 				.WithMany(e => e.Members)
 				.Map(m => m.ToTable("Product_Likes").MapLeftKey("Member_id").MapRightKey("Product_id"));
@@ -208,11 +224,6 @@ namespace H2StyleStore.Models.EFModels
 				.WithOptional(e => e.PermissionsE)
 				.HasForeignKey(e => e.Permission_id);
 
-			modelBuilder.Entity<Product_Comments>()
-				.HasMany(e => e.PComments_Imgs)
-				.WithRequired(e => e.Product_Comments)
-				.WillCascadeOnDelete(false);
-
 			modelBuilder.Entity<Product>()
 				.HasMany(e => e.Specs)
 				.WithRequired(e => e.Product)
@@ -222,6 +233,11 @@ namespace H2StyleStore.Models.EFModels
 				.HasMany(e => e.Tags)
 				.WithMany(e => e.Products)
 				.Map(m => m.ToTable("Tags_Products").MapLeftKey("Product_Id"));
+
+			modelBuilder.Entity<Question_Categories>()
+				.HasMany(e => e.CommonQuestions)
+				.WithRequired(e => e.Question_Categories)
+				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<Spec>()
 				.HasMany(e => e.Carts)
@@ -255,5 +271,9 @@ namespace H2StyleStore.Models.EFModels
 				.WithRequired(e => e.Video)
 				.WillCascadeOnDelete(false);
 		}
-	}
+
+        public System.Data.Entity.DbSet<H2StyleStore.Models.ViewModels.CreateCommonQVM> CreateCommonQVMs { get; set; }
+
+        public System.Data.Entity.DbSet<H2StyleStore.Models.ViewModels.CommonQuestionVM> CommonQuestionVMs { get; set; }
+    }
 }

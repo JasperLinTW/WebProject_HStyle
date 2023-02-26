@@ -1,4 +1,5 @@
-﻿using HStyleApi.Models.EFModels;
+﻿using HStyleApi.Controllers;
+using HStyleApi.Models.EFModels;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
@@ -23,6 +24,8 @@ builder.Services.AddDbContext<AppDbContext>(option => option.UseLazyLoadingProxi
 //builder.Services.AddDbContext<AppDbContext>(option => option.UseSqlServer(HstoreconnectString));
 
 
+builder.Services.AddSingleton<WebSocketController>();
+
 string MyAllowOrigins = "AllowAny";
 builder.Services.AddCors(options => {
 	options.AddPolicy(
@@ -46,6 +49,11 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseWebSockets(new WebSocketOptions
+{
+	KeepAliveInterval = TimeSpan.FromSeconds(60),
+});
 
 app.MapControllers();
 

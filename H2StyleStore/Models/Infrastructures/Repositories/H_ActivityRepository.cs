@@ -104,7 +104,6 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 				CheckIn_Times = checkInTimes,
 				Last_Time = DateTime.Now,
 			};
-
 			_db.SaveChanges();
 		}
 

@@ -65,7 +65,7 @@ namespace H2StyleStore.Models.DTOs
 					MemberName = entity.Member.Name,
 					Employee_id = entity.Employee_id,
 					Total = entity.Total,
-					Payment = entity.Payment,
+					//Payment = entity.Payment,
 					ShippedDate = entity.ShippedDate,
 					ShipVia = entity.ShipVia,
 					Freight = entity.Freight,

@@ -14,6 +14,7 @@ namespace H2StyleStore.Models.EFModels
             Videos = new HashSet<Video>();
             Essays = new HashSet<Essay>();
             Products = new HashSet<Product>();
+            Product_Comments = new HashSet<Product_Comments>();
         }
 
         [Key]
@@ -31,5 +32,8 @@ namespace H2StyleStore.Models.EFModels
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Products { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Product_Comments> Product_Comments { get; set; }
     }
 }

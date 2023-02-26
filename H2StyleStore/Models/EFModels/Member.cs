@@ -17,6 +17,7 @@ namespace H2StyleStore.Models.EFModels
             H_CheckIns = new HashSet<H_CheckIns>();
             H_Source_Details = new HashSet<H_Source_Details>();
             Orders = new HashSet<Order>();
+            VideoLikes = new HashSet<VideoLike>();
             Essays_Comments1 = new HashSet<Essays_Comments>();
             Essays = new HashSet<Essay>();
             Products = new HashSet<Product>();
@@ -84,6 +85,9 @@ namespace H2StyleStore.Models.EFModels
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Orders { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VideoLike> VideoLikes { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Essays_Comments> Essays_Comments1 { get; set; }
