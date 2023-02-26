@@ -1,4 +1,6 @@
-﻿namespace HStyleApi.Models.DTOs
+﻿using HStyleApi.Models.EFModels;
+
+namespace HStyleApi.Models.DTOs
 {
 	public class OrderDetailsDTO
 	{
@@ -13,4 +15,21 @@
 		public int SubTotal { get; set; }
 	}
 
+	public static class OrderDetailsExt
+	{
+		public static OrderDetailsDTO ToDto(this OrderDetail source)
+		{
+			return new OrderDetailsDTO
+			{
+				OrderId = source.OrderId,
+				ProductId = source.ProductId,	
+				ProductName = source.ProductName,
+				UnitPrice = source.UnitPrice,
+				Quantity = source.Quantity,
+				Color = source.Color,
+				Size = source.Size,
+				SubTotal = source.SubTotal,
+			};
+		}
+	}
 }

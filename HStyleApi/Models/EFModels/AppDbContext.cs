@@ -1006,6 +1006,12 @@ namespace HStyleApi.Models.EFModels
 
                 entity.HasIndex(e => e.MemberId, "IX_VideoLikes");
 
+                entity.HasOne(d => d.Member)
+                    .WithMany(p => p.VideoLikes)
+                    .HasForeignKey(d => d.MemberId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_VideoLikes_Members");
+
                 entity.HasOne(d => d.Video)
                     .WithMany(p => p.VideoLikes)
                     .HasForeignKey(d => d.VideoId)
