@@ -206,6 +206,7 @@
     <Compile Include="Models\EFModels\H_Source_Details.cs" />
     <Compile Include="Models\EFModels\Image.cs" />
     <Compile Include="Models\EFModels\Member.cs" />
+    <Compile Include="Models\EFModels\model.cs" />
     <Compile Include="Models\EFModels\News.cs" />
     <Compile Include="Models\EFModels\Order.cs" />
     <Compile Include="Models\EFModels\Order_Details.cs" />
@@ -221,8 +222,10 @@
     <Compile Include="Models\EFModels\Product_Comments.cs" />
     <Compile Include="Models\EFModels\Spec.cs" />
     <Compile Include="Models\EFModels\Tag.cs" />
+    <Compile Include="Models\EFModels\VCommentLike.cs" />
     <Compile Include="Models\EFModels\Video.cs" />
     <Compile Include="Models\EFModels\VideoCategory.cs" />
+    <Compile Include="Models\EFModels\VideoComment.cs" />
     <Compile Include="Models\EFModels\VideoLike.cs" />
     <Compile Include="Models\EFModels\VideoView.cs" />
     <Compile Include="Models\Infrastructures\Repositories\EssayRepository.cs" />

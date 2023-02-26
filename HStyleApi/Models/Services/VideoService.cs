@@ -4,6 +4,7 @@ using HStyleApi.Models.EFModels;
 using HStyleApi.Models.InfraStructures.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Query.Internal;
+using Newtonsoft.Json;
 
 namespace HStyleApi.Models.Services
 {
@@ -16,10 +17,10 @@ namespace HStyleApi.Models.Services
 			_videoRepository = new VideoRepository(db);
 		}
 
-		public async Task <IEnumerable<VideoDTO>> GetVideos()
+		public async Task<IEnumerable<VideoDTO>> GetVideos(string? keyword)
 		{
-			var data=_videoRepository.GetVideos();
-			return await data;
+			var data = await _videoRepository.GetVideos(keyword);
+			return data;
 		}
 
 		public async Task<IEnumerable<VideoDTO>> GetVideo(int id)
@@ -28,15 +29,42 @@ namespace HStyleApi.Models.Services
 			return await data;
 		}
 
-		public void PostLike(VideoLikeDTO value)
+		public async Task<IEnumerable<VideoDTO>> GetNews()
 		{
-			if (value == null)
-			{
-				throw new Exception();
-			}else
-			{
-				_videoRepository.PostLike(value);
-			}
+			var data = _videoRepository.GetNews();
+			return await data;
+		}
+
+		public async Task<IEnumerable<VideoLikeDTO>> GetLikeVideos(int memberId)
+		{
+			var data = await _videoRepository.GetLikeVideos(memberId);
+			return  data;
+		}
+
+		public void PostLike(int memberId, int videoId)
+		{
+			if (memberId == 0 || videoId == 0) throw new Exception();
+			else _videoRepository.PostLike(memberId, videoId);
+		}
+
+		public void PostView(int videoId)
+		{
+			_videoRepository.PostView(videoId);
+		}
+
+		public async Task<IEnumerable<VideoCommentDTO>> GetComments(int videoId)
+		{
+			return await _videoRepository.GetComments(videoId);
+		}
+
+		public void CreateComment(string comment, int memberId, int videoId)
+		{
+			_videoRepository.CreateComment(comment, memberId, videoId);
+		}
+
+		public void PostCommentLike(int memberId, int commentId)
+		{
+			_videoRepository.PostCommentLike(memberId, commentId);
 		}
 	}
 }

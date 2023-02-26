@@ -2,6 +2,13 @@
 using HStyleApi.Models.EFModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using Newtonsoft.Json;
 
 namespace HStyleApi.Models.InfraStructures.Repositories
 {
@@ -14,55 +21,165 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 			_db = db;
 		}
 
-		public async Task<IEnumerable<VideoDTO>> GetVideos()
+		//影片列表：取出所有影片、篩選
+		public async Task<IEnumerable<VideoDTO>> GetVideos(string? keyword)
 		{
-			var data = await _db.Videos.Select(v => v.ToVideoDTO()).ToListAsync();
-
-			//var data= await _db.Videos.Select(v => new VideoDTO
-			//{
-			//	Id = v.Id,
-			//	Title = v.Title,
-			//	CategoryId = v.CategoryId,
-			//	ImageId= v.ImageId,
-			//	CreatedTime = v.CreatedTime,
-			//	Description = v.Description,
-			//	FilePath = v.FilePath,
-			//	OnShelffTime = v.OnShelffTime,
-			//	OffShelffTime = v.OffShelffTime,
-			//	Tags=v.Tags.Select(t=>t.TagName)
-			//}). ToListAsync();
-			return data;
-		}
-
-		public async Task<IEnumerable<VideoDTO>> GetVideo(int id)
-		{
-			IEnumerable<VideoDTO> data = await _db.Videos.Where(x => x.Id == id).Select(v => v.ToVideoDTO()).ToListAsync();
-
-			//var video= await _db.Videos.Where(v=>v.Id==id).Select(v => new VideoDTO
-			//{
-			//	Id = v.Id,
-			//	Title = v.Title,
-			//	CategoryId = v.CategoryId,
-			//	ImageId = v.ImageId,
-			//	//CreatedTime = v.CreatedTime,
-			//	Description = v.Description,
-			//	FilePath = v.FilePath,
-			//	//OnShelffTime = v.OnShelffTime,
-			//	//OffShelffTime = v.OffShelffTime,
-			//	Tags = v.Tags.Select(t => t.TagName)
-			//}).ToListAsync();
+			IEnumerable<Video> data = await _db.Videos.Include(v => v.Image)
+															.Include(v => v.Tags)
+															.Include(v => v.VideoLikes)
+															.Include(v=>v.Category)
+															.Include(v => v.VideoView).Where(v=>v.IsOnShelff==true)
+															.ToListAsync();
 
 			if (data == null)
 			{
 				throw new Exception();
 			}
+
+			if (keyword == null)
+			{
+				IEnumerable<VideoDTO> videos = data.Select(v => v.ToVideoDTO());
+				return videos;
+			}
+			else
+			{
+				IEnumerable<VideoDTO> selectVideos = data.Where(v => v.Title.Contains(keyword)||v.Tags.Select(t=>t.TagName).Contains(keyword)).Select(x => x.ToVideoDTO());
+				return selectVideos;
+			}			
+		 }
+
+		//單一影片資訊
+		public async Task<IEnumerable<VideoDTO>> GetVideo(int id)
+		{
+			IEnumerable<VideoDTO> video = await _db.Videos.Where(v => v.Id == id)
+												.Include(v => v.Image)
+												.Include(v => v.Category)
+												.Include(v => v.Tags)
+												.Include(v => v.VideoLikes)
+												.Include(v => v.VideoView).Where(v => v.IsOnShelff == true).Select(v=>v.ToVideoDTO())
+												.ToListAsync();
+
+			if (video == null)
+			{
+				throw new Exception();
+			}
+
+			return video;
+		}
+
+		//最新影片
+		public async Task <IEnumerable<VideoDTO>> GetNews()
+		{
+			//TODO 把雅婷資料加進來
+			IEnumerable<Video> data = await _db.Videos.Include(v=>v.VideoView). Include(v => v.Category).Include(v => v.Image)
+				 										.Include(v => v.Tags)
+														.ThenInclude(v => v.Essays)
+														.ToListAsync();
+
+			IEnumerable<VideoDTO> news = data.Where(v => v.IsOnShelff == true).OrderByDescending(v => v.Tags.GroupBy(v => v.TagName).Count())
+														.OrderByDescending(v => v.OnShelffTime)
+														.Take(6).Select(v => v.ToVideoDTO()).ToList();
+
+			return news;
+		}
+
+		//使用者收藏的影片
+		public async Task <IEnumerable<VideoLikeDTO>> GetLikeVideos(int memberId)
+		{
+			IEnumerable<VideoLike> data =await _db.VideoLikes.Include(v => v.Video)
+																.ThenInclude(v => v.Image)
+																.Include(v=>v.Video)
+																.ThenInclude(v=>v.Category)
+																.Include(v=>v.Video)
+																.ThenInclude(v=>v.Tags)
+																.Include(v=>v.Video)
+																.ThenInclude(v=>v.VideoView)
+																.Where(v=>v.MemberId==memberId)
+																.ToListAsync();
+
+			IEnumerable<VideoLikeDTO> likeVideos = data.Select(v => v.ToLikeDTO());
+																//.Where(v=>v.IsOnShelff==true)
+
+			return likeVideos;
+		}
+
+		//收藏影片
+		public void PostLike(int memberId, int videoId)
+		{
+			var data = _db.VideoLikes.Where(v=>v.MemberId==memberId).FirstOrDefault(v => v.VideoId == videoId);
+			if (data == null)
+			{
+				VideoLike like = new VideoLike
+				{
+					MemberId = memberId,
+					VideoId = videoId,
+				};
+				_db.VideoLikes.Add(like);
+			}
+			else _db.VideoLikes.Remove(data);	
+			_db.SaveChanges();
+		}
+
+		//瀏覽次數
+		public void PostView(int videoId) 
+		{
+			var data = _db.VideoViews.Find(videoId);
+			if (data == null)
+			{
+				VideoView view = new VideoView()
+				{
+					VideoId= videoId,
+					Views= 1
+				};
+				_db.VideoViews.Add(view);
+			}else
+			{
+				data.Views++;
+			}
+			_db.SaveChanges();
+		}
+
+		//Get評論
+		public async Task<IEnumerable<VideoCommentDTO>> GetComments(int videoId)
+		{
+			IEnumerable < VideoCommentDTO > data= await _db.VideoComments	
+														.Where(v => v.VideoId == videoId)
+														.Select(v => v.ToCommentDTO()).ToListAsync();
 			return data;
 		}
 
-		public void PostLike(VideoLikeDTO value)
+		//Post評論
+		public void CreateComment(string comment, int memberId, int videoId)
 		{
-			VideoLike like = value.ToVideoLike();
-			_db.VideoLikes.Add(like);
+			if (comment == null||memberId==0||videoId==0) throw new Exception();
+
+			VideoComment videoComment = new VideoComment()
+			{
+				VideoId=videoId,
+				MemberId=memberId,
+				CreatedTime=DateTime.Now,
+				Comment=comment,
+				Like=0
+			};
+			_db.Add(videoComment);
+			_db.SaveChanges();
+		}
+
+		public void PostCommentLike(int memberId, int commentId)
+		{
+			var data = _db.VideoComments.SingleOrDefault(v => v.Id == commentId);
+
+			if (data != null)
+			{
+				VcommentLike commentlike = new VcommentLike()
+				{
+					MemberId = memberId,
+					CommentId = commentId
+				};
+				_db.Add(commentlike);
+				data.Like++;
+			}
+
 			_db.SaveChanges();
 		}
 	}

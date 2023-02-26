@@ -43,7 +43,7 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 				ImageId = imageid.Image_Id,
 				OnShelffTime = dto.OnShelffTime,
 				OffShelffTime = dto.OffShelffTime,
-				IsOnShelff=dto.IsOnShelff,
+				IsOnShelff = dto.IsOnShelff,
 				CreatedTime = DateTime.Now
 			};
 			_db.Videos.Add(video);
@@ -62,7 +62,16 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 					video.Tags.Add(newTag);
 				}
 			}
+			_db.SaveChanges();
 
+			var videoOther = _db.Videos.SingleOrDefault(v => v.Title == dto.Title && v.ImageId == dto.ImageId);
+			VideoView videoView = new VideoView()
+			{
+				VideoId = videoOther.Id,
+				Views = 0,
+			};
+
+			_db.VideoViews.Add(videoView);
 			_db.SaveChanges();
 		}
 
@@ -76,7 +85,7 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 		}
 
 		public IEnumerable<SelectListItem> GetVideoCategories(int? categoryId)
-		{ 
+		{
 			var data = _db.VideoCategories.Select(x => new SelectListItem
 			{ Value = x.Id.ToString(), Text = x.CategoryName, Selected = (categoryId.HasValue && x.Id == categoryId) })
 			.ToList().Prepend(new SelectListItem { Value = string.Empty, Text = "請選擇" });
@@ -98,7 +107,7 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 		public void Update(UpdateVideoDto dto)
 		{
 			string path = dto.Image;
-			Image image = new Image { Path =path };
+			Image image = new Image { Path = path };
 			_db.Images.Add(image);
 			_db.SaveChanges();
 

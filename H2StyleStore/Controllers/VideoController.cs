@@ -147,11 +147,11 @@ namespace H2StyleStore.Controllers
 			{
 				string videoSave = helper.SaveAs(videoPath, videoFile);
 				string videoFileName = videoSave;
-				model.FilePath=$"../../Videos/{videoFileName}";
+				model.FilePath=videoFileName;
 
 				string imageSave = helper.SaveAs(imagePath, imageFile);
 				string imageFileName = imageSave;
-				model.Image = $"../../Images/VideoImages/{imageFileName}";
+				model.Image = imageFileName;
 
 				try
 				{
@@ -227,7 +227,7 @@ namespace H2StyleStore.Controllers
 				{
 					string videoSave = helper.SaveAs(videoPath, videoFile);
 					string videoFileName = videoSave;
-					model.FilePath = $"../../Videos/{videoFileName}";
+					model.FilePath = videoFileName;
 				}
 				catch (Exception ex)
 				{
@@ -245,7 +245,7 @@ namespace H2StyleStore.Controllers
 				{
 					string imageSave = helper.SaveAs(imagePath, imageFile);
 					string imageFileName = imageSave;
-					model.Image = $"../../Images/VideoImages/{imageFileName}";
+					model.Image = imageFileName;
 				}
 				catch (Exception ex)
 				{
