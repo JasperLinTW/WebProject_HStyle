@@ -12,20 +12,23 @@ namespace HStyleApi.Models.DTOs
 		public DateTime UpLoad { get; set; }
 		public DateTime Removed { get; set; }
 		public int CategoryId { get; set; }
+
+		public string CategoryName { get; set; }
 		public IEnumerable<string> Imgs { get; set; }
 		public IEnumerable<string> Tags { get; set; }
+        public virtual ICollection<Elike> Like { get; set; }
 
-		//public virtual VideoCategory Category { get; set; }
-		//public virtual Employee Influencer { get; set; }
-		//public virtual ICollection<EassyFollow> EassyFollows { get; set; }
-		//public virtual ICollection<EssaysComment> EssaysComments { get; set; }
+        //public virtual VideoCategory Category { get; set; }
+        //public virtual Employee Influencer { get; set; }
+        //public virtual ICollection<EassyFollow> EassyFollows { get; set; }
+        //public virtual ICollection<EssaysComment> EssaysComments { get; set; }
 
-		//public virtual ICollection<Image> Imgs { get; set; }
-		//public virtual ICollection<Member> Members { get; set; }
-		//public virtual ICollection<Tag> Tags { get; set; }
+        //public virtual ICollection<Image> Imgs { get; set; }
+        //public virtual ICollection<Member> Members { get; set; }
+        //public virtual ICollection<Tag> Tags { get; set; }
 
 
-	}
+    }
 	public static class EssayExts
 		{
 			public static EssayDTO ToEssayDTO(this Essay source)
@@ -42,7 +45,9 @@ namespace HStyleApi.Models.DTOs
 					CategoryId= source.CategoryId,
 					Imgs= source.Imgs.Select(x=>x.Path),
 					Tags=source.Tags.Select(x=>x.TagName),
-				};
+                    Like =source.Elikes.GroupBy(x => x.EssayId).Count(),
+					CategoryName=source.Category.CategoryName,
+                };
 			}
 		}
 }

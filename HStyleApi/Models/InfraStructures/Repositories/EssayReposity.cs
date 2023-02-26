@@ -14,11 +14,13 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 			_db = db;
 		}
 
+		//文章列表
 		public async Task<IEnumerable<EssayDTO>> GetEssays(string keyword)
 		{
 			IEnumerable<Essay> data = await _db.Essays.Include(e => e.Imgs)
 				.Include(e => e.Tags)
 				.Include(e => e.Elikes)
+				.Include(e => e.Category)
 				.ToListAsync();
 			if(data == null)
 			{
@@ -26,7 +28,8 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 			}
 			if(keyword== null)
 			{
-				return data.Select(x => x.ToEssayDTO());
+				IEnumerable<EssayDTO>essays=data.Select(e => e.ToEssayDTO());
+				return essays;
 			}
 			else
 			{
@@ -34,18 +37,20 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 			    return selectEssays;
 			}
 		}
+		//當一文章
 		public async Task<IEnumerable<EssayDTO>> GetEssay(int id)
 		{
-			IEnumerable<Essay> data = await _db.Essays.Where(x => x.EssayId ==id)
+			IEnumerable<EssayDTO> essays = await _db.Essays.Where(e => e.EssayId == id)
 				.Include(e => e.Imgs)
+				.Include(e => e.CategoryId)
 				.Include(e => e.Tags)
 				.Include(e => e.Elikes)
 				.ToListAsync();
-			if (data == null)
+			if (essays == null)
 			{
 				throw new Exception();
 			}
-			IEnumerable<EssayDTO> essays = data.Select(x => x .ToEssayDTO());
+			
 			return essays;
 		}
 		public async Task<IEnumerable<EssayLikeDTO>> GetlikeEssays(int memberId)
