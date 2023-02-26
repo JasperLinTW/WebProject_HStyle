@@ -18,7 +18,7 @@ namespace HStyleApi.Controllers
 			_service= new EssayService(db);
 		}
 		// GET: api/<EssayController>
-		[HttpGet()]
+		[HttpGet]
 		//FromQuery  =傳value篩選 代 service rpst
 		public async Task<IEnumerable<EssayDTO>> GetEssays([FromQuery]  string keyword)
 		{
@@ -53,8 +53,9 @@ namespace HStyleApi.Controllers
 
         //GET api/<VideoController>/5 
         //GET 所有評論
-        [HttpGet("Comments")]
-        public async Task<IEnumerable<EssayLikeDTO>> GetComments(int memberId)
+
+        //[HttpGet("Comments")]
+        //public async Task<IEnumerable<EssayLikeDTO>> GetComments(int memberId)
 
         // PUT api/<EssayController>/5
         [HttpPut("{id}")]

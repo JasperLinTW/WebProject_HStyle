@@ -23,7 +23,7 @@ namespace HStyleApi.Controllers
 			_service = new VideoService(db);
 		}
 		// GET: api/<VideoController>
-		[HttpGet()]
+		[HttpGet]
 		public async Task<IEnumerable<VideoDTO>> GetVideos([FromQuery] string? keyword)
 		{
 			IEnumerable<VideoDTO> data = await _service.GetVideos(keyword);

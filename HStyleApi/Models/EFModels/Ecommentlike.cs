@@ -5,20 +5,11 @@ using System.Collections.Generic;
 
 namespace HStyleApi.Models.EFModels
 {
-<<<<<<<< HEAD:HStyleApi/Models/EFModels/Ecommentlike.cs
     public partial class Ecommentlike
     {
         public int EssayId { get; set; }
         public int CommentId { get; set; }
 
         public virtual EssaysComment Comment { get; set; }
-========
-    public partial class Elike
-    {
-        public int MemberId { get; set; }
-        public int EssayId { get; set; }
-
-        public virtual Essay Essay { get; set; }
->>>>>>>> peiyu:HStyleApi/Models/EFModels/Elike.cs
     }
 }

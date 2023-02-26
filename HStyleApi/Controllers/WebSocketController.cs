@@ -16,7 +16,8 @@ namespace HStyleApi.Controllers
 			return View();
 		}
 
-		[Route("/ws")]
+		//這邊用route有錯，不符合rest
+		[HttpGet("/ws")]
 		public async Task Get()
 		{
 			if (HttpContext.WebSockets.IsWebSocketRequest)

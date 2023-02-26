@@ -21,8 +21,8 @@ namespace HStyleApi.Models.EFModels
         public DateTime UplodTime { get; set; }
         public string Etitle { get; set; }
         public string Econtent { get; set; }
-        public DateTime UpLoad { get; set; }
-        public DateTime Removed { get; set; }
+        public DateTime? UpLoad { get; set; }
+        public DateTime? Removed { get; set; }
         public int CategoryId { get; set; }
 
         public virtual VideoCategory Category { get; set; }

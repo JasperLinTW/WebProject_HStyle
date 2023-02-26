@@ -224,9 +224,7 @@ namespace HStyleApi.Models.EFModels
             {
                 entity.HasKey(e => new { e.MemberId, e.EssayId });
 
-                entity.Property(e => e.MemberId)
-                    .ValueGeneratedOnAdd()
-                    .HasColumnName("Member_Id");
+                entity.Property(e => e.MemberId).HasColumnName("Member_Id");
 
                 entity.Property(e => e.EssayId).HasColumnName("Essay_Id");
 
@@ -980,8 +978,6 @@ namespace HStyleApi.Models.EFModels
 
             modelBuilder.Entity<VideoComment>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Comment).IsRequired();
 
                 entity.Property(e => e.CreatedTime).HasColumnType("datetime");
@@ -1005,12 +1001,6 @@ namespace HStyleApi.Models.EFModels
                     .HasName("PK_VideoLikes_1");
 
                 entity.HasIndex(e => e.MemberId, "IX_VideoLikes");
-
-                entity.HasOne(d => d.Member)
-                    .WithMany(p => p.VideoLikes)
-                    .HasForeignKey(d => d.MemberId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_VideoLikes_Members");
 
                 entity.HasOne(d => d.Video)
                     .WithMany(p => p.VideoLikes)

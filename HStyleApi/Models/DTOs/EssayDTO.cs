@@ -9,14 +9,14 @@ namespace HStyleApi.Models.DTOs
 		public DateTime UplodTime { get; set; }
 		public string Etitle { get; set; }
 		public string Econtent { get; set; }
-		public DateTime UpLoad { get; set; }
-		public DateTime Removed { get; set; }
+		public DateTime? UpLoad { get; set; }
+		public DateTime? Removed { get; set; }
 		public int CategoryId { get; set; }
 
 		public string CategoryName { get; set; }
 		public IEnumerable<string> Imgs { get; set; }
 		public IEnumerable<string> Tags { get; set; }
-        public virtual ICollection<Elike> Like { get; set; }
+        public virtual int Like { get; set; }
 
         //public virtual VideoCategory Category { get; set; }
         //public virtual Employee Influencer { get; set; }

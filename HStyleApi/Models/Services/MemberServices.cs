@@ -11,17 +11,17 @@ namespace HStyleApi.Models.Services
         {
             _MemberRepositories = new MemberRepositories(db);
         }
-        public async Task<IEnumerable<MemberDTO>> GetMember()
-        {
-            var data = _MemberRepositories.GetMember();
-            return await data;
-        }
+        //public async Task<IEnumerable<MemberDTO>> GetMember()
+        //{
+        //    var data = _MemberRepositories.GetMember();
+        //    return await data;
+        //}
 
-        public async Task<IEnumerable<MemberDTO>> GetMember(int id)
-        {
-            var data = _MemberRepositories.GetMember(id);
-            return await data;
-        }
+        //public async Task<IEnumerable<MemberDTO>> GetMember(int id)
+        //{
+        //    var data = _MemberRepositories.GetMember(id);
+        //    return await data;
+        //}
 
 
 

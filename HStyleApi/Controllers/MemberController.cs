@@ -26,11 +26,11 @@ namespace HStyleApi.Controllers
 			return new string[] { "value1", "value2" };
 		}
 
-        [HttpGet]
-        public async Task<IEnumerable<MemberDTO>> GetMember() //text Get
-        {
-            return await _Service.GetMember();
-        }
+        //[HttpGet]
+        //public async Task<IEnumerable<MemberDTO>> GetMember() //text Get
+        //{
+        //    return await _Service.GetMember();
+        //}
 
         //[HttpGet("{id}")]
         //public async Task<IEnumerable<VideoDTO>> GetVideo(int id)

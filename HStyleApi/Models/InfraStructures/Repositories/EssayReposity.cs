@@ -45,6 +45,7 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 				.Include(e => e.CategoryId)
 				.Include(e => e.Tags)
 				.Include(e => e.Elikes)
+				.Select(x => x.ToEssayDTO())
 				.ToListAsync();
 			if (essays == null)
 			{
@@ -85,6 +86,11 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 			}
 			else _db.Elikes.Remove(data);
 			_db.SaveChanges();
+		}
+
+		public async Task<IEnumerable<EssayDTO>> GetNews()
+		{
+			throw new NotImplementedException();
 		}
 	}
 }
