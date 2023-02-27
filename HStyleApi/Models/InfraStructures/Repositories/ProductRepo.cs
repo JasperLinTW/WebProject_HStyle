@@ -1,6 +1,7 @@
 ﻿using HStyleApi.Models.DTOs;
 using HStyleApi.Models.EFModels;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace HStyleApi.Models.InfraStructures.Repositories
@@ -21,21 +22,19 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 										.Include(product => product.Specs)
 										.Include(product => product.Tags).Where(x => x.Discontinued == false);
 
+			IEnumerable<ProductDto> products;
 			if (keyword == null)
 			{
 				
-				var products = data.OrderBy(x => x.DisplayOrder).Select(x => x.ToDto());
-
-				return products;
+			    products = data.OrderBy(x => x.DisplayOrder).Select(x => x.ToDto());
 			}
 			else
 			{
-				var products = data.Where(x => x.ProductName.Contains(keyword))
+				products = data.Where(x => x.ProductName.Contains(keyword))
 					               .OrderBy(x => x.DisplayOrder).Select(x => x.ToDto());
-
-				return products;
 			}
-			
+
+			return products;
 		}
 
 		public ProductDto GetProduct(int product_id)
@@ -131,7 +130,8 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 				                                                  .Include(x => x.Product)
 																  .Include(x => x.Order).ThenInclude(x => x.OrderDetails);
 			
-			var comments = data.Select(x => x.ToDto());	
+			var comments = data.Select(x => x.ToDto());
+			
 
 			return comments;
 		}
