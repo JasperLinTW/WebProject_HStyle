@@ -67,9 +67,10 @@ namespace HStyleApi.Controllers
 		[HttpGet("products")]
 		public ActionResult<ProductDto> LoadProducts([FromQuery] string? keyword)
 		{
+			IEnumerable<ProductDto> data;
 			try
 			{
-				var data = _Service.LoadProducts(keyword);
+				data = _Service.LoadProducts(keyword);
 			}
 			catch (Exception ex)
 			{
@@ -77,26 +78,25 @@ namespace HStyleApi.Controllers
 				return BadRequest(ex.Message);
 			}
 
-			return Ok("取得全部商品");
+			return Ok(data);
 		}
 
 		//單一商品頁
 		[HttpGet("{product_id}")]
 		public ActionResult GetProduct(int product_id)
 		{
+			ProductDto data;
 			try
 			{
-				var data = _Service.GetProduct(product_id);
-				return Ok(data);
-
+				 data = _Service.GetProduct(product_id);
 			}
 			catch (Exception ex)
 			{
 				return BadRequest(ex.Message);
 			}
 
+			return Ok(data);
 
-			
 		}
 
 		//商品收藏
@@ -118,20 +118,36 @@ namespace HStyleApi.Controllers
 
 		//商品專屬推薦(根據此商品特徵篩選) //用在你可能會喜歡(商品頁)
 		[HttpGet("ProdRec/{product_id}")]
-		public IEnumerable<ProductDto> ProductRecommend(int product_id)
+		public ActionResult<ProductDto> ProductRecommend(int product_id)
 		{
-			var data = _Service.GetRecommendByProducts(product_id);
+			IEnumerable<ProductDto> data;
+			try
+			{
+				data = _Service.GetRecommendByProducts(product_id);
+			}
+			catch (Exception ex)
+			{
 
-			return data;
+				return BadRequest(ex.Message);
+			}		
+
+			return Ok(data);
 		}
 
 		//評論頁
 		[HttpGet("comment")]
 		public ActionResult GetComment(int orderId,  int productId)
 		{
+			PCommentGetDTO data;
+			try
+			{
+				data = _Service.GetComment(productId, orderId);
+			}
+			catch (Exception ex)
+			{
 
-		    var data = _Service.GetComment(productId, orderId);
-
+				return BadRequest(ex.Message);
+			}
 			return Ok(data);
 		}
 
@@ -181,10 +197,10 @@ namespace HStyleApi.Controllers
 		[HttpGet("comments")]
 		public ActionResult<PCommentDTO> LoadComments()
 		{
+			IEnumerable<PCommentDTO> data;
 			try
 			{
-				var data = _Service.LoadComments();
-				return Ok(data);
+				 data = _Service.LoadComments();	
 			}
 			catch (Exception ex)
 			{
@@ -192,7 +208,7 @@ namespace HStyleApi.Controllers
 				return BadRequest(ex.Message);
 			}
 
-			
+			return Ok(data);
 		}
 
 	}

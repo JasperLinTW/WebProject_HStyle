@@ -19,7 +19,8 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 										.Include(product => product.Category)
 										.Include(product => product.Imgs)
 										.Include(product => product.Specs)
-										.Include(product => product.Tags);
+										.Include(product => product.Tags).Where(x => x.Discontinued == false);
+
 			if (keyword == null)
 			{
 				
