@@ -1,16 +1,19 @@
 ﻿using HStyleApi.Models.DTOs;
 using HStyleApi.Models.EFModels;
 using HStyleApi.Models.InfraStructures.Repositories;
+using Newtonsoft.Json.Linq;
 
 namespace HStyleApi.Models.Services
 {
     public class CartService
     {
-        private readonly CartRepo _repo;
-        public CartService(CartRepo repo)
+		private HCoinRepository _hCoinRepo;
+		private readonly CartRepo _repo;
+        public CartService(AppDbContext db)
         {
-            _repo = repo;
-        }
+            _repo = new CartRepo(db);
+			_hCoinRepo = new HCoinRepository(db);
+		}
 		public CartListDTO GetCart(int memberId)
         {
             return _repo.GetCart(memberId);
@@ -20,13 +23,16 @@ namespace HStyleApi.Models.Services
         {
 			var cartlist = GetCart(memberId);
 			bool isInStock = _repo.CheckStocks(memberId);
-
+			double discountPercentage = 0.2;
+			
 			if(isInStock == false)
 			{
 				throw new Exception("您有商品庫存不足，已刪除不足品項，請重新選購");
 			}
-
+			if (value.Discount < 0) { throw new Exception("優惠幣欄位不可為負值"); }
+			
 			int freight = 100;
+			int freeShippingStd = 10000;
 			OrderDTO newOrder = new OrderDTO
 			{
 				MemberId = memberId,
@@ -39,8 +45,8 @@ namespace HStyleApi.Models.Services
 					Quantity = x.Quantity,
 					UnitPrice = x.UnitPrice,
 					SubTotal = x.Quantity * x.UnitPrice,
-					Color= x.Color,
-					Size= x.Size,
+					Color = x.Color,
+					Size = x.Size,
 				}),
 				Total = cartlist.Total,
 				Payment = value.Payment,
@@ -49,11 +55,16 @@ namespace HStyleApi.Models.Services
 				ShipPhone = value.ShipPhone,
 				ShipAddress = value.ShipAddress,
 				CreatedTime = DateTime.Now,
-				StatusId = 1,//有待付款狀態
+				Discount = value.Discount,
+				StatusId = 1,//待付款
 				StatusDescriptionId = 9,
 
 			};
-			newOrder.Freight = newOrder.Total > 10000 ? 0 : freight;//todo換成變數
+			newOrder.Freight = newOrder.Total > freeShippingStd ? 0 : freight;
+			int memberTotalHCoin = _hCoinRepo.GetTotalHByMemberId(memberId);
+			if (memberTotalHCoin < newOrder.Discount || newOrder.Discount > newOrder.Total * discountPercentage)
+			{ throw new Exception("H幣不足或不符使用規範"); }
+			newOrder.Total -= (int)newOrder.Discount;
 
 			return newOrder;
 		}
@@ -99,11 +110,12 @@ namespace HStyleApi.Models.Services
 
 		}
 
-		public int CreateOrder(OrderDTO checkoutList)
+		public int CreateOrder( OrderDTO checkoutList)
 		{
-			//todo，取有多少幣、判斷是否大於20%、扣除本次使用量
+
 			int orderId = _repo.CreateOrder(checkoutList);
-			
+			if (checkoutList.Discount > 0) _hCoinRepo.PostCostHCoinByMemberId(checkoutList.MemberId, (int)checkoutList.Discount);
+
 			return orderId;
 		}
 	}

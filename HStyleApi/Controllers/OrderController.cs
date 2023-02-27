@@ -52,22 +52,8 @@ namespace HStyleApi.Controllers
 			return order;
 		}
 
-		// POST api/<OrderController>
-		[HttpPost]
-		public void Post([FromBody] string value)
-		{
-		}
+		
 
-		// PUT api/<OrderController>/5
-		[HttpPut("{id}")]
-		public void Put(int id, [FromBody] string value)
-		{
-		}
-
-		// DELETE api/<OrderController>/5
-		[HttpDelete("{id}")]
-		public void Delete(int id)
-		{
-		}
+		
 	}
 }

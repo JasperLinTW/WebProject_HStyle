@@ -15,13 +15,11 @@ namespace HStyleApi.Controllers
     public class CartController : ControllerBase
     {
         private readonly CartService _CartService;
-        private readonly CartRepo _repo;
         private readonly int _memberId;
         public CartController(AppDbContext db)
         {
-            _repo= new CartRepo(db);
-            _CartService = new CartService(_repo);
-			_memberId = 1;//TODO從COOKIE取
+            _CartService = new CartService(db);
+			_memberId = 2;//TODO從COOKIE取
 		}
         [HttpPost("Checkout")]
         public IActionResult Checkout(CheckoutDTO value)
@@ -36,13 +34,9 @@ namespace HStyleApi.Controllers
             {
                 return BadRequest(ex.Message);
             }
-			
-            
+			//Todo:新增信用卡支付，直接導向付款api           
 			return Ok(orderId);
         }
-
-        
-
 
         // GET: api/<CartController>
         [HttpGet]
@@ -50,8 +44,6 @@ namespace HStyleApi.Controllers
         {
             return _CartService.GetCart(_memberId);
         }
-
-        
 
         // POST api/<CartController>
         [HttpPost("{specId}")]
@@ -94,11 +86,7 @@ namespace HStyleApi.Controllers
 			return Ok("刪除成功");
 		}
 
-		// PUT api/<CartController>/5
-		[HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+	
 
        
     }

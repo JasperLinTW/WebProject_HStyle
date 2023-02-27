@@ -8,6 +8,7 @@
 		public string ShipName { get; set; }
 		public string ShipAddress { get; set; }
 		public string ShipPhone { get; set; }
+		public int? Discount { get; set; }
 
 	}
 }

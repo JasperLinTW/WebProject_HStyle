@@ -29,9 +29,9 @@ namespace HStyleApi.Models.Services
 			_repo.SavePayInfo( orderId, payInfo);
 		}
 
-        public void UpdateOrder(string palpaltoken)
+        public void UpdateOrder(string paypaltoken)
         {
-            _repo.UpdateOrder(palpaltoken);
+            _repo.UpdateOrder(paypaltoken);
         }
     }
 }

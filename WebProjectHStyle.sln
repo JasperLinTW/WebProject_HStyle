@@ -14,7 +14,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScheduleWork", "HcoinForBir
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HStyleApi", "HStyleApi\HStyleApi.csproj", "{EBEB8862-4B7F-4A1B-B7C4-0F35BAFAB61C}"
 EndProject
-Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "hstylestorebuyer", "HStyleStoreBuyer\hstylestorebuyer.esproj", "{B7E48655-A76E-4186-AAF2-DF4165DDDE61}"
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "buyerpages", "BuyerPages\buyerpages.esproj", "{C0825D64-3EC3-480C-BC32-904366A7703C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,12 +34,12 @@ Global
 		{EBEB8862-4B7F-4A1B-B7C4-0F35BAFAB61C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EBEB8862-4B7F-4A1B-B7C4-0F35BAFAB61C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EBEB8862-4B7F-4A1B-B7C4-0F35BAFAB61C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B7E48655-A76E-4186-AAF2-DF4165DDDE61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B7E48655-A76E-4186-AAF2-DF4165DDDE61}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B7E48655-A76E-4186-AAF2-DF4165DDDE61}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{B7E48655-A76E-4186-AAF2-DF4165DDDE61}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B7E48655-A76E-4186-AAF2-DF4165DDDE61}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B7E48655-A76E-4186-AAF2-DF4165DDDE61}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{C0825D64-3EC3-480C-BC32-904366A7703C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0825D64-3EC3-480C-BC32-904366A7703C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0825D64-3EC3-480C-BC32-904366A7703C}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{C0825D64-3EC3-480C-BC32-904366A7703C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0825D64-3EC3-480C-BC32-904366A7703C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0825D64-3EC3-480C-BC32-904366A7703C}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

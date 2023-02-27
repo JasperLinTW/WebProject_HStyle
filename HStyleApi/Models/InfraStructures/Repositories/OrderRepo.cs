@@ -22,7 +22,7 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 		}
 		public OrderDTO GetOrder(int orderId)
 		{
-			var data = _db.Orders.Include(o => o.OrderDetails).Where(o => o.OrderId == orderId).Select(x => x.ToDTO()).SingleOrDefault();
+			var data = _db.Orders.Include(o => o.OrderDetails).Where(o => o.OrderId == orderId).Select(x => x.ToDTO()).FirstOrDefault();
 
 
 			return data;
@@ -43,6 +43,13 @@ namespace HStyleApi.Models.InfraStructures.Repositories
             var order = _db.Orders.Where(o => o.PayInfo== palpaltoken).SingleOrDefault();
 			order.StatusId = 2;
 			order.StatusDescriptionId = 10;
+			var dataLog = new OrderLog
+			{
+				OrderId = order.OrderId,
+				StatusChangedTime = DateTime.Now,
+				Status = "待處理",
+			};
+			_db.OrderLogs.Add(dataLog);
 			_db.SaveChanges();
         }
     }

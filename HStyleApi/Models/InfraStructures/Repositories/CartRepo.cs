@@ -122,25 +122,33 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 					Size = x.Size,
 				}).ToList(),
 				Total = value.Total,
+                Discount = value.Discount,
 				Payment = value.Payment,
 				ShipVia = value.ShipVia,
 				ShipName = value.ShipName,
 				ShipPhone = value.ShipPhone,
 				ShipAddress = value.ShipAddress,
 				CreatedTime = DateTime.Now,
-				StatusId = value.StatusId,//有待付款狀態
+				StatusId = value.StatusId,
 				StatusDescriptionId = value.StatusDescriptionId,
 			};
             _db.Orders.Add(order);
+			_db.SaveChanges();
+			var orderId = order.OrderId;
             var dataLog = new OrderLog
             {
-                OrderId = value.OrderId,
+                OrderId = orderId,
                 StatusChangedTime = DateTime.Now,
-                Status = "待處理",
+                Status = "待付款",
             };
             _db.OrderLogs.Add(dataLog);
             var cartItems = _db.Carts.Where(x => x.MemberId == order.MemberId);
-            _db.RemoveRange(cartItems);
+            var dbStock = _db.Specs.Where(x => cartItems.Select(c =>c.SpecId).Contains(x.Id)).ToList();
+            foreach (var cartItem in cartItems)
+            {
+                dbStock.Where(x => x.Id == cartItem.SpecId).FirstOrDefault().Stock -= cartItem.Quantity;
+            }
+            _db.Carts.RemoveRange(cartItems);
 
             _db.SaveChanges();
             return order.OrderId;

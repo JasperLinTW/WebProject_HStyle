@@ -17,6 +17,7 @@ namespace HStyleApi.Models.DTOs
 		public DateTime CreatedTime { get; set; }
 		public int StatusId { get; set; }
 		public int? StatusDescriptionId { get; set; }
+		public int? Discount { get; set; }
 	}
 
 	public static class OrderExtension
@@ -38,6 +39,7 @@ namespace HStyleApi.Models.DTOs
 				StatusId = value.StatusId,//有待付款狀態
 				StatusDescriptionId = value.StatusDescriptionId,
 				Freight= value.Freight,
+				Discount=value.Discount
 
 			};
 			return data;
