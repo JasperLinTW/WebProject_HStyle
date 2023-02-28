@@ -191,5 +191,10 @@ namespace HStyleApi.Models.Services
 			return products;
 
 		}
+
+		public IEnumerable<ProductDto> GetRecommendByWeather(string weatherdescription)
+		{
+			return null;
+		}
 	}
 }

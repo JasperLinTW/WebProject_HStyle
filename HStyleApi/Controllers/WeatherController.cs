@@ -36,10 +36,15 @@ namespace HStyleApi.Controllers
 			string responseContent;
 			//TODO locationName 可用HTML5的 Geolocation API取得 
 
-			var timeFrom = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss");
-			var timeTo = DateTime.Now.AddHours(6).ToString("yyyy-MM-ddTHH:mm:ss");
+			var timeTo= DateTime.Today.AddDays(1).ToString("yyyy-MM-ddTHH:mm:ss");
 
-			var url = $"{WeatherUrl}?Authorization={ApiKey}&locationName={locationName}&elementName=CI&timeFrom={timeFrom}&timeTo={timeTo}";
+			
+			if (locationName == null)
+			{
+				locationName = "臺北市";
+			}
+
+			var url = $"{WeatherUrl}?Authorization={ApiKey}&locationName={locationName}&elementName=CI";
 
 			// 發送HTTP請求，取得天氣資訊JSON
 			var response = await httpClient.GetAsync(url);
@@ -51,6 +56,16 @@ namespace HStyleApi.Controllers
 			return weatherdescription;
 		}
 
+
+		[HttpGet("weatherRec")]
+		public dynamic WeatherRecommend(string? locationName)
+		{
+			string weatherdescription = GetWeather(locationName).Result;
+
+			var products = _Service.GetRecommendByWeather(weatherdescription);
+
+			return products;
+		}
 
 	}
 }
