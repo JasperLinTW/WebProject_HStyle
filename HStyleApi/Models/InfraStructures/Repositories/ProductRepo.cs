@@ -1,5 +1,6 @@
 ﻿using HStyleApi.Models.DTOs;
 using HStyleApi.Models.EFModels;
+using Microsoft.CodeAnalysis.VisualBasic.Syntax;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -166,13 +167,11 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 			return productsLike;
 		}
 
-		public IEnumerable<ProductDto> GetOrderProducts(int member_id)
+		public int GetOrderMaxTag(int member_id)
 		{
 			//此會員的所有訂單的商品Id
 			var orders = _db.Orders.Where(x => x.MemberId == member_id);
 			var productsId = orders.Select(x => x.OrderDetails.Select(x => x.ProductId)).ToArray();
-
-
 
 			List<int> ordersproducts = new List<int>();
 			foreach (var order in productsId)
@@ -211,11 +210,8 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 
 			var maxValueTag = tagsCount.Aggregate((x, y) => x.Value > y.Value ? x : y).Key;
 
-			//不含買過的商品的其他商品
-			
 
-
-			return null;
+			return maxValueTag;
 
 		}
 
@@ -290,6 +286,31 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 				}
 			}
 			return products_id;
+		}
+
+		public List<int> GetProductsByOrder(int maxvaluetag , int member_id)
+		{
+			var orders = _db.Orders.Where(x => x.MemberId == member_id).ToList().TakeLast(1);
+			var productsId = orders.Select(x => x.OrderDetails.Select(x => x.ProductId));
+
+			List<int> ordersproducts = new List<int>();
+			foreach (var order in productsId)
+			{
+				foreach (var pId in order)
+				{
+					ordersproducts.Add(pId);
+				}
+			}
+			var dbPro = _db.Products.Where(x => !ordersproducts.Contains(x.ProductId)).Where(x => x.Tags.Select(x => x.Id).Contains(maxvaluetag));
+
+			var products = new List<int>();
+
+			foreach (var item in dbPro)
+			{
+				products.Add(item.ProductId);
+			}
+
+			return products;
 		}
 	}
 }

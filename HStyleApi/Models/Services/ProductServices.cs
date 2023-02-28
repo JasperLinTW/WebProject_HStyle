@@ -175,10 +175,21 @@ namespace HStyleApi.Models.Services
 
 		public IEnumerable<ProductDto> GetRecommendByOrder(int member_id)
 		{
-			//取得order中最多tag的id，並取得有此tag的products
-			var products = _repo.GetOrderProducts(member_id);
+			//取得order中最多tag的id
+			var maxvaluetag = _repo.GetOrderMaxTag(member_id);
+
+			//找出其他商品中含有此tag的id
+			var products_id = _repo.GetProductsByOrder(maxvaluetag, member_id);
+
+			List<int> recommendlist = new List<int>();
+			int targetnumber = 3;
+			IEnumerable<ProductDto> products;
+
+			recommendlist = RandomSelect(products_id, targetnumber);
+			products = _repo.GetProducts(recommendlist);
 
 			return products;
+
 		}
 	}
 }

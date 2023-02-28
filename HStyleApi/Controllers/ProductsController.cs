@@ -34,52 +34,52 @@ namespace HStyleApi.Controllers
 		[HttpGet("test")]
 		public dynamic GetTags(int product_id)
 		{
-			//var orders = _db.Orders.Where(x => x.MemberId == _member_id);
+			var orders = _db.Orders.Where(x => x.MemberId == _member_id).OrderByDescending(x => x.OrderId).ToList().Take(5);
 
-			//var productsId = orders.Select(x => x.OrderDetails.Select(x => x.ProductId)).ToArray();
-			//List<int> Ordersproducts = new List<int>();
-			//foreach (var order in productsId)
-			//{
-			//	foreach (var pId in order)
-			//	{
-			//		Ordersproducts.Add(pId);
-			//	}
-			//}
-			//var dbPro = _db.Products.Include(x => x.Tags);
+			var productsId = orders.Select(x => x.OrderDetails.Select(x => x.ProductId)).ToArray();
+			List<int> Ordersproducts = new List<int>();
+			foreach (var order in productsId)
+			{
+				foreach (var pId in order)
+				{
+					Ordersproducts.Add(pId);
+				}
+			}
+			var dbPro = _db.Products.Include(x => x.Tags);
 
 
-			//var tags = new List<int>();
-			//foreach (var product in Ordersproducts)
-			//{
-			//	var ts = dbPro.Where(x => x.ProductId == product).SingleOrDefault().Tags;
-			//	foreach (var t in ts)
-			//	{
-			//		tags.Add(t.Id);
-			//	}
-			//}
+			var tags = new List<int>();
+			foreach (var product in Ordersproducts)
+			{
+				var ts = dbPro.Where(x => x.ProductId == product).SingleOrDefault().Tags;
+				foreach (var t in ts)
+				{
+					tags.Add(t.Id);
+				}
+			}
 
-			//Dictionary<int, int> tagsCount = new Dictionary<int, int>();
+			Dictionary<int, int> tagsCount = new Dictionary<int, int>();
 
-			//foreach (var id in tags)
-			//{
-			//		if (tagsCount.ContainsKey(id))
-			//		{
-			//			tagsCount[id]++;
-			//		}
-			//		else
-			//		{
-			//			tagsCount.Add(id, 1);
-			//		}
-			//}
+			foreach (var id in tags)
+			{
+				if (tagsCount.ContainsKey(id))
+				{
+					tagsCount[id]++;
+				}
+				else
+				{
+					tagsCount.Add(id, 1);
+				}
+			}
 
-			//var maxValueKey = tagsCount.Aggregate((x, y) => x.Value > y.Value ? x : y).Key;
+			var maxValueKey = tagsCount.Aggregate((x, y) => x.Value > y.Value ? x : y).Key;
 
-			//var products = dbPro.Where(x => !Ordersproducts.Contains(x.ProductId)).Where(x => x.Tags.Select(x => x.Id).Contains(maxValueKey));
+			var products = dbPro.Where(x => !Ordersproducts.Contains(x.ProductId));
 
-			var timeFrom = DateTime.Today.ToString("yyyy-MM-ddTHH:mm:ss");
-			var timeTo = DateTime.Today.AddHours(12).ToString("yyyy-MM-ddTHH:mm:ss");
+			
 
-			return timeTo;
+
+			return products;
 
 		}
 
