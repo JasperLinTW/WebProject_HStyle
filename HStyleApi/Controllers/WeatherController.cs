@@ -36,8 +36,8 @@ namespace HStyleApi.Controllers
 			string responseContent;
 			//TODO locationName 可用HTML5的 Geolocation API取得 
 
-			var timeFrom = DateTime.Now.ToString("yyyy-MM-ddThh:mm:ss");
-			var timeTo = DateTime.Now.AddHours(6).ToString("yyyy-MM-ddThh:mm:ss");
+			var timeFrom = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss");
+			var timeTo = DateTime.Now.AddHours(6).ToString("yyyy-MM-ddTHH:mm:ss");
 
 			var url = $"{WeatherUrl}?Authorization={ApiKey}&locationName={locationName}&elementName=CI&timeFrom={timeFrom}&timeTo={timeTo}";
 
@@ -47,6 +47,7 @@ namespace HStyleApi.Controllers
 			var data = JObject.Parse(responseContent);
 
 			string weatherdescription = (string)data["records"]["location"][0]["weatherElement"][0]["time"][0]["parameter"]["parameterName"];
+
 			return weatherdescription;
 		}
 

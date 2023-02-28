@@ -169,19 +169,53 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 		public IEnumerable<ProductDto> GetOrderProducts(int member_id)
 		{
 			//此會員的所有訂單的商品Id
-			var orderproductsId = _db.Orders
-								.Include(o => o.OrderDetails)
-								.Where(x => x.MemberId == member_id)
-								.Select(x => x.OrderDetails.Select(x => x.ProductId));
+			var orders = _db.Orders.Where(x => x.MemberId == member_id);
+			var productsId = orders.Select(x => x.OrderDetails.Select(x => x.ProductId)).ToArray();
 
 
 
-			//var tags = _db.Tags.Include(x => x.Products);
+			List<int> ordersproducts = new List<int>();
+			foreach (var order in productsId)
+			{
+				foreach (var pId in order)
+				{
+					ordersproducts.Add(pId);
+				}
+			}
+			var dbPro = _db.Products.Include(x => x.Tags);
 
-			return null;
+			//取得次數最高的tag
+			var tags = new List<int>();
+			foreach (var product in ordersproducts)
+			{
+				var ts = dbPro.Where(x => x.ProductId == product).SingleOrDefault().Tags;
+				foreach (var t in ts)
+				{
+					tags.Add(t.Id);
+				}
+			}
 
+			Dictionary<int, int> tagsCount = new Dictionary<int, int>();
+
+			foreach (var id in tags)
+			{
+				if (tagsCount.ContainsKey(id))
+				{
+					tagsCount[id]++;
+				}
+				else
+				{
+					tagsCount.Add(id, 1);
+				}
+			}
+
+			var maxValueTag = tagsCount.Aggregate((x, y) => x.Value > y.Value ? x : y).Key;
+
+			//不含買過的商品的其他商品
 			
 
+
+			return null;
 
 		}
 

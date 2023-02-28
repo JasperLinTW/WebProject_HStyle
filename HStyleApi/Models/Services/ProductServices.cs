@@ -92,7 +92,6 @@ namespace HStyleApi.Models.Services
 
 			var products_id = _repo.GetProductByTags(tags, product_id);
 
-
 			//如果有這個tag的商品大於三件亂數去取隨機商品
 			int targetnumber = 3;
 			IEnumerable<ProductDto> products;
@@ -172,6 +171,14 @@ namespace HStyleApi.Models.Services
 			}
 
 			return recommendlist;
+		}
+
+		public IEnumerable<ProductDto> GetRecommendByOrder(int member_id)
+		{
+			//取得order中最多tag的id，並取得有此tag的products
+			var products = _repo.GetOrderProducts(member_id);
+
+			return products;
 		}
 	}
 }

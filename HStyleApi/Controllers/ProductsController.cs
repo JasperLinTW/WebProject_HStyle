@@ -34,22 +34,22 @@ namespace HStyleApi.Controllers
 		[HttpGet("test")]
 		public dynamic GetTags(int product_id)
 		{
-			//var orders = _db.Orders.Where(x => x.MemberId == member_id);
+			//var orders = _db.Orders.Where(x => x.MemberId == _member_id);
 
 			//var productsId = orders.Select(x => x.OrderDetails.Select(x => x.ProductId)).ToArray();
-			//List<int> products = new List<int>();
+			//List<int> Ordersproducts = new List<int>();
 			//foreach (var order in productsId)
 			//{
 			//	foreach (var pId in order)
 			//	{
-			//		products.Add(pId);
+			//		Ordersproducts.Add(pId);
 			//	}
 			//}
 			//var dbPro = _db.Products.Include(x => x.Tags);
 
 
 			//var tags = new List<int>();
-			//foreach (var product in products)
+			//foreach (var product in Ordersproducts)
 			//{
 			//	var ts = dbPro.Where(x => x.ProductId == product).SingleOrDefault().Tags;
 			//	foreach (var t in ts)
@@ -57,9 +57,29 @@ namespace HStyleApi.Controllers
 			//		tags.Add(t.Id);
 			//	}
 			//}
-			//return tags;
 
-			return null;
+			//Dictionary<int, int> tagsCount = new Dictionary<int, int>();
+
+			//foreach (var id in tags)
+			//{
+			//		if (tagsCount.ContainsKey(id))
+			//		{
+			//			tagsCount[id]++;
+			//		}
+			//		else
+			//		{
+			//			tagsCount.Add(id, 1);
+			//		}
+			//}
+
+			//var maxValueKey = tagsCount.Aggregate((x, y) => x.Value > y.Value ? x : y).Key;
+
+			//var products = dbPro.Where(x => !Ordersproducts.Contains(x.ProductId)).Where(x => x.Tags.Select(x => x.Id).Contains(maxValueKey));
+
+			var timeFrom = DateTime.Today.ToString("yyyy-MM-ddTHH:mm:ss");
+			var timeTo = DateTime.Today.AddHours(12).ToString("yyyy-MM-ddTHH:mm:ss");
+
+			return timeTo;
 
 		}
 
@@ -116,7 +136,7 @@ namespace HStyleApi.Controllers
 			return Ok(data);
 		}
 
-		//商品專屬推薦(根據此商品特徵篩選) //用在你可能會喜歡(商品頁)
+		//商品推薦(根據此商品特徵篩選) //用在你可能會喜歡(商品頁)
 		[HttpGet("ProdRec/{product_id}")]
 		public ActionResult<ProductDto> ProductRecommend(int product_id)
 		{
@@ -133,6 +153,25 @@ namespace HStyleApi.Controllers
 
 			return Ok(data);
 		}
+
+		//會員專屬推薦
+		[HttpGet("MemberRec")]
+		public ActionResult<ProductDto> OrderRecommend()
+		{
+			IEnumerable<ProductDto> data;
+			try
+			{
+				data = _Service.GetRecommendByOrder(_member_id);
+			}
+			catch (Exception ex)
+			{
+
+				return BadRequest(ex.Message);
+			}
+
+			return Ok(data);
+		}
+
 
 		//評論頁
 		[HttpGet("comment")]
