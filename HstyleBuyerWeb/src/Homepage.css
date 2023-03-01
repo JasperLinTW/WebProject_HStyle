@@ -1,32 +1,28 @@
-.box{
-    width: 500px;
-    height: 700px;
+.box {
+  width: 500px;
+  height: 700px;
 }
 
 header {
-    background-color: white;
-    color: rgb(12, 13, 12);
-    opacity: 0.9;
-    /* 內距 */
-    padding: 20px;
-    text-align: center;
-    
+  background-color: white;
+  color: rgb(12, 13, 12);
+  opacity: 0.9;
+  /* 內距 */
+  padding: 20px;
+  text-align: center;
 }
 
 header:hover {
-    background-color: black;
-    transition: 0.5s;
+  background-color: black;
+  transition: 0.5s;
 }
 
-header.sticky
-{
-    padding: 5px 100px;
-    background: #fff;
+header.sticky {
+  padding: 5px 100px;
+  background: #fff;
 }
-header .sticky ul li a
-{
-    color: #000;
-    
+header .sticky ul li a {
+  color: #000;
 }
 /* header {
     width: 100%;
@@ -36,81 +32,78 @@ header .sticky ul li a
 } */
 
 .area {
-    width: 100%;
-    height: 100vh;
-    background-size: cover;
-    background-position: center center;
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+  background-position: center center;
 }
 
 .area1 {
-    background-image: url(./image/chanel1.jpg);
-    
+  background-image: url(./assets/image/chanel1.jpg);
 }
 
 .area2 {
-    background-image: url(./image/chanel2.jpg);
+  background-image: url(./assets/image/chanel2.jpg);
 }
 
 .area3 {
-    background-image: url(./image/chanel3.jpg);
+  background-image: url(./assets/image/chanel3.jpg);
 }
 
 .area4 {
-    background-image: url(./image/chanel4.jpg);
+  background-image: url(./assets/image/chanel4.jpg);
 }
 
 .area5 {
-    background-image: url(./image/chanel5.jpg);
+  background-image: url(./assets/image/chanel5.jpg);
 }
 
 .myList .list-group-item {
-    position: relative;
-    padding: 0;
-    margin: 0;
-    width: 20px;
-    height: 20px;
-    background-color: #ffffff;
-    border-radius: 50%;
-    border: none;
-    outline: none;
-    margin-bottom: 5px;
-    opacity: 0.5;
+  position: relative;
+  padding: 0;
+  margin: 0;
+  width: 20px;
+  height: 20px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  margin-bottom: 5px;
+  opacity: 0.5;
 }
 
 .myList .active {
-    background-color: #1b9dc4;
-    opacity: 0.7;
+  background-color: #1b9dc4;
+  opacity: 0.7;
 }
 
 .myList .list-group-item:hover::after {
-    position: absolute;
-    top: -2px;
-    left: -60px;
-    background-color: rgb(141, 218, 241);
-    content: attr(option-text);
-    width: 50px;
-    text-align: center;
-    border-radius: 10px;
+  position: absolute;
+  top: -2px;
+  left: -60px;
+  background-color: rgb(141, 218, 241);
+  content: attr(option-text);
+  width: 50px;
+  text-align: center;
+  border-radius: 10px;
 }
 
 .title {
-    text-align: center;
+  text-align: center;
 }
 
 /* 文字下移 */
 
 .hero-text {
-    text-align: center;
-    color: #fff;
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
+  text-align: center;
+  color: #fff;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 
-
-
- /* #section1{
+/* #section1{
 
   }
   .container2{
@@ -131,34 +124,29 @@ section h1 p a{
     transform: translate(-50%, -50%);
 } */
 
-  .trans1 {
-    text-transform: uppercase;
+.trans1 {
+  text-transform: uppercase;
 }
 
+.section1 {
+  text-align: center;
+  color: #fff;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 
-
-
-  .section1 {
-    text-align: center;
-    color: #fff;
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  
-  /* 按鈕 */
-  .btn:not(.nav-btns button){
-    background-color: #fff;
-    color: rgb(12, 13, 12);
-    padding: 10px 28px;
-    border-radius: 25px;
-    border: 1px solid rgb(12, 13, 12);
-  }
-  .btn:not(.nav-btns button):hover{
-    background-color: #46A3FF;
-    color: #fff;
-    border-color: #46A3FF;
-
-  }
-
+/* 按鈕 */
+.btn:not(.nav-btns button) {
+  background-color: #fff;
+  color: rgb(12, 13, 12);
+  padding: 10px 28px;
+  border-radius: 25px;
+  border: 1px solid rgb(12, 13, 12);
+}
+.btn:not(.nav-btns button):hover {
+  background-color: #46a3ff;
+  color: #fff;
+  border-color: #46a3ff;
+}

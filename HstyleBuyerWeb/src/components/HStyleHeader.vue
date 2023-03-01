@@ -1,4 +1,5 @@
 <template>
+
     <header class="bg-opacity-0 targetAll sticky-top" id="myHeader">
     <h1 class="trans1">H'STYLE</h1>
     </header>
@@ -41,16 +42,16 @@
 
             <div class="nav justify-content-end">
                 <div class="mx-3">
-                    <a href="#" title="喜歡"><i class="fa-regular fa-heart text-bg-light"></i></a>
+                    <a href="#" title="喜歡" class="text-dark"><i class="fa-regular fa-heart icon-hover"></i></a>
                 </div>
                 <div class="btn-light mx-3">
-                    <a href="#" title="打卡"><i class="fa-regular fa-circle-check text-bg-light"></i></a>
+                    <a href="#" title="打卡" class="text-dark"><i class="fa-regular fa-circle-check  icon-hover"></i></a>
                 </div>
                 <div class="btn-light mx-3">
-                    <a href="#" title="會員"><i class="fa-regular fa-circle-user text-bg-light"></i></a>
+                    <a href="#" title="會員" class="text-dark"><i class="fa-regular fa-circle-user icon-hover"></i></a>
                 </div>
                 <div class="btn-light mx-3" >
-                    <a href="#" title="購物車" @click="showCart = true"><i class="fa-solid fa-cart-shopping text-bg-light"> <span class="badge">{{ cartItems }}</span></i></a>
+                    <a href="#" title="購物車" class="text-dark" @click="showCart = true"><i class="fa-solid fa-cart-shopping icon-hover"> <span class="badge">{{ cartItems }}</span></i></a>
                 </div>
             </div>
         </div>
@@ -75,9 +76,9 @@ export default{
             .on("mouseleave", function () {
               $(this).css("color", "black");
             });
-        // window.addEventListener("scroll",function(){
-        //     var header = document.querySelector("header");
-        //     header.classList.toggle("sticky", window.scrollY > 0);})
+         window.addEventListener("scroll",function(){
+         var header = document.querySelector("header");
+         header.classList.toggle("sticky", window.scrollY > 0);})
          
      
     }
@@ -86,4 +87,8 @@ export default{
 
 
 </script>
-<style></style>
+<style>
+.icon-hover:hover{
+    color: #46A3FF;
+}
+</style>
