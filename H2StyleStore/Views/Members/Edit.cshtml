@@ -99,7 +99,9 @@
     <div class="form-group">
         @*@Html.LabelFor(model => model.Birthday, htmlAttributes: new { @class = "control-label col-md-2" })*@生日
         <div class="col-md-10">
-            <input type="datetime-local" class="form-control" value="@Birthday" />
+            @*<input type="datetime-local" class="form-control" value="@Birthday" />*@
+            <input type="datetime-local" class="form-control" id="Birthday" name="Birthday" value="@Birthday" />
+            @*@Html.EditorFor(model => model.Birthday, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })*@  @*顯示用得*@
             @Html.ValidationMessageFor(model => model.Birthday, "", new { @class = "text-danger" })
         </div>
     </div>

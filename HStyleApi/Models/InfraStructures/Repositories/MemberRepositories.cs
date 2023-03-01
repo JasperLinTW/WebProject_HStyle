@@ -11,17 +11,13 @@ namespace HStyleApi.Models.InfraStructures.Repositories
         {
             _db = db;
         }
-        //public IEnumerable<MemberDTO> ListMember()  //測試Get
+
+        //        public MemberDTO GetByAccount(string Account)
         //{
-        //    IEnumerable<Member> data = _db.Members
-        //                                .Include(Members => Members.Id)
-        //                                .Include(Members => Members.Name)
-        //                                .Include(Members => Members.Account)
-        //                                .Include(Members => Members.Birthday);
+        //    var data = _db.Members
+        //        .SingleOrDefault(x => x.MemberAccount == Account)!;
 
-        //    var members = data.OrderBy(x => x.DisplayOrder).Select(x => x.ToDto());
-
-        //    return members;
+        //    return data.ToDTO();
         //}
 
 

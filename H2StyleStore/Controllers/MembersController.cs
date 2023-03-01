@@ -183,11 +183,26 @@ namespace H2StyleStore.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Email,Account,Password,Phone_Number,Address,Gender,Birthday,Permission_Id,Jointime,Mail_verify,Mail_code,Total_H")] Member member)
+        public ActionResult Edit([Bind(Include = "Id,Name,Email,Account,EncryptedPassword,Phone_Number,Address,Gender,Birthday,Permission_Id,Jointime,Mail_verify,Mail_code,Total_H")] Member member)// 密碼,生日會變成NULL
         {
             if (ModelState.IsValid)
             {
-                db.Entry(member).State = EntityState.Modified;
+                var dbMember = db.Members.Where(x => x.Id == member.Id).SingleOrDefault();
+                dbMember.Name = member.Name;
+                dbMember.Email = member.Email;
+                dbMember.Account = member.Account;
+                dbMember.Phone_Number = member.Phone_Number;
+                dbMember.Address = member.Address;
+                dbMember.Gender = member.Gender;
+                dbMember.Birthday = member.Birthday;
+                dbMember.Mail_verify = member.Mail_verify;
+                dbMember.Mail_code = member.Mail_code;
+                dbMember.Total_H = member.Total_H;
+
+
+
+
+                //db.Entry(member).State = EntityState.Modified;
                 
                 db.SaveChanges();
                 return RedirectToAction("Index");

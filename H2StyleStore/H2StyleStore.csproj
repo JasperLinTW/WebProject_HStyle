@@ -236,6 +236,7 @@
     <Compile Include="Models\EFModels\VideoLike.cs" />
     <Compile Include="Models\EFModels\VideoView.cs" />
     <Compile Include="Models\Infrastructures\Repositories\EssayRepository.cs" />
+    <Compile Include="Models\Infrastructures\HashUtility.cs" />
     <Compile Include="Models\Infrastructures\Repositories\H_ActivityRepository.cs" />
     <Compile Include="Models\Infrastructures\Repositories\H_Source_DetailRepository.cs" />
     <Compile Include="Models\Infrastructures\Repositories\QuestionRepository.cs" />
@@ -297,7 +298,6 @@
     <Compile Include="Models\InfraStructures\EmailHelper.cs" />
     <Compile Include="Models\InfraStructures\ExtensionMethods\EmployeesExts.cs" />
     <Compile Include="Models\InfraStructures\ExtensionMethods\MemberExts.cs" />
-    <Compile Include="Models\InfraStructures\HashUtility.cs" />
     <Compile Include="Models\InfraStructures\Repositories\EmployeeRepository.cs" />
     <Compile Include="Models\InfraStructures\Repositories\MemberRepository.cs" />
     <Compile Include="Models\Services\EmployeeService.cs" />
