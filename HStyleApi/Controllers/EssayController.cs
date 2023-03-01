@@ -34,12 +34,12 @@ namespace HStyleApi.Controllers
 			return await _service.GetEssays(id);
 		}
 
-		//[HttpGet("News")]
+		//[HttpGet("News")] skip
 
 
 
 		// GET api/<EssayController>/EssayLike/5
-		[HttpGet("/Elike/{id}")]
+		[HttpGet("Elike/{memberId}")]
 		public async Task<IEnumerable<EssayLikeDTO>> GetlikeEssays(int memberId)
 		{
 			return await _service.GetlikeEssays(memberId);
@@ -51,22 +51,41 @@ namespace HStyleApi.Controllers
 			_service.PostELike(memberId, essayId);
 		}
 
-		//GET api/<VideoController>/5 
+		//GET api/<EssayController>/5 
 		//GET 所有評論
+		[HttpGet("Comments")]
+		public async Task<IEnumerable<EssayCommentDTO>> GetComments(int essayId)
+		{
+			return await _service.GetComments(essayId);
+		}
 
+		//POST api/<VideoController>/Comment/5
+		//POST 評論
+		[HttpPost("Comment")]
+		public void CreateComment([FromBody] string comment, int memberId, int essayId)
+		{
+			_service.CreateComment(comment, memberId,essayId);
+		}
+
+		//POST api/<VideoController>/CommentLike
+		[HttpPost("CommentLike")]
+		public void PostCommentLike(int memberId, int essayId)
+		{
+			_service.PostCommentLike(memberId, essayId);
+		}
 		//[HttpGet("Comments")]
 		//public async Task<IEnumerable<EssayLikeDTO>> GetComments(int memberId)
 
 		// PUT api/<EssayController>/5
-		[HttpPut("{id}")]
-		public void Put(int id, [FromBody] string value)
-		{
-		}
+		//[HttpPut("{id}")]
+		//public void Put(int id, [FromBody] string value)
+		//{
+		//}
 
-		// DELETE api/<EssayController>/5
-		[HttpDelete("{id}")]
-		public void Delete(int id)
-		{
-		}
+		//// DELETE api/<EssayController>/5
+		//[HttpDelete("{id}")]
+		//public void Delete(int id)
+		//{
+		//}
 	}
 }

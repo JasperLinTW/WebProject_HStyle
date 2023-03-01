@@ -106,13 +106,13 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 		{
 			if (comment == null || memberId == 0 || essayId == 0) throw new Exception();
 
-			EssaysComment essaysComment = new EssaysComment();
+			EssaysComment essaysComment = new EssaysComment()
 			{
 				EssayId = essayId,
                 MemberId = memberId,
                 Ecomment = comment,
                 Etime = DateTime.Now,
-                Like = 0
+                Elike = 0
 
 			};
 			_db.Add(essaysComment);
@@ -129,7 +129,7 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 					CommentId = commentId
 				};
 				_db.Add(ecommentlike);
-				data.Like++;
+				data.Elike +=1;
 				//TestTest
 			}
 			_db.SaveChanges();
