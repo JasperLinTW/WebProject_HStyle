@@ -1,6 +1,8 @@
 <template>
-    
+<p>test</p>
 </template>
 
-<script></script>
+<script>
+
+</script>
 <style></style>

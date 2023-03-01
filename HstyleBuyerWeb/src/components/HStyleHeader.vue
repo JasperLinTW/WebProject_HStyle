@@ -51,15 +51,21 @@
                     <a href="#" title="會員" class="text-dark"><i class="fa-regular fa-circle-user icon-hover"></i></a>
                 </div>
                 <div class="btn-light mx-3" >
-                    <a href="#" title="購物車" class="text-dark" @click="showCart = true"><i class="fa-solid fa-cart-shopping icon-hover"> <span class="badge">{{ cartItems }}</span></i></a>
+                    <a href="#" title="購物車" class="text-dark"><i class="fa-solid fa-cart-shopping icon-hover"> </i></a>
+                    
                 </div>
             </div>
         </div>
 
     </nav>
+    <Cart />
 </template>
 <script>
+import Cart from './Cart.vue'
 export default{
+    components:{
+        Cart,
+    },
     mounted(){
         $(".target")
             .on("mouseenter", function () {
