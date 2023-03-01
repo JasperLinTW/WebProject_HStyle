@@ -48,7 +48,7 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 		{
 			CommonQuestion question = _db.CommonQuestions.SingleOrDefault(q => q.CommonQuestionId == CommonQId);
 			if (question == null) throw new Exception("找不到紀錄");
-
+				
 			question.SatisfactionYes += 1;
 			_db.SaveChanges();
 		}
