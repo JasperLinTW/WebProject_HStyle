@@ -16,38 +16,41 @@ namespace HStyleApi.Models.DTOs
 		public string CategoryName { get; set; }
 		public IEnumerable<string> Imgs { get; set; }
 		public IEnumerable<string> Tags { get; set; }
-        public virtual int Like { get; set; }
+		public int Like { get; set; }
 
-        //public virtual VideoCategory Category { get; set; }
-        //public virtual Employee Influencer { get; set; }
-        //public virtual ICollection<EassyFollow> EassyFollows { get; set; }
-        //public virtual ICollection<EssaysComment> EssaysComments { get; set; }
+		public IEnumerable<int> MemberId { get; set; }
 
-        //public virtual ICollection<Image> Imgs { get; set; }
-        //public virtual ICollection<Member> Members { get; set; }
-        //public virtual ICollection<Tag> Tags { get; set; }
+		//public virtual VideoCategory Category { get; set; }
+		//public virtual Employee Influencer { get; set; }
+		//public virtual ICollection<EassyFollow> EassyFollows { get; set; }
+		//public virtual ICollection<EssaysComment> EssaysComments { get; set; }
+
+		//public virtual ICollection<Image> Imgs { get; set; }
+		//public virtual ICollection<Member> Members { get; set; }
+		//public virtual ICollection<Tag> Tags { get; set; }
 
 
-    }
+	}
 	public static class EssayExts
+	{
+		public static EssayDTO ToEssayDTO(this Essay source)
 		{
-			public static EssayDTO ToEssayDTO(this Essay source)
+			return new EssayDTO()
 			{
-				return new EssayDTO()
-				{
-					EssayId= source.EssayId,
-					InfluencerId= source.InfluencerId,
-					UpLoad= source.UpLoad,
-					Etitle= source.Etitle,
-					Econtent= source.Econtent,
-					UplodTime= source.UplodTime,
-					Removed= source.Removed,
-					CategoryId= source.CategoryId,
-					Imgs= source.Imgs.Select(x=>x.Path),
-					Tags=source.Tags.Select(x=>x.TagName),
-                    Like =source.Elikes.GroupBy(x => x.EssayId).Count(),
-					CategoryName=source.Category.CategoryName,
-                };
-			}
+				EssayId = source.EssayId,
+				InfluencerId = source.InfluencerId,
+				UpLoad = source.UpLoad,
+				Etitle = source.Etitle,
+				Econtent = source.Econtent,
+				UplodTime = source.UplodTime,
+				Removed = source.Removed,
+				CategoryId = source.CategoryId,
+				Imgs = source.Imgs.Select(x => x.Path),
+				Tags = source.Tags.Select(x => x.TagName),
+				Like = source.Elikes.GroupBy(x => x.EssayId).Count(),
+				CategoryName = source.Category.CategoryName,
+				MemberId = source.Elikes.Select(x => x.MemberId)
+			};
 		}
+	}
 }

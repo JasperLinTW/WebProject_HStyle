@@ -15,12 +15,12 @@ namespace HStyleApi.Controllers
 
 		public EssayController(AppDbContext db)
 		{
-			_service= new EssayService(db);
+			_service = new EssayService(db);
 		}
 		// GET: api/<EssayController>
 		[HttpGet]
 		//FromQuery  =傳value篩選 代 service rpst
-		public async Task<IEnumerable<EssayDTO>> GetEssays([FromQuery]  string keyword)
+		public async Task<IEnumerable<EssayDTO>> GetEssays([FromQuery] string keyword)
 		{
 			IEnumerable<EssayDTO> data = await _service.GetEssays(keyword);
 			return data;
@@ -30,13 +30,13 @@ namespace HStyleApi.Controllers
 		[HttpGet("{id}")]
 		public async Task<IEnumerable<EssayDTO>> GetEssay(int id)
 		{
-			
+
 			return await _service.GetEssays(id);
 		}
 
 		//[HttpGet("News")]
 
-		
+
 
 		// GET api/<EssayController>/EssayLike/5
 		[HttpGet("/Elike/{id}")]
@@ -51,14 +51,14 @@ namespace HStyleApi.Controllers
 			_service.PostELike(memberId, essayId);
 		}
 
-        //GET api/<VideoController>/5 
-        //GET 所有評論
+		//GET api/<VideoController>/5 
+		//GET 所有評論
 
-        //[HttpGet("Comments")]
-        //public async Task<IEnumerable<EssayLikeDTO>> GetComments(int memberId)
+		//[HttpGet("Comments")]
+		//public async Task<IEnumerable<EssayLikeDTO>> GetComments(int memberId)
 
-        // PUT api/<EssayController>/5
-        [HttpPut("{id}")]
+		// PUT api/<EssayController>/5
+		[HttpPut("{id}")]
 		public void Put(int id, [FromBody] string value)
 		{
 		}
