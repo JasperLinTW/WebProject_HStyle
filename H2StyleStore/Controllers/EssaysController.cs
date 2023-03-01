@@ -105,7 +105,7 @@ namespace H2StyleStore.Controllers
 		//}
 
 		/// <summary>
-		/// create essay
+		/// create essay test
 		/// </summary>
 		/// <returns></returns>
 		public ActionResult NewEssay()

@@ -27,7 +27,7 @@
                         <!-- <a class="nav-link targetAll" href="#">服飾名品</a> -->
                     </li>
                     <li class="nav-item dropdown">
-                        <router-link to="/" class="nav-link targetAll">香水</router-link>
+                        <router-link to="/EssaysBlog" class="nav-link targetAll">文章部落格</router-link>
                         <!-- <a class="nav-link targetAll" href="#">香水</a> -->
                     </li>
                     <li class="nav-item dropdown">
