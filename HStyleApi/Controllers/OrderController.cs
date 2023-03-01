@@ -33,16 +33,29 @@ namespace HStyleApi.Controllers
 			var orders = _orderService.GetOrders(_memberId);
 			return orders;
 		}
-		[HttpGet("test")]
-		public int CheckStock(int specId)
+
+		[HttpGet("/test")]
+		public dynamic test()
 		{
-			var stock = (from product in _db.Products
-						 join spec in _db.Specs
-						 on product.ProductId equals spec.ProductId
-						 where spec.Id == specId
-						 select spec.Stock).FirstOrDefault();
-			return stock;
-		}
+            var tags = new List<int> { 34, 36 };
+
+			var products = _db.Products
+				.Include(x => x.Tags)
+				.Select(x => new{
+					productId = x.ProductId,
+					isRecomended = x.Tags.Select(x => x.Id).ToList()
+				}).ToList().Where(x => x.isRecomended.Intersect(tags).Any()).Select(x => x.productId);
+			//var idList = new List<int>();
+			//foreach (var item in products)
+			//{
+			//	if (item.isRecomended.Intersect(tags).Any())
+			//	{
+   //                 idList.Add(item.productId);
+			//	}
+			//}
+
+			return products;
+        }
 
 		// GET api/<OrderController>/5
 		[HttpGet("{id}")]

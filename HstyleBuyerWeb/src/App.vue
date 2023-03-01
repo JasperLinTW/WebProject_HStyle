@@ -1,9 +1,9 @@
 <script>
-import webHeader from './components/WebHeader.vue'
+import HStyleHeader from './components/HStyleHeader.vue'
 export default {
   name: "App",
   components: {
-    webHeader
+    HStyleHeader,
   }
 };
 
@@ -13,8 +13,7 @@ export default {
 <template>
   
   <div id="app">
-    <webHeader />
-     
+    <HStyleHeader />
     
     <router-view />
   </div>

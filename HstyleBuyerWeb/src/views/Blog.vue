@@ -4,10 +4,10 @@
       <h1>Welcome to the Blog page!</h1>
       <p>This is the Blog page of our app.</p>
     </div>
-  </template>
+</template>
   
-  <script>
-  export default {
-    name: 'Blog'
-  }
-  </script>
+<script>
+  
+</script>
+
+<style></style>
