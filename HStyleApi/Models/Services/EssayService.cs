@@ -42,7 +42,13 @@ namespace HStyleApi.Models.Services
 
 		}
 
-		public async Task<IEnumerable<EssayCommentDTO>> GetComments(int essayId)
+        public async Task<IEnumerable<EssayDTO>> GetNews()
+        {
+            var data = _essayReposity.GetNews();
+            return await data;
+        }
+
+        public async Task<IEnumerable<EssayCommentDTO>> GetComments(int essayId)
 		{
 			return await _essayReposity.GetComments(essayId);
 

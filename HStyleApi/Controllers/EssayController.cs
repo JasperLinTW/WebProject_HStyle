@@ -34,12 +34,17 @@ namespace HStyleApi.Controllers
 			return await _service.GetEssays(id);
 		}
 
-		//[HttpGet("News")] skip
+        //[HttpGet("News")] 
+        [HttpGet("News")]
+        public async Task<IEnumerable<EssayDTO>> GetNews()
+        {
+            return await _service.GetNews();
+        }
 
 
 
-		// GET api/<EssayController>/EssayLike/5
-		[HttpGet("Elike/{memberId}")]
+        // GET api/<EssayController>/EssayLike/5
+        [HttpGet("Elike/{memberId}")]
 		public async Task<IEnumerable<EssayLikeDTO>> GetlikeEssays(int memberId)
 		{
 			return await _service.GetlikeEssays(memberId);

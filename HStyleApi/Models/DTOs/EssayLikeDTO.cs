@@ -8,6 +8,7 @@ namespace HStyleApi.Models.DTOs
 		public int EssayId { get; set; }
 
 		public virtual Essay Essay { get; set; }
+
 	}
 
 	public static class EssaylikeExts
@@ -26,7 +27,7 @@ namespace HStyleApi.Models.DTOs
 			{
 
 				MemberId = source.MemberId,
-				EssayId = source.EssayId
+				EssayId = source.EssayId,
 			};
 		}
 	}

@@ -58,10 +58,23 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 
 			return essays;
 		}
+        public async Task<IEnumerable<EssayDTO>> GetNews()
+        {
 
 
-		//使用者收藏影片
-		public async Task<IEnumerable<EssayLikeDTO>> GetlikeEssays(int memberId)
+            IEnumerable<Essay> dataE = await _db.Essays
+                                                        .Include(e => e.Imgs)
+                                                        .Include(e => e.Tags)
+                                                        .ToListAsync();
+
+            IEnumerable<EssayDTO> newsE = dataE.OrderByDescending(e => e.Tags.GroupBy(e => e.TagName).Count())
+                                                        .OrderByDescending(e => e.UpLoad)
+                                                        .Take(3).Select(e => e.ToEssayDTO()).ToList();
+            return newsE;
+        }
+
+        //使用者收藏影片
+        public async Task<IEnumerable<EssayLikeDTO>> GetlikeEssays(int memberId)
 		{
 			IEnumerable<Elike> data = await _db.Elikes
 				.Include(e => e.Essay)
