@@ -3,6 +3,7 @@ using HStyleApi.Models.EFModels;
 using HStyleApi.Models.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.DotNet.MSIdentity.Shared;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -31,7 +32,7 @@ namespace HStyleApi.Controllers
 
 
 		[HttpGet("weather")]
-		public async Task<string> GetWeather(string? locationName)
+		public async Task<List<int>> GetWeather(string? locationName)
 		{
 			string responseContent;
 			//TODO locationName 可用HTML5的 Geolocation API取得 
@@ -44,28 +45,38 @@ namespace HStyleApi.Controllers
 				locationName = "臺北市";
 			}
 
-			var url = $"{WeatherUrl}?Authorization={ApiKey}&locationName={locationName}&elementName=CI";
+			var url = $"{WeatherUrl}?Authorization={ApiKey}&locationName={locationName}&elementName=MinT,MaxT";
 
 			// 發送HTTP請求，取得天氣資訊JSON
 			var response = await httpClient.GetAsync(url);
 			responseContent = await response.Content.ReadAsStringAsync();
 			var data = JObject.Parse(responseContent);
 
-			string weatherdescription = (string)data["records"]["location"][0]["weatherElement"][0]["time"][0]["parameter"]["parameterName"];
+			List<int> temp = new List<int>();
+			int minT = (int)data["records"]["location"][0]["weatherElement"][0]["time"][0]["parameter"]["parameterName"];
+			int maxT = (int)data["records"]["location"][0]["weatherElement"][1]["time"][0]["parameter"]["parameterName"];
 
-			return weatherdescription;
+			temp.Add(minT);
+			temp.Add(maxT);
+
+			return temp;
 		}
 
 
 		[HttpGet("weatherRec")]
 		public dynamic WeatherRecommend(string? locationName)
 		{
-			string weatherdescription = GetWeather(locationName).Result;
+			var temp = GetWeather(locationName).Result;
 
-			var products = _Service.GetRecommendByWeather(weatherdescription);
+			var data = _Service.GetRecommendByWeather(temp);
 
-			return products;
+			return data;
 		}
 
+		[HttpPost("test")]
+		public dynamic test()
+		{
+			return null;
+		}
 	}
 }

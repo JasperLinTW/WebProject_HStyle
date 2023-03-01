@@ -26,13 +26,13 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 			IEnumerable<ProductDto> products;
 			if (keyword == null)
 			{
-				
-			    products = data.OrderBy(x => x.DisplayOrder).Select(x => x.ToDto());
+
+				products = data.OrderBy(x => x.DisplayOrder).Select(x => x.ToDto());
 			}
 			else
 			{
 				products = data.Where(x => x.ProductName.Contains(keyword))
-					               .OrderBy(x => x.DisplayOrder).Select(x => x.ToDto());
+								   .OrderBy(x => x.DisplayOrder).Select(x => x.ToDto());
 			}
 
 			return products;
@@ -51,20 +51,20 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 										.Include(product => product.Tags);
 
 			var product = data.FirstOrDefault(x => x.ProductId == product_id).ToDto();
-			
+
 			return product;
 
 		}
 
 		public void CreateComment(PCommentPostDTO dto, int orderId, int productId)
 		{
-			
+
 			ProductComment pcomment = new ProductComment
 			{
 				OrderId = orderId,
 				ProductId = productId,
-				CommentContent= dto.CommentContent,
-				Score= dto.Score,
+				CommentContent = dto.CommentContent,
+				Score = dto.Score,
 				CreatedTime = DateTime.Now,
 			};
 
@@ -97,7 +97,7 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 				ProductName = product.Product_Name,
 				ProductPhoto = product.Imgs.ToList()[0],
 				Color = orderDetail.Color,
-				Size= orderDetail.Size,
+				Size = orderDetail.Size,
 			};
 
 			return comment;
@@ -128,11 +128,11 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 		public IEnumerable<PCommentDTO> LoadComments()
 		{
 			IEnumerable<ProductComment> data = _db.ProductComments.Include(x => x.PcommentImgs)
-				                                                  .Include(x => x.Product)
+																  .Include(x => x.Product)
 																  .Include(x => x.Order).ThenInclude(x => x.OrderDetails);
-			
+
 			var comments = data.Select(x => x.ToDto());
-			
+
 
 			return comments;
 		}
@@ -160,7 +160,7 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 		public IEnumerable<Product_LikeDTO> LoadLikeProducts(int member_id)
 		{
 			IEnumerable<ProductLike> data = _db.ProductLikes.Include(x => x.Product).ThenInclude(x => x.Imgs)
-				                                            .Where(x => x.MemberId == member_id);
+															.Where(x => x.MemberId == member_id);
 
 			var productsLike = data.Select(x => x.ToDto());
 
@@ -288,7 +288,7 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 			return products_id;
 		}
 
-		public List<int> GetProductsByOrder(int maxvaluetag , int member_id)
+		public List<int> GetProductsByOrder(int maxvaluetag, int member_id)
 		{
 			var orders = _db.Orders.Where(x => x.MemberId == member_id).ToList().TakeLast(1);
 			var productsId = orders.Select(x => x.OrderDetails.Select(x => x.ProductId));
@@ -311,6 +311,20 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 			}
 
 			return products;
+		}
+
+		public List<int> GetProductsByWeather(List<string> weatherdescription)
+		{
+			
+			var tags = _db.Tags.Include(x => x.Products).Where(x => weatherdescription.Contains(x.TagName)).Select(x => x.Id).ToList();
+
+			var data = _db.Products.Include(x => x.Tags).Select(x => new
+	                    {
+		                  productId = x.ProductId,
+		                  isRecomended = x.Tags.Select(x => x.Id).ToList()
+	                     }).ToList().Where(x => x.isRecomended.Intersect(tags).Any()).Select(x => x.productId).ToList();
+
+			return data;
 		}
 	}
 }
