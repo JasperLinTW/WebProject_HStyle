@@ -17,6 +17,8 @@ namespace H2StyleStore.Models.EFModels
 		public virtual DbSet<CommonQuestion> CommonQuestions { get; set; }
 		public virtual DbSet<CustomerQuestion> CustomerQuestions { get; set; }
 		public virtual DbSet<Eassy_Follows> Eassy_Follows { get; set; }
+		public virtual DbSet<ECommentlike> ECommentlikes { get; set; }
+		public virtual DbSet<Elike> Elikes { get; set; }
 		public virtual DbSet<Employee> Employees { get; set; }
 		public virtual DbSet<Essay> Essays { get; set; }
 		public virtual DbSet<Essays_Comments> Essays_Comments { get; set; }
@@ -36,11 +38,14 @@ namespace H2StyleStore.Models.EFModels
 		public virtual DbSet<PermissionsE> PermissionsEs { get; set; }
 		public virtual DbSet<PermissionsM> PermissionsMs { get; set; }
 		public virtual DbSet<Product_Comments> Product_Comments { get; set; }
+		public virtual DbSet<Product_Likes> Product_Likes { get; set; }
 		public virtual DbSet<Product> Products { get; set; }
 		public virtual DbSet<Question_Categories> Question_Categories { get; set; }
 		public virtual DbSet<Spec> Specs { get; set; }
 		public virtual DbSet<Tag> Tags { get; set; }
+		public virtual DbSet<VCommentLike> VCommentLikes { get; set; }
 		public virtual DbSet<VideoCategory> VideoCategories { get; set; }
+		public virtual DbSet<VideoComment> VideoComments { get; set; }
 		public virtual DbSet<VideoLike> VideoLikes { get; set; }
 		public virtual DbSet<Video> Videos { get; set; }
 		public virtual DbSet<VideoView> VideoViews { get; set; }
@@ -50,10 +55,6 @@ namespace H2StyleStore.Models.EFModels
 			modelBuilder.Entity<Address>()
 				.Property(e => e.destination_THE)
 				.IsUnicode(false);
-
-			modelBuilder.Entity<CustomerQuestion>()
-				.HasOptional(e => e.CustomerQuestions1)
-				.WithRequired(e => e.CustomerQuestion1);
 
 			modelBuilder.Entity<Employee>()
 				.Property(e => e.Account)
@@ -76,14 +77,14 @@ namespace H2StyleStore.Models.EFModels
 				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<Essay>()
-				.HasMany(e => e.Essays_Comments)
+				.HasMany(e => e.Elikes)
 				.WithRequired(e => e.Essay)
 				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<Essay>()
-				.HasMany(e => e.Members)
-				.WithMany(e => e.Essays)
-				.Map(m => m.ToTable("Elikes").MapLeftKey("Essay_Id"));
+				.HasMany(e => e.Essays_Comments)
+				.WithRequired(e => e.Essay)
+				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<Essay>()
 				.HasMany(e => e.Images)
@@ -94,6 +95,11 @@ namespace H2StyleStore.Models.EFModels
 				.HasMany(e => e.Tags)
 				.WithMany(e => e.Essays)
 				.Map(m => m.ToTable("Essays_Tags").MapLeftKey("Essay_Id"));
+
+			modelBuilder.Entity<Essays_Comments>()
+				.HasMany(e => e.ECommentlikes)
+				.WithRequired(e => e.Essays_Comments)
+				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<Essays_Comments>()
 				.HasMany(e => e.Members)
@@ -156,6 +162,11 @@ namespace H2StyleStore.Models.EFModels
 				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<Member>()
+				.HasMany(e => e.CustomerQuestions)
+				.WithOptional(e => e.Member)
+				.HasForeignKey(e => e.Member_Id);
+
+			modelBuilder.Entity<Member>()
 				.HasOptional(e => e.Eassy_Follows)
 				.WithRequired(e => e.Member);
 
@@ -184,14 +195,9 @@ namespace H2StyleStore.Models.EFModels
 				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<Member>()
-				.HasMany(e => e.VideoLikes)
+				.HasMany(e => e.VideoComments)
 				.WithRequired(e => e.Member)
 				.WillCascadeOnDelete(false);
-
-			modelBuilder.Entity<Member>()
-				.HasMany(e => e.Products)
-				.WithMany(e => e.Members)
-				.Map(m => m.ToTable("Product_Likes").MapLeftKey("Member_id").MapRightKey("Product_id"));
 
 			modelBuilder.Entity<Order_Status>()
 				.HasMany(e => e.Orders)
@@ -225,6 +231,16 @@ namespace H2StyleStore.Models.EFModels
 				.HasForeignKey(e => e.Permission_id);
 
 			modelBuilder.Entity<Product>()
+				.HasMany(e => e.Product_Comments)
+				.WithRequired(e => e.Product)
+				.WillCascadeOnDelete(false);
+
+			modelBuilder.Entity<Product>()
+				.HasMany(e => e.Product_Likes)
+				.WithRequired(e => e.Product)
+				.WillCascadeOnDelete(false);
+
+			modelBuilder.Entity<Product>()
 				.HasMany(e => e.Specs)
 				.WithRequired(e => e.Product)
 				.WillCascadeOnDelete(false);
@@ -236,6 +252,11 @@ namespace H2StyleStore.Models.EFModels
 
 			modelBuilder.Entity<Question_Categories>()
 				.HasMany(e => e.CommonQuestions)
+				.WithRequired(e => e.Question_Categories)
+				.WillCascadeOnDelete(false);
+
+			modelBuilder.Entity<Question_Categories>()
+				.HasMany(e => e.CustomerQuestions)
 				.WithRequired(e => e.Question_Categories)
 				.WillCascadeOnDelete(false);
 
@@ -261,19 +282,27 @@ namespace H2StyleStore.Models.EFModels
 				.HasForeignKey(e => e.CategoryId)
 				.WillCascadeOnDelete(false);
 
+			modelBuilder.Entity<VideoComment>()
+				.HasMany(e => e.VCommentLikes)
+				.WithRequired(e => e.VideoComment)
+				.HasForeignKey(e => e.CommentId)
+				.WillCascadeOnDelete(false);
+
+			modelBuilder.Entity<Video>()
+				.HasMany(e => e.VideoComments)
+				.WithRequired(e => e.Video)
+				.WillCascadeOnDelete(false);
+
 			modelBuilder.Entity<Video>()
 				.HasMany(e => e.VideoLikes)
 				.WithRequired(e => e.Video)
 				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<Video>()
-				.HasMany(e => e.VideoViews)
-				.WithRequired(e => e.Video)
-				.WillCascadeOnDelete(false);
+				.HasOptional(e => e.VideoView)
+				.WithRequired(e => e.Video);
 		}
 
-        public System.Data.Entity.DbSet<H2StyleStore.Models.ViewModels.CreateCommonQVM> CreateCommonQVMs { get; set; }
-
-        public System.Data.Entity.DbSet<H2StyleStore.Models.ViewModels.CommonQuestionVM> CommonQuestionVMs { get; set; }
+        public System.Data.Entity.DbSet<H2StyleStore.Models.ViewModels.CustomerQuestionVM> CustomerQuestionVMs { get; set; }
     }
 }

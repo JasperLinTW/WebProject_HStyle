@@ -6,14 +6,18 @@ namespace H2StyleStore.Models.EFModels
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class VideoView
+    public partial class Product_Likes
     {
         [Key]
+        [Column(Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int VideoId { get; set; }
+        public int Product_id { get; set; }
 
-        public int Views { get; set; }
+        [Key]
+        [Column(Order = 1)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int Member_id { get; set; }
 
-        public virtual Video Video { get; set; }
+        public virtual Product Product { get; set; }
     }
 }

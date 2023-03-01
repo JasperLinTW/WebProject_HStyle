@@ -11,6 +11,7 @@ namespace H2StyleStore.Models.EFModels
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Essays_Comments()
         {
+            ECommentlikes = new HashSet<ECommentlike>();
             Members = new HashSet<Member>();
         }
 
@@ -23,9 +24,14 @@ namespace H2StyleStore.Models.EFModels
 
         [Required]
         [StringLength(50)]
-        public string CComment { get; set; }
+        public string EComment { get; set; }
 
-        public DateTime CTime { get; set; }
+        public DateTime ETime { get; set; }
+
+        public int Elike { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ECommentlike> ECommentlikes { get; set; }
 
         public virtual Essay Essay { get; set; }
 

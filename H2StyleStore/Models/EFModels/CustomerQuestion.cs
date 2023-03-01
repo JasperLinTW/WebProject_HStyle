@@ -33,8 +33,8 @@ namespace H2StyleStore.Models.EFModels
 
         public int? Employee_Id { get; set; }
 
-        public virtual CustomerQuestion CustomerQuestions1 { get; set; }
+        public virtual Member Member { get; set; }
 
-        public virtual CustomerQuestion CustomerQuestion1 { get; set; }
+        public virtual Question_Categories Question_Categories { get; set; }
     }
 }

@@ -36,5 +36,20 @@ namespace H2StyleStore.Models.Services
 		{
 			_questionRepository.DeleteCommonQ(commonQId);
 		}
+
+		public IEnumerable<CustomerQuestionDTO> GetAllCustomerQuestion()
+		{
+			return _questionRepository.GetAllCustomerQuestion();
+		}
+
+		public CustomerQuestionDTO GetCustomerQById(int id)
+		{
+			return _questionRepository.GetCustomerQById(id);
+		}
+
+		public void UpdatetCustomerQ(CustomerQuestionDTO dto)
+		{
+			_questionRepository.UpdatetCustomerQ(dto);
+		}
 	}
 }

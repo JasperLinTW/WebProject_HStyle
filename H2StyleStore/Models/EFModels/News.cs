@@ -15,7 +15,7 @@ namespace H2StyleStore.Models.EFModels
         [StringLength(1000)]
         public string NTitle { get; set; }
 
-        public DateTime NTme { get; set; }
+        public DateTime NTime { get; set; }
 
         [Required]
         [StringLength(1000)]

@@ -43,7 +43,7 @@ namespace H2StyleStore.Controllers
 
 			IEnumerable<CommonQuestionDTO> data = _questionService.GetAllCommonQuestion();
 
-			// 若有篩選 activityId
+			// 若有篩選 qcategoryId
 			if (qcategoryId.HasValue) data = data.Where(q => q.QCategory_Id == qcategoryId.Value);
 			// 若有篩選 keyWord
 			if (string.IsNullOrEmpty(keyWord) == false)
@@ -129,6 +129,68 @@ namespace H2StyleStore.Controllers
 		{
 			_questionService.DeleteCommonQ(id);
 			return RedirectToAction("Index");
+		}
+
+		public ActionResult GetCustomerQ(string currentFilter, string searchString, int? page
+			, int? qcategoryId, string keyword)
+		{
+
+			// 將篩選條件放在ViewBag,稍後在 view page取回
+			ViewBag.QCategory = _questionRepo.GetQCategories(qcategoryId);
+			ViewBag.Keyword = keyword;
+
+			if (searchString != null) { page = 1; }
+			else { searchString = currentFilter; }
+			ViewBag.CurrentFilter = searchString;
+
+			IEnumerable<CustomerQuestionDTO> data = _questionService.GetAllCustomerQuestion();
+
+			// 若有篩選 qcategoryId
+			if (qcategoryId.HasValue) data = data.Where(q => q.QCategory_Id == qcategoryId.Value);
+			// 若有篩選 keyword
+			if (string.IsNullOrEmpty(keyword) == false)
+			{
+				data = data.Where(q => q.Title.Contains(keyword)
+				|| q.Problem_Description.Contains(keyword));
+			}
+
+			int pageSize = 10;
+			int pageNumber = (page ?? 1);
+			return View(data.Select(q => q.ToVM()).ToPagedList(pageNumber, pageSize));
+		}
+
+		public ActionResult EditCustomerQ(int id)
+		{
+			EditCustomerQVM model = _questionRepo.GetCustomerQById(id).ToEditVM();
+			var qCategory = _questionRepo.GetQCategories(id).ToList();
+			ViewBag.QCategoryItems = qCategory;
+
+			if (model == null) return HttpNotFound();
+			return View(model);
+		}
+
+		[HttpPost]
+		public ActionResult EditCustomerQ(EditCustomerQVM model)
+		{
+			string user = User.Identity.Name;
+			model.Employee_Name = user;
+
+			var qCategory = _questionRepo.GetQCategories(model.QCategory_Id);
+			ViewBag.QCategoryItems = qCategory;
+
+			if (!ModelState.IsValid) return View(model);
+
+			try
+			{
+				_questionService.UpdatetCustomerQ(model.ToDTO());
+			}
+			catch (Exception ex)
+			{
+				ModelState.AddModelError(string.Empty, ex.Message);
+			}
+
+			if (ModelState.IsValid) return RedirectToAction("Index");
+			return View(model);
 		}
 	}
 }

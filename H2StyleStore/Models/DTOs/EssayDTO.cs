@@ -54,8 +54,8 @@ namespace H2StyleStore.Models.DTOs
 			EContent = source.EContent,
 			CategoryId = source.CategoryId,
 			CategoryName = source.VideoCategory.CategoryName,
-			UpLoad = source.UpLoad,
-			Removed = source.Removed,
+			//UpLoad = source.UpLoad,
+			//Removed = source.Removed,
 			images = source.Images.Select(i => i.ToPDto()),
 			Tags = source.Tags.Select(i => i.ToPDto())
 		};

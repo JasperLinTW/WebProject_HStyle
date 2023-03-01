@@ -70,7 +70,6 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			question.Question = dto.Question;
 			question.Answer = dto.Answer;
 
-			_db.CommonQuestions.Remove(question);
 			_db.SaveChanges();
 		}
 
@@ -79,6 +78,34 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			CommonQuestion question = _db.CommonQuestions.Find(commonQId);
 
 			_db.CommonQuestions.Remove(question);
+			_db.SaveChanges();
+		}
+
+		public IEnumerable<CustomerQuestionDTO> GetAllCustomerQuestion()
+		{
+			IEnumerable<CustomerQuestionDTO> question = _db.CustomerQuestions
+				.OrderBy(q => q.Solution_Description)
+				.ThenBy(q => q.AskTime).ThenBy(q => q.QCategory_Id)
+				.ToList().Select(q => q.ToDTO());
+			return question;
+		}
+
+		public CustomerQuestionDTO GetCustomerQById(int? customerQId)
+		{
+			if (!customerQId.HasValue) { throw new Exception("找不到這一筆紀錄"); }
+
+			CustomerQuestionDTO data = _db.CustomerQuestions
+				.FirstOrDefault(q => q.CustomerQuestion_Id == customerQId).ToDTO();
+			return data;
+		}
+
+		public void UpdatetCustomerQ(CustomerQuestionDTO dto)
+		{
+			CustomerQuestion question = _db.CustomerQuestions.Find(dto.CustomerQuestion_Id);
+
+			question.Solution_Description = dto.Solution_Description;
+			question.SolveTime = dto.SolveTime;
+			question.Employee_Id = _db.Employees.Where(x => x.Account == dto.Employee_Name).FirstOrDefault().Employee_id;
 			_db.SaveChanges();
 		}
 	}

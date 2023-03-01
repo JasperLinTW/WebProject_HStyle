@@ -8,15 +8,15 @@ namespace H2StyleStore.Models.EFModels
 
     public partial class VideoLike
     {
-        public int Id { get; set; }
-
+        [Key]
+        [Column(Order = 0)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int VideoId { get; set; }
 
+        [Key]
+        [Column(Order = 1)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int MemberId { get; set; }
-
-        public DateTime CreatedTime { get; set; }
-
-        public virtual Member Member { get; set; }
 
         public virtual Video Video { get; set; }
     }

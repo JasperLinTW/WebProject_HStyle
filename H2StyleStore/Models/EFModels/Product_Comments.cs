@@ -17,6 +17,8 @@ namespace H2StyleStore.Models.EFModels
         [Key]
         public int Comment_id { get; set; }
 
+        public int Product_id { get; set; }
+
         public int Order_id { get; set; }
 
         [Required]
@@ -28,6 +30,8 @@ namespace H2StyleStore.Models.EFModels
         public DateTime CreatedTime { get; set; }
 
         public virtual Order Order { get; set; }
+
+        public virtual Product Product { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Image> Images { get; set; }

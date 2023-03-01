@@ -29,7 +29,7 @@ namespace H2StyleStore.Models.DTOs
 
 		public DateTime CreatedTime { get; set; }
 
-		public bool? IsOnShelff { get; set; }
+		public bool IsOnShelff { get; set; }
 
 		public string Image { get; set; }
 
