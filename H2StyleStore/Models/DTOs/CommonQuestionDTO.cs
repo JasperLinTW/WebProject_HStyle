@@ -20,7 +20,7 @@ namespace H2StyleStore.Models.DTOs
 
 		public string Answer { get; set; }
 
-		public int Satiafaction_Click { get; set; }
+		public int Satisfaction_No { get; set; }
 
 		public int Satiafaction_Yes { get; set; }
 	}
@@ -36,8 +36,8 @@ namespace H2StyleStore.Models.DTOs
 				QCategory_Name=source.Question_Categories.Category_Name,
 				Question = source.Question,
 				Answer = source.Answer,
-				Satiafaction_Click = source.Satiafaction_Click,
-				Satiafaction_Yes = source.Satiafaction_Yes,
+				Satisfaction_No = source.Satisfaction_No,
+				Satiafaction_Yes = source.Satisfaction_Yes,
 			};
 		}
 	}

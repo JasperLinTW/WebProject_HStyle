@@ -19,9 +19,9 @@ namespace H2StyleStore.Models.EFModels
         [Required]
         public string Answer { get; set; }
 
-        public int Satiafaction_Click { get; set; }
+        public int Satisfaction_Yes { get; set; }
 
-        public int Satiafaction_Yes { get; set; }
+        public int Satisfaction_No { get; set; }
 
         public virtual Question_Categories Question_Categories { get; set; }
     }

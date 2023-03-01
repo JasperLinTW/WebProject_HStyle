@@ -60,6 +60,9 @@ namespace H2StyleStore.Models.EFModels
 
         public int? Discount { get; set; }
 
+        [StringLength(50)]
+        public string PayInfo { get; set; }
+
         public virtual Employee Employee { get; set; }
 
         public virtual Member Member { get; set; }

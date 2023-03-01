@@ -11,8 +11,8 @@ namespace H2StyleStore.Models.EFModels
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Video()
         {
+            VideoComments = new HashSet<VideoComment>();
             VideoLikes = new HashSet<VideoLike>();
-            VideoViews = new HashSet<VideoView>();
             Tags = new HashSet<Tag>();
         }
 
@@ -36,7 +36,7 @@ namespace H2StyleStore.Models.EFModels
 
         public DateTime? OffShelffTime { get; set; }
 
-        public bool? IsOnShelff { get; set; }
+        public bool IsOnShelff { get; set; }
 
         public DateTime CreatedTime { get; set; }
 
@@ -45,10 +45,12 @@ namespace H2StyleStore.Models.EFModels
         public virtual VideoCategory VideoCategory { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<VideoLike> VideoLikes { get; set; }
+        public virtual ICollection<VideoComment> VideoComments { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<VideoView> VideoViews { get; set; }
+        public virtual ICollection<VideoLike> VideoLikes { get; set; }
+
+        public virtual VideoView VideoView { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tag> Tags { get; set; }

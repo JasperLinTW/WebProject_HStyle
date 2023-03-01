@@ -188,6 +188,7 @@
     <Compile Include="Models\DTOs\CreateEssayDTO.cs" />
     <Compile Include="Models\DTOs\CreateH_Source_DetailDto.cs" />
     <Compile Include="Models\DTOs\CreateVideoDto.cs" />
+    <Compile Include="Models\DTOs\CustomerQuestionDTO.cs" />
     <Compile Include="Models\DTOs\EssayDTO.cs" />
     <Compile Include="Models\DTOs\H_ActivityDto.cs" />
     <Compile Include="Models\DTOs\H_CheckInDto.cs" />
@@ -202,6 +203,8 @@
     <Compile Include="Models\EFModels\CommonQuestion.cs" />
     <Compile Include="Models\EFModels\CustomerQuestion.cs" />
     <Compile Include="Models\EFModels\Eassy_Follows.cs" />
+    <Compile Include="Models\EFModels\ECommentlike.cs" />
+    <Compile Include="Models\EFModels\Elike.cs" />
     <Compile Include="Models\EFModels\Employee.cs" />
     <Compile Include="Models\EFModels\Essay.cs" />
     <Compile Include="Models\EFModels\Essays_Comments.cs" />
@@ -210,7 +213,6 @@
     <Compile Include="Models\EFModels\H_Source_Details.cs" />
     <Compile Include="Models\EFModels\Image.cs" />
     <Compile Include="Models\EFModels\Member.cs" />
-    <Compile Include="Models\EFModels\model.cs" />
     <Compile Include="Models\EFModels\News.cs" />
     <Compile Include="Models\EFModels\Order.cs" />
     <Compile Include="Models\EFModels\Order_Details.cs" />
@@ -223,6 +225,7 @@
     <Compile Include="Models\EFModels\PermissionsM.cs" />
     <Compile Include="Models\EFModels\Product.cs" />
     <Compile Include="Models\EFModels\Product_Comments.cs" />
+    <Compile Include="Models\EFModels\Product_Likes.cs" />
     <Compile Include="Models\EFModels\Question_Categories.cs" />
     <Compile Include="Models\EFModels\Spec.cs" />
     <Compile Include="Models\EFModels\Tag.cs" />
@@ -252,6 +255,8 @@
     <Compile Include="Models\ViewModels\CreateEssayVM.cs" />
     <Compile Include="Models\ViewModels\CreateH_Source_DetailVM.cs" />
     <Compile Include="Models\ViewModels\CreateVideoVM.cs" />
+    <Compile Include="Models\ViewModels\CustomerQuestionVM.cs" />
+    <Compile Include="Models\ViewModels\EditCustomerQVM.cs" />
     <Compile Include="Models\ViewModels\EditEmployeeVM.cs" />
     <Compile Include="Models\ViewModels\EditVideoVM.cs" />
     <Compile Include="Models\ViewModels\EssayVM.cs" />
@@ -579,6 +584,7 @@
     <Content Include="Views\Question\CreateCommonQ.cshtml" />
     <Content Include="Views\Question\EditCommonQ.cshtml" />
     <Content Include="Views\Question\DeleteCommonQ.cshtml" />
+    <Content Include="Views\Question\GetCustomerQ.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

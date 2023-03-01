@@ -14,7 +14,6 @@ namespace H2StyleStore.Models.EFModels
             VCommentLikes = new HashSet<VCommentLike>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
 
         public int VideoId { get; set; }
@@ -28,7 +27,11 @@ namespace H2StyleStore.Models.EFModels
 
         public int Like { get; set; }
 
+        public virtual Member Member { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VCommentLike> VCommentLikes { get; set; }
+
+        public virtual Video Video { get; set; }
     }
 }

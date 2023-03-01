@@ -12,6 +12,7 @@ namespace H2StyleStore.Models.EFModels
         public Question_Categories()
         {
             CommonQuestions = new HashSet<CommonQuestion>();
+            CustomerQuestions = new HashSet<CustomerQuestion>();
         }
 
         [Key]
@@ -22,5 +23,8 @@ namespace H2StyleStore.Models.EFModels
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CommonQuestion> CommonQuestions { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CustomerQuestion> CustomerQuestions { get; set; }
     }
 }

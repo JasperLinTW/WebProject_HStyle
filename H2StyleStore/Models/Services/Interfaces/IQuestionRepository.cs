@@ -43,5 +43,21 @@ namespace H2StyleStore.Models.Services.Interfaces
 		/// </summary>
 		/// <param name="id">問題Id</param>
 		void DeleteCommonQ(int commonQId);
+		/// <summary>
+		/// 取得顧客所有問題
+		/// </summary>
+		/// <returns></returns>
+		IEnumerable<CustomerQuestionDTO> GetAllCustomerQuestion();
+		/// <summary>
+		/// 經由Id取得一筆顧客提問的紀錄
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
+		CustomerQuestionDTO GetCustomerQById(int? id);
+		/// <summary>
+		/// 回覆顧客提問
+		/// </summary>
+		/// <param name="dto"></param>
+		void UpdatetCustomerQ(CustomerQuestionDTO dto);
 	}
 }

@@ -6,14 +6,18 @@ namespace H2StyleStore.Models.EFModels
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class VideoView
+    public partial class Elike
     {
         [Key]
+        [Column(Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int VideoId { get; set; }
+        public int Member_Id { get; set; }
 
-        public int Views { get; set; }
+        [Key]
+        [Column(Order = 1)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int Essay_Id { get; set; }
 
-        public virtual Video Video { get; set; }
+        public virtual Essay Essay { get; set; }
     }
 }

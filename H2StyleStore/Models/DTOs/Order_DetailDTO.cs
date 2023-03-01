@@ -37,7 +37,7 @@ namespace H2StyleStore.Models.DTOs
 				UnitPrice = source.UnitPrice,
 				SubTotal = source.SubTotal,
 				Quantity = source.Quantity,
-				Discount = source.Discount,
+				//Discount = source.Discount,
 			};
 		}
 	}
