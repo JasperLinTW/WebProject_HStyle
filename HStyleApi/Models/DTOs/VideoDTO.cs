@@ -30,7 +30,7 @@ namespace HStyleApi.Models.DTOs
 
 		public string TagName { get; set; }
 
-		public virtual ICollection<VideoLike> VideoLikes { get; set; }
+		//public virtual ICollection<VideoLike> VideoLikes { get; set; }
 
 		public virtual VideoView VideoView { get; set; }
 
@@ -59,7 +59,7 @@ namespace HStyleApi.Models.DTOs
 				OffShelffTime = source.OffShelffTime,
 				CreatedTime = source.CreatedTime,
 				Tags = source.Tags.Select(x => x.TagName),
-				VideoLikes = source.VideoLikes,
+				//VideoLikes = source.VideoLikes,
 				CategoryName = source.Category.CategoryName,
 				Likes = source.VideoLikes.GroupBy(x => x.VideoId).Count(),
 				Views = source.VideoView.Views,

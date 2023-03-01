@@ -34,32 +34,52 @@ namespace HStyleApi.Controllers
 		[HttpGet("test")]
 		public dynamic GetTags(int product_id)
 		{
-			//var orders = _db.Orders.Where(x => x.MemberId == member_id);
+			var orders = _db.Orders.Where(x => x.MemberId == _member_id).OrderByDescending(x => x.OrderId).ToList().Take(5);
 
-			//var productsId = orders.Select(x => x.OrderDetails.Select(x => x.ProductId)).ToArray();
-			//List<int> products = new List<int>();
-			//foreach (var order in productsId)
-			//{
-			//	foreach (var pId in order)
-			//	{
-			//		products.Add(pId);
-			//	}
-			//}
-			//var dbPro = _db.Products.Include(x => x.Tags);
+			var productsId = orders.Select(x => x.OrderDetails.Select(x => x.ProductId)).ToArray();
+			List<int> Ordersproducts = new List<int>();
+			foreach (var order in productsId)
+			{
+				foreach (var pId in order)
+				{
+					Ordersproducts.Add(pId);
+				}
+			}
+			var dbPro = _db.Products.Include(x => x.Tags);
 
 
-			//var tags = new List<int>();
-			//foreach (var product in products)
-			//{
-			//	var ts = dbPro.Where(x => x.ProductId == product).SingleOrDefault().Tags;
-			//	foreach (var t in ts)
-			//	{
-			//		tags.Add(t.Id);
-			//	}
-			//}
-			//return tags;
+			var tags = new List<int>();
+			foreach (var product in Ordersproducts)
+			{
+				var ts = dbPro.Where(x => x.ProductId == product).SingleOrDefault().Tags;
+				foreach (var t in ts)
+				{
+					tags.Add(t.Id);
+				}
+			}
 
-			return null;
+			Dictionary<int, int> tagsCount = new Dictionary<int, int>();
+
+			foreach (var id in tags)
+			{
+				if (tagsCount.ContainsKey(id))
+				{
+					tagsCount[id]++;
+				}
+				else
+				{
+					tagsCount.Add(id, 1);
+				}
+			}
+
+			var maxValueKey = tagsCount.Aggregate((x, y) => x.Value > y.Value ? x : y).Key;
+
+			var products = dbPro.Where(x => !Ordersproducts.Contains(x.ProductId));
+
+			
+
+
+			return products;
 
 		}
 
@@ -67,9 +87,10 @@ namespace HStyleApi.Controllers
 		[HttpGet("products")]
 		public ActionResult<ProductDto> LoadProducts([FromQuery] string? keyword)
 		{
+			IEnumerable<ProductDto> data;
 			try
 			{
-				var data = _Service.LoadProducts(keyword);
+				data = _Service.LoadProducts(keyword);
 			}
 			catch (Exception ex)
 			{
@@ -77,26 +98,25 @@ namespace HStyleApi.Controllers
 				return BadRequest(ex.Message);
 			}
 
-			return Ok("取得全部商品");
+			return Ok(data);
 		}
 
 		//單一商品頁
 		[HttpGet("{product_id}")]
 		public ActionResult GetProduct(int product_id)
 		{
+			ProductDto data;
 			try
 			{
-				var data = _Service.GetProduct(product_id);
-				return Ok(data);
-
+				 data = _Service.GetProduct(product_id);
 			}
 			catch (Exception ex)
 			{
 				return BadRequest(ex.Message);
 			}
 
+			return Ok(data);
 
-			
 		}
 
 		//商品收藏
@@ -116,22 +136,57 @@ namespace HStyleApi.Controllers
 			return Ok(data);
 		}
 
-		//商品專屬推薦(根據此商品特徵篩選) //用在你可能會喜歡(商品頁)
+		//商品推薦(根據此商品特徵篩選) //用在你可能會喜歡(商品頁)
 		[HttpGet("ProdRec/{product_id}")]
-		public IEnumerable<ProductDto> ProductRecommend(int product_id)
+		public ActionResult<ProductDto> ProductRecommend(int product_id)
 		{
-			var data = _Service.GetRecommendByProducts(product_id);
+			IEnumerable<ProductDto> data;
+			try
+			{
+				data = _Service.GetRecommendByProducts(product_id);
+			}
+			catch (Exception ex)
+			{
 
-			return data;
+				return BadRequest(ex.Message);
+			}		
+
+			return Ok(data);
 		}
+
+		//會員專屬推薦
+		[HttpGet("MemberRec")]
+		public ActionResult<ProductDto> OrderRecommend()
+		{
+			IEnumerable<ProductDto> data;
+			try
+			{
+				data = _Service.GetRecommendByOrder(_member_id);
+			}
+			catch (Exception ex)
+			{
+
+				return BadRequest(ex.Message);
+			}
+
+			return Ok(data);
+		}
+
 
 		//評論頁
 		[HttpGet("comment")]
 		public ActionResult GetComment(int orderId,  int productId)
 		{
+			PCommentGetDTO data;
+			try
+			{
+				data = _Service.GetComment(productId, orderId);
+			}
+			catch (Exception ex)
+			{
 
-		    var data = _Service.GetComment(productId, orderId);
-
+				return BadRequest(ex.Message);
+			}
 			return Ok(data);
 		}
 
@@ -181,10 +236,10 @@ namespace HStyleApi.Controllers
 		[HttpGet("comments")]
 		public ActionResult<PCommentDTO> LoadComments()
 		{
+			IEnumerable<PCommentDTO> data;
 			try
 			{
-				var data = _Service.LoadComments();
-				return Ok(data);
+				 data = _Service.LoadComments();	
 			}
 			catch (Exception ex)
 			{
@@ -192,7 +247,7 @@ namespace HStyleApi.Controllers
 				return BadRequest(ex.Message);
 			}
 
-			
+			return Ok(data);
 		}
 
 	}

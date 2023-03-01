@@ -1,6 +1,7 @@
 ﻿using HStyleApi.Models.DTOs;
 using HStyleApi.Models.EFModels;
 using HStyleApi.Models.InfraStructures.Repositories;
+using PayPalCheckoutSdk.Orders;
 using System.Collections.Generic;
 
 namespace HStyleApi.Models.Services
@@ -92,7 +93,6 @@ namespace HStyleApi.Models.Services
 
 			var products_id = _repo.GetProductByTags(tags, product_id);
 
-
 			//如果有這個tag的商品大於三件亂數去取隨機商品
 			int targetnumber = 3;
 			IEnumerable<ProductDto> products;
@@ -138,7 +138,7 @@ namespace HStyleApi.Models.Services
 			return products;
 		}
 
-		public List<int> RandomSelect(List<int> products_id, int targetnumber)
+		private List<int> RandomSelect(List<int> products_id, int targetnumber)
 		{
 			//1.產生一原始陣列
 			int[] original = new int[products_id.Count];
@@ -172,6 +172,81 @@ namespace HStyleApi.Models.Services
 			}
 
 			return recommendlist;
+		}
+
+		public IEnumerable<ProductDto> GetRecommendByOrder(int member_id)
+		{
+			//取得order中最多tag的id
+			var maxvaluetag = _repo.GetOrderMaxTag(member_id);
+
+			//找出其他商品中含有此tag的id
+			var products_id = _repo.GetProductsByOrder(maxvaluetag, member_id);
+
+			List<int> recommendlist = new List<int>();
+			int targetnumber = 3;
+			IEnumerable<ProductDto> products;
+
+			recommendlist = RandomSelect(products_id, targetnumber);
+			products = _repo.GetProducts(recommendlist);
+
+			return products;
+
+		}
+
+		public IEnumerable<ProductDto> GetRecommendByWeather(List<int> temp)
+		{
+			//TODO 如果取出超過三件商品 要randomSelect
+			var weatherdescription = TransWeather(temp);
+			var products_id = _repo.GetProductsByWeather(weatherdescription);
+
+			IEnumerable<ProductDto> products;
+			products = _repo.GetProducts(products_id);
+
+			return products;
+		}
+
+		public List<string> TransWeather(List<int> temp)
+		{
+			Dictionary<int, string> CI = new Dictionary<int, string>
+			{
+				[1] = "非常寒冷",
+				[2] = "寒冷",
+				[3] = "稍有寒意",
+				[4] = "舒適",
+				[5] = "悶熱",
+				[6] = "易中暑",
+			};
+
+			var weatherdescription = new List<string>();
+
+			for (int i = convertToCI(temp[0]); i <= convertToCI(temp[1]); i++)
+			{
+				weatherdescription.Add(CI[i]);
+			}
+
+			return weatherdescription;
+		}
+
+		public int convertToCI(int temp)
+		{
+			if (temp <= 10)
+			{
+				return 1;
+			}
+			else if (temp <= 15)
+			{
+				return 2;
+			}
+			else if (temp <= 19)
+			{
+				return 3;
+			}
+			else if (temp <= 26)
+			{
+				return 4;
+			}
+			
+			return 5;
 		}
 	}
 }
