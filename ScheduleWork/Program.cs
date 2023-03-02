@@ -1,11 +1,10 @@
-﻿using HcoinForBirth.EFModel;
+﻿using ScheduleWork.EFModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Timers;
 
 namespace ScheduleWork
 {
@@ -27,28 +26,28 @@ namespace ScheduleWork
 		/// <param name="today">今天的日期</param>
 		private static void HcoinForBirth(DateTime today)
 		{
-            //AppDbContext _db = new AppDbContext();
-            // 生日活動Id
-            int activityId = 2;
-            // 生日活動發放的H幣
-            int activity_value = _db.H_Activities
-                .SingleOrDefault(a => a.H_Activity_Id.Equals(activityId))
-                .H_Value;
-            // 這個月份生日的會員
-            var memberInBirth = _db.Members
-                .Where(m => m.Birthday.Month.Equals(today.Month))
-                .ToList();
-            // 這個月份生日的會員的Id
-            var memberInBirthId = memberInBirth.Select(m => m.Id);
-            // 生日活動今年已發放過的紀錄
-            var memberBirthInActivity = _db.H_Source_Details
-                .Where(d => d.Activity_Id.Equals(activityId) && d.Event_Time.Year.Equals(today.Year))
-                .ToList();
+			//AppDbContext _db = new AppDbContext();
+			// 生日活動Id
+			int activityId = 2;
+			// 生日活動發放的H幣
+			int activity_value = _db.H_Activities
+				.SingleOrDefault(a => a.H_Activity_Id.Equals(activityId))
+				.H_Value;
+			// 這個月份生日的會員
+			var memberInBirth = _db.Members
+				.Where(m => m.Birthday.Month.Equals(today.Month))
+				.ToList();
+			// 這個月份生日的會員的Id
+			var memberInBirthId = memberInBirth.Select(m => m.Id);
+			// 生日活動今年已發放過的紀錄
+			var memberBirthInActivity = _db.H_Source_Details
+				.Where(d => d.Activity_Id.Equals(activityId) && d.Event_Time.Year.Equals(today.Year))
+				.ToList();
 
-            // 這個月還沒發放過H幣的會員
-            var memberNotHcoin = memberBirthInActivity.Select(m => m.Member_Id).Except(memberInBirthId);
+			// 這個月還沒發放過H幣的會員
+			var memberNotHcoin = memberBirthInActivity.Select(m => m.Member_Id).Except(memberInBirthId);
 
-            foreach (var member in memberInBirth)
+			foreach (var member in memberInBirth)
 			{
 				//var sendHcoin = memberBirthInActivity.Where(a => a.Member_Id == member.Id);
 				try
@@ -155,7 +154,7 @@ namespace ScheduleWork
 						_db.SaveChanges();
 
 						Console.WriteLine($"訂單:{order.Order_id.ToString()}，已發送貨幣");
-					}					
+					}
 				}
 				catch (Exception ex)
 				{

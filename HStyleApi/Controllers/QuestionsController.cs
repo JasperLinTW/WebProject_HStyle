@@ -3,6 +3,7 @@ using HStyleApi.Models.EFModels;
 using HStyleApi.Models.Services;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,16 +14,15 @@ namespace HStyleApi.Controllers
 	[ApiController]
 	public class QuestionsController : ControllerBase
 	{
-		private QuestionService _service;
+		private readonly QuestionService _service;
 		public QuestionsController(AppDbContext db)
 		{
 			_service = new QuestionService(db);
 		}
 
-		// GET: api/<QuestionsController>
 		// 得到所有常見問題
 		[HttpGet("/CommonQ")]
-		public async Task< IEnumerable<CommonQuestionDTO>> GetCommonQuestion([FromQuery]string? keyword)
+		public async Task<IEnumerable<CommonQuestionDTO>> GetCommonQuestion([FromQuery] string? keyword)
 		{
 			return await _service.GetCommonQuestion(keyword);
 		}
@@ -34,7 +34,6 @@ namespace HStyleApi.Controllers
 			return await _service.GetQuestionCategory();
 		}
 
-		// POST api/<QuestionsController>
 		// 傳送顧客提的問題(新增資料)
 		[HttpPost("/CustomerQ")]
 		public void PostCustomerQuestion([FromBody] CustomerQuestionDTO dto)
@@ -42,7 +41,21 @@ namespace HStyleApi.Controllers
 			_service.PostCustomerQuestion(dto);
 		}
 
-		// PUT api/<QuestionsController>/5
+		// 傳送會員提的問題(新增資料)，主要用於訂單問題
+		[HttpPost("/CustomerQ")]
+		public void PostCustomerQuestion(int? memberId, [FromBody] CustomerQuestionDTO dto)
+		{
+			if (memberId == null)
+			{
+				throw new Exception("請先登入會員");
+			}
+			else
+			{
+				dto.MemberId = memberId;
+				_service.PostCustomerQuestion(dto);
+			}
+		}
+
 		// 傳送滿意度好的紀錄
 		[HttpPut("SatisfYes/{CommonQId}")]
 		public void PutSatisfactionYes(int CommonQId)
@@ -56,11 +69,5 @@ namespace HStyleApi.Controllers
 		{
 			_service.PutSatisfactionNo(CommonQId);
 		}
-
-		//// DELETE api/<QuestionsController>/5
-		//[HttpDelete("{id}")]
-		//public void Delete(int id)
-		//{
-		//}
 	}
 }

@@ -1,4 +1,4 @@
-namespace HcoinForBirth.EFModel
+namespace ScheduleWork.EFModels
 {
     using System;
     using System.Collections.Generic;

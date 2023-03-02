@@ -3,6 +3,7 @@ using HStyleApi.Models.EFModels;
 using HStyleApi.Models.Services;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Reflection.Metadata.Ecma335;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -21,29 +22,43 @@ namespace HStyleApi.Controllers
 		}
 
 		// GET: api/<HCoinController>
-		[HttpGet]
-		public IEnumerable<string> Get()
-		{
-			return new string[] { "value1", "value2" };
-		}
+		//[HttpGet]
+		//public IEnumerable<string> Get()
+		//{
+		//	return new string[] { "value1", "value2" };
+		//}
 
 		// GET api/<HCoinController>/5
 		// 得到打卡資料
 		[HttpGet("CheckIn/{memberId}")]
 		public async Task<HCheckInDTO> GetHCheckIn(int memberId)
 		{
-			// 活動Id和項目
-			int activityId_checkIn = 3;
-			return await _service.GetHCheckIn(memberId, activityId_checkIn);
+			if (memberId == null)
+			{
+				throw new Exception("請先登入會員");
+			}
+			else
+			{
+				// 活動Id和項目
+				int activityId_checkIn = 3;
+				return await _service.GetHCheckIn(memberId, activityId_checkIn);
+			}
 		}
 
 		// PUT api/<HCoinController>/5
 		// 將打卡紀錄傳回資料庫
 		[HttpPut("CheckIn/{id}")]
-		public async Task<ActionResult> PutCheckIn(int id)
+		public async Task<ActionResult> PutCheckIn(int memberId)
 		{
-			string response = await _service.PutCheckInById(id);
-			return Ok(response);
+			if (memberId == null)
+			{
+				throw new Exception("請先登入會員");
+			}
+			else
+			{
+				string response = await _service.PutCheckInById(memberId);
+				return Ok(response);
+			}
 		}
 
 		// 取得花費活動的規則
@@ -58,7 +73,14 @@ namespace HStyleApi.Controllers
 		[HttpGet("TotalHCoin/{memberId}")]
 		public async Task<int> GetTotalHCoin(int memberId)
 		{
-			return await _service.GetTotalHCoinByMemberId(memberId);
+			if (memberId == null)
+			{
+				throw new Exception("請先登入會員");
+			}
+			else
+			{
+				return await _service.GetTotalHCoinByMemberId(memberId);
+			}
 		}
 
 		// 將會員花費的HCoin記錄到
@@ -66,14 +88,21 @@ namespace HStyleApi.Controllers
 		[HttpPost("CostHCoin/{memberId}")]
 		public void PostCostHCoin(int memberId, [FromBody] int value)
 		{
-			// 將會員花費的HCoin記錄到會員的活動中
-			_service.PostCostHCoinByMemberId(memberId, value);
+			if (memberId == null)
+			{
+				throw new Exception("請先登入會員");
+			}
+			else
+			{
+				// 將會員花費的HCoin記錄到會員的活動中
+				_service.PostCostHCoinByMemberId(memberId, value);
+			}
 		}
 
-		// DELETE api/<HCoinController>/5
-		[HttpDelete("{id}")]
-		public void Delete(int id)
-		{
-		}
+		//// DELETE api/<HCoinController>/5
+		//[HttpDelete("{id}")]
+		//public void Delete(int id)
+		//{
+		//}
 	}
 }

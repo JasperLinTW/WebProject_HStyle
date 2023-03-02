@@ -1,4 +1,4 @@
-namespace HcoinForBirth.EFModel
+namespace ScheduleWork.EFModels
 {
     using System;
     using System.Collections.Generic;
@@ -28,7 +28,7 @@ namespace HcoinForBirth.EFModel
 
         public DateTime? OffShelffTime { get; set; }
 
-        public bool IsOnShelff { get; set; }
+        public bool? IsOnShelff { get; set; }
 
         public DateTime CreatedTime { get; set; }
     }

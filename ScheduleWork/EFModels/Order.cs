@@ -1,4 +1,4 @@
-namespace HcoinForBirth.EFModel
+namespace ScheduleWork.EFModels
 {
     using System;
     using System.Collections.Generic;
@@ -8,12 +8,6 @@ namespace HcoinForBirth.EFModel
 
     public partial class Order
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Order()
-        {
-            Order_Details = new HashSet<Order_Details>();
-        }
-
         [Key]
         public int Order_id { get; set; }
 
@@ -63,12 +57,5 @@ namespace HcoinForBirth.EFModel
         public string PayInfo { get; set; }
 
         public virtual Member Member { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Order_Details> Order_Details { get; set; }
-
-        public virtual Order_Status Order_Status { get; set; }
-
-        public virtual Order_StatusDescription Order_StatusDescription { get; set; }
     }
 }
