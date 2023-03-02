@@ -8,6 +8,12 @@ namespace HcoinForBirth.EFModel
 
     public partial class Order_StatusDescription
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Order_StatusDescription()
+        {
+            Orders = new HashSet<Order>();
+        }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Description_id { get; set; }
@@ -16,5 +22,8 @@ namespace HcoinForBirth.EFModel
 
         [StringLength(100)]
         public string Description { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

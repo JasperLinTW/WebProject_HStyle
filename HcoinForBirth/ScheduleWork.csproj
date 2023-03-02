@@ -53,7 +53,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EFModel\AppDbContext.cs" />
-    <Compile Include="EFModel\Employee.cs" />
     <Compile Include="EFModel\H_Activities.cs" />
     <Compile Include="EFModel\H_CheckIns.cs" />
     <Compile Include="EFModel\H_Source_Details.cs" />
@@ -63,6 +62,7 @@
     <Compile Include="EFModel\Order_Log.cs" />
     <Compile Include="EFModel\Order_Status.cs" />
     <Compile Include="EFModel\Order_StatusDescription.cs" />
+    <Compile Include="EFModel\Video.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -70,5 +70,6 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

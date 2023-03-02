@@ -18,5 +18,7 @@ namespace HcoinForBirth.EFModel
         [Required]
         [StringLength(50)]
         public string Status { get; set; }
+
+        public int? Employee_id { get; set; }
     }
 }

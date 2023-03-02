@@ -11,6 +11,8 @@ namespace HcoinForBirth.EFModel
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Member()
         {
+            H_CheckIns = new HashSet<H_CheckIns>();
+            H_Source_Details = new HashSet<H_Source_Details>();
             Orders = new HashSet<Order>();
         }
 
@@ -54,6 +56,12 @@ namespace HcoinForBirth.EFModel
 
         [StringLength(100)]
         public string EncryptedPassword { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<H_CheckIns> H_CheckIns { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<H_Source_Details> H_Source_Details { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Orders { get; set; }

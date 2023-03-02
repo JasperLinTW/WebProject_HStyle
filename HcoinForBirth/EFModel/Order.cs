@@ -23,7 +23,9 @@ namespace HcoinForBirth.EFModel
 
         public int Total { get; set; }
 
-        public int Payment { get; set; }
+        [Required]
+        [StringLength(20)]
+        public string Payment { get; set; }
 
         public DateTime? ShippedDate { get; set; }
 
@@ -55,11 +57,18 @@ namespace HcoinForBirth.EFModel
 
         public int? Status_Description_id { get; set; }
 
-        public virtual Employee Employee { get; set; }
+        public int? Discount { get; set; }
+
+        [StringLength(50)]
+        public string PayInfo { get; set; }
 
         public virtual Member Member { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order_Details> Order_Details { get; set; }
+
+        public virtual Order_Status Order_Status { get; set; }
+
+        public virtual Order_StatusDescription Order_StatusDescription { get; set; }
     }
 }

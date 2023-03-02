@@ -28,7 +28,13 @@ namespace HcoinForBirth.EFModel
 
         public int Quantity { get; set; }
 
-        public int? Discount { get; set; }
+        [Required]
+        [StringLength(50)]
+        public string Color { get; set; }
+
+        [Required]
+        [StringLength(50)]
+        public string Size { get; set; }
 
         public virtual Order Order { get; set; }
     }

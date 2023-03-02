@@ -96,9 +96,9 @@ namespace ScheduleWork
 			// 購物額滿的金額
 			int fullPriceId = 4;
 			int fullPrice = _db.H_Activities.SingleOrDefault(a => a.H_Activity_Id == fullPriceId).H_Value;
-			// 購物滿額發送的H幣
+			// 購物滿額發送的H幣，以購買金額的(多少)%來做為發放的金額
 			int hCoinId = 5;
-			int hCoin = _db.H_Activities.SingleOrDefault(a => a.H_Activity_Id == hCoinId).H_Value;
+			double hCoinPercent = _db.H_Activities.SingleOrDefault(a => a.H_Activity_Id == hCoinId).H_Value / 100;
 			// 已發送過H幣的訂單(三個月內)
 			DateTime inDays = today.AddDays(-90);
 			var orderInSources = _db.H_Source_Details
@@ -119,8 +119,25 @@ namespace ScheduleWork
 				{
 					if (!orderInSources.Any(s => s.Remark.Contains("訂單編號:" + order.Order_id.ToString())))
 					{
-						// 加入Member中的Total_H
+						// 取得會員資料
 						Member memberData = _db.Members.SingleOrDefault(m => m.Id == order.Member_id);
+						// 訂單金額
+						int price = _db.Orders.SingleOrDefault(o => o.Order_id == order.Order_id).Total;
+						// 計算發送的H幣，白金會員
+						double calHCoin = price * hCoinPercent;
+						// 依據會員等級發放
+						if (memberData.Permission_Id == 1)
+						{
+							// 銀級會員
+							calHCoin *= 0.5;
+						}
+						else if (memberData.Permission_Id == 2)
+						{
+							// 金級會員
+							calHCoin *= 0.75;
+						}
+						int hCoin = (int)Math.Round(calHCoin, 0, MidpointRounding.AwayFromZero);
+						// 加入Member中的Total_H						
 						memberData.Total_H += hCoin;
 						_db.SaveChanges();
 
@@ -138,43 +155,13 @@ namespace ScheduleWork
 						_db.SaveChanges();
 
 						Console.WriteLine($"訂單:{order.Order_id.ToString()}，已發送貨幣");
-					}
-					//else
-					//{
-					//	Console.WriteLine("今年已發送過了");
-					//}
+					}					
 				}
 				catch (Exception ex)
 				{
 					throw new Exception(ex.Message);
 				}
 			}
-		}
-
-		/// 計算所有 H coin
-		/// </summary>
-		/// <param name="id"></param>
-		public static void TotalHcoin(int id)
-		{
-			AppDbContext _db = new AppDbContext();
-
-			// 找出會員所有活動的紀錄
-			var detail = _db.H_Source_Details.Where(d => d.Member_Id == id);
-
-			// 計算H幣總額
-			int total = 0;
-
-			total = detail.Sum(d => d.Difference_H);
-			//foreach (var item in detail)
-			//{
-			//	total += item.Difference_H;
-			//}
-
-			// 修改Member的Total_H
-			var member = _db.Members.Find(id);
-			member.Total_H = total;
-
-			_db.SaveChanges();
 		}
 	}
 }
