@@ -1,5 +1,4 @@
 <template>
-
     <header class="bg-opacity-0 targetAll sticky-top" id="myHeader">
     <h1 class="trans1">H'STYLE</h1>
     </header>
@@ -37,9 +36,6 @@
                 
                 </ul>
             </div>
-
-            
-
             <div class="nav justify-content-end">
                 <div class="mx-3">
                     <a href="#" title="喜歡" class="text-dark"><i class="fa-regular fa-heart icon-hover"></i></a>
@@ -51,12 +47,11 @@
                     <a href="#" title="會員" class="text-dark"><i class="fa-regular fa-circle-user icon-hover"></i></a>
                 </div>
                 <div class="btn-light mx-3" >
-                    <a href="#" title="購物車" class="text-dark"><i class="fa-solid fa-cart-shopping icon-hover"> </i></a>
+                    <a href="#" title="購物車" class="text-dark"><i class="fa-solid fa-cart-shopping icon-hover" data-bs-toggle="modal" data-bs-target="#exampleModal"> </i></a>
                     
                 </div>
             </div>
         </div>
-
     </nav>
     <Cart />
 </template>

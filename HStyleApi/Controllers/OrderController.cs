@@ -37,22 +37,17 @@ namespace HStyleApi.Controllers
 		[HttpGet("/test")]
 		public dynamic test()
 		{
-            var tags = new List<int> { 34, 36 };
+			var tags = new List<int> { 34, 36 };
 
 			var products = _db.Products
 				.Include(x => x.Tags)
-				.Select(x => new{
+				.Select(x => new
+				{
 					productId = x.ProductId,
-					isRecomended = x.Tags.Select(x => x.Id).ToList()
-				}).ToList().Where(x => x.isRecomended.Intersect(tags).Any()).Select(x => x.productId);
-			//var idList = new List<int>();
-			//foreach (var item in products)
-			//{
-			//	if (item.isRecomended.Intersect(tags).Any())
-			//	{
-   //                 idList.Add(item.productId);
-			//	}
-			//}
+					isRecomended = x.Tags.Select(x => x.Id)
+				}).ToList().Where(x => x.isRecomended.Intersect(tags).Any());//.Select(x => x.productId);
+			
+
 
 			return products;
         }
