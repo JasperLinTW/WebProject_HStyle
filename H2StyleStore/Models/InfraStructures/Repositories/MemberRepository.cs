@@ -23,7 +23,7 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 				Address =dto.Address,
 				Gender = dto.Gender,
 				Birthday =dto.Birthday,
-				Permission_Id = null,
+				Permission_Id = 1,
 				Jointime =DateTime.Now,
 				Mail_verify = false, //預設是未確認的會員  IsConfirmed=我資料庫的 Mail_verify
 				Mail_code = dto.Mail_code,//mail的確認確認碼  ConfirmCode=我資料庫的 Mail_code

@@ -44,40 +44,96 @@ namespace HStyleApi.Controllers
 		}
 
 
+        //    [HttpPost("LogIn")]
+        //    public string LogIn(LogInDTO value)
+        //    {
+        //        var member = _context.Members.FirstOrDefault(x => x.Account == value.Account);
+
+        //        if (member == null)
+        //        {
+        //            return ("帳密有誤");
+        //        }
+
+        //        if (member.MailVerify == false)
+        //        {
+        //            return ("會員資格尚未確認");
+        //        }
+
+        //        string encryptedPwd = HashUtility.ToSHA256(value.Password, RegisterDTO.SALT);
+
+        //        if (String.CompareOrdinal(member.EncryptedPassword, encryptedPwd) != 0)
+        //        {
+        //            return "帳號或密碼錯誤";
+        //        }
+        //        else
+        //        {
+        //            var claims = new List<Claim>
+        //            {
+        //                new Claim(ClaimTypes.Name, member.Account),
+        //                new Claim("FullName", member.Name),
+        //	// new Claim(ClaimTypes.Role, "Administrator")
+        //};
+        //            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+        //            HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+        //        };
+        //        return "登入成功";
+        //    }
         [HttpPost("LogIn")]
-        public string LogIn(LogInDTO value)
+        public IActionResult LogIn(LogInDTO value)
         {
             var member = _context.Members.FirstOrDefault(x => x.Account == value.Account);
 
             if (member == null)
             {
-                return ("帳密有誤");
-            }
-
-            if (member.MailVerify == false)
-            {
-                return ("會員資格尚未確認");
+                return BadRequest("帳號或密碼錯誤");
             }
 
             string encryptedPwd = HashUtility.ToSHA256(value.Password, RegisterDTO.SALT);
 
             if (String.CompareOrdinal(member.EncryptedPassword, encryptedPwd) != 0)
             {
-                return "帳號或密碼錯誤";
+                return BadRequest("帳號或密碼錯誤");
             }
-            else
+
+            if (member.MailVerify == false)
             {
-                var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, member.Account),
-                    new Claim("FullName", member.Name),
-					// new Claim(ClaimTypes.Role, "Administrator")
-				};
-                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+                return BadRequest("會員資格尚未確認");
+            }
+
+            var claims = new List<Claim>
+    {
+        new Claim(ClaimTypes.Name, member.Account),
+        new Claim("FullName", member.Name),
+    };
+
+            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+            HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity)).Wait();
+
+            // 建立一個包含用戶相關聲明(Claim)的JavaScript對象
+            var userData = new
+            {
+                id = member.Id,
+                account = member.Account,
+                name = member.Name,
+                email = member.Email,
+                //role = member.Role,       妹用到這個資料
+                //picture = member.Picture  沒用到這個資料
             };
-            return "登入成功";
+
+            // 將JavaScript對象傳遞回前端
+            return Ok(new { userData });
         }
+
+        //    var claims = new List<Claim>
+        //            {
+        //                new Claim(ClaimTypes.Name,
+        //                ),
+        //                new Claim("FullName", member.Name),
+        //	// new Claim(ClaimTypes.Role, "Administrator")
+        //};
+        //    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+        //    HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
         [HttpPost("LogOut")]
         public void LogOut()
@@ -117,7 +173,7 @@ namespace HStyleApi.Controllers
                 Address = register.Address,
                 Gender = register.Gender,
                 Birthday = register.Birthday,
-                PermissionId = null,
+                PermissionId = 1,
                 Jointime = DateTime.Now,
                 MailVerify = false, //預設是未確認的會員  IsConfirmed=我資料庫的 Mail_verify
                 MailCode = Guid.NewGuid().ToString("N"),//mail的確認確認碼  ConfirmCode=我資料庫的 Mail_code
