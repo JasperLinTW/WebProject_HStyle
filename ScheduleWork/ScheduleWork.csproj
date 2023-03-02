@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{EAACF929-DBFD-49B9-AA77-E98536B372A1}</ProjectGuid>
+    <ProjectGuid>{478B39D2-5301-4DD2-859F-27DFD37E8591}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>HcoinForBirth</RootNamespace>
-    <AssemblyName>HcoinForBirth</AssemblyName>
+    <RootNamespace>ScheduleWork</RootNamespace>
+    <AssemblyName>ScheduleWork</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -52,17 +52,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EFModel\AppDbContext.cs" />
-    <Compile Include="EFModel\Employee.cs" />
-    <Compile Include="EFModel\H_Activities.cs" />
-    <Compile Include="EFModel\H_CheckIns.cs" />
-    <Compile Include="EFModel\H_Source_Details.cs" />
-    <Compile Include="EFModel\Member.cs" />
-    <Compile Include="EFModel\Order.cs" />
-    <Compile Include="EFModel\Order_Details.cs" />
-    <Compile Include="EFModel\Order_Log.cs" />
-    <Compile Include="EFModel\Order_Status.cs" />
-    <Compile Include="EFModel\Order_StatusDescription.cs" />
+    <Compile Include="EFModels\AppDbContext.cs" />
+    <Compile Include="EFModels\H_Activities.cs" />
+    <Compile Include="EFModels\H_CheckIns.cs" />
+    <Compile Include="EFModels\H_Source_Details.cs" />
+    <Compile Include="EFModels\Member.cs" />
+    <Compile Include="EFModels\Order.cs" />
+    <Compile Include="EFModels\Video.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

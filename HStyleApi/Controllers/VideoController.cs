@@ -24,38 +24,74 @@ namespace HStyleApi.Controllers
 		}
 		// GET: api/<VideoController>
 		[HttpGet]
-		public async Task<IEnumerable<VideoDTO>> GetVideos([FromQuery] string? keyword)
+		public async Task<ActionResult<IEnumerable<VideoDTO>>> GetVideos([FromQuery] string? keyword)
 		{
-			IEnumerable<VideoDTO> data = await _service.GetVideos(keyword);
-			return data;
+			
+			try
+			{
+				IEnumerable<VideoDTO> data = await _service.GetVideos(keyword);
+				return Ok(data);
+			}
+			catch(Exception ex)
+			{
+				return BadRequest(ex.Message);
+			}
 		}
 
 		// GET api/<VideoController>/5  
 		[HttpGet("{id}")]
-		public async Task<IEnumerable<VideoDTO>> GetVideo(int id)
+		public async Task<ActionResult<IEnumerable<VideoDTO>>> GetVideo(int id)
 		{
-			return await _service.GetVideo(id);
+			try
+			{
+				IEnumerable<VideoDTO> data = await _service.GetVideo(id);
+				return Ok(data);
+			}
+			catch(Exception ex)
+			{
+				return BadRequest(ex.Message);
+			}
 		}
 
 		// GET api/<VideoController>/5 
 		[HttpGet("News")]
-		public async Task<IEnumerable<VideoDTO>> GetNews()
+		public async Task<ActionResult<IEnumerable<VideoDTO>>> GetNews()
 		{
-			return await _service.GetNews();
+			try
+			{
+				IEnumerable<VideoDTO> data= await _service.GetNews();
+				return Ok(data);
+			}
+			catch(Exception ex)
+			{
+				return BadRequest(ex.Message);
+			}
 		}
 
 		//GET api/<VideoController>/MyLike/5  
 		[HttpGet("MyLike/{memberId}")]
 		public async Task<IEnumerable<VideoLikeDTO>> GetLikeVideos(int memberId)
 		{
-			return await _service.GetLikeVideos(memberId);
+			if (memberId == null)
+			{
+				throw new Exception("請先登入會員");
+			}else
+			{
+				return await _service.GetLikeVideos(memberId);
+			}
 		}
 
 		// POST api/<VideoController>/Like
 		[HttpPost("Like")]
 		public void PostLike(int memberId, int videoId)
 		{ 
-			_service.PostLike(memberId, videoId);
+			if (memberId == null)
+			{
+				throw new Exception("請先登入會員");
+			}else
+			{
+				_service.PostLike(memberId, videoId);
+			}
 		}
 
 		// POST api/<VideoController>/View/5
@@ -78,14 +114,28 @@ namespace HStyleApi.Controllers
 		[HttpPost("Comment")]
 		public void CreateComment([FromBody] string comment, int memberId, int videoId)
 		{
-			_service.CreateComment(comment,memberId,videoId);
+			if (memberId == null)
+			{
+				throw new Exception("請先登入會員");
+			}
+			else
+			{
+				_service.CreateComment(comment, memberId, videoId);
+			}
 		}
 
 		//POST api/<VideoController>/CommentLike
 		[HttpPost("CommentLike")]
 		public void PostCommentLike(int memberId,int CommentId)
 		{
-			_service.PostCommentLike(memberId,CommentId);
+			if (memberId == null)
+			{
+				throw new Exception("請先登入會員");
+			}
+			else
+			{
+				_service.PostCommentLike(memberId, CommentId);
+			}
 		}
 	}
 }

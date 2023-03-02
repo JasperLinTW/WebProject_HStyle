@@ -33,7 +33,7 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 
 			if (data == null)
 			{
-				throw new Exception();
+				throw new Exception("目前沒有影片");
 			}
 
 			if (keyword == null)
@@ -61,7 +61,7 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 
 			if (video == null)
 			{
-				throw new Exception();
+				throw new Exception("找不到這部影片!");
 			}
 
 			return video;
@@ -116,7 +116,8 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 				};
 				_db.VideoLikes.Add(like);
 			}
-			else _db.VideoLikes.Remove(data);	
+			else _db.VideoLikes.Remove(data);
+
 			_db.SaveChanges();
 		}
 

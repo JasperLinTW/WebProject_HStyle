@@ -33,22 +33,22 @@ namespace H2StyleStore.Models.Services
 
             if (dto.FilePath == null) return (false, "請上傳影片檔案");
 
-			if (dto.OnShelffTime == null && dto.OffShelffTime == null) dto.IsOnShelff = true;
-			else if (dto.OnShelffTime.HasValue && dto.OffShelffTime == null)
-			{
-				if (DateTime.Now >= dto.OnShelffTime) dto.IsOnShelff = true;
-				else dto.IsOnShelff = false;
-			}
-			else if (dto.OnShelffTime == null && dto.OffShelffTime.HasValue)
-			{
-				if (DateTime.Now < dto.OffShelffTime) dto.IsOnShelff = true;
-				else dto.IsOnShelff = false;
-			}
-			else
-			{
-				if (DateTime.Now >= dto.OnShelffTime && DateTime.Now < dto.OffShelffTime) dto.IsOnShelff = true;
-				else dto.IsOnShelff = false;
-			}
+			//if (dto.OnShelffTime == null && dto.OffShelffTime == null) dto.IsOnShelff = true;
+			//else if (dto.OnShelffTime.HasValue && dto.OffShelffTime == null)
+			//{
+			//	if (DateTime.Now >= dto.OnShelffTime) dto.IsOnShelff = true;
+			//	else dto.IsOnShelff = false;
+			//}
+			//else if (dto.OnShelffTime == null && dto.OffShelffTime.HasValue)
+			//{
+			//	if (DateTime.Now < dto.OffShelffTime) dto.IsOnShelff = true;
+			//	else dto.IsOnShelff = false;
+			//}
+			//else
+			//{
+			//	if (DateTime.Now >= dto.OnShelffTime && DateTime.Now < dto.OffShelffTime) dto.IsOnShelff = true;
+			//	else dto.IsOnShelff = false;
+			//}
 
 			_repository.CreateVideo(dto);
             return (true, null);
@@ -57,27 +57,27 @@ namespace H2StyleStore.Models.Services
 		public void UpdateVideo(UpdateVideoDto request)
 		{
             UpdateVideoDto entity = _repository.GetVideoById(request.Id);
-            if (entity == null)
-            {
-                throw new Exception("找不到此影片");
-            }
+			if (entity == null)
+			{
+				throw new Exception("找不到此影片");
+			}
 
-			if (request.OnShelffTime == null && request.OffShelffTime == null) request.IsOnShelff = true;
-			else if (request.OnShelffTime.HasValue && request.OffShelffTime == null)
-			{
-				if (DateTime.Now >= request.OnShelffTime) request.IsOnShelff = true;
-				else request.IsOnShelff = false;
-			}
-			else if (request.OnShelffTime == null && request.OffShelffTime.HasValue)
-			{
-				if (DateTime.Now < request.OffShelffTime) request.IsOnShelff = true;
-				else request.IsOnShelff = false;
-			}
-			else
-			{
-				if (DateTime.Now >= request.OnShelffTime && DateTime.Now < request.OffShelffTime) request.IsOnShelff = true;
-				else request.IsOnShelff = false;
-			}
+			//if (request.OnShelffTime == null && request.OffShelffTime == null) request.IsOnShelff = true;
+			//else if (request.OnShelffTime.HasValue && request.OffShelffTime == null)
+			//{
+			//	if (DateTime.Now >= request.OnShelffTime) request.IsOnShelff = true;
+			//	else request.IsOnShelff = false;
+			//}
+			//else if (request.OnShelffTime == null && request.OffShelffTime.HasValue)
+			//{
+			//	if (DateTime.Now < request.OffShelffTime) request.IsOnShelff = true;
+			//	else request.IsOnShelff = false;
+			//}
+			//else
+			//{
+			//	if (DateTime.Now >= request.OnShelffTime && DateTime.Now < request.OffShelffTime) request.IsOnShelff = true;
+			//	else request.IsOnShelff = false;
+			//}
 			entity.Title = request.Title;
 			entity.Description = request.Description;
 			entity.CategoryId = request.CategoryId;
@@ -87,7 +87,7 @@ namespace H2StyleStore.Models.Services
 			entity.CreatedTime = request.CreatedTime;
 			entity.Tags = request.Tags;
 			entity.Image = request.Image;
-			entity.IsOnShelff = request.IsOnShelff;
+			//entity.IsOnShelff = request.IsOnShelff;
 
 			_repository.Update(entity);
 		}
