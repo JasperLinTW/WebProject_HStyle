@@ -30,6 +30,7 @@
     -ms-transform: translate3d(0%, 0, 0);
     -o-transform: translate3d(0%, 0, 0);
     transform: translate3d(0%, 0, 0);
+    right: 0;
 }
 
 .modal-content {
@@ -41,11 +42,5 @@
 .modal-body {
     padding: 15px 15px 80px;
 }
-
-
-.modal-dialog {
-    right: 0;
-}
-
 
 </style>
