@@ -2,10 +2,9 @@
 <template>
   
    <div id="area1" class="area area1">
-              <div class="hero-text nav-btns  ">  
+              <div class="hero-text nav-btns">  
                   <h1 class="text-captialize">Welcome to H'style</h1>
                   <p>Discover the latest collections and experience the unique world of H'style</p>
-                  <!-- <button>Shop Now</button> -->
                   <a href="#" class="btn mt-3 text-uppercasre">shop now</a>
               </div>
           </div>
@@ -14,7 +13,7 @@
           <div id="section1" class="text-center ">  
               <div>
                   <div class="box"></div>
-                  <h1 class="text-captialize text-white">Welcome to H'style dfrgsgs</h1>
+                  <h1 class="text-captialize text-white">Welcome to H'style</h1>
                   <p class="text-white">Discover the latest collections and experience the unique world of H'style</p>
                   <a href="#" class="btn mt-3 text-uppercasre">shop now</a> 
               </div> 
@@ -55,5 +54,4 @@
 <script></script>
 
 <style>
-
 </style>

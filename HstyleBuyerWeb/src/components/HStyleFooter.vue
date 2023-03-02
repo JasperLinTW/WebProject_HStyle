@@ -1,11 +1,11 @@
 <template>
     <footer>
-            <div class="container-fluid pb-5">
+            <div class="container-fluid pt-5">
                 <div class="nav d-flex justify-content-evenly">
-                <span class="text-black">部落格</span>
-                <span class="text-black">服務中心</span>
-                <span class="nav-link text-black">會員權益</span>
-                <span class="nav-link text-black">售後服務</span>
+                <span class="text-white">部落格</span>
+                <span class="text-white">服務中心</span>
+                <span class="nav-link text-white">會員權益</span>
+                <span class="nav-link text-white">售後服務</span>
                 </div>
             </div>
         </footer>
@@ -28,10 +28,13 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 
-footer {  
-    
+footer {
+  height: 250px;
+  background-color: black;
+  position: relative;
+  clear:both;
 }
 
 </style>

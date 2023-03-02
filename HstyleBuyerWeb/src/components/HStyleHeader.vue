@@ -14,17 +14,17 @@
             <div id="NavbarContent" class="nav">
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
-                        <router-link to="/blog" class="nav-link text-dark"><span class="targetAll">H'Blog</span></router-link>
+                        <router-link to="/blog" class="nav-link text-dark px-3"><span class="targetAll">H'Blog</span></router-link>
                     </li>
                     <li class="nav-item dropdown">
-                        <router-link to="/recommend" class="nav-link text-dark"><span class="targetAll">推薦商品</span></router-link>
+                        <router-link to="/recommend" class="nav-link text-dark px-3"><span class="targetAll">推薦商品</span></router-link>
                     </li>
                     <a href="#"></a>
                     <li class="nav-item dropdown">
-                        <router-link to="/product" class="nav-link text-dark"><span class="targetAll">新品上市</span></router-link>
+                        <router-link to="/product" class="nav-link text-dark px-3"><span class="targetAll">新品上市</span></router-link>
                     </li>
                     <li class="nav-item dropdown">
-                        <router-link to="/product" class="nav-link text-dark targetAll"><span class="targetAll">服飾名品</span></router-link>
+                        <router-link to="/product" class="nav-link text-dark px-3"><span class="targetAll">服飾名品</span></router-link>
                     </li>
                 
                 </ul>
@@ -32,16 +32,16 @@
 
             <div class="nav justify-content-end ps-5">
                 <div class="mx-3">
-                    <a href="#" title="喜歡" class="text-dark"><i class="fa-regular fa-heart icon-hover"></i></a>
+                    <a href="#" title="喜歡" class="text-dark"><i class="fa-regular fa-heart icon-hover fz-18"></i></a>
                 </div>
                 <div class="btn-light mx-3">
-                    <a href="#" title="打卡" class="text-dark"><i class="fa-regular fa-circle-check  icon-hover"></i></a>
+                    <a href="#" title="打卡" class="text-dark"><i class="fa-regular fa-circle-check  icon-hover fz-18"></i></a>
                 </div>
                 <div class="btn-light mx-3">
-                    <a href="#" title="會員" class="text-dark"><i class="fa-regular fa-circle-user icon-hover"></i></a>
+                    <a href="#" title="會員" class="text-dark"><i class="fa-regular fa-circle-user icon-hover fz-18"></i></a>
                 </div>
                 <div class="btn-light mx-3" >
-                    <a href="#" title="購物車" class="text-dark"><i class="fa-solid fa-cart-shopping icon-hover"> </i></a>
+                    <a href="#" title="購物車" class="text-dark"><i class="fa-solid fa-cart-shopping icon-hover fz-18"> </i></a>
                     
                 </div>
             </div>
@@ -66,7 +66,10 @@ export default{
 
 
 </script>
-<style>
+<style scoped>
+.fz-18{
+    font-size: 18px;
+}
 .icon-hover:hover{
     color: #46A3FF;
 }
@@ -80,5 +83,22 @@ export default{
     color: #46A3FF;
 }
 
+.nav-item::after{
+ content: '';
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  bottom: -3px;
+  left: 0;
+  background-color: #46A3FF;
+  visibility: hidden;
+  transform: scaleX(0);
+  transition: all 0.3s ease-in-out 0s;
 
+}
+
+.nav-item:hover::after{
+    visibility: visible;
+  transform: scaleX(1);
+}
 </style>
