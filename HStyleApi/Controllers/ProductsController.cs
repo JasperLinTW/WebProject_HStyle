@@ -83,7 +83,7 @@ namespace HStyleApi.Controllers
 
 		}
 
-		// 商品總覽
+		// 商品總覽(全部商品)
 		[HttpGet("products")]
 		public ActionResult<ProductDto> LoadProducts([FromQuery] string? keyword)
 		{
@@ -118,6 +118,46 @@ namespace HStyleApi.Controllers
 			return Ok(data);
 
 		}
+
+		//新品頁
+		[HttpGet("newProducts")]
+		public ActionResult<ProductDto> LoadNewProducts(string tag)
+		{
+			IEnumerable<ProductDto> data;
+			List<string> tags = new List<string>();
+			try
+			{
+				tags.Add(tag);
+				data = _Service.GetNewProducts(tags);
+			}
+			catch (Exception ex)
+			{
+				return BadRequest(ex.Message);
+			}
+
+			return Ok(data);
+
+		}
+
+
+		//依類別分類
+		[HttpGet("PCategory/{PCategoryName}")]
+		public ActionResult<ProductDto> LoadPCategory(string PCategoryName)
+		{
+			IEnumerable<ProductDto> data;
+			try
+			{
+				data = _Service.LoadProductsByCategory(PCategoryName);
+			}
+			catch (Exception ex)
+			{
+
+				return BadRequest(ex.Message);
+			}
+
+			return Ok(data);
+		}
+
 
 		//商品收藏
 		[HttpPost("product/like")]
