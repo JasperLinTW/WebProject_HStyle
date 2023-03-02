@@ -160,7 +160,7 @@ namespace ScheduleWork
 		public static void ChangeIsOnShelf(DateTime today)
 		{
 			//AppDbContext _db = new AppDbContext();
-			var data = _db.Videos;
+			IEnumerable<Video> data = _db.Videos;
 
 			foreach (Video video in data)
 			{
@@ -168,19 +168,16 @@ namespace ScheduleWork
 				if (video.OnShelffTime == null && video.OffShelffTime == null)
 				{
 					video.IsOnShelff = true;
-					_db.SaveChanges();
 				}
 				else if (video.OnShelffTime.HasValue && video.OffShelffTime == null)
 				{
 					if (today >= video.OnShelffTime)
 					{
 						video.IsOnShelff = true;
-						_db.SaveChanges();
 					}
 					else
 					{
 						video.IsOnShelff = false;
-						_db.SaveChanges();
 					}
 				}
 				else if (video.OnShelffTime == null && video.OffShelffTime.HasValue)
@@ -188,12 +185,10 @@ namespace ScheduleWork
 					if (today < video.OffShelffTime)
 					{
 						video.IsOnShelff = true;
-						_db.SaveChanges();
 					}
 					else
 					{
 						video.IsOnShelff = false;
-						_db.SaveChanges();
 					}
 				}
 				else
@@ -201,16 +196,14 @@ namespace ScheduleWork
 					if (today >= video.OnShelffTime && today < video.OffShelffTime)
 					{
 						video.IsOnShelff = true;
-						_db.SaveChanges();
 					}
 					else
 					{
 						video.IsOnShelff = false;
-						_db.SaveChanges();
 					}
-				}
-				Console.WriteLine(video.Title);
+				}	
 			}
+			_db.SaveChanges();
 		}
 	}
 }
