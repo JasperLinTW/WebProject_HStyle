@@ -1,10 +1,12 @@
 <script>
 import HStyleHeader from './components/HStyleHeader.vue'
+import HStyleFooter from './components/HStyleFooter.vue'
 
 export default {
   name: "App",
   components: {
     HStyleHeader,
+    HStyleFooter,
   }
 };
 
@@ -15,8 +17,8 @@ export default {
   
   <div id="app">
     <HStyleHeader />
-    
     <router-view />
+    <HStyleFooter/>
   </div>
   
 </template>
