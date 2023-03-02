@@ -5,11 +5,11 @@
     </header>
     <nav class="navbar navbar-expand bg-ligt">
         <div Class="container-fluid" m-0 g-0 position-relative>
-            <div class="nav inputGroup">
+            <div class="nav inputGroup" id="app">
                 <span class="icon ma-1 my-1 px-3">
-                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <i class="fa-solid fa-magnifying-glass search targetAll"></i>
                 </span>
-                <input class="fz14 py-1 ps-4 rounded-1 border-0" type="text" placeholder="" />
+                <input class="fz14 py-1 ps-4 rounded-1 border-0" id="search"  type="text" />
             </div>
             <div id="NavbarContent" class="nav">
                 <ul class="navbar-nav">
@@ -59,14 +59,20 @@ export default{
     mounted(){
          window.addEventListener("scroll",function(){
          var header = document.querySelector("header");
-         header.classList.toggle("sticky", window.scrollY > 0);})   
+         header.classList.toggle("sticky", window.scrollY > 0)
+         ;})   
+
+         document.querySelector(".search").addEventListener("click", function () {
+            document.querySelector("#search").focus();
+        });
+
     }
-    
 }
-
-
 </script>
 <style scoped>
+.search{
+    cursor: pointer;
+}
 .fz-18{
     font-size: 18px;
 }
