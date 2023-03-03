@@ -1,37 +1,87 @@
 <template>
-    <div class="col-lg-4">
-        <div class="card mb-4 shadow-sm">
-            <img class="card-img-top">
+    <div class="col-lg-4 d-flex justify-content-around px-5 py-5" v-for="item in products">
+        <div class="card d-flex justify-content-center align-items-center">
+            <div class="img-sz">
+                <img v-if="!item.isIn" @mouseover="item.isIn = true" :src="item.imgs[0]" class="card-img-top"
+                    alt="Product Image">
+                <img v-else @mouseout="item.isIn = false" :src="item.imgs[1]" class="card-img-top" alt="Product Image">
+            </div>
+
             <div class="card-body">
-                <h5 class="card-title">13256</h5>
-                <div class="d-flex justify-content-between align-items-center">
-                    <span class="price">56486</span>
-                    <i class="fa-regular fa-heart icon-hover fz-18"></i>
+                <div class="card-title fw-bold">{{ item.product_Name }}</div>
+                <span>$NT {{ item.unitPrice }}</span>
+                <div class="card-text text-end">
+                    <span v-if="!item.isClicked" @click="item.isClicked = true"><i
+                            class="fa-regular fa-heart icon-hover fz-18"></i></span>
+                    <span v-else @click="item.isClicked = false"><i class="fa-solid fa-heart fz-18"></i></span>
                 </div>
             </div>
         </div>
     </div>
 </template>
 
-<script>
-export default {
-    name: 'MyComponent',
-    data() {
-        return {
-            // 在這裡添加您的數據
-        };
-    },
-    methods: {
-        // 在這裡添加您的方法
-    },
-    mounted() {
-        // 在這裡添加組件初始化邏輯
-    }
-};
+<script setup>
+import axios from 'axios';
+import { ref, onMounted } from 'vue';
+
+//收藏
+const isClicked = ref(false);
+const isIn = ref(false);
+
+//商品預覽
+const products = ref([]);
+const loadProducts = async () => {
+    await axios.get("https://localhost:7243/api/Products/products")
+        .then(response => {
+            products.value = response.data;
+        })
+        .catch(error => { console.log(error); });
+}
+
+
+
+onMounted(() => {
+    loadProducts();
+});
 </script>
 
 <style scoped>
 .fz-18 {
     font-size: 20px;
+    cursor: pointer;
+}
+
+.card {
+    border: none;
+    cursor: pointer;
+}
+
+.img-sz {
+    width: 330px;
+    height: 450px;
+    overflow: hidden;
+}
+
+.img-sz img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1.0s ease-in-out;
+}
+
+img:hover {
+    transform: scale(1.1);
+    animation: rotate 1s linear infinite;
+
+}
+
+img:mouseout {
+    opacity: 0;
+    transition-delay: 1s;
+    transition-timing-function: ease-out;
+}
+
+.card-body {
+    width: 100%;
 }
 </style>

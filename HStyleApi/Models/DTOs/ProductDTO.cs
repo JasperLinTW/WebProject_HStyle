@@ -28,6 +28,8 @@ namespace HStyleApi.Models.DTOs
 
 	public static class ProductExts
 	{
+		private static readonly object _basePath = "https://localhost:44313/Images";
+
 		public static ProductDto ToDto(this Product source)
 		=> new ProductDto
 		{
@@ -39,7 +41,7 @@ namespace HStyleApi.Models.DTOs
 			Discontinued = source.Discontinued,
 			DisplayOrder = source.DisplayOrder,
 			PCategoryName = source.Category.PcategoryName,
-			Imgs = source.Imgs.Select(x => x.Path),
+			Imgs = source.Imgs.Select(x => $"{_basePath}/ProductImages/{x.Path}"),
 			Specs = source.Specs.Select(x => x.ToDto()),
 			Tags = source.Tags.Select(x => x.TagName),
 

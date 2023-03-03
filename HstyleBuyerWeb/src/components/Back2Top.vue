@@ -54,14 +54,14 @@ export default {
 </script>
 
 <style>
-.back2top{
+.back2top {
     position: fixed;
     right: 50px;
     bottom: 50px;
     height: 50px;
     width: 50px;
     cursor: pointer;
-    color: rgb(255, 255, 255);
+    color: rgb(110, 110, 110);
     font-size: 15pt;
 }
 </style>
