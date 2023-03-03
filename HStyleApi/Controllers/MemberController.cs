@@ -10,6 +10,7 @@ using HStyleApi.Models.InfraStructures;
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using MimeKit;
+using Microsoft.AspNetCore.Authorization;
 
 
 
@@ -80,6 +81,7 @@ namespace HStyleApi.Controllers
         //    }
 
         [HttpPost("LogIn")]
+        [AllowAnonymous]
         public IActionResult LogIn(LogInDTO value)
         {
             var member = _context.Members.FirstOrDefault(x => x.Account == value.Account);
@@ -120,14 +122,14 @@ namespace HStyleApi.Controllers
                 //};
                 //HttpContext.Response.Cookies.Append("my_cookie_name", "my_cookie_value", option);
 
-                //HttpContext.Response.Cookies.Append("myCookieName", "cookieValue", new CookieOptions
-                //{
-                //    Expires = DateTime.Now.AddDays(7),
-                //    HttpOnly = true,
-                //    Domain = "http://localhost:5174/",
-                //    SameSite = SameSiteMode.None,
-                //    Secure = true
-                //});
+                HttpContext.Response.Cookies.Append("myCookieName", "cookieValue", new CookieOptions
+                {
+                    Expires = DateTime.Now.AddDays(7),
+                    HttpOnly = true,
+                    Domain = "localhost:5176",
+                    SameSite = SameSiteMode.None,
+                    Secure = true
+                });
             }
 
             // 建立一個包含用戶相關聲明(Claim)的JavaScript對象
@@ -156,7 +158,14 @@ namespace HStyleApi.Controllers
         //    HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
         [HttpPost("LogOut")]
+        [Authorize]
         public void LogOut()
+        {
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        }
+
+        [HttpPost("NoLogin")]
+        public void NoLogin()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         }

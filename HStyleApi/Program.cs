@@ -38,11 +38,11 @@ builder.Services.AddCors(options => {
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(option =>
 {
     //未登入時會自動導到這個網址
-    option.LoginPath = new PathString("/api/Login/NoLogin");
+    option.LoginPath = new PathString("/api/Member/NoLogin");
 });
 
 var app = builder.Build();
-app.UseCors(option => option.WithOrigins("http://localhost:5175").AllowAnyMethod().AllowAnyHeader());
+app.UseCors(MyAllowOrigins);
 
 
 // Configure the HTTP request pipeline.
