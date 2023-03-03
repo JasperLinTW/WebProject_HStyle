@@ -64,7 +64,7 @@
                 <hr>
                 <p>商品金額: {{ products.total }}</p>
                 <p>運費: NT$0</p>
-                <p>使用H幣(現有500):</p><input v-model="discount" type="text" name="" id="">
+                <p>使用H幣(目前有{{ H_Coin }}，最高可使用{{ coinUseLimit }}):</p><input v-model="discount" type="text" name="" id="">
                 <h5>總金額: NT${{ totalIncludeHcoin }}</h5>
                 <button @click="checkout" type="button" class="btn btn-dark">結帳</button>
             </div>
@@ -76,8 +76,8 @@
 import { ref, onMounted, computed, reactive } from "vue";
 import axios from "axios";
 
+//呈現購物車
 const products = ref([]);
-
 const getCartInfo = async () => {
     await axios.get("https://localhost:7243/api/Cart")
         .then(response => { products.value = response.data; })
@@ -99,6 +99,7 @@ const minusItem = async (specId) => {
         .catch(error => { console.log(error); });
 }
 
+//綁定收件、收費資料
 const shipName = ref("");
 const shipAddress = ref("");
 const shipPhone = ref("");
@@ -107,11 +108,23 @@ const discount = ref(0)
 const totalIncludeHcoin = computed(() => {
     return products.value.total - discount.value;
 });
+
+//結帳
+const H_Coin = ref(0);
+const getCoin = async () => {
+    await axios.get('https://localhost:7243/api/HCoin/TotalHCoin/1')
+        .then(response => {
+            H_Coin.value = response.data;
+        })
+}
+const coinUseLimit = computed(() => {
+    return parseInt(products.value.total * 0.2)
+})
 const checkout = async () => {
     await axios.post(`https://localhost:7243/api/Cart/Checkout`, {
         payment: shipName.value,
-        shipVia: "黑貓",
-        freight: 0,
+        shipVia: "黑貓",//todo。運送方式改成後台管理頁面填寫
+        freight: 0,//todo，考慮運費拿掉全部免運
         discount: discount.value,
         shipName: shipName.value,
         shipAddress: shipAddress.value,
@@ -129,6 +142,7 @@ const checkout = async () => {
 
 onMounted(() => {
     getCartInfo();
+    getCoin();
 });
 
 </script>
