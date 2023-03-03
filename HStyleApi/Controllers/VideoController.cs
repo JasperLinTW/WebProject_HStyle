@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -51,6 +52,14 @@ namespace HStyleApi.Controllers
 			{
 				return BadRequest(ex.Message);
 			}
+		}
+
+		// GET api/<VideoController>/5  
+		[HttpGet("{videoId}/Recommenations")]
+		public async Task<ActionResult<IEnumerable<ProductDto>>> GetRecommendationProduct(int videoId)
+		 {
+			IEnumerable < ProductDto > products =await _service.GetRecommendationProduct(videoId);
+			return Ok(products);
 		}
 
 		// GET api/<VideoController>/5 
