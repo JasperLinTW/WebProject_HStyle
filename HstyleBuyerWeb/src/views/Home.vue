@@ -52,15 +52,6 @@
             </div>
         </div>
 
- 
-    <div id="navbar" class="list-group position-fixed end-0 bottom-50 me-2 myList ">
-        <a href="#area1" class="list-group-item" option-text="選項1" n="1"></a>
-
-        <a href="#area2" class="list-group-item" option-text="選項2" n="2"></a>
-        <a href="#area3" class="list-group-item" option-text="選項3" n="3"></a>
-        <a href="#area4" class="list-group-item" option-text="選項4" n="4"></a>
-        <a href="#area5" class="list-group-item" option-text="選項5" n="5"></a>
-    </div>
 
 
   </template>

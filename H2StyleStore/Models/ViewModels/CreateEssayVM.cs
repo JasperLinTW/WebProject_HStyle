@@ -45,7 +45,6 @@ namespace H2StyleStore.Models.ViewModels
 		[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
 		public DateTime Removed { get; set; }
 
-		[Required]
 		[Display(Name = "圖片")]
 		public List<string> Images { get; set; }
 
