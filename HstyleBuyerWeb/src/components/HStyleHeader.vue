@@ -34,7 +34,10 @@
                         <router-link to="/" class="nav-link targetAll">化妝品</router-link>
                         <!-- <a class="nav-link targetAll" href="#">化妝品</a> -->
                     </li>
-                
+                    <li class="nav-item dropdown">
+                        <router-link to="/member" class="nav-link targetAll">測試用會員</router-link>
+                        <!-- <a class="nav-link targetAll" href="#">測試用會員</a> -->
+                    </li>
                 </ul>
             </div>
 

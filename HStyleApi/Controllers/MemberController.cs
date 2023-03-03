@@ -18,11 +18,11 @@ using MimeKit;
 
 namespace HStyleApi.Controllers
 {
-	[EnableCors("AllowAny")]
-	[Route("api/[controller]")]
-	[ApiController]
-	public class MemberController : ControllerBase
-	{
+    [EnableCors("AllowAny")]
+    [Route("api/[controller]")]
+    [ApiController]
+    public class MemberController : ControllerBase
+    {
         //private readonly MemberServices _Service;
 
         //public MemberController(AppDbContext db)
@@ -38,10 +38,10 @@ namespace HStyleApi.Controllers
         }
         // GET: api/<MemberController>
         [HttpGet]
-		public IEnumerable<string> Get()
-		{
-			return new string[] { "value1", "value2" };
-		}
+        public IEnumerable<string> Get()
+        {
+            return new string[] { "value1", "value2" };
+        }
 
 
         //    [HttpPost("LogIn")]
@@ -78,6 +78,7 @@ namespace HStyleApi.Controllers
         //        };
         //        return "登入成功";
         //    }
+
         [HttpPost("LogIn")]
         public IActionResult LogIn(LogInDTO value)
         {
@@ -99,16 +100,35 @@ namespace HStyleApi.Controllers
             {
                 return BadRequest("會員資格尚未確認");
             }
+            else
+            {
+                var claims = new List<Claim>
+                 {
+                   new Claim(ClaimTypes.Name, member.Account),
+                   new Claim("FullName", member.Name),
+                  };
 
-            var claims = new List<Claim>
-    {
-        new Claim(ClaimTypes.Name, member.Account),
-        new Claim("FullName", member.Name),
-    };
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+                //var option = new CookieOptions
+                //{
+                //    Expires = DateTime.Now.AddMinutes(30),
+                //    HttpOnly = true,
+                //    Domain = "localhost",
+                //    SameSite = SameSiteMode.Strict,
+                //    Secure = true
+                //};
+                //HttpContext.Response.Cookies.Append("my_cookie_name", "my_cookie_value", option);
 
-            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
-            HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity)).Wait();
+                //HttpContext.Response.Cookies.Append("myCookieName", "cookieValue", new CookieOptions
+                //{
+                //    Expires = DateTime.Now.AddDays(7),
+                //    HttpOnly = true,
+                //    Domain = "http://localhost:5174/",
+                //    SameSite = SameSiteMode.None,
+                //    Secure = true
+                //});
+            }
 
             // 建立一個包含用戶相關聲明(Claim)的JavaScript對象
             var userData = new
@@ -117,12 +137,12 @@ namespace HStyleApi.Controllers
                 account = member.Account,
                 name = member.Name,
                 email = member.Email,
-                //role = member.Role,       妹用到這個資料
-                //picture = member.Picture  沒用到這個資料
             };
 
+
+
             // 將JavaScript對象傳遞回前端
-            return Ok(new { userData });
+            return Ok(userData);
         }
 
         //    var claims = new List<Claim>
@@ -244,27 +264,27 @@ namespace HStyleApi.Controllers
 
         // GET api/<MemberController>/5
         [HttpGet("{id}")]
-		public string Get(int id)
-		{
-			return "value";
-		}
+        public string Get(int id)
+        {
+            return "value";
+        }
 
-		// POST api/<MemberController>
-		[HttpPost]
-		public void Post([FromBody] string value)
-		{
-		}
+        // POST api/<MemberController>
+        [HttpPost]
+        public void Post([FromBody] string value)
+        {
+        }
 
-		// PUT api/<MemberController>/5
-		[HttpPut("{id}")]
-		public void Put(int id, [FromBody] string value)
-		{
-		}
+        // PUT api/<MemberController>/5
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody] string value)
+        {
+        }
 
-		// DELETE api/<MemberController>/5
-		[HttpDelete("{id}")]
-		public void Delete(int id)
-		{
-		}
-	}
+        // DELETE api/<MemberController>/5
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+        }
+    }
 }

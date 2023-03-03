@@ -1,5 +1,6 @@
 ﻿using HStyleApi.Controllers;
 using HStyleApi.Models.EFModels;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
@@ -34,9 +35,14 @@ builder.Services.AddCors(options => {
 			.WithHeaders("*")
 			.WithMethods("*"));
 });
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(option =>
+{
+    //未登入時會自動導到這個網址
+    option.LoginPath = new PathString("/api/Login/NoLogin");
+});
 
 var app = builder.Build();
-app.UseCors();
+app.UseCors(option => option.WithOrigins("http://localhost:5175").AllowAnyMethod().AllowAnyHeader());
 
 
 // Configure the HTTP request pipeline.
@@ -48,6 +54,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseWebSockets(new WebSocketOptions
@@ -55,6 +62,11 @@ app.UseWebSockets(new WebSocketOptions
 	KeepAliveInterval = TimeSpan.FromSeconds(60),
 });
 
+app.UseCookiePolicy();
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+
