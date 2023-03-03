@@ -38,7 +38,7 @@ builder.Services.AddCors(options => {
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(option =>
 {
     //未登入時會自動導到這個網址
-    option.LoginPath = new PathString("/api/Member/NoLogin");
+    //option.LoginPath = new PathString("/api/Member/NoLogin"); //先改成null
 });
 
 var app = builder.Build();

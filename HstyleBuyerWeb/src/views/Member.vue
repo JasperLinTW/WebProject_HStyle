@@ -41,27 +41,38 @@ export default {
         body: JSON.stringify({
           'account': this.username,
           'password': this.password
-        })
+        }),
+        credentials: 'same-origin' //測試 本來沒有加
       })
         .then((response) => {
             return response.json();
         })
         .then( (response) => {
-            console.log(response);
+            // console.log(response)
         })
         .catch(error => console.error(error));
     },
-    logout() {
-      axios.post('https://localhost:7243/api/Member/logout')
-        .then(response => { 
-          // 登出成功，清除用戶端 cookie 或其他相關資料
-          this.loggedIn = false;
-          this.$router.push('/');
-        //   console.log(response)
+    Logout(e){
+        e.preventDefault()
+    fetch('https://localhost:7243/api/Member/LogOut', {
+        method: 'POST',
+        headers: {     
+            'Content-Type': 'application/json',       
+            "Accept": "application/json",
+        },
+        body: JSON.stringify({
+          
+        }),
+        credentials: 'same-origin'
         })
-        .catch(error => {
-          console.error(error);
-        });
+        .then((response) => {
+            return response.json();
+        })
+        .then(response => {
+            console.log(response)
+        }).catch(error => {
+            console.error(error)// 網路錯誤或其他錯誤處理
+        })
     }
   }
 }

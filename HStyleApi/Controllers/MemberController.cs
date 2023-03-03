@@ -112,24 +112,9 @@ namespace HStyleApi.Controllers
 
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
-                //var option = new CookieOptions
-                //{
-                //    Expires = DateTime.Now.AddMinutes(30),
-                //    HttpOnly = true,
-                //    Domain = "localhost",
-                //    SameSite = SameSiteMode.Strict,
-                //    Secure = true
-                //};
-                //HttpContext.Response.Cookies.Append("my_cookie_name", "my_cookie_value", option);
+                
 
-                HttpContext.Response.Cookies.Append("myCookieName", "cookieValue", new CookieOptions
-                {
-                    Expires = DateTime.Now.AddDays(7),
-                    HttpOnly = true,
-                    Domain = "localhost:5176",
-                    SameSite = SameSiteMode.None,
-                    Secure = true
-                });
+
             }
 
             // 建立一個包含用戶相關聲明(Claim)的JavaScript對象
@@ -158,10 +143,11 @@ namespace HStyleApi.Controllers
         //    HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
         [HttpPost("LogOut")]
-        [Authorize]
-        public void LogOut()
+        public IActionResult LogOut()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return Ok("登出成功");
+
         }
 
         [HttpPost("NoLogin")]
@@ -170,6 +156,7 @@ namespace HStyleApi.Controllers
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         }
 
+        [Authorize]
         [HttpPost("Register")]
         public async Task<string> Register(RegisterDTO register)
         {
