@@ -45,7 +45,7 @@
                     <a href="#" title="喜歡" class="text-dark"><i class="fa-regular fa-heart icon-hover"></i></a>
                 </div>
                 <div class="btn-light mx-3">
-                    <a href="#" title="打卡" class="text-dark"><i class="fa-regular fa-circle-check  icon-hover"></i></a>
+                    <a href="#" title="打卡" class="text-dark"><i class="fa-regular fa-circle-check  icon-hover" data-bs-toggle="modal" data-bs-target="#checkInModal"></i></a>
                 </div>
                 <div class="btn-light mx-3">
                     <a href="#" title="會員" class="text-dark"><i class="fa-regular fa-circle-user icon-hover"></i></a>
@@ -59,12 +59,15 @@
 
     </nav>
     <Cart />
+    <CheckIn />
 </template>
 <script>
 import Cart from './Cart.vue'
+import CheckIn from './CheckIn.vue'
 export default{
     components:{
         Cart,
+        CheckIn,
     },
     mounted(){
         $(".target")
