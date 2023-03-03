@@ -2,6 +2,7 @@
 using HStyleApi.Models.InfraStructures.Repositories;
 using HStyleApi.Models.Services;
 using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PayPalCheckoutSdk.Core;
@@ -11,6 +12,7 @@ using System.Net;
 
 namespace HStyleApi.Controllers
 {
+	[EnableCors("AllowAny")]
 	[Route("api/[controller]")]
 	[ApiController]
 	public class PaypalController : ControllerBase
@@ -115,14 +117,14 @@ namespace HStyleApi.Controllers
 			//todo紀錄付款人，修改訂單狀態，改向畫面網址
 
 			_orderService.UpdateOrder(token);
-			return Ok("付款成功");
+			return Redirect("http://localhost:5174/");
 		}
 
 		[HttpGet("cancel")]
 		public IActionResult Cancel()
 		{
 			//todo導向訂單頁面
-			return Redirect("https://www.youtube.com/");
+			return Redirect("http://localhost:5174/");
 		}
 
 		//[HttpPost("{orderId}")]

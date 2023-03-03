@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HStyleApi.Controllers
 {
+
 	[Route("api/[controller]")]
 	[ApiController]
 	public class EssayController : ControllerBase
