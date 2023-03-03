@@ -15,6 +15,26 @@
     </form>
   </div>
 
+<div>
+  <input type="text" onchange="" v-model="Name" placeholder="Name">
+  <input type="email" onchange="" v-model="Email" placeholder="Email">
+  <input type="text" onchange="" v-model="Account" placeholder="Account">
+  <input type="number" onchange="" v-model="PhoneNumber" placeholder="PhoneNumber">
+  <input type="text" onchange="" v-model="Address" placeholder="Address">
+  <div>
+    <input type="radio" id="male" value="male" v-model="gender" placeholder="gender">
+    <label for="male">Male</label>
+
+    <input type="radio" id="female" value="female" v-model="gender" placeholder="gender">
+    <label for="female">Female</label>
+
+    <p>Selected gender: {{ gender }}</p>
+  </div>
+  <input type="datetime" onchange="" v-model="Birthday" placeholder="Birthday">
+  <input type="password" onchange="" v-model="EncryptedPassword" placeholder="password">
+  <button type="button" @click="register">register</button>
+
+</div>
 </template>
 
 
@@ -73,7 +93,36 @@ export default {
         }).catch(error => {
             console.error(error)// 網路錯誤或其他錯誤處理
         })
-    }
+    },
+    register(e) {
+      e.preventDefault();
+      fetch('https://localhost:7243/api/Member/Register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          "Accept": "application/json",
+        },
+        body: JSON.stringify({
+          'name': this.Name,
+          'email': this.Email,
+          'password': this.EncryptedPassword,
+          'account': this.Account,
+          'phone_Number': this.PhoneNumber,
+          'address': this.Address,
+          'gender': this.Gender,
+          'birthday': this.Birthday,
+        }),
+        credentials: 'same-origin'
+      })
+        .then((response) => {
+            return response.json();
+        })
+        .then( (response) => {
+            console.log(response);
+        })
+        .catch(error => console.error(error));
+    },
+
   }
 }
   </script>
