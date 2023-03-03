@@ -10,8 +10,6 @@
             </div>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <li><a class="dropdown-item" href="#">Menu item</a></li>
-              <li><a class="dropdown-item" href="#">Menu item</a></li>
-              <li><a class="dropdown-item" href="#">Menu item</a></li>
             </ul>
           </div>
           <div class="filter">
@@ -19,8 +17,6 @@
               尺寸
             </div>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <li><a class="dropdown-item" href="#">Menu item</a></li>
-              <li><a class="dropdown-item" href="#">Menu item</a></li>
               <li><a class="dropdown-item" href="#">Menu item</a></li>
             </ul>
           </div>
@@ -30,8 +26,6 @@
             </div>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <li><a class="dropdown-item" href="#">Menu item</a></li>
-              <li><a class="dropdown-item" href="#">Menu item</a></li>
-              <li><a class="dropdown-item" href="#">Menu item</a></li>
             </ul>
           </div>
           <div class="filter">
@@ -39,8 +33,6 @@
               顏色
             </div>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <li><a class="dropdown-item" href="#">Menu item</a></li>
-              <li><a class="dropdown-item" href="#">Menu item</a></li>
               <li><a class="dropdown-item" href="#">Menu item</a></li>
             </ul>
           </div>

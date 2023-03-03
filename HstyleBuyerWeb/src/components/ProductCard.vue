@@ -6,7 +6,7 @@
                 <h5 class="card-title">13256</h5>
                 <div class="d-flex justify-content-between align-items-center">
                     <span class="price">56486</span>
-                    <button type="button" class="btn btn-sm btn-outline-primary">加入購物車</button>
+                    <i class="fa-regular fa-heart icon-hover fz-18"></i>
                 </div>
             </div>
         </div>
@@ -30,6 +30,8 @@ export default {
 };
 </script>
 
-<style>
-/* 在這裡添加您的樣式 */
+<style scoped>
+.fz-18 {
+    font-size: 20px;
+}
 </style>
