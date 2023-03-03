@@ -16,7 +16,7 @@
   </div>
 
 <div>
-  <input type="text" onchange="" v-model="Name" placeholder="Name">
+  <input type="text" onchange="" v-model="name" placeholder="name">
   <input type="email" onchange="" v-model="Email" placeholder="Email">
   <input type="text" onchange="" v-model="Account" placeholder="Account">
   <input type="number" onchange="" v-model="PhoneNumber" placeholder="PhoneNumber">
@@ -30,7 +30,7 @@
 
     <p>Selected gender: {{ gender }}</p>
   </div>
-  <input type="datetime" onchange="" v-model="Birthday" placeholder="Birthday">
+  <input type="date" id="date" onchange="" v-model="Birthday" placeholder="Birthday">
   <input type="password" onchange="" v-model="EncryptedPassword" placeholder="password">
   <button type="button" @click="register">register</button>
 
@@ -46,7 +46,16 @@ export default {
     data(){
         return{
             username: "",
-            password: ""
+            password: "",
+            name:"",
+            Email:"",
+            Account:"",
+            PhoneNumber:"",
+            Address:"",
+            gender:"",
+            Birthday:"",
+            EncryptedPassword:"",
+            MailCode:1,
         }
     },
   methods: {
@@ -103,7 +112,7 @@ export default {
           "Accept": "application/json",
         },
         body: JSON.stringify({
-          'name': this.Name,
+          'name': this.name,
           'email': this.Email,
           'password': this.EncryptedPassword,
           'account': this.Account,
@@ -111,6 +120,7 @@ export default {
           'address': this.Address,
           'gender': this.Gender,
           'birthday': this.Birthday,
+          'mailCode':this.MailCode,
         }),
         credentials: 'same-origin'
       })

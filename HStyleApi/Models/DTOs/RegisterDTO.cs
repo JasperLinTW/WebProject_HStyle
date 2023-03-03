@@ -1,4 +1,5 @@
 ﻿using HStyleApi.Models.InfraStructures;
+using System.ComponentModel.DataAnnotations;
 
 namespace HStyleApi.Models.DTOs
 {
@@ -10,7 +11,7 @@ namespace HStyleApi.Models.DTOs
         /// <summary>
         /// 密碼,明碼
         /// </summary>
-        public string Password { get; set; }
+        public string Password { get; set; }  
 
         /// <summary>
         /// 加密之後的密碼
@@ -25,8 +26,10 @@ namespace HStyleApi.Models.DTOs
             }
         }
         public string Address { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
         public DateTime Birthday { get; set; }
-        public DateTime Jointime { get; set; }
+        //public DateTime Jointime { get; set; }  有修改 不確定 
         public bool Gender { get; set; }
 
 
@@ -36,7 +39,7 @@ namespace HStyleApi.Models.DTOs
 
         public string Phone_Number { get; set; } //手機號碼  Mobile
 
-        public string Mail_code { get; set; } //確認碼   ConfirmCode
+        //public string Mail_code { get; set; } //確認碼   ConfirmCode  有修改 不確定 
 
     }
 }
