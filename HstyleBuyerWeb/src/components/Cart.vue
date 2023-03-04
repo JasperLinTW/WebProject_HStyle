@@ -23,31 +23,32 @@
                             </div>
                             <div class="d-flex justify-content-between align-items-center pt-3">
                                 <div class="mb-0 fz-15  mx-2 pt-2">
-                                    <span>$NT {{ item.unitPrice * item.quantity }} 元</span>
+                                    <span>NT$ {{ item.unitPrice * item.quantity }}</span>
                                 </div>
-                                <div class="btn-group" role="group">
-                                    <button type="button" class="btn btn-outline-secondary btn-s"
+                                <div class="btn-group-sm" role="group">
+                                    <button type="button" class="btn btn-custom-left  btn-outline-secondary btn-s"
                                         @click="minusItem(item.specId)">
-                                        <i class="fa-solid fa-minus  fa-xs"></i>
+                                        <i class="fa-solid fa-minus fz-10"></i>
                                     </button>
-                                    <button type="button" class="btn btn-outline-secondary btn-s quantity">
-                                        {{ item.quantity }}
+                                    <button type="button"
+                                        class="btn border-0 border-top border-bottom border-secondary btn-outline-secondary btn-s quantity">
+                                        <div class="text-center mx-6 ">{{ item.quantity }}</div>
                                     </button>
-                                    <button type="button" class="btn btn-outline-secondary btn-s"
+                                    <button type="button" class="btn btn-custom-right  btn-outline-secondary btn-s"
                                         @click="addItem(item.specId)">
-                                        <i class="fa-solid fa-plus  fa-xs"></i>
+                                        <i class="fa-solid fa-plus fz-10"></i>
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer px-2">
                     <div>
-                        <strong>$NT {{ products.total }} 元</strong>
+                        <strong>NT$ {{ products.total }}</strong>
                     </div>
 
-                    <div class="">
+                    <div class="ps-2">
                         <router-link to="/Checkout" class="nav-link targetAll">
                             <button type="button" class="btn btn-secondary checkoutbtn" data-bs-dismiss="modal">
                                 檢視購物車及付款
@@ -117,6 +118,11 @@ onMounted(() => {
     font-size: 12pt;
 }
 
+.mx-6 {
+    margin-left: 1pt;
+    margin-right: 1pt;
+}
+
 .checkoutbtn:not(.nav-btns button) {
     background-color: #fff;
     color: rgb(12, 13, 12);
@@ -146,6 +152,7 @@ onMounted(() => {
 
 .quantity {
     pointer-events: none;
+    border-radius: 0%;
 }
 
 .modal.fade .modal-dialog {
@@ -159,5 +166,17 @@ onMounted(() => {
 
 .fade {
     transition: opacity .15s linear;
+}
+
+.btn-custom-left {
+    border-radius: 5% 0 0 5%;
+}
+
+.btn-custom-right {
+    border-radius: 0 5% 5% 0;
+}
+
+.fz-10 {
+    font-size: 9px;
 }
 </style>

@@ -2,71 +2,92 @@
 <template>
     <div class="container mt-3">
         <div class="row">
-            <div class="col-md-12">
-                <h4>我的購物車</h4>
-                <hr>
-                <div v-for="item in products.cartItems" class="card mb-3">
-                    <div class="row g-0">
-                        <div class="col-md-3">
-                            <img :src="item.image" alt="圖片已失效">
-                        </div>
-                        <div class="col-md-9">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ item.productName }}</h5>
-                                <p class="card-text">{{ item.color + item.size }}</p>
-                                <div class="btn-group" role="group">
-                                    <button type="button" class="btn btn-outline-secondary btn-s"
-                                        @click="minusItem(item.specId)">
-                                        <i class="fa-solid fa-minus  fa-xs"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-outline-secondary btn-s">
-                                        {{ item.quantity }}
-                                    </button>
-                                    <button type="button" class="btn btn-outline-secondary btn-s"
-                                        @click="addItem(item.specId)">
-                                        <i class="fa-solid fa-plus  fa-xs"></i>
-                                    </button>
-                                </div>
-                                <p class="card-text">小計: {{ item.unitPrice * item.quantity }}</p>
+            <div class="col-md-12 mb-3">
+                <div class="text-start border-bottom">
+                    <h5 class="fw-bold">購物車</h5>
+                </div>
+                <div v-for="item in products.cartItems" class="py-3 border-bottom row">
+                    <div class="col-md-12 d-flex align-items-center">
+                        <div class="">
+                            <div class="custom">
+                                <img :src="item.image" alt="圖片已失效">
                             </div>
                         </div>
+                        <div class="ms-5">
+                            <span class="card-title">{{ item.productName }}
+                                <span class="border-start ps-2">規格: {{ item.color + ', ' + item.size }}</span>
+                            </span>
+                        </div>
+                        <div class="flex-grow-1 text-end pe-6">
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-custom btn-outline-secondary btn-s"
+                                    @click="minusItem(item.specId)">
+                                    <i class="fa-solid fa-minus  fa-xs"></i>
+                                </button>
+                                <button type="button" class="btn btn-custom btn-outline-secondary btn-s quantity">
+                                    {{ item.quantity }}
+                                </button>
+                                <button type="button" class="btn btn-custom btn-outline-secondary btn-s"
+                                    @click="addItem(item.specId)">
+                                    <i class="fa-solid fa-plus  fa-xs"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="ms-auto">
+                            <span>NT$ {{ item.unitPrice * item.quantity }}</span>
+                        </div>
+
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <h4>收件與付款資訊</h4>
-                <hr>
-
-                <div class="mb-3">
-                    <label for="name" class="form-label">姓名</label>
-                    <input v-model="shipName" type="text" class="form-control" id="name" placeholder="請輸入姓名">
+            <div class="col-md-7 mt-5">
+                <div class="fz-12 fw-bold  text-start  border-bottom pb-1 mb-2">收件與付款資訊</div>
+                <div class="my-4 d-flex justify-content-between">
+                    <label for="name" class="form-label fw-bold pe-3">姓名</label>
+                    <input v-model="shipName" type="text" class="textbox_ship flex-grow-1" id="name" placeholder="請輸入姓名">
+                    <label for="phone" class="form-label  fw-bold pe-3">電話</label>
+                    <input v-model="shipPhone" type="text" class="textbox_ship flex-grow-1" id="phone"
+                        placeholder="請輸入電話號碼">
                 </div>
-                <div class="mb-3">
-                    <label for="address" class="form-label">地址</label>
-                    <input v-model="shipAddress" type="text" class="form-control" id="address" placeholder="請輸入地址">
+                <div class="mb-4 d-flex justify-content-between">
+                    <label for="address" class="form-label  fw-bold pe-3">地址</label>
+                    <input v-model="shipAddress" type="text" class="textbox_ship flex-grow-1" id="address"
+                        placeholder="請輸入地址">
                 </div>
-                <div class="mb-3">
-                    <label for="phone" class="form-label">電話</label>
-                    <input v-model="shipPhone" type="text" class="form-control" id="phone" placeholder="請輸入電話號碼">
+                <div class="mb-3 d-flex justify-content-between">
+                    <label for="payment" class="form-label fw-bold pe-3">付款方式</label>
+                    <div class="flex-grow-1">
+                        <select v-model="payment" aria-label="Select payment method" id="payment">
+                            <option value="">選擇付款方式</option>
+                            <option value="信用卡">信用卡</option>
+                            <option value="Paypal">PayPal</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <label for="payment" class="form-label">付款方式</label>
-                    <select v-model="payment" class="form-select" aria-label="Select payment method" id="payment">
-                        <option selected>選擇付款方式</option>
-                        <option value="信用卡">信用卡</option>
-                        <option value="Paypal">PayPal</option>
-                    </select>
-                </div>
-
             </div>
-            <div class="col-md-6">
-                <h5>訂單摘要</h5>
-                <hr>
-                <p>商品金額: {{ products.total }}</p>
-                <p>運費: NT$0</p>
-                <p>使用H幣(目前有{{ H_Coin }}，最高可使用{{ coinUseLimit }}):</p><input v-model="discount" type="text" name="" id="">
-                <h5>總金額: NT${{ totalIncludeHcoin }}</h5>
-                <button @click="checkout" type="button" class="btn btn-dark">結帳</button>
+            <div class="col-md-1"></div>
+            <div class="col-md-4 mt-5">
+                <div class="fz-12 fw-bold text-start border-bottom pb-1 mb-2">訂單摘要</div>
+                <div class="d-flex justify-content-between pb-3">
+                    <div class="fw-bold">商品金額</div>
+                    <div class="pe-1">NT$ {{ products.total }}</div>
+                </div>
+                <div class="d-flex justify-content-between pb-3">
+                    <div class="fw-bold">運費</div>
+                    <div class="pe-1">NT$ 0</div>
+                </div>
+                <div class="d-flex justify-content-between pb-2">
+                    <div class="fw-bold">使用H幣</div>
+                    <input v-model="discount" type="text" class="textbox" name="" id="">
+                </div>
+                <div class="fz-sm text-end pb-4">目前有{{ H_Coin }}枚，最高可使用{{ coinUseLimit }}枚</div>
+                <div class="d-flex justify-content-between border-top py-4">
+                    <div class="fw-bold">總金額</div>
+                    <div>NT$ {{ totalIncludeHcoin }}</div>
+                </div>
+                <div class="text-end mt-1">
+                    <button @click="checkout" type="button" class="btn checkoutbtn ">提交訂單</button>
+                </div>
             </div>
         </div>
     </div>
@@ -103,7 +124,7 @@ const minusItem = async (specId) => {
 const shipName = ref("");
 const shipAddress = ref("");
 const shipPhone = ref("");
-const payment = ref("Paypal")
+const payment = ref("")
 const discount = ref(0)
 const totalIncludeHcoin = computed(() => {
     return products.value.total - discount.value;
@@ -145,10 +166,93 @@ onMounted(() => {
     getCoin();
 });
 
+
 </script>
-<style>
-.card img {
+<style scoped>
+.custom {
     width: 200px;
     height: 200px;
+    overflow: hidden;
+}
+
+.pe-6 {
+    padding-right: 10%;
+}
+
+.custom img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.fz-12 {
+    font-size: 13pt;
+}
+
+.btn-custom {
+    border-radius: 5%;
+}
+
+.fz-sm {
+    font-size: 12px;
+}
+
+.fz-10 {
+    font-size: 15px;
+}
+
+.checkoutbtn:not(.nav-btns button) {
+    background-color: #fff;
+    color: rgb(12, 13, 12);
+    padding: 10px 28px;
+    border-radius: 25px;
+    border: 1px solid rgb(12, 13, 12);
+}
+
+.quantity {
+    pointer-events: none;
+    border-radius: 0%;
+}
+
+.checkoutbtn:not(.nav-btns button):hover {
+    background-color: #000000;
+    color: #fff;
+    ;
+    border-color: #000000;
+}
+
+.textbox {
+    border: none;
+    border-bottom: 1px solid transparent;
+    outline: none;
+    font-size: 16px;
+    transition: border-bottom-color 0.2s ease-in-out;
+    text-align: right;
+    padding-right: 4px;
+}
+
+select {
+    appearance: none;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    width: 100%;
+    color: #757575
+}
+
+select:focus {
+    outline: none;
+}
+
+.textbox_ship {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    ;
+    outline: none;
+    font-size: 16px;
+    transition: border-bottom-color 0.2s ease-in-out;
+}
+
+.textbox:focus {
+    border-bottom-color: #ccc;
 }
 </style>
