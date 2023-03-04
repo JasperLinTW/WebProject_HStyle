@@ -34,23 +34,35 @@ const isIn = ref(false);
 //收藏
 let likes = ref([]);
 
+const likeProductsId = ref([])
+
 const likesProducts = async () => {
     await axios.get("https://localhost:7243/api/Products/products/likes")
         .then(response => {
             if (response.data.length > 0) {
                 likes.value = response.data;
+                likeProductsId.value = likes.value.map(p => {
+                    return p.productId
+                });
             }
+
         })
         .catch(error => { console.log(error); });
 }
 
 
+
+
 //商品預覽
 const products = ref([]);
+
 
 const loadProducts = async () => {
     await axios.get("https://localhost:7243/api/Products/products")
         .then(response => {
+            response.data.map(p => {
+                p.isClicked = likeProductsId.value.includes(p.product_Id);
+            })
             products.value = response.data;
         })
         .catch(error => { console.log(error); });
@@ -60,8 +72,9 @@ const loadProducts = async () => {
 const newProduct = ref("新品");
 
 onMounted(() => {
-    loadProducts();
     likesProducts();
+    loadProducts();
+
 });
 </script>
 
