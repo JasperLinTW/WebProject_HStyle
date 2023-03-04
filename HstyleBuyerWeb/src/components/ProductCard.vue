@@ -7,7 +7,10 @@
                 <img v-else @mouseout="item.isIn = false" :src="item.imgs[1]" class="card-img-top" alt="Product Image">
             </div>
 
-            <div class="card-body">
+            <div class="card-body position-relative">
+                <div class="position-absolute top-0 end-0 me-2 mt-2" v-for="tag in item.tags"> <label class="fz-9"
+                        v-if="tag === newProduct">{{ newProduct
+                        }}</label> </div>
                 <div class="card-title fw-bold">{{ item.product_Name }}</div>
                 <span>$NT {{ item.unitPrice }}</span>
                 <div class="card-text text-end">
@@ -24,12 +27,27 @@
 import axios from 'axios';
 import { ref, onMounted } from 'vue';
 
-//收藏
-const isClicked = ref(false);
+//圖片動畫
 const isIn = ref(false);
+
+
+//收藏
+let likes = ref([]);
+
+const likesProducts = async () => {
+    await axios.get("https://localhost:7243/api/Products/products/likes")
+        .then(response => {
+            if (response.data.length > 0) {
+                likes.value = response.data;
+            }
+        })
+        .catch(error => { console.log(error); });
+}
+
 
 //商品預覽
 const products = ref([]);
+
 const loadProducts = async () => {
     await axios.get("https://localhost:7243/api/Products/products")
         .then(response => {
@@ -38,21 +56,34 @@ const loadProducts = async () => {
         .catch(error => { console.log(error); });
 }
 
-
+//新品
+const newProduct = ref("新品");
 
 onMounted(() => {
     loadProducts();
+    likesProducts();
 });
 </script>
 
 <style scoped>
+.card-img-top {
+    border: none;
+    border-radius: 0%;
+}
+
 .fz-18 {
     font-size: 20px;
     cursor: pointer;
 }
 
+.fz-9 {
+    font-size: 15px;
+    color: rgb(116, 129, 143);
+}
+
 .card {
     border: none;
+    border-radius: 0%;
     cursor: pointer;
 }
 

@@ -168,7 +168,7 @@ namespace HStyleApi.Controllers
 		}
 
 		//商品收藏瀏覽
-		[HttpPost("products/likes")]
+		[HttpGet("products/likes")]
 		public ActionResult LoadLikeProducts()
 		{
 			var data = _Service.LoadLikeProducts(_member_id);

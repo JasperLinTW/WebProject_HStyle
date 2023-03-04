@@ -1,7 +1,8 @@
 <template>
-
     <header class="bg-opacity-0 targetAll sticky-top" id="myHeader">
-    <router-link class="logo-style targetAll" to="/"><h1 class="trans1">H'STYLE</h1></router-link>
+        <router-link class="logo-style targetAll" to="/">
+            <h1 class="trans1">H'STYLE</h1>
+        </router-link>
     </header>
     <nav class="navbar navbar-expand bg-ligt">
         <div Class="container-fluid" m-0 g-0 position-relative>
@@ -9,24 +10,28 @@
                 <span class="icon ma-1 my-1 px-3">
                     <i class="fa-solid fa-magnifying-glass search targetAll"></i>
                 </span>
-                <input class="fz14 py-1 ps-4 rounded-1 border-0" id="search"  type="text" />
+                <input class="fz14 pb-1 ps-4 textbox" id="search" type="text" />
             </div>
             <div id="NavbarContent" class="nav">
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
-                        <router-link to="/blog" class="nav-link text-dark px-3"><span class="targetAll">H'Blog</span></router-link>
+                        <router-link to="/blog" class="nav-link text-dark px-3"><span
+                                class="targetAll">H'Blog</span></router-link>
                     </li>
                     <li class="nav-item dropdown">
-                        <router-link to="/recommend" class="nav-link text-dark px-3"><span class="targetAll">推薦商品</span></router-link>
+                        <router-link to="/recommend" class="nav-link text-dark px-3"><span
+                                class="targetAll">推薦商品</span></router-link>
                     </li>
                     <a href="#"></a>
                     <li class="nav-item dropdown">
-                        <router-link to="/product" class="nav-link text-dark px-3"><span class="targetAll">新品上市</span></router-link>
+                        <router-link to="/product" class="nav-link text-dark px-3"><span
+                                class="targetAll">新品上市</span></router-link>
                     </li>
                     <li class="nav-item dropdown">
-                        <router-link to="/product" class="nav-link text-dark px-3"><span class="targetAll">服飾名品</span></router-link>
+                        <router-link to="/product" class="nav-link text-dark px-3"><span
+                                class="targetAll">服飾名品</span></router-link>
                     </li>
-                
+
                 </ul>
             </div>
 
@@ -35,14 +40,16 @@
                     <a href="#" title="喜歡" class="text-dark"><i class="fa-regular fa-heart icon-hover fz-18"></i></a>
                 </div>
                 <div class="btn-light mx-3">
-                    <a href="#" title="打卡" class="text-dark"><i class="fa-regular fa-circle-check  icon-hover fz-18"></i></a>
+                    <a href="#" title="打卡" class="text-dark"><i
+                            class="fa-regular fa-circle-check  icon-hover fz-18"></i></a>
                 </div>
                 <div class="btn-light mx-3">
                     <a href="#" title="會員" class="text-dark"><i class="fa-regular fa-circle-user icon-hover fz-18"></i></a>
                 </div>
-                <div class="btn-light mx-3" >
-                    <a href="#" title="購物車" class="text-dark"><i class="fa-solid fa-cart-shopping icon-hover fz-18"> </i></a>
-                    
+                <div class="btn-light mx-3">
+                    <a href="#" title="購物車" class="text-dark"><i class="fa-solid fa-cart-shopping icon-hover fz-18">
+                        </i></a>
+
                 </div>
             </div>
         </div>
@@ -52,17 +59,18 @@
 </template>
 <script>
 import Cart from './Cart.vue'
-export default{
-    components:{
+export default {
+    components: {
         Cart,
     },
-    mounted(){
-         window.addEventListener("scroll",function(){
-         var header = document.querySelector("header");
-         header.classList.toggle("sticky", window.scrollY > 0)
-         ;})   
+    mounted() {
+        window.addEventListener("scroll", function () {
+            var header = document.querySelector("header");
+            header.classList.toggle("sticky", window.scrollY > 0)
+                ;
+        })
 
-         document.querySelector(".search").addEventListener("click", function () {
+        document.querySelector(".search").addEventListener("click", function () {
             document.querySelector("#search").focus();
         });
 
@@ -70,41 +78,56 @@ export default{
 }
 </script>
 <style scoped>
-.search{
+.search {
     cursor: pointer;
 }
-.fz-18{
+
+.fz-18 {
     font-size: 18px;
 }
-.icon-hover:hover{
+
+.icon-hover:hover {
     color: #46A3FF;
 }
 
-.logo-style{
+.logo-style {
     text-decoration: none;
     color: black;
 }
 
-.targetAll:hover{
+.targetAll:hover {
     color: #46A3FF;
 }
 
-.nav-item::after{
- content: '';
-  position: absolute;
-  width: 100%;
-  height: 3px;
-  bottom: -3px;
-  left: 0;
-  background-color: #46A3FF;
-  visibility: hidden;
-  transform: scaleX(0);
-  transition: all 0.3s ease-in-out 0s;
+.nav-item::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: #46A3FF;
+    visibility: hidden;
+    transform: scaleX(0);
+    transition: all 0.3s ease-in-out 0s;
 
 }
 
-.nav-item:hover::after{
+.nav-item:hover::after {
     visibility: visible;
-  transform: scaleX(1);
+    transform: scaleX(1);
+}
+
+
+.textbox {
+    border: none;
+    border-bottom: 1px solid transparent;
+    outline: none;
+    font-size: 16px;
+    transition: border-bottom-color 0.5s ease-in-out;
+}
+
+.textbox:focus {
+    border-bottom-color: #ced4da;
 }
 </style>
