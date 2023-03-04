@@ -14,7 +14,9 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 
 		public IEnumerable<OrderDTO> GetOrders(int memberId)
 		{
-			var data = _db.Orders.Include(o => o.OrderDetails).Where(o => o.MemberId== memberId).Select(x => x.ToDTO());
+			var data = _db.Orders.Include(o => o.OrderDetails)
+								.Include(o => o.Status)
+								.Where(o => o.MemberId== memberId).Select(x => x.ToDTO());
 
 			
 			return data;

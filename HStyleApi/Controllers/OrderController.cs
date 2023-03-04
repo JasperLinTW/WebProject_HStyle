@@ -24,7 +24,7 @@ namespace HStyleApi.Controllers
 			_repo = new OrderRepo(db);
 			_orderService = new OrderService(_repo);
 			_db= db;
-			_memberId = 1;//TODO從COOKIE取
+			_memberId = 2;//TODO從COOKIE取
 		}
 		// GET: api/<OrderController>
 		[HttpGet]
