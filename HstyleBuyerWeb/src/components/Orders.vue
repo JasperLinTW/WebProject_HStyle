@@ -2,27 +2,32 @@
     <div class="container">
         <div class="order-header border-bottom border-dark">
             <div class="row">
+                <div class="col-1"></div>
                 <div class="col-2">訂單編號</div>
                 <div class="col-2">金額</div>
                 <div class="col-2">日期</div>
                 <div class="col-2">付款方式</div>
-                <div class="col-2">狀態</div>
+                <div class="col-1">狀態</div>
                 <div class="col-2">操作</div>
             </div>
         </div>
-        <div v-for="order in orders" class="order-item border-bottom border-dark">
+        <div v-for="(order, index) in orders" :key="order.orderId" class="order-item border-bottom border-dark">
             <div class="row order-item-header">
+                <div class="col-1"><i v-if="selectProduct === index" @click="hideDetails(index)"
+                        class="fa-regular fa-square-minus"></i>
+                    <i v-else @click="showDetails(index)" class="fa-regular fa-square-plus"></i>
+                </div>
                 <div class="col-2">{{ order.orderId }}</div>
                 <div class="col-2">{{ order.total }}</div>
-                <div class="col-2">{{ order.CreatedDate }}</div>
+                <div class="col-2">{{ order.createdTime }}</div>
                 <div class="col-2">{{ order.payment }}</div>
-                <div class="col-2">{{ order.statusId }}</div>
+                <div class="col-1">{{ order.statusId }}</div>
                 <div class="col-2">
                     <a>我要評論</a><br>
                     <a>聯絡客服</a>
                 </div>
             </div>
-            <div class="order-item-details border border-dark">
+            <div class="order-item-details border border-dark" v-if="selectProduct === index">
                 <div class="row bg-dark text-white p-0">
                     <div class="col-2">品名</div>
                     <div class="col-2">規格</div>
@@ -39,7 +44,7 @@
                 </div>
                 <div class="row order-item-footer">
                     <div class="col-2">共 5 件</div>
-                    <div class="col-4"></div>
+                    <div class="col-6"></div>
 
                     <div class="col-4">
                         <span>優惠</span>
@@ -63,9 +68,14 @@ const getOrdersInfo = async () => {
         .then(response => { orders.value = response.data; })
         .catch(error => { console.log(error); });
 }
-
-function toggleDetails(index) {
-    orders.value[index].showDetails = !orders.value[index].showDetails;
+const selectProduct = ref("");
+function showDetails(index) {
+    // orders.value[index].showDetails = !orders.value[index].showDetails;
+    selectProduct.value = index;
+}
+function hideDetails(index) {
+    // orders.value[index].showDetails = !orders.value[index].showDetails;
+    selectProduct.value = null;
 }
 
 function getReviewLink(orderId) {
@@ -82,7 +92,7 @@ onMounted(() => {
 
 </script>
 
-<style>
+<style scoped>
 .p-0 {
     padding: 0 !important;
 }
