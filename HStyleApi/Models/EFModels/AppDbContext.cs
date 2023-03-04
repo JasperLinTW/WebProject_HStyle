@@ -62,6 +62,8 @@ namespace HStyleApi.Models.EFModels
             {
                 entity.ToTable("Address");
 
+                entity.HasIndex(e => e.MemberId, "IX_Member_id");
+
                 entity.Property(e => e.AddressId).HasColumnName("address_id");
 
                 entity.Property(e => e.Destination)
@@ -93,30 +95,37 @@ namespace HStyleApi.Models.EFModels
                     .WithMany(p => p.Addresses)
                     .HasForeignKey(d => d.MemberId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Address_Members");
+                    .HasConstraintName("FK_dbo.Address_dbo.Members_Member_id");
             });
 
             modelBuilder.Entity<Cart>(entity =>
             {
-                entity.HasKey(e => new { e.SpecId, e.MemberId });
+                entity.HasKey(e => new { e.SpecId, e.MemberId })
+                    .HasName("PK_dbo.Cart");
 
                 entity.ToTable("Cart");
+
+                entity.HasIndex(e => e.MemberId, "IX_MemberId");
+
+                entity.HasIndex(e => e.SpecId, "IX_SpecId");
 
                 entity.HasOne(d => d.Member)
                     .WithMany(p => p.Carts)
                     .HasForeignKey(d => d.MemberId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Cart_Members");
+                    .HasConstraintName("FK_dbo.Cart_dbo.Members_MemberId");
 
                 entity.HasOne(d => d.Spec)
                     .WithMany(p => p.Carts)
                     .HasForeignKey(d => d.SpecId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Cart_Spec");
+                    .HasConstraintName("FK_dbo.Cart_dbo.Spec_SpecId");
             });
 
             modelBuilder.Entity<CommonQuestion>(entity =>
             {
+                entity.HasIndex(e => e.QcategoryId, "IX_QCategory_Id");
+
                 entity.Property(e => e.CommonQuestionId).HasColumnName("CommonQuestion_Id");
 
                 entity.Property(e => e.Answer).IsRequired();
@@ -133,11 +142,15 @@ namespace HStyleApi.Models.EFModels
                     .WithMany(p => p.CommonQuestions)
                     .HasForeignKey(d => d.QcategoryId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_CommonQuestions_Question_Categories");
+                    .HasConstraintName("FK_dbo.CommonQuestions_dbo.Question_Categories_QCategory_Id");
             });
 
             modelBuilder.Entity<CustomerQuestion>(entity =>
             {
+                entity.HasIndex(e => e.MemberId, "IX_Member_Id");
+
+                entity.HasIndex(e => e.QcategoryId, "IX_QCategory_Id");
+
                 entity.Property(e => e.CustomerQuestionId).HasColumnName("CustomerQuestion_Id");
 
                 entity.Property(e => e.AskTime).HasColumnType("datetime");
@@ -165,23 +178,28 @@ namespace HStyleApi.Models.EFModels
                 entity.HasOne(d => d.Member)
                     .WithMany(p => p.CustomerQuestions)
                     .HasForeignKey(d => d.MemberId)
-                    .HasConstraintName("FK_CustomerQuestions_Members");
+                    .HasConstraintName("FK_dbo.CustomerQuestions_dbo.Members_Member_Id");
 
                 entity.HasOne(d => d.Qcategory)
                     .WithMany(p => p.CustomerQuestions)
                     .HasForeignKey(d => d.QcategoryId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_CustomerQuestions_Question_Categories");
+                    .HasConstraintName("FK_dbo.CustomerQuestions_dbo.Question_Categories_QCategory_Id");
             });
 
             modelBuilder.Entity<EassyFollow>(entity =>
             {
-                entity.HasKey(e => e.MemberId);
+                entity.HasKey(e => e.MemberId)
+                    .HasName("PK_dbo.Eassy_Follows");
 
                 entity.ToTable("Eassy_Follows");
 
+                entity.HasIndex(e => e.EassyId, "IX_Eassy_Id");
+
+                entity.HasIndex(e => e.MemberId, "IX_Member_Id");
+
                 entity.Property(e => e.MemberId)
-                    .ValueGeneratedOnAdd()
+                    .ValueGeneratedNever()
                     .HasColumnName("Member_Id");
 
                 entity.Property(e => e.EassyId).HasColumnName("Eassy_Id");
@@ -194,20 +212,23 @@ namespace HStyleApi.Models.EFModels
                     .WithMany(p => p.EassyFollows)
                     .HasForeignKey(d => d.EassyId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Eassy_Follows_Essays");
+                    .HasConstraintName("FK_dbo.Eassy_Follows_dbo.Essays_Eassy_Id");
 
                 entity.HasOne(d => d.Member)
                     .WithOne(p => p.EassyFollow)
                     .HasForeignKey<EassyFollow>(d => d.MemberId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Eassy_Follows_Members");
+                    .HasConstraintName("FK_dbo.Eassy_Follows_dbo.Members_Member_Id");
             });
 
             modelBuilder.Entity<Ecommentlike>(entity =>
             {
-                entity.HasKey(e => new { e.EssayId, e.CommentId });
+                entity.HasKey(e => new { e.EssayId, e.CommentId })
+                    .HasName("PK_dbo.ECommentlikes");
 
                 entity.ToTable("ECommentlikes");
+
+                entity.HasIndex(e => e.CommentId, "IX_Comment_Id");
 
                 entity.Property(e => e.EssayId).HasColumnName("Essay_Id");
 
@@ -217,12 +238,15 @@ namespace HStyleApi.Models.EFModels
                     .WithMany(p => p.Ecommentlikes)
                     .HasForeignKey(d => d.CommentId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ECommentlikes_ECommentlikes");
+                    .HasConstraintName("FK_dbo.ECommentlikes_dbo.Essays_Comments_Comment_Id");
             });
 
             modelBuilder.Entity<Elike>(entity =>
             {
-                entity.HasKey(e => new { e.MemberId, e.EssayId });
+                entity.HasKey(e => new { e.MemberId, e.EssayId })
+                    .HasName("PK_dbo.Elikes");
+
+                entity.HasIndex(e => e.EssayId, "IX_Essay_Id");
 
                 entity.Property(e => e.MemberId).HasColumnName("Member_Id");
 
@@ -232,11 +256,13 @@ namespace HStyleApi.Models.EFModels
                     .WithMany(p => p.Elikes)
                     .HasForeignKey(d => d.EssayId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Elikes_Essays");
+                    .HasConstraintName("FK_dbo.Elikes_dbo.Essays_Essay_Id");
             });
 
             modelBuilder.Entity<Employee>(entity =>
             {
+                entity.HasIndex(e => e.PermissionId, "IX_Permission_id");
+
                 entity.Property(e => e.EmployeeId).HasColumnName("Employee_id");
 
                 entity.Property(e => e.Account)
@@ -248,20 +274,22 @@ namespace HStyleApi.Models.EFModels
                     .HasMaxLength(100)
                     .IsUnicode(false);
 
-                entity.Property(e => e.PermissionId)
-                    .HasColumnName("Permission_id")
-                    .HasDefaultValueSql("((4))");
+                entity.Property(e => e.PermissionId).HasColumnName("Permission_id");
 
                 entity.Property(e => e.Title).HasMaxLength(50);
 
                 entity.HasOne(d => d.Permission)
                     .WithMany(p => p.Employees)
                     .HasForeignKey(d => d.PermissionId)
-                    .HasConstraintName("FK_Employees_Employees");
+                    .HasConstraintName("FK_dbo.Employees_dbo.PermissionsE_Permission_id");
             });
 
             modelBuilder.Entity<Essay>(entity =>
             {
+                entity.HasIndex(e => e.CategoryId, "IX_CategoryId");
+
+                entity.HasIndex(e => e.InfluencerId, "IX_Influencer_Id");
+
                 entity.Property(e => e.EssayId).HasColumnName("Essay_Id");
 
                 entity.Property(e => e.Econtent)
@@ -275,26 +303,75 @@ namespace HStyleApi.Models.EFModels
 
                 entity.Property(e => e.InfluencerId).HasColumnName("Influencer_Id");
 
+                entity.Property(e => e.Pon).HasColumnName("PON");
+
                 entity.Property(e => e.UplodTime).HasColumnType("datetime");
 
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.Essays)
                     .HasForeignKey(d => d.CategoryId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Essays_VideoCategories");
+                    .HasConstraintName("FK_dbo.Essays_dbo.VideoCategories_CategoryId");
 
                 entity.HasOne(d => d.Influencer)
                     .WithMany(p => p.Essays)
                     .HasForeignKey(d => d.InfluencerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Essays_Employees");
+                    .HasConstraintName("FK_dbo.Essays_dbo.Employees_Influencer_Id");
+
+                entity.HasMany(d => d.Imgs)
+                    .WithMany(p => p.Essays)
+                    .UsingEntity<Dictionary<string, object>>(
+                        "EssaysImg",
+                        l => l.HasOne<Image>().WithMany().HasForeignKey("ImgId").HasConstraintName("FK_dbo.Essays_Imgs_dbo.Images_Img_Id"),
+                        r => r.HasOne<Essay>().WithMany().HasForeignKey("EssayId").HasConstraintName("FK_dbo.Essays_Imgs_dbo.Essays_Essay_Id"),
+                        j =>
+                        {
+                            j.HasKey("EssayId", "ImgId").HasName("PK_dbo.Essays_Imgs");
+
+                            j.ToTable("Essays_Imgs");
+
+                            j.HasIndex(new[] { "EssayId" }, "IX_Essay_Id");
+
+                            j.HasIndex(new[] { "ImgId" }, "IX_Img_Id");
+
+                            j.IndexerProperty<int>("EssayId").HasColumnName("Essay_Id");
+
+                            j.IndexerProperty<int>("ImgId").HasColumnName("Img_Id");
+                        });
+
+                entity.HasMany(d => d.Tags)
+                    .WithMany(p => p.Essays)
+                    .UsingEntity<Dictionary<string, object>>(
+                        "EssaysTag",
+                        l => l.HasOne<Tag>().WithMany().HasForeignKey("TagId").HasConstraintName("FK_dbo.Essays_Tags_dbo.Tags_Tag_Id"),
+                        r => r.HasOne<Essay>().WithMany().HasForeignKey("EssayId").HasConstraintName("FK_dbo.Essays_Tags_dbo.Essays_Essay_Id"),
+                        j =>
+                        {
+                            j.HasKey("EssayId", "TagId").HasName("PK_dbo.Essays_Tags");
+
+                            j.ToTable("Essays_Tags");
+
+                            j.HasIndex(new[] { "EssayId" }, "IX_Essay_Id");
+
+                            j.HasIndex(new[] { "TagId" }, "IX_Tag_Id");
+
+                            j.IndexerProperty<int>("EssayId").HasColumnName("Essay_Id");
+
+                            j.IndexerProperty<int>("TagId").HasColumnName("Tag_Id");
+                        });
             });
 
             modelBuilder.Entity<EssaysComment>(entity =>
             {
-                entity.HasKey(e => e.CommentId);
+                entity.HasKey(e => e.CommentId)
+                    .HasName("PK_dbo.Essays_Comments");
 
                 entity.ToTable("Essays_Comments");
+
+                entity.HasIndex(e => e.EssayId, "IX_Essay_Id");
+
+                entity.HasIndex(e => e.MemberId, "IX_Member_Id");
 
                 entity.Property(e => e.CommentId).HasColumnName("Comment_Id");
 
@@ -315,13 +392,34 @@ namespace HStyleApi.Models.EFModels
                     .WithMany(p => p.EssaysComments)
                     .HasForeignKey(d => d.EssayId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Essays_Comments_Essays");
+                    .HasConstraintName("FK_dbo.Essays_Comments_dbo.Essays_Essay_Id");
 
                 entity.HasOne(d => d.Member)
                     .WithMany(p => p.EssaysComments)
                     .HasForeignKey(d => d.MemberId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Essays_Comments_Members");
+                    .HasConstraintName("FK_dbo.Essays_Comments_dbo.Members_Member_Id");
+
+                entity.HasMany(d => d.Members)
+                    .WithMany(p => p.Comments)
+                    .UsingEntity<Dictionary<string, object>>(
+                        "EcommentsLike",
+                        l => l.HasOne<Member>().WithMany().HasForeignKey("MemberId").HasConstraintName("FK_dbo.EComments_Likes_dbo.Members_Member_Id"),
+                        r => r.HasOne<EssaysComment>().WithMany().HasForeignKey("CommentId").HasConstraintName("FK_dbo.EComments_Likes_dbo.Essays_Comments_Comment_Id"),
+                        j =>
+                        {
+                            j.HasKey("CommentId", "MemberId").HasName("PK_dbo.EComments_Likes");
+
+                            j.ToTable("EComments_Likes");
+
+                            j.HasIndex(new[] { "CommentId" }, "IX_Comment_Id");
+
+                            j.HasIndex(new[] { "MemberId" }, "IX_Member_Id");
+
+                            j.IndexerProperty<int>("CommentId").HasColumnName("Comment_Id");
+
+                            j.IndexerProperty<int>("MemberId").HasColumnName("Member_Id");
+                        });
             });
 
             modelBuilder.Entity<HActivity>(entity =>
@@ -344,9 +442,14 @@ namespace HStyleApi.Models.EFModels
 
             modelBuilder.Entity<HCheckIn>(entity =>
             {
-                entity.HasKey(e => e.CheckInHId);
+                entity.HasKey(e => e.CheckInHId)
+                    .HasName("PK_dbo.H_CheckIns");
 
                 entity.ToTable("H_CheckIns");
+
+                entity.HasIndex(e => e.ActivityId, "IX_Activity_Id");
+
+                entity.HasIndex(e => e.MemberId, "IX_Member_Id");
 
                 entity.Property(e => e.CheckInHId).HasColumnName("CheckIn_H_Id");
 
@@ -364,21 +467,27 @@ namespace HStyleApi.Models.EFModels
                     .WithMany(p => p.HCheckIns)
                     .HasForeignKey(d => d.ActivityId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_H_CheckIns_H_Activities_Categories");
+                    .HasConstraintName("FK_dbo.H_CheckIns_dbo.H_Activities_Activity_Id");
 
                 entity.HasOne(d => d.Member)
                     .WithMany(p => p.HCheckIns)
                     .HasForeignKey(d => d.MemberId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_H_CheckIns_Members");
+                    .HasConstraintName("FK_dbo.H_CheckIns_dbo.Members_Member_Id");
             });
 
             modelBuilder.Entity<HSourceDetail>(entity =>
             {
                 entity.HasKey(e => e.SourceHId)
-                    .HasName("PK_Source_Hs");
+                    .HasName("PK_dbo.H_Source_Details");
 
                 entity.ToTable("H_Source_Details");
+
+                entity.HasIndex(e => e.ActivityId, "IX_Activity_Id");
+
+                entity.HasIndex(e => e.EmployeeId, "IX_Employee_Id");
+
+                entity.HasIndex(e => e.MemberId, "IX_Member_Id");
 
                 entity.Property(e => e.SourceHId).HasColumnName("Source_H_Id");
 
@@ -402,18 +511,18 @@ namespace HStyleApi.Models.EFModels
                     .WithMany(p => p.HSourceDetails)
                     .HasForeignKey(d => d.ActivityId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_H_Source_Details_H_Activities_Categories");
+                    .HasConstraintName("FK_dbo.H_Source_Details_dbo.H_Activities_Activity_Id");
 
                 entity.HasOne(d => d.Employee)
                     .WithMany(p => p.HSourceDetails)
                     .HasForeignKey(d => d.EmployeeId)
-                    .HasConstraintName("FK_H_Source_Details_Employees");
+                    .HasConstraintName("FK_dbo.H_Source_Details_dbo.Employees_Employee_Id");
 
                 entity.HasOne(d => d.Member)
                     .WithMany(p => p.HSourceDetails)
                     .HasForeignKey(d => d.MemberId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_H_Source_Details_Members");
+                    .HasConstraintName("FK_dbo.H_Source_Details_dbo.Members_Member_Id");
             });
 
             modelBuilder.Entity<Image>(entity =>
@@ -429,47 +538,38 @@ namespace HStyleApi.Models.EFModels
                     .WithMany(p => p.PcommentImgs)
                     .UsingEntity<Dictionary<string, object>>(
                         "PcommentsImg",
-                        l => l.HasOne<ProductComment>().WithMany().HasForeignKey("CommentId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_PComments_Imgs_Product_Comments"),
-                        r => r.HasOne<Image>().WithMany().HasForeignKey("PcommentImgId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_PComments_Imgs_Images1"),
+                        l => l.HasOne<ProductComment>().WithMany().HasForeignKey("CommentId").HasConstraintName("FK_dbo.PComments_Imgs_dbo.Product_Comments_Comment_id"),
+                        r => r.HasOne<Image>().WithMany().HasForeignKey("PcommentImgId").HasConstraintName("FK_dbo.PComments_Imgs_dbo.Images_PComment_img_id"),
                         j =>
                         {
-                            j.HasKey("PcommentImgId", "CommentId").HasName("PK_PComments_Imgs_1");
+                            j.HasKey("PcommentImgId", "CommentId").HasName("PK_dbo.PComments_Imgs");
 
                             j.ToTable("PComments_Imgs");
+
+                            j.HasIndex(new[] { "CommentId" }, "IX_Comment_id");
+
+                            j.HasIndex(new[] { "PcommentImgId" }, "IX_PComment_img_id");
 
                             j.IndexerProperty<int>("PcommentImgId").HasColumnName("PComment_img_id");
 
                             j.IndexerProperty<int>("CommentId").HasColumnName("Comment_id");
                         });
 
-                entity.HasMany(d => d.Essays)
-                    .WithMany(p => p.Imgs)
-                    .UsingEntity<Dictionary<string, object>>(
-                        "EssaysImg",
-                        l => l.HasOne<Essay>().WithMany().HasForeignKey("EssayId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_Essays_Imgs_Essays"),
-                        r => r.HasOne<Image>().WithMany().HasForeignKey("ImgId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_Essays_Imgs_Images"),
-                        j =>
-                        {
-                            j.HasKey("ImgId", "EssayId").HasName("PK_Essays_Img");
-
-                            j.ToTable("Essays_Imgs");
-
-                            j.IndexerProperty<int>("ImgId").HasColumnName("Img_Id");
-
-                            j.IndexerProperty<int>("EssayId").HasColumnName("Essay_Id");
-                        });
-
                 entity.HasMany(d => d.Products)
                     .WithMany(p => p.Imgs)
                     .UsingEntity<Dictionary<string, object>>(
                         "ImgsProduct",
-                        l => l.HasOne<Product>().WithMany().HasForeignKey("ProductId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_Imgs_Products_Products"),
-                        r => r.HasOne<Image>().WithMany().HasForeignKey("ImgId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_Imgs_Products_Images"),
+                        l => l.HasOne<Product>().WithMany().HasForeignKey("ProductId").HasConstraintName("FK_dbo.Imgs_Products_dbo.Products_Product_Id"),
+                        r => r.HasOne<Image>().WithMany().HasForeignKey("ImgId").HasConstraintName("FK_dbo.Imgs_Products_dbo.Images_Img_Id"),
                         j =>
                         {
-                            j.HasKey("ImgId", "ProductId");
+                            j.HasKey("ImgId", "ProductId").HasName("PK_dbo.Imgs_Products");
 
                             j.ToTable("Imgs_Products");
+
+                            j.HasIndex(new[] { "ImgId" }, "IX_Img_Id");
+
+                            j.HasIndex(new[] { "ProductId" }, "IX_Product_Id");
 
                             j.IndexerProperty<int>("ImgId").HasColumnName("Img_Id");
 
@@ -479,14 +579,13 @@ namespace HStyleApi.Models.EFModels
 
             modelBuilder.Entity<Member>(entity =>
             {
+                entity.HasIndex(e => e.PermissionId, "IX_Permission_Id");
+
                 entity.Property(e => e.Account)
-                    .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Address)
-                    .IsRequired()
-                    .HasMaxLength(100);
+                entity.Property(e => e.Address).HasMaxLength(100);
 
                 entity.Property(e => e.Email)
                     .IsRequired()
@@ -502,9 +601,7 @@ namespace HStyleApi.Models.EFModels
                     .HasMaxLength(100)
                     .HasColumnName("Mail_code");
 
-                entity.Property(e => e.MailVerify)
-                    .HasColumnName("Mail_verify")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.MailVerify).HasColumnName("Mail_verify");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
@@ -513,36 +610,16 @@ namespace HStyleApi.Models.EFModels
                 entity.Property(e => e.PermissionId).HasColumnName("Permission_Id");
 
                 entity.Property(e => e.PhoneNumber)
-                    .IsRequired()
                     .HasMaxLength(10)
                     .IsUnicode(false)
                     .HasColumnName("Phone_Number");
 
-                entity.Property(e => e.TotalH)
-                    .HasColumnName("Total_H")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.TotalH).HasColumnName("Total_H");
 
                 entity.HasOne(d => d.Permission)
                     .WithMany(p => p.Members)
                     .HasForeignKey(d => d.PermissionId)
-                    .HasConstraintName("FK_Members_PermissionsM");
-
-                entity.HasMany(d => d.Comments)
-                    .WithMany(p => p.Members)
-                    .UsingEntity<Dictionary<string, object>>(
-                        "EcommentsLike",
-                        l => l.HasOne<EssaysComment>().WithMany().HasForeignKey("CommentId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_EComments_Likes_Essays_Comments"),
-                        r => r.HasOne<Member>().WithMany().HasForeignKey("MemberId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_EComments_Likes_Members"),
-                        j =>
-                        {
-                            j.HasKey("MemberId", "CommentId");
-
-                            j.ToTable("EComments_Likes");
-
-                            j.IndexerProperty<int>("MemberId").HasColumnName("Member_Id");
-
-                            j.IndexerProperty<int>("CommentId").HasColumnName("Comment_Id");
-                        });
+                    .HasConstraintName("FK_dbo.Members_dbo.PermissionsM_Permission_Id");
             });
 
             modelBuilder.Entity<News>(entity =>
@@ -572,6 +649,14 @@ namespace HStyleApi.Models.EFModels
 
             modelBuilder.Entity<Order>(entity =>
             {
+                entity.HasIndex(e => e.EmployeeId, "IX_Employee_id");
+
+                entity.HasIndex(e => e.MemberId, "IX_Member_id");
+
+                entity.HasIndex(e => e.StatusDescriptionId, "IX_Status_Description_id");
+
+                entity.HasIndex(e => e.StatusId, "IX_Status_id");
+
                 entity.Property(e => e.OrderId).HasColumnName("Order_id");
 
                 entity.Property(e => e.CreatedTime).HasColumnType("datetime");
@@ -613,31 +698,34 @@ namespace HStyleApi.Models.EFModels
                 entity.HasOne(d => d.Employee)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.EmployeeId)
-                    .HasConstraintName("FK_Orders_Employees");
+                    .HasConstraintName("FK_dbo.Orders_dbo.Employees_Employee_id");
 
                 entity.HasOne(d => d.Member)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.MemberId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Orders_Members");
+                    .HasConstraintName("FK_dbo.Orders_dbo.Members_Member_id");
 
                 entity.HasOne(d => d.StatusDescription)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.StatusDescriptionId)
-                    .HasConstraintName("FK_Orders_Order_StatusDescription");
+                    .HasConstraintName("FK_dbo.Orders_dbo.Order_StatusDescription_Status_Description_id");
 
                 entity.HasOne(d => d.Status)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.StatusId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Orders_Order_Status");
+                    .HasConstraintName("FK_dbo.Orders_dbo.Order_Status_Status_id");
             });
 
             modelBuilder.Entity<OrderDetail>(entity =>
             {
-                entity.HasKey(e => new { e.OrderId, e.ProductId });
+                entity.HasKey(e => new { e.OrderId, e.ProductId })
+                    .HasName("PK_dbo.Order_Details");
 
                 entity.ToTable("Order_Details");
+
+                entity.HasIndex(e => e.OrderId, "IX_Order_id");
 
                 entity.Property(e => e.OrderId).HasColumnName("Order_id");
 
@@ -659,12 +747,13 @@ namespace HStyleApi.Models.EFModels
                     .WithMany(p => p.OrderDetails)
                     .HasForeignKey(d => d.OrderId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Order_Details_Orders");
+                    .HasConstraintName("FK_dbo.Order_Details_dbo.Orders_Order_id");
             });
 
             modelBuilder.Entity<OrderLog>(entity =>
             {
-                entity.HasKey(e => e.LogId);
+                entity.HasKey(e => e.LogId)
+                    .HasName("PK_dbo.Order_Log");
 
                 entity.ToTable("Order_Log");
 
@@ -685,7 +774,8 @@ namespace HStyleApi.Models.EFModels
 
             modelBuilder.Entity<OrderStatus>(entity =>
             {
-                entity.HasKey(e => e.StatusId);
+                entity.HasKey(e => e.StatusId)
+                    .HasName("PK_dbo.Order_Status");
 
                 entity.ToTable("Order_Status");
 
@@ -701,7 +791,7 @@ namespace HStyleApi.Models.EFModels
             modelBuilder.Entity<OrderStatusDescription>(entity =>
             {
                 entity.HasKey(e => e.DescriptionId)
-                    .HasName("PK_Status_Description");
+                    .HasName("PK_dbo.Order_StatusDescription");
 
                 entity.ToTable("Order_StatusDescription");
 
@@ -728,7 +818,8 @@ namespace HStyleApi.Models.EFModels
 
             modelBuilder.Entity<PcommentsHelpful>(entity =>
             {
-                entity.HasKey(e => new { e.MemberId, e.CommentId });
+                entity.HasKey(e => new { e.MemberId, e.CommentId })
+                    .HasName("PK_dbo.PComments_Helpful");
 
                 entity.ToTable("PComments_Helpful");
 
@@ -739,7 +830,8 @@ namespace HStyleApi.Models.EFModels
 
             modelBuilder.Entity<PermissionsE>(entity =>
             {
-                entity.HasKey(e => e.PermissionMId);
+                entity.HasKey(e => e.PermissionMId)
+                    .HasName("PK_dbo.PermissionsE");
 
                 entity.ToTable("PermissionsE");
 
@@ -750,7 +842,8 @@ namespace HStyleApi.Models.EFModels
 
             modelBuilder.Entity<PermissionsM>(entity =>
             {
-                entity.HasKey(e => e.PermissionId);
+                entity.HasKey(e => e.PermissionId)
+                    .HasName("PK_dbo.PermissionsM");
 
                 entity.ToTable("PermissionsM");
 
@@ -761,14 +854,15 @@ namespace HStyleApi.Models.EFModels
 
             modelBuilder.Entity<Product>(entity =>
             {
+                entity.HasIndex(e => e.CategoryId, "IX_Category_Id");
+
                 entity.Property(e => e.ProductId).HasColumnName("Product_Id");
 
                 entity.Property(e => e.CategoryId).HasColumnName("Category_Id");
 
                 entity.Property(e => e.CreateAt)
                     .HasColumnType("datetime")
-                    .HasColumnName("Create_at")
-                    .HasDefaultValueSql("(getdate())");
+                    .HasColumnName("Create_at");
 
                 entity.Property(e => e.Description)
                     .IsRequired()
@@ -783,14 +877,40 @@ namespace HStyleApi.Models.EFModels
                     .WithMany(p => p.Products)
                     .HasForeignKey(d => d.CategoryId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Products_PCategories");
+                    .HasConstraintName("FK_dbo.Products_dbo.PCategories_Category_Id");
+
+                entity.HasMany(d => d.Tags)
+                    .WithMany(p => p.Products)
+                    .UsingEntity<Dictionary<string, object>>(
+                        "TagsProduct",
+                        l => l.HasOne<Tag>().WithMany().HasForeignKey("TagId").HasConstraintName("FK_dbo.Tags_Products_dbo.Tags_Tag_Id"),
+                        r => r.HasOne<Product>().WithMany().HasForeignKey("ProductId").HasConstraintName("FK_dbo.Tags_Products_dbo.Products_Product_Id"),
+                        j =>
+                        {
+                            j.HasKey("ProductId", "TagId").HasName("PK_dbo.Tags_Products");
+
+                            j.ToTable("Tags_Products");
+
+                            j.HasIndex(new[] { "ProductId" }, "IX_Product_Id");
+
+                            j.HasIndex(new[] { "TagId" }, "IX_Tag_Id");
+
+                            j.IndexerProperty<int>("ProductId").HasColumnName("Product_Id");
+
+                            j.IndexerProperty<int>("TagId").HasColumnName("Tag_Id");
+                        });
             });
 
             modelBuilder.Entity<ProductComment>(entity =>
             {
-                entity.HasKey(e => e.CommentId);
+                entity.HasKey(e => e.CommentId)
+                    .HasName("PK_dbo.Product_Comments");
 
                 entity.ToTable("Product_Comments");
+
+                entity.HasIndex(e => e.OrderId, "IX_Order_id");
+
+                entity.HasIndex(e => e.ProductId, "IX_Product_id");
 
                 entity.Property(e => e.CommentId).HasColumnName("Comment_id");
 
@@ -809,20 +929,23 @@ namespace HStyleApi.Models.EFModels
                     .WithMany(p => p.ProductComments)
                     .HasForeignKey(d => d.OrderId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Product_Comments_Orders");
+                    .HasConstraintName("FK_dbo.Product_Comments_dbo.Orders_Order_id");
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.ProductComments)
                     .HasForeignKey(d => d.ProductId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Product_Comments_Products");
+                    .HasConstraintName("FK_dbo.Product_Comments_dbo.Products_Product_id");
             });
 
             modelBuilder.Entity<ProductLike>(entity =>
             {
-                entity.HasKey(e => new { e.ProductId, e.MemberId });
+                entity.HasKey(e => new { e.ProductId, e.MemberId })
+                    .HasName("PK_dbo.Product_Likes");
 
                 entity.ToTable("Product_Likes");
+
+                entity.HasIndex(e => e.ProductId, "IX_Product_id");
 
                 entity.Property(e => e.ProductId).HasColumnName("Product_id");
 
@@ -832,12 +955,13 @@ namespace HStyleApi.Models.EFModels
                     .WithMany(p => p.ProductLikes)
                     .HasForeignKey(d => d.ProductId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Product_Likes_Products");
+                    .HasConstraintName("FK_dbo.Product_Likes_dbo.Products_Product_id");
             });
 
             modelBuilder.Entity<QuestionCategory>(entity =>
             {
-                entity.HasKey(e => e.QcategoryId);
+                entity.HasKey(e => e.QcategoryId)
+                    .HasName("PK_dbo.Question_Categories");
 
                 entity.ToTable("Question_Categories");
 
@@ -851,6 +975,8 @@ namespace HStyleApi.Models.EFModels
             modelBuilder.Entity<Spec>(entity =>
             {
                 entity.ToTable("Spec");
+
+                entity.HasIndex(e => e.ProductId, "IX_Product_Id");
 
                 entity.Property(e => e.Color)
                     .IsRequired()
@@ -866,7 +992,7 @@ namespace HStyleApi.Models.EFModels
                     .WithMany(p => p.Specs)
                     .HasForeignKey(d => d.ProductId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Spec_Products");
+                    .HasConstraintName("FK_dbo.Spec_dbo.Products_Product_Id");
             });
 
             modelBuilder.Entity<Tag>(entity =>
@@ -875,59 +1001,47 @@ namespace HStyleApi.Models.EFModels
                     .IsRequired()
                     .HasMaxLength(20);
 
-                entity.HasMany(d => d.Essays)
+                entity.HasMany(d => d.Videos)
                     .WithMany(p => p.Tags)
                     .UsingEntity<Dictionary<string, object>>(
-                        "EssaysTag",
-                        l => l.HasOne<Essay>().WithMany().HasForeignKey("EssayId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_Essays_Tags_Essays"),
-                        r => r.HasOne<Tag>().WithMany().HasForeignKey("TagId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_Essays_Tags_Essays_Tags"),
+                        "TagsVideo",
+                        l => l.HasOne<Video>().WithMany().HasForeignKey("VideoId").HasConstraintName("FK_dbo.Tags_Video_dbo.Videos_VideoId"),
+                        r => r.HasOne<Tag>().WithMany().HasForeignKey("TagId").HasConstraintName("FK_dbo.Tags_Video_dbo.Tags_TagId"),
                         j =>
                         {
-                            j.HasKey("TagId", "EssayId");
+                            j.HasKey("TagId", "VideoId").HasName("PK_dbo.Tags_Video");
 
-                            j.ToTable("Essays_Tags");
+                            j.ToTable("Tags_Video");
 
-                            j.IndexerProperty<int>("TagId").HasColumnName("Tag_Id");
+                            j.HasIndex(new[] { "TagId" }, "IX_TagId");
 
-                            j.IndexerProperty<int>("EssayId").HasColumnName("Essay_Id");
-                        });
-
-                entity.HasMany(d => d.Products)
-                    .WithMany(p => p.Tags)
-                    .UsingEntity<Dictionary<string, object>>(
-                        "TagsProduct",
-                        l => l.HasOne<Product>().WithMany().HasForeignKey("ProductId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_Tags_Products_Products"),
-                        r => r.HasOne<Tag>().WithMany().HasForeignKey("TagId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_Tags_Products_Tags"),
-                        j =>
-                        {
-                            j.HasKey("TagId", "ProductId");
-
-                            j.ToTable("Tags_Products");
-
-                            j.IndexerProperty<int>("TagId").HasColumnName("Tag_Id");
-
-                            j.IndexerProperty<int>("ProductId").HasColumnName("Product_Id");
+                            j.HasIndex(new[] { "VideoId" }, "IX_VideoId");
                         });
             });
 
             modelBuilder.Entity<VcommentLike>(entity =>
             {
-                entity.HasKey(e => new { e.MemberId, e.CommentId });
+                entity.HasKey(e => new { e.MemberId, e.CommentId })
+                    .HasName("PK_dbo.VCommentLike");
 
                 entity.ToTable("VCommentLike");
+
+                entity.HasIndex(e => e.CommentId, "IX_CommentId");
 
                 entity.HasOne(d => d.Comment)
                     .WithMany(p => p.VcommentLikes)
                     .HasForeignKey(d => d.CommentId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_VCommentLike_VCommentLike");
+                    .HasConstraintName("FK_dbo.VCommentLike_dbo.VideoComments_CommentId");
             });
 
             modelBuilder.Entity<Video>(entity =>
             {
-                entity.Property(e => e.CreatedTime)
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
+                entity.HasIndex(e => e.CategoryId, "IX_CategoryId");
+
+                entity.HasIndex(e => e.ImageId, "IX_ImageId");
+
+                entity.Property(e => e.CreatedTime).HasColumnType("datetime");
 
                 entity.Property(e => e.FilePath)
                     .IsRequired()
@@ -945,26 +1059,13 @@ namespace HStyleApi.Models.EFModels
                     .WithMany(p => p.Videos)
                     .HasForeignKey(d => d.CategoryId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Videos_VideoCategories");
+                    .HasConstraintName("FK_dbo.Videos_dbo.VideoCategories_CategoryId");
 
                 entity.HasOne(d => d.Image)
                     .WithMany(p => p.Videos)
                     .HasForeignKey(d => d.ImageId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Videos_Images");
-
-                entity.HasMany(d => d.Tags)
-                    .WithMany(p => p.Videos)
-                    .UsingEntity<Dictionary<string, object>>(
-                        "TagsVideo",
-                        l => l.HasOne<Tag>().WithMany().HasForeignKey("TagId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_Tags_Video_Tags"),
-                        r => r.HasOne<Video>().WithMany().HasForeignKey("VideoId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_Tags_Video_Videos"),
-                        j =>
-                        {
-                            j.HasKey("VideoId", "TagId");
-
-                            j.ToTable("Tags_Video");
-                        });
+                    .HasConstraintName("FK_dbo.Videos_dbo.Images_ImageId");
             });
 
             modelBuilder.Entity<VideoCategory>(entity =>
@@ -978,6 +1079,10 @@ namespace HStyleApi.Models.EFModels
 
             modelBuilder.Entity<VideoComment>(entity =>
             {
+                entity.HasIndex(e => e.MemberId, "IX_MemberId");
+
+                entity.HasIndex(e => e.VideoId, "IX_VideoId");
+
                 entity.Property(e => e.Comment).IsRequired();
 
                 entity.Property(e => e.CreatedTime).HasColumnType("datetime");
@@ -986,32 +1091,35 @@ namespace HStyleApi.Models.EFModels
                     .WithMany(p => p.VideoComments)
                     .HasForeignKey(d => d.MemberId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_VideoComments_Members");
+                    .HasConstraintName("FK_dbo.VideoComments_dbo.Members_MemberId");
 
                 entity.HasOne(d => d.Video)
                     .WithMany(p => p.VideoComments)
                     .HasForeignKey(d => d.VideoId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_VideoComments_Videos");
+                    .HasConstraintName("FK_dbo.VideoComments_dbo.Videos_VideoId");
             });
 
             modelBuilder.Entity<VideoLike>(entity =>
             {
                 entity.HasKey(e => new { e.VideoId, e.MemberId })
-                    .HasName("PK_VideoLikes_1");
+                    .HasName("PK_dbo.VideoLikes");
 
-                entity.HasIndex(e => e.MemberId, "IX_VideoLikes");
+                entity.HasIndex(e => e.VideoId, "IX_VideoId");
 
                 entity.HasOne(d => d.Video)
                     .WithMany(p => p.VideoLikes)
                     .HasForeignKey(d => d.VideoId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_VideoLikes_Videos1");
+                    .HasConstraintName("FK_dbo.VideoLikes_dbo.Videos_VideoId");
             });
 
             modelBuilder.Entity<VideoView>(entity =>
             {
-                entity.HasKey(e => e.VideoId);
+                entity.HasKey(e => e.VideoId)
+                    .HasName("PK_dbo.VideoViews");
+
+                entity.HasIndex(e => e.VideoId, "IX_VideoId");
 
                 entity.Property(e => e.VideoId).ValueGeneratedNever();
 
@@ -1019,7 +1127,7 @@ namespace HStyleApi.Models.EFModels
                     .WithOne(p => p.VideoView)
                     .HasForeignKey<VideoView>(d => d.VideoId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_VideoViews_Videos1");
+                    .HasConstraintName("FK_dbo.VideoViews_dbo.Videos_VideoId");
             });
 
             OnModelCreatingPartial(modelBuilder);
