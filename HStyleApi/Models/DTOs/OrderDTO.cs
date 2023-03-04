@@ -16,8 +16,10 @@ namespace HStyleApi.Models.DTOs
 		public string ShipPhone { get; set; }
 		public DateTime CreatedTime { get; set; }
 		public int StatusId { get; set; }
+		public string Status { get; set; }
 		public int? StatusDescriptionId { get; set; }
-		public int? Discount { get; set; }
+		public int Discount { get; set; }
+
 	}
 
 	public static class OrderExtension
@@ -37,9 +39,10 @@ namespace HStyleApi.Models.DTOs
 				ShipAddress = value.ShipAddress,
 				CreatedTime = value.CreatedTime,
 				StatusId = value.StatusId,//有待付款狀態
+				Status = value.Status.Status,
 				StatusDescriptionId = value.StatusDescriptionId,
-				Freight= value.Freight,
-				Discount=value.Discount
+				Freight = value.Freight,
+				Discount = value.Discount ?? 0
 
 			};
 			return data;

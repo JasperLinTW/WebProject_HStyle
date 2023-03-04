@@ -55,7 +55,7 @@ namespace HStyleApi.Models.Services
 				ShipPhone = value.ShipPhone,
 				ShipAddress = value.ShipAddress,
 				CreatedTime = DateTime.Now,
-				Discount = value.Discount,
+				Discount = value.Discount ?? 0,
 				StatusId = 1,//待付款
 				StatusDescriptionId = 9,
 
