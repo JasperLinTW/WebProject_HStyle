@@ -19,6 +19,10 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace HStyleApi.Controllers
 {
+
+
+
+
     [EnableCors("AllowAny")]
     [Route("api/[controller]")]
     [ApiController]
@@ -112,9 +116,6 @@ namespace HStyleApi.Controllers
 
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
-                
-
-
             }
 
             // 建立一個包含用戶相關聲明(Claim)的JavaScript對象
@@ -125,8 +126,6 @@ namespace HStyleApi.Controllers
                 name = member.Name,
                 email = member.Email,
             };
-
-
 
             // 將JavaScript對象傳遞回前端
             return Ok(userData);
@@ -141,19 +140,26 @@ namespace HStyleApi.Controllers
         //};
         //    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
         //    HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
-
+        [Authorize]
         [HttpPost("LogOut")]
-        public IActionResult LogOut()
+        public async Task<IActionResult> LogOut()
         {
-            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return Ok("登出成功");
+            if (User.Identity.IsAuthenticated)
+                {
+                await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                return Ok("登出成功");
+            }
+            else
+            {
+                return BadRequest("您尚未登入");
+            }
 
         }
 
         [HttpPost("NoLogin")]
         public void NoLogin()
         {
-            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            
         }
 
         [Authorize]
@@ -282,5 +288,7 @@ namespace HStyleApi.Controllers
         public void Delete(int id)
         {
         }
+
+        }
     }
-}
+

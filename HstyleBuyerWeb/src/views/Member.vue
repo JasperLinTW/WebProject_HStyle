@@ -39,7 +39,15 @@
 
 
   <script>
-
+  //以下測試
+  function getCookie(name) {
+  let value = "; " + document.cookie;
+  let parts = value.split("; " + name + "=");
+  if (parts.length === 2) {
+    return parts.pop().split(";").shift();
+  }
+}
+//以上測試
 import axios from 'axios';
 
 export default {
@@ -67,32 +75,26 @@ export default {
           'Content-Type': 'application/json',
           "Accept": "application/json",
         },
+        credentials: 'include',
+
         body: JSON.stringify({
           'account': this.username,
           'password': this.password
         }),
-        credentials: 'same-origin' //測試 本來沒有加
       })
         .then((response) => {
-            return response.json();
-        })
-        .then( (response) => {
-            // console.log(response)
         })
         .catch(error => console.error(error));
     },
     Logout(e){
-        e.preventDefault()
-    fetch('https://localhost:7243/api/Member/LogOut', {
+        //e.preventDefault()
+        fetch('https://localhost:7243/api/Member/LogOut', {
         method: 'POST',
         headers: {     
             'Content-Type': 'application/json',       
             "Accept": "application/json",
         },
-        body: JSON.stringify({
-          
-        }),
-        credentials: 'same-origin'
+        credentials: 'include',
         })
         .then((response) => {
             return response.json();
@@ -108,6 +110,8 @@ export default {
       fetch('https://localhost:7243/api/Member/Register', {
         method: 'POST',
         headers: {
+          // Authorization: Bearer <your_access_token>,
+          'Authorization': `Bearer ${access_token}`,
           'Content-Type': 'application/json',
           "Accept": "application/json",
         },
@@ -125,7 +129,12 @@ export default {
         credentials: 'same-origin'
       })
         .then((response) => {
+            // return response.json();
+            if (response.ok) {
             return response.json();
+          } else {
+            throw new Error('Something went wrong');
+          }
         })
         .then( (response) => {
             console.log(response);
