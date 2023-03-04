@@ -1,6 +1,6 @@
 <template>
     <header class="bg-opacity-0 targetAll sticky-top" id="myHeader">
-    <h1 class="trans1">H'STYLE</h1>
+        <h1 class="trans1">H'STYLE</h1>
     </header>
     <nav class="navbar navbar-expand bg-ligt">
         <div Class="container-fluid" m-0 g-0 position-relative>
@@ -33,7 +33,7 @@
                         <router-link to="/" class="nav-link targetAll">化妝品</router-link>
                         <!-- <a class="nav-link targetAll" href="#">化妝品</a> -->
                     </li>
-                
+
                 </ul>
             </div>
             <div class="nav justify-content-end">
@@ -44,11 +44,14 @@
                     <a href="#" title="打卡" class="text-dark"><i class="fa-regular fa-circle-check  icon-hover"></i></a>
                 </div>
                 <div class="btn-light mx-3">
-                    <a href="#" title="會員" class="text-dark"><i class="fa-regular fa-circle-user icon-hover"></i></a>
+                    <router-link to="/account" class="text-dark"><i
+                            class="fa-regular fa-circle-user icon-hover"></i></router-link>
+                    <!-- <a href="#" title="會員" class="text-dark"><i class="fa-regular fa-circle-user icon-hover"></i></a> -->
                 </div>
-                <div class="btn-light mx-3" >
-                    <a href="#" title="購物車" class="text-dark"><i class="fa-solid fa-cart-shopping icon-hover" data-bs-toggle="modal" data-bs-target="#exampleModal"> </i></a>
-                    
+                <div class="btn-light mx-3">
+                    <a href="#" title="購物車" class="text-dark"><i class="fa-solid fa-cart-shopping icon-hover"
+                            data-bs-toggle="modal" data-bs-target="#exampleModal"> </i></a>
+
                 </div>
             </div>
         </div>
@@ -57,39 +60,40 @@
 </template>
 <script>
 import Cart from './Cart.vue'
-export default{
-    components:{
+export default {
+    components: {
         Cart,
     },
-    mounted(){
+    mounted() {
         $(".target")
             .on("mouseenter", function () {
-              $(".target").css("color", "#46A3FF");
+                $(".target").css("color", "#46A3FF");
             })
             .on("mouseleave", function () {
-              $(".target").css("color", "black");
+                $(".target").css("color", "black");
             });
-    
-          $(".targetAll")
+
+        $(".targetAll")
             .on("mouseenter", function () {
-              $(this).css("color", "#46A3FF");
+                $(this).css("color", "#46A3FF");
             })
             .on("mouseleave", function () {
-              $(this).css("color", "black");
+                $(this).css("color", "black");
             });
-         window.addEventListener("scroll",function(){
-         var header = document.querySelector("header");
-         header.classList.toggle("sticky", window.scrollY > 0);})
-         
-     
+        window.addEventListener("scroll", function () {
+            var header = document.querySelector("header");
+            header.classList.toggle("sticky", window.scrollY > 0);
+        })
+
+
     }
-    
+
 }
 
 
 </script>
 <style>
-.icon-hover:hover{
+.icon-hover:hover {
     color: #46A3FF;
 }
 </style>
