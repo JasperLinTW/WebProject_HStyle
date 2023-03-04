@@ -54,6 +54,7 @@
 import Back2Top from '../components/Back2Top.vue'
 import ProductCard from '../components/ProductCard.vue'
 
+
 </script>
 <style scoped>
 .filter {

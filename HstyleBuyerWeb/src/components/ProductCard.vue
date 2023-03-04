@@ -1,12 +1,15 @@
 <template>
     <div class="col-lg-4 d-flex justify-content-around px-5 py-5" v-for="item in products">
-        <div class="card d-flex justify-content-center align-items-center">
-            <div class="img-sz">
-                <img v-if="!item.isIn" @mouseover="item.isIn = true" :src="item.imgs[0]" class="card-img-top"
-                    alt="Product Image">
-                <img v-else @mouseout="item.isIn = false" :src="item.imgs[1]" class="card-img-top" alt="Product Image">
-            </div>
 
+        <div class="card d-flex justify-content-center align-items-center">
+            <router-link :to="'/product/' + item.product_Id">
+                <div class="img-sz">
+
+                    <img v-if="!item.isIn" @mouseover="item.isIn = true" :src="item.imgs[0]" class="card-img-top"
+                        alt="Product Image">
+                    <img v-else @mouseout="item.isIn = false" :src="item.imgs[1]" class="card-img-top" alt="Product Image">
+                </div>
+            </router-link>
             <div class="card-body position-relative">
                 <div class="position-absolute top-0 end-0 me-2 mt-2" v-for="tag in item.tags"> <label class="fz-9"
                         v-if="tag === newProduct">{{ newProduct
@@ -20,12 +23,14 @@
                 </div>
             </div>
         </div>
+
     </div>
 </template>
 
 <script setup>
 import axios from 'axios';
 import { ref, onMounted } from 'vue';
+
 
 //圖片動畫
 const isIn = ref(false);
