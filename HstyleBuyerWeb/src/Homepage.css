@@ -30,6 +30,8 @@ header .sticky ul li a {
   height: 100vh;
   background-size: cover;
   background-position: center center;
+  overflow: auto;
+
 }
 
 .area1 {

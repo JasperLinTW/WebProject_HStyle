@@ -11,6 +11,6 @@ const routes = [
         component: () => import('../components/Orders.vue')
       }
     ]},
-
+    { path: '/EssaysBlog',name:'EssaysBlog', component:()=> import('../views/EssaysBlog.vue') }
   ]
 export default routes

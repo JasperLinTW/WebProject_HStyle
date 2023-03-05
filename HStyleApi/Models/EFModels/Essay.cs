@@ -24,6 +24,7 @@ namespace HStyleApi.Models.EFModels
         public DateTime? UpLoad { get; set; }
         public DateTime? Removed { get; set; }
         public int CategoryId { get; set; }
+        public bool? Pon { get; set; }
 
         public virtual VideoCategory Category { get; set; }
         public virtual Employee Influencer { get; set; }

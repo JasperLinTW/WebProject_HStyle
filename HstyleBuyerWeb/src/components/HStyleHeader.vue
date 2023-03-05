@@ -28,8 +28,10 @@
                                 class="targetAll">新品上市</span></router-link>
                     </li>
                     <li class="nav-item dropdown">
-                        <router-link to="/product" class="nav-link text-dark px-3"><span
-                                class="targetAll">服飾名品</span></router-link>
+                        <router-link to="/product" class="nav-link text-dark px-3"><span class="targetAll">服飾名品</span></router-link>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <router-link to="/EssaysBlog" class="nav-link targetAll">文章部落格</router-link>
                     </li>
 
                 </ul>

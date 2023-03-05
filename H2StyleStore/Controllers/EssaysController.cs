@@ -105,7 +105,7 @@ namespace H2StyleStore.Controllers
 		//}
 
 		/// <summary>
-		/// create essay
+		/// create essay test
 		/// </summary>
 		/// <returns></returns>
 		public ActionResult NewEssay()
@@ -118,7 +118,11 @@ namespace H2StyleStore.Controllers
 		public ActionResult NewEssay(CreateEssayVM model, HttpPostedFileBase[] files)
 		{
 
-			ViewBag.VideoCategoriesItems = new EssayRepository(new AppDbContext()).GetCategories(null); ;
+			ViewBag.VideoCategoriesItems = new EssayRepository(new AppDbContext()).GetCategories(null);
+			if (ModelState.IsValid)
+			{
+				return View(model);
+			}
 			model.Influencer_Name = this.User.Identity.Name;
 			//fill Remove, Upload properties value
 			bool isDateTime = DateTime.TryParse(Request.Form["Upload"], out DateTime dt1);
