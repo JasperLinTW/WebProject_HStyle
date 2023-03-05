@@ -49,8 +49,7 @@
                     <a href="#" title="喜歡" class="text-dark"><i class="fa-regular fa-heart icon-hover fz-18"></i></a>
                 </div>
                 <div class="btn-light mx-3">
-                    <a href="#" title="打卡" class="text-dark"><i
-                            class="fa-regular fa-circle-check  icon-hover fz-18"></i></a>
+                    <a href="#" title="打卡" class="text-dark"><i class="fa-regular fa-circle-check  icon-hover fz-18" data-bs-toggle="modal" data-bs-target="#checkInModal"></i></a>
                 </div>
                 <div class="btn-light mx-3">
                     <router-link to="/account" class="text-dark"><i
@@ -66,12 +65,15 @@
         </div>
     </nav>
     <Cart />
+    <CheckIn />
 </template>
 <script>
 import Cart from './Cart.vue'
-export default {
-    components: {
+import CheckIn from './CheckIn.vue'
+export default{
+    components:{
         Cart,
+        CheckIn,
     },
     mounted() {
         window.addEventListener("scroll", function () {
