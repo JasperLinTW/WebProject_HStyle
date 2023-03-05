@@ -29,6 +29,12 @@ namespace HStyleApi.Models.Services
 			return await data;
 		}
 
+		public async Task<IEnumerable<ProductDto>> GetRecommendationProduct(int videoId)
+		{
+			var data = _videoRepository.GetRecommendationProduct(videoId);
+			return await data;
+		}
+
 		public async Task<IEnumerable<VideoDTO>> GetNews()
 		{
 			var data = _videoRepository.GetNews();

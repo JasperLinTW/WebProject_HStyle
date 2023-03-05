@@ -15,6 +15,7 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 	public class VideoRepository
 	{
 		private AppDbContext _db;
+		private ProductRepo _PRepo;
 
 		public VideoRepository(AppDbContext db)
 		{
@@ -33,7 +34,7 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 
 			if (data == null)
 			{
-				throw new Exception();
+				throw new Exception("目前沒有影片");
 			}
 
 			if (keyword == null)
@@ -61,16 +62,51 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 
 			if (video == null)
 			{
-				throw new Exception();
+				throw new Exception("找不到這部影片!");
 			}
 
 			return video;
 		}
 
+		//根據影片推薦相關商品
+		public async Task<IEnumerable<ProductDto>> GetRecommendationProduct(int videoId)
+		{
+			//var video = await _db.Videos.Where(v=>v.Id==videoId).ToListAsync();
+			//var tags=video.Select(v=>v.Tags).ToList();
+			//var video = video.Select(v => v.Tags).ToList();
+			//var videoTags=_db.Tags.Where(t=>t.Id==video).ToListAsync();
+
+			//var products = _db.Products.Include(p => p.Tags).Where(v=>v.Tags==tags)
+			//										.OrderByDescending(p => p.ProductLikes.Count())
+			//										.Take(3).Select(p => p.ToDto()).ToList();
+
+			//IEnumerable<ProductDto> products = await _db.Products.Include(p => p.Imgs)
+			//											.Include(p => p.Tags)
+			//											.Include(p => p.Category)
+			//											.Where(p => p.Tags == videoTags)
+			//											.OrderByDescending(p => p.ProductLikes.Count())
+			//											.Take(3).Select(p => p.ToDto()).ToArrayAsync();
+
+			//List<int> productsId = new List<int>();
+
+			//foreach (var item in products)
+			//{
+			//	foreach (var tag in tags)
+			//	{
+			//		if (item.Tags.Any(x => x.TagName==tag) == true)
+			//		{
+			//			productsId.Add(item.ProductId);
+			//		}
+			//	}
+			//}
+			//return products_id;	
+
+			//return products;
+		}
+
 		//最新影片
 		public async Task <IEnumerable<VideoDTO>> GetNews()
 		{
-			//TODO 把雅婷資料加進來
 			IEnumerable<Video> data = await _db.Videos.Include(v=>v.VideoView). Include(v => v.Category).Include(v => v.Image)
 				 										.Include(v => v.Tags)
 														.ThenInclude(v => v.Essays)
@@ -116,7 +152,8 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 				};
 				_db.VideoLikes.Add(like);
 			}
-			else _db.VideoLikes.Remove(data);	
+			else _db.VideoLikes.Remove(data);
+
 			_db.SaveChanges();
 		}
 
