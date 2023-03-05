@@ -1,15 +1,27 @@
 <!-- Account.vue -->
 <template>
     <div>
-        <router-link to="/account/orders" class="text-dark">訂單查詢</router-link>
-    </div>
-    <div>
-        <router-view></router-view>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-2">
+                    <MemberSidebar></MemberSidebar>
+                </div>
+                <div class="col-md-10">
+                    <router-view></router-view>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
   
 <script>
+import MemberSidebar from '../components/MemberSidebar.vue';
 
+export default {
+    components: {
+        MemberSidebar,
+    },
+}
 </script>
 
 <style></style>

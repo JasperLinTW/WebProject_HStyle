@@ -42,7 +42,7 @@ namespace HStyleApi.Controllers
 		}
 
 		// 傳送會員提的問題(新增資料)，主要用於訂單問題
-		[HttpPost("/CustomerQ")]
+		[HttpPost("/CustomerQforOrder")]//此行與上一支api衝突，修改名稱
 		public void PostCustomerQuestion(int? memberId, [FromBody] CustomerQuestionDTO dto)
 		{
 			if (memberId == null)

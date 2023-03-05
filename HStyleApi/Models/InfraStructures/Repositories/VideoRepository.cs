@@ -71,12 +71,12 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 		//根據影片推薦相關商品
 		public async Task<IEnumerable<ProductDto>> GetRecommendationProduct(int videoId)
 		{
-			//var video = await _db.Videos.Where(v=>v.Id==videoId).ToListAsync();
-			//var tags=video.Select(v=>v.Tags).ToList();
+			//var video = await _db.Videos.Where(v => v.Id == videoId).ToListAsync();
+			//var tags = video.Select(v => v.Tags).ToList();
 			//var video = video.Select(v => v.Tags).ToList();
-			//var videoTags=_db.Tags.Where(t=>t.Id==video).ToListAsync();
+			//var videoTags = _db.Tags.Where(t => t.Id == video).ToListAsync();
 
-			//var products = _db.Products.Include(p => p.Tags).Where(v=>v.Tags==tags)
+			//var products = _db.Products.Include(p => p.Tags).Where(v => v.Tags == tags)
 			//										.OrderByDescending(p => p.ProductLikes.Count())
 			//										.Take(3).Select(p => p.ToDto()).ToList();
 
@@ -93,15 +93,15 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 			//{
 			//	foreach (var tag in tags)
 			//	{
-			//		if (item.Tags.Any(x => x.TagName==tag) == true)
+			//		if (item.Tags.Any(x => x.TagName == tag) == true)
 			//		{
 			//			productsId.Add(item.ProductId);
 			//		}
 			//	}
 			//}
-			//return products_id;	
-
-			//return products;
+			//return products_id;
+			var data = new List<ProductDto> { };//程式碼建置未過，加上此行讓程式能動
+			return data;
 		}
 
 		//最新影片

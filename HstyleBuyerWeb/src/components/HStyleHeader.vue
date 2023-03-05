@@ -14,10 +14,7 @@
             </div>
             <div id="NavbarContent" class="nav">
                 <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
-                        <router-link to="/blog" class="nav-link text-dark px-3"><span
-                                class="targetAll">H'Blog</span></router-link>
-                    </li>
+
                     <li class="nav-item dropdown">
                         <router-link to="/recommend" class="nav-link text-dark px-3"><span
                                 class="targetAll">推薦商品</span></router-link>
@@ -28,10 +25,15 @@
                                 class="targetAll">新品上市</span></router-link>
                     </li>
                     <li class="nav-item dropdown">
-                        <router-link to="/product" class="nav-link text-dark px-3"><span class="targetAll">服飾名品</span></router-link>
+                        <router-link to="/product" class="nav-link text-dark px-3"><span
+                                class="targetAll">服飾名品</span></router-link>
                     </li>
                     <li class="nav-item dropdown">
                         <router-link to="/EssaysBlog" class="nav-link targetAll">文章部落格</router-link>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <router-link to="/blog" class="nav-link text-dark px-3"><span
+                                class="targetAll">影片部落格</span></router-link>
                     </li>
                     <li class="nav-item dropdown">
                         <router-link to="/member" class="nav-link targetAll">測試用會員</router-link>
@@ -49,12 +51,12 @@
                     <a href="#" title="喜歡" class="text-dark"><i class="fa-regular fa-heart icon-hover fz-18"></i></a>
                 </div>
                 <div class="btn-light mx-3">
-                    <a href="#" title="打卡" class="text-dark"><i class="fa-regular fa-circle-check  icon-hover fz-18" data-bs-toggle="modal" data-bs-target="#checkInModal"></i></a>
+                    <a href="#" title="打卡" class="text-dark"><i class="fa-regular fa-circle-check  icon-hover fz-18"
+                            data-bs-toggle="modal" data-bs-target="#checkInModal"></i></a>
                 </div>
                 <div class="btn-light mx-3">
-                    <router-link to="/account" class="text-dark"><i
+                    <router-link to="/account/memberprofile" class="text-dark"><i
                             class="fa-regular fa-circle-user icon-hover"></i></router-link>
-                    <!-- <a href="#" title="會員" class="text-dark"><i class="fa-regular fa-circle-user icon-hover"></i></a> -->
                 </div>
                 <div class="btn-light mx-3">
                     <a href="#" title="購物車" class="text-dark"><i class="fa-solid fa-cart-shopping icon-hover"
@@ -70,8 +72,8 @@
 <script>
 import Cart from './Cart.vue'
 import CheckIn from './CheckIn.vue'
-export default{
-    components:{
+export default {
+    components: {
         Cart,
         CheckIn,
     },
