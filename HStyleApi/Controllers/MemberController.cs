@@ -10,6 +10,7 @@ using HStyleApi.Models.InfraStructures;
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using MimeKit;
+using Microsoft.AspNetCore.Authorization;
 
 
 
@@ -18,11 +19,15 @@ using MimeKit;
 
 namespace HStyleApi.Controllers
 {
-	[EnableCors("AllowAny")]
-	[Route("api/[controller]")]
-	[ApiController]
-	public class MemberController : ControllerBase
-	{
+
+
+
+
+    [EnableCors("AllowAny")]
+    [Route("api/[controller]")]
+    [ApiController]
+    public class MemberController : ControllerBase
+    {
         //private readonly MemberServices _Service;
 
         //public MemberController(AppDbContext db)
@@ -38,53 +43,126 @@ namespace HStyleApi.Controllers
         }
         // GET: api/<MemberController>
         [HttpGet]
-		public IEnumerable<string> Get()
-		{
-			return new string[] { "value1", "value2" };
-		}
+        public IEnumerable<string> Get()
+        {
+            return new string[] { "value1", "value2" };
+        }
 
+
+        //    [HttpPost("LogIn")]
+        //    public string LogIn(LogInDTO value)
+        //    {
+        //        var member = _context.Members.FirstOrDefault(x => x.Account == value.Account);
+
+        //        if (member == null)
+        //        {
+        //            return ("帳密有誤");
+        //        }
+
+        //        if (member.MailVerify == false)
+        //        {
+        //            return ("會員資格尚未確認");
+        //        }
+
+        //        string encryptedPwd = HashUtility.ToSHA256(value.Password, RegisterDTO.SALT);
+
+        //        if (String.CompareOrdinal(member.EncryptedPassword, encryptedPwd) != 0)
+        //        {
+        //            return "帳號或密碼錯誤";
+        //        }
+        //        else
+        //        {
+        //            var claims = new List<Claim>
+        //            {
+        //                new Claim(ClaimTypes.Name, member.Account),
+        //                new Claim("FullName", member.Name),
+        //	// new Claim(ClaimTypes.Role, "Administrator")
+        //};
+        //            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+        //            HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+        //        };
+        //        return "登入成功";
+        //    }
 
         [HttpPost("LogIn")]
-        public string LogIn(LogInDTO value)
+        [AllowAnonymous]
+        public IActionResult LogIn(LogInDTO value)
         {
             var member = _context.Members.FirstOrDefault(x => x.Account == value.Account);
 
             if (member == null)
             {
-                return ("帳密有誤");
-            }
-
-            if (member.MailVerify == false)
-            {
-                return ("會員資格尚未確認");
+                return BadRequest("帳號或密碼錯誤");
             }
 
             string encryptedPwd = HashUtility.ToSHA256(value.Password, RegisterDTO.SALT);
 
             if (String.CompareOrdinal(member.EncryptedPassword, encryptedPwd) != 0)
             {
-                return "帳號或密碼錯誤";
+                return BadRequest("帳號或密碼錯誤");
+            }
+
+            if (member.MailVerify == false)
+            {
+                return BadRequest("會員資格尚未確認");
             }
             else
             {
                 var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, member.Account),
-                    new Claim("FullName", member.Name),
-					// new Claim(ClaimTypes.Role, "Administrator")
-				};
+                 {
+                   new Claim(ClaimTypes.Name, member.Account),
+                   new Claim("FullName", member.Name),
+                  };
+
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+            }
+
+            // 建立一個包含用戶相關聲明(Claim)的JavaScript對象
+            var userData = new
+            {
+                id = member.Id,
+                account = member.Account,
+                name = member.Name,
+                email = member.Email,
             };
-            return "登入成功";
+
+            // 將JavaScript對象傳遞回前端
+            return Ok(userData);
         }
 
+        //    var claims = new List<Claim>
+        //            {
+        //                new Claim(ClaimTypes.Name,
+        //                ),
+        //                new Claim("FullName", member.Name),
+        //	// new Claim(ClaimTypes.Role, "Administrator")
+        //};
+        //    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+        //    HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+        [Authorize]
         [HttpPost("LogOut")]
-        public void LogOut()
+        public async Task<IActionResult> LogOut()
         {
-            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            if (User.Identity.IsAuthenticated)
+                {
+                await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                return Ok("登出成功");
+            }
+            else
+            {
+                return BadRequest("您尚未登入");
+            }
+
         }
 
+        [HttpPost("NoLogin")]
+        public void NoLogin()
+        {
+            
+        }
+
+        [Authorize]
         [HttpPost("Register")]
         public async Task<string> Register(RegisterDTO register)
         {
@@ -117,7 +195,7 @@ namespace HStyleApi.Controllers
                 Address = register.Address,
                 Gender = register.Gender,
                 Birthday = register.Birthday,
-                PermissionId = null,
+                PermissionId = 1,
                 Jointime = DateTime.Now,
                 MailVerify = false, //預設是未確認的會員  IsConfirmed=我資料庫的 Mail_verify
                 MailCode = Guid.NewGuid().ToString("N"),//mail的確認確認碼  ConfirmCode=我資料庫的 Mail_code
@@ -188,27 +266,29 @@ namespace HStyleApi.Controllers
 
         // GET api/<MemberController>/5
         [HttpGet("{id}")]
-		public string Get(int id)
-		{
-			return "value";
-		}
+        public string Get(int id)
+        {
+            return "value";
+        }
 
-		// POST api/<MemberController>
-		[HttpPost]
-		public void Post([FromBody] string value)
-		{
-		}
+        // POST api/<MemberController>
+        [HttpPost]
+        public void Post([FromBody] string value)
+        {
+        }
 
-		// PUT api/<MemberController>/5
-		[HttpPut("{id}")]
-		public void Put(int id, [FromBody] string value)
-		{
-		}
+        // PUT api/<MemberController>/5
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody] string value)
+        {
+        }
 
-		// DELETE api/<MemberController>/5
-		[HttpDelete("{id}")]
-		public void Delete(int id)
-		{
-		}
-	}
-}
+        // DELETE api/<MemberController>/5
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+        }
+
+        }
+    }
+

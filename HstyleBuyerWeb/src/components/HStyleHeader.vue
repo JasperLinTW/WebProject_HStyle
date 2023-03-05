@@ -33,7 +33,14 @@
                     <li class="nav-item dropdown">
                         <router-link to="/EssaysBlog" class="nav-link targetAll">文章部落格</router-link>
                     </li>
-
+                    <li class="nav-item dropdown">
+                        <router-link to="/member" class="nav-link targetAll">測試用會員</router-link>
+                        <!-- <a class="nav-link targetAll" href="#">測試用會員</a> -->
+                    </li>
+                    <li class="nav-item dropdown">
+                        <router-link to="/MemberLogin" class="nav-link targetAll">測試用會員123</router-link>
+                        <!-- <a class="nav-link targetAll" href="#">測試用會員</a> -->
+                    </li>
                 </ul>
             </div>
 
