@@ -24,7 +24,7 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 		}
 		public OrderDTO GetOrder(int orderId)
 		{
-			var data = _db.Orders.Include(o => o.OrderDetails).Where(o => o.OrderId == orderId).Select(x => x.ToDTO()).FirstOrDefault();
+			var data = _db.Orders.Include(o => o.OrderDetails).Include(o => o.Status).Where(o => o.OrderId == orderId).Select(x => x.ToDTO()).FirstOrDefault();
 
 
 			return data;
