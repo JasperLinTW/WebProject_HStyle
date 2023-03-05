@@ -4,7 +4,7 @@ const routes = [
     { path: '/recommend',name:'Recommend', component:()=> import('../views/Recommend.vue') },
     { path: '/blog',name:'Blog', component:()=> import('../views/Blog.vue') },
     { path: '/member',name:'member', component:()=> import('../views/Member.vue') },
-    { path: '/MemberLogin',name:'MemberLogin', component:()=> import('../views/MemberLogin.vue') }
+    { path: '/google',name:'google', component:()=> import('../views/google.vue') }
 
   ]
 export default routes
