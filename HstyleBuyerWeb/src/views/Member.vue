@@ -35,22 +35,72 @@
   <button type="button" @click="register">register</button>
 
 </div>
+
+
+
+<div>
+    <h1>Google Login</h1>
+    <div v-if="!loggedIn">
+      <button @click="googlelogin">Login with Google</button>
+    </div>
+    <div v-else>
+      <p>Welcome, {{ user.name }}!</p>
+      <button @click="logout">Logout</button>
+    </div>
+  </div>
+<div id="g_id_onload"
+     data-client_id="826430034566-tvq18h6l8duepd5chu8rc1gekodbc4a5.apps.googleusercontent.com"
+     data-login_uri="https://localhost:7046/Home/ValidGoogleLogin"
+     data-auto_prompt="false">
+</div>
+<div class="g_id_signin"
+     data-type="standard"
+     data-size="large"
+     data-theme="outline"
+     data-text="sign_in_with"
+     data-shape="rectangular"
+     data-logo_alignment="left">
+</div>
+
 </template>
 
 
-  <script>
-  //以下測試
-  function getCookie(name) {
-  let value = "; " + document.cookie;
-  let parts = value.split("; " + name + "=");
-  if (parts.length === 2) {
-    return parts.pop().split(";").shift();
-  }
-}
+<script>
+  
+
 //以上測試
 import axios from 'axios';
+import { reactive } from 'vue'
+
+const state = reactive({
+  token: ''
+})
+
+const signIn = async () => {
+  try {
+    await googleAuth.signIn()
+    const googleUser = googleAuth.getAuthUser()
+    const idToken = googleUser.getAuthResponse().id_token
+    state.token = idToken
+
+    const response = await fetch('https://your-api-endpoint.com/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ idToken })
+    })
+    if (!response.ok) {
+      throw new Error('Login failed')
+    }
+  } catch (err) {
+    console.error(err)
+  }
+}
 
 export default {
+  signIn,
+  state,
     data(){
         return{
             username: "",
@@ -64,6 +114,8 @@ export default {
             Birthday:"",
             EncryptedPassword:"",
             MailCode:1,
+            isSignedIn: false,
+            googleUser: null
         }
     },
   methods: {
@@ -141,8 +193,7 @@ export default {
         })
         .catch(error => console.error(error));
     },
-
   }
 }
-  </script>
+</script>
   <style></style>
