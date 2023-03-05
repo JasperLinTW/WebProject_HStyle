@@ -44,7 +44,7 @@ namespace HStyleApi.Models.DTOs
 				Likes=source.Video.VideoLikes.GroupBy(v=>v.VideoId).Count(),
 				CategoryName = source.Video.Category.CategoryName,
 				Title=source.Video.Title,
-				IsOnShelff=source.Video.IsOnShelff
+				IsOnShelff=source.Video.IsOnShelff ?? true,
 			};
 		}
 	}

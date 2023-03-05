@@ -10,10 +10,10 @@ namespace HStyleApi.Models.DTOs
         public string Account { get; set; }
         public string PhoneNumber { get; set; }
         public string Address { get; set; }
-        public bool Gender { get; set; }
-        public DateTime Birthday { get; set; }
+        public bool? Gender { get; set; }
+        public DateTime? Birthday { get; set; }
         public int? PermissionId { get; set; }
-        public DateTime Jointime { get; set; }
+        public DateTime? Jointime { get; set; }
         public bool? MailVerify { get; set; }
         public string MailCode { get; set; }
         public int? TotalH { get; set; }
