@@ -19,7 +19,7 @@ namespace HStyleApi.Controllers
         public CartController(AppDbContext db)
         {
             _CartService = new CartService(db);
-			_memberId = 2;//TODO從COOKIE取
+			_memberId = 1;//TODO從COOKIE取
 		}
         [HttpPost("Checkout")]
         public IActionResult Checkout(CheckoutDTO value)

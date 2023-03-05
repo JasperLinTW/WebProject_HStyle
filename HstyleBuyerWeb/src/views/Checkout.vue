@@ -86,7 +86,9 @@
                     <div>NT$ {{ totalIncludeHcoin }}</div>
                 </div>
                 <div class="text-end mt-1">
-                    <button @click="checkout" type="button" class="btn checkoutbtn ">提交訂單</button>
+                    <button :disabled="progressing" @click="checkout" type="button" class="btn checkoutbtn ">提交訂單</button>
+                    <img src="../assets/progressGif/icons8-sup.gif" v-show="progressing" />
+                    <div id="result"></div>
                 </div>
             </div>
         </div>
@@ -131,6 +133,7 @@ const totalIncludeHcoin = computed(() => {
 });
 
 //結帳
+const progressing = ref(false)
 const H_Coin = ref(0);
 const getCoin = async () => {
     await axios.get('https://localhost:7243/api/HCoin/TotalHCoin/1')
@@ -139,9 +142,11 @@ const getCoin = async () => {
         })
 }
 const coinUseLimit = computed(() => {
-    return parseInt(products.value.total * 0.2)
+    const twentyPercent = parseInt(products.value.total * 0.2);
+    return H_Coin.value < twentyPercent ? H_Coin : twentyPercent
 })
 const checkout = async () => {
+    progressing.value = true;
     await axios.post(`https://localhost:7243/api/Cart/Checkout`, {
         payment: shipName.value,
         shipVia: "黑貓",//todo。運送方式改成後台管理頁面填寫
