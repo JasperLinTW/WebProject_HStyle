@@ -3,6 +3,7 @@ using HStyleApi.Models.EFModels;
 using HStyleApi.Models.InfraStructures.Repositories;
 using PayPalCheckoutSdk.Orders;
 using System.Collections.Generic;
+using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
 
 namespace HStyleApi.Models.Services
 {
@@ -27,22 +28,6 @@ namespace HStyleApi.Models.Services
 			return data;
 
 		}
-
-		//public IEnumerable<ProductDto> GetRecommend(int product_id, int member_id)
-		//{
-
-		//	//若無登入或無購買紀錄就以目前瀏覽的商品有相同tag作為推薦
-
-		//	//取得member有買過的商品資料
-		//	var data = _repo.GetOrderProducts(member_id);
-
-		//	//以member購買過的商品具相同tag作為推薦
-
-		//	return null;
-
-		//}
-
-
 
 		public (bool, string) CreateComment(PCommentPostDTO dto, int orderId, int productId)
 		{
@@ -197,7 +182,7 @@ namespace HStyleApi.Models.Services
 		{
 			//TODO 如果取出超過三件商品 要randomSelect
 			var weatherdescription = TransWeather(temp);
-			var products_id = _repo.GetProductsByWeather(weatherdescription);
+			var products_id = _repo.GetProductsByTagsName(weatherdescription);
 
 			IEnumerable<ProductDto> products;
 			products = _repo.GetProducts(products_id);
@@ -247,6 +232,23 @@ namespace HStyleApi.Models.Services
 			}
 			
 			return 5;
+		}
+
+		public IEnumerable<ProductDto> GetNewProducts(List<string> tagsName)
+		{
+			//TODO 如果取出超過三件商品 要randomSelect
+			var products_id = _repo.GetProductsByTagsName(tagsName);
+
+			IEnumerable<ProductDto> products;
+			products = _repo.GetProducts(products_id);
+
+			return products;
+		}
+
+		public IEnumerable<ProductDto> LoadProductsByCategory(string pCategoryName)
+		{
+			var data = _repo.LoadProductsByCategory(pCategoryName);
+			return data;
 		}
 	}
 }

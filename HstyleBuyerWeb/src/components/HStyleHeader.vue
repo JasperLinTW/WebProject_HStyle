@@ -1,47 +1,47 @@
 <template>
     <header class="bg-opacity-0 targetAll sticky-top" id="myHeader">
-        <h1 class="trans1">H'STYLE</h1>
+        <router-link class="logo-style targetAll" to="/">
+            <h1 class="trans1">H'STYLE</h1>
+        </router-link>
     </header>
     <nav class="navbar navbar-expand bg-ligt">
         <div Class="container-fluid" m-0 g-0 position-relative>
-            <div class="nav justify-content-center inputGroup">
-                <span class="icon ma-1 my-1">
-                    <i class="fa-solid fa-magnifying-glass"></i>
+            <div class="nav inputGroup" id="app">
+                <span class="icon ma-1 my-1 px-3">
+                    <i class="fa-solid fa-magnifying-glass search targetAll"></i>
                 </span>
-                <input class="fz14 py-1 ps-4 rounded-1 border-0" type="text" placeholder="" />
+                <input class="fz14 pb-1 ps-4 textbox" id="search" type="text" />
             </div>
-            <div id="NavbarContent" class="nav justify-content-center">
+            <div id="NavbarContent" class="nav">
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
-                        <router-link to="/blog" class="nav-link targetAll">H'Blog</router-link>
-                        <!-- <a class="nav-link targetAll" href="#">H'Blog</a> -->
+                        <router-link to="/blog" class="nav-link text-dark px-3"><span
+                                class="targetAll">H'Blog</span></router-link>
                     </li>
                     <li class="nav-item dropdown">
-                        <router-link to="/recommend" class="nav-link targetAll">推薦</router-link>
-                        <!-- <a class="nav-link targetAll" href="#">推薦</a> -->
+                        <router-link to="/recommend" class="nav-link text-dark px-3"><span
+                                class="targetAll">推薦商品</span></router-link>
                     </li>
                     <a href="#"></a>
                     <li class="nav-item dropdown">
-                        <router-link to="/product" class="nav-link targetAll">服飾名品</router-link>
-                        <!-- <a class="nav-link targetAll" href="#">服飾名品</a> -->
+                        <router-link to="/product" class="nav-link text-dark px-3"><span
+                                class="targetAll">新品上市</span></router-link>
                     </li>
                     <li class="nav-item dropdown">
-                        <router-link to="/" class="nav-link targetAll">香水</router-link>
-                        <!-- <a class="nav-link targetAll" href="#">香水</a> -->
-                    </li>
-                    <li class="nav-item dropdown">
-                        <router-link to="/" class="nav-link targetAll">化妝品</router-link>
-                        <!-- <a class="nav-link targetAll" href="#">化妝品</a> -->
+                        <router-link to="/product" class="nav-link text-dark px-3"><span
+                                class="targetAll">服飾名品</span></router-link>
                     </li>
 
                 </ul>
             </div>
-            <div class="nav justify-content-end">
+
+            <div class="nav justify-content-end ps-5">
                 <div class="mx-3">
-                    <a href="#" title="喜歡" class="text-dark"><i class="fa-regular fa-heart icon-hover"></i></a>
+                    <a href="#" title="喜歡" class="text-dark"><i class="fa-regular fa-heart icon-hover fz-18"></i></a>
                 </div>
                 <div class="btn-light mx-3">
-                    <a href="#" title="打卡" class="text-dark"><i class="fa-regular fa-circle-check  icon-hover"></i></a>
+                    <a href="#" title="打卡" class="text-dark"><i
+                            class="fa-regular fa-circle-check  icon-hover fz-18"></i></a>
                 </div>
                 <div class="btn-light mx-3">
                     <router-link to="/account" class="text-dark"><i
@@ -65,35 +65,70 @@ export default {
         Cart,
     },
     mounted() {
-        $(".target")
-            .on("mouseenter", function () {
-                $(".target").css("color", "#46A3FF");
-            })
-            .on("mouseleave", function () {
-                $(".target").css("color", "black");
-            });
-
-        $(".targetAll")
-            .on("mouseenter", function () {
-                $(this).css("color", "#46A3FF");
-            })
-            .on("mouseleave", function () {
-                $(this).css("color", "black");
-            });
         window.addEventListener("scroll", function () {
             var header = document.querySelector("header");
-            header.classList.toggle("sticky", window.scrollY > 0);
+            header.classList.toggle("sticky", window.scrollY > 0)
+                ;
         })
 
+        document.querySelector(".search").addEventListener("click", function () {
+            document.querySelector("#search").focus();
+        });
 
     }
+}
+</script>
+<style scoped>
+.search {
+    cursor: pointer;
+}
+
+.fz-18 {
+    font-size: 18px;
+}
+
+.icon-hover:hover {
+    color: #46A3FF;
+}
+
+.logo-style {
+    text-decoration: none;
+    color: black;
+}
+
+.targetAll:hover {
+    color: #46A3FF;
+}
+
+.nav-item::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: #46A3FF;
+    visibility: hidden;
+    transform: scaleX(0);
+    transition: all 0.3s ease-in-out 0s;
 
 }
 
+.nav-item:hover::after {
+    visibility: visible;
+    transform: scaleX(1);
+}
 
-</script>
-<style>
-.icon-hover:hover {
-    color: #46A3FF;
+
+.textbox {
+    border: none;
+    border-bottom: 1px solid transparent;
+    outline: none;
+    font-size: 16px;
+    transition: border-bottom-color 0.5s ease-in-out;
+}
+
+.textbox:focus {
+    border-bottom-color: #ced4da;
 }
 </style>

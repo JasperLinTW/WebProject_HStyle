@@ -52,6 +52,7 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 
 			var product = data.FirstOrDefault(x => x.ProductId == product_id).ToDto();
 
+
 			return product;
 
 		}
@@ -313,10 +314,10 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 			return products;
 		}
 
-		public List<int> GetProductsByWeather(List<string> weatherdescription)
+		public List<int> GetProductsByTagsName(List<string> tagsName)
 		{
 			
-			var tags = _db.Tags.Include(x => x.Products).Where(x => weatherdescription.Contains(x.TagName)).Select(x => x.Id).ToList();
+			var tags = _db.Tags.Include(x => x.Products).Where(x => tagsName.Contains(x.TagName)).Select(x => x.Id).ToList();
 
 			var data = _db.Products.Include(x => x.Tags).Select(x => new
 	                    {
@@ -325,6 +326,22 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 	                     }).ToList().Where(x => x.isRecomended.Intersect(tags).Any()).Select(x => x.productId).ToList();
 
 			return data;
+		}
+
+		public IEnumerable<ProductDto> LoadProductsByCategory(string pCategoryName)
+		{
+			IEnumerable<Product> data = _db.Products
+										.Include(product => product.Category)
+										.Include(product => product.Imgs)
+										.Include(product => product.Specs)
+										.Include(product => product.Tags).Where(x => x.Discontinued == false)
+										.Where(x => x.Category.PcategoryName == pCategoryName);
+
+			var products = data.OrderBy(x => x.DisplayOrder).Select(x => x.ToDto());
+
+
+			return products;
+
 		}
 	}
 }

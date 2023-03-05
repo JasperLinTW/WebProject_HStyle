@@ -8,7 +8,8 @@ header {
   color: rgb(12, 13, 12);
   opacity: 0.9;
   /* 內距 */
-  padding: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
   text-align: center;
 }
 
@@ -24,13 +25,6 @@ header.sticky {
 header .sticky ul li a {
   color: #000;
 }
-/* header {
-    width: 100%;
-    height: 100vh;
-    background-size: cover;
-    background-position: center center;
-} */
-
 .area {
   width: 100%;
   height: 100vh;
@@ -40,22 +34,27 @@ header .sticky ul li a {
 
 .area1 {
   background-image: url(./assets/image/chanel1.jpg);
+  background-attachment: fixed;
 }
 
 .area2 {
   background-image: url(./assets/image/chanel2.jpg);
+  background-attachment: fixed;
 }
 
 .area3 {
   background-image: url(./assets/image/chanel3.jpg);
+  background-attachment: fixed;
 }
 
 .area4 {
   background-image: url(./assets/image/chanel4.jpg);
+  background-attachment: fixed;
 }
 
 .area5 {
   background-image: url(./assets/image/chanel5.jpg);
+  background-attachment: fixed;
 }
 
 .myList .list-group-item {
@@ -103,29 +102,9 @@ header .sticky ul li a {
   transform: translate(-50%, -50%);
 }
 
-/* #section1{
-
-  }
-  .container2{
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-    top: 100%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-section h1 p a{
-    text-align: center;
-    color: #fff;
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-} */
-
 .trans1 {
   text-transform: uppercase;
+  padding-top: 5px;
 }
 
 .section1 {
@@ -136,6 +115,3 @@ section h1 p a{
   left: 50%;
   transform: translate(-50%, -50%);
 }
-
-/* 按鈕 */
-
