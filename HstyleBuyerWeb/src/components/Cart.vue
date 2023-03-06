@@ -129,6 +129,7 @@ onMounted(() => {
     padding: 10px 28px;
     border-radius: 25px;
     border: 1px solid rgb(12, 13, 12);
+    transition: all 0.3s ease;
 }
 
 .checkoutbtn:not(.nav-btns button):hover {

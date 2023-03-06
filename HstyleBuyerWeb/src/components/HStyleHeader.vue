@@ -144,4 +144,28 @@ export default {
 .textbox:focus {
     border-bottom-color: #ced4da;
 }
+
+header {
+    background-color: white;
+    color: rgb(12, 13, 12);
+    opacity: 0.9;
+    /* 內距 */
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+}
+
+header:hover {
+    background-color: black;
+    transition: 0.5s;
+}
+
+header.sticky {
+    padding: 5px 100px;
+    background: #fff;
+}
+
+header .sticky ul li a {
+    color: #000;
+}
 </style>
