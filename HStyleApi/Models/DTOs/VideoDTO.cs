@@ -58,7 +58,8 @@ namespace HStyleApi.Models.DTOs
 				OnShelffTime = source.OnShelffTime,
 				OffShelffTime = source.OffShelffTime,
 				CreatedTime = source.CreatedTime,
-				Tags = source.Tags.Select(x => x.TagName),
+				Tags = source.Tags.Select(x => 
+				x.TagName),
 				//VideoLikes = source.VideoLikes,
 				CategoryName = source.Category.CategoryName,
 				Likes = source.VideoLikes.GroupBy(x => x.VideoId).Count(),
