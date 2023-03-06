@@ -97,6 +97,7 @@ const modules = ref([Pagination]);
 
 //加入購物車
 const SelectSpecId = ref(0);
+
 const addItem = async () => {
     await axios.post(`https://localhost:7243/api/Cart/${SelectSpecId.value}`)
         .then(response => {
