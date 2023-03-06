@@ -12,6 +12,7 @@ const routes = [
       { path: 'MemberAddresses',component: () => import('../components/MemberAddresses.vue')},
     ]},
     { path: '/EssaysBlog',name:'EssaysBlog', component:()=> import('../views/EssaysBlog.vue') },
+    { path: '/VideoBlog',name:'VideoBlog', component:()=> import('../views/VideoBlog.vue') },
     { path: '/member',name:'member', component:()=> import('../views/Member.vue') },
     { path: '/google',name:'google', component:()=> import('../views/google.vue') }
 

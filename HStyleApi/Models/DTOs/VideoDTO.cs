@@ -55,6 +55,7 @@ namespace HStyleApi.Models.DTOs
 				FilePath = source.FilePath,
 				CategoryId = source.CategoryId,
 				ImageId = source.ImageId,
+				Image=source.Image.ToString(),
 				OnShelffTime = source.OnShelffTime,
 				OffShelffTime = source.OffShelffTime,
 				CreatedTime = source.CreatedTime,
