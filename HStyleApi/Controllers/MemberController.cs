@@ -110,6 +110,7 @@ namespace HStyleApi.Controllers
             {
                 var claims = new List<Claim>
                  {
+                   new Claim("MemberId", member.Id.ToString()), //測試用
                    new Claim(ClaimTypes.Name, member.Account),
                    new Claim("FullName", member.Name),
                   };
@@ -131,19 +132,33 @@ namespace HStyleApi.Controllers
             return Ok(userData);
         }
 
-        //    var claims = new List<Claim>
-        //            {
-        //                new Claim(ClaimTypes.Name,
-        //                ),
-        //                new Claim("FullName", member.Name),
-        //	// new Claim(ClaimTypes.Role, "Administrator")
-        //};
-        //    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-        //    HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+        [HttpGet("id")]
+        public int GetMemberId()
+        {
+            var claims = User.FindFirst("MemberId");
+            if (claims != null)
+            {
+                int memberId = int.Parse(claims.Value);
+                // Do something with the member ID
+                return memberId;
+            }
+            else
+            {
+                // 無法獲取 MemberId，返回未授權狀態碼
+                return (1213);
+            }
+        }
+
         [Authorize]
         [HttpPost("LogOut")]
         public async Task<IActionResult> LogOut()
         {
+            var claims = User.FindFirst("MemberId");
+            if (claims != null)
+            {
+                int memberId = int.Parse(claims.Value);
+                // Do something with the member ID
+            }
             if (User.Identity.IsAuthenticated)
                 {
                 await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

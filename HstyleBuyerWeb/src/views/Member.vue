@@ -62,6 +62,10 @@
      data-logo_alignment="left">
 </div>
 
+<div>
+    <p>會員ID：{{ memberId }}</p>
+</div>
+
 </template>
 
 
@@ -70,6 +74,7 @@
 
 //以上測試
 import axios from 'axios';
+axios.defaults.withCredentials = true;
 import { reactive } from 'vue'
 
 const state = reactive({
@@ -115,9 +120,13 @@ export default {
             EncryptedPassword:"",
             MailCode:1,
             isSignedIn: false,
-            googleUser: null
+            googleUser: null,
+            memberId: null,
         }
     },
+  //   mounted() { 
+  //   this.memberId = this.getCookieValue("MemberId"); //新加的
+  // },
   methods: {
     login(e) {
       e.preventDefault();
@@ -138,6 +147,16 @@ export default {
         })
         .catch(error => console.error(error));
     },
+    // getCookieValue(key) {
+    //   var cookies = document.cookie.split(";");
+    //   for (var i = 0; i < cookies.length; i++) {
+    //     var cookie = cookies[i].trim();
+    //     if (cookie.indexOf(key + "=") == 0) {
+    //       return cookie.substring(key.length + 1, cookie.length);
+    //     }
+    //   }
+    //   return null;
+    // },
     Logout(e){
         //e.preventDefault()
         fetch('https://localhost:7243/api/Member/LogOut', {
