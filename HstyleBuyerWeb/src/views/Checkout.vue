@@ -103,8 +103,9 @@ import axios from "axios";
 const products = ref([]);
 const getCartInfo = async () => {
     await axios.get("https://localhost:7243/api/Cart")
-        .then(response => { products.value = response.data;
-            if(products.value.cartItems.length === 0){
+        .then(response => {
+            products.value = response.data;
+            if (products.value.cartItems.length === 0) {
                 window.location = 'http://localhost:5173/product';
             }
         })
@@ -152,7 +153,7 @@ const coinUseLimit = computed(() => {
 const checkout = async () => {
     progressing.value = true;
     await axios.post(`https://localhost:7243/api/Cart/Checkout`, {
-        payment: shipName.value,
+        payment: payment.value,
         shipVia: "黑貓",//todo。運送方式改成後台管理頁面填寫
         freight: 0,//todo，考慮運費拿掉全部免運
         discount: discount.value,
@@ -172,7 +173,7 @@ const checkout = async () => {
 
 onMounted(() => {
     getCartInfo();
-    
+
     getCoin();
 });
 
@@ -265,7 +266,8 @@ select:focus {
 .textbox:focus {
     border-bottom-color: #ccc;
 }
-.cartContent{
+
+.cartContent {
     min-height: 200px;
 }
 </style>
