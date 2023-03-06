@@ -65,6 +65,7 @@
 import { ref, onMounted } from "vue";
 import axios from "axios";
 
+
 const products = ref([]);
 
 const getCartInfo = async () => {

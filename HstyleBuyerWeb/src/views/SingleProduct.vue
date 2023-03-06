@@ -30,23 +30,24 @@
                     </div>
                     <div class="col-lg-12 mb-5 text-start">
                         <div>
-                            <div class="pb-4">
+                            <!-- <div class="pb-4">
                                 <label>尺寸:</label>
                                 <button class="mx-2 btn-underline px-2" v-for="size in product.specs" :value="size.size">{{
                                     size.size
                                 }}</button>
-                            </div>
+                            </div> -->
                             <div class="product-options">
-                                <label>顏色:</label>
-                                <select class="mx-2">
-                                    <option v-for="color in product.specs" :value="color.color">{{ color.color }}
+                                <label>規格:</label>
+                                <select v-model="SelectSpecId" class="mx-2">
+                                    <option v-for="spec in product.specs" :value="spec.specId">
+                                        {{ `${spec.color}, ${spec.size}` }}
                                     </option>
                                 </select>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-12  mt-5 text-start">
-                        <button class="add-to-cart"> NT$ {{ product.unitPrice }}<span
+                        <button @click="addItem()" class="add-to-cart"> NT$ {{ product.unitPrice }}<span
                                 class="border-start border-dark ms-2"><span class="ps-2">加入購物車</span></span></button>
                         <span class="m-3" v-if="!isClicked" @click="isClicked = true"><i
                                 class="fa-regular fa-heart icon-hover fz-18"></i></span>
@@ -85,7 +86,8 @@ const getProduct = async () => {
     await axios.get(`https://localhost:7243/api/Products/${route.params.id}`)
         .then(response => {
             product.value = response.data;
-            console.log(product.value);
+            SelectSpecId.value = product.value.specs[0].specId;
+            console.log(product.value.specs[0].specId);
         })
         .catch(error => { console.log(error); });
 }
@@ -93,6 +95,16 @@ const getProduct = async () => {
 //照片輪播
 const modules = ref([Pagination]);
 
+//加入購物車
+const SelectSpecId = ref(0);
+const addItem = async () => {
+    await axios.post(`https://localhost:7243/api/Cart/${SelectSpecId.value}`)
+        .then(response => {
+            alert("新增成功");
+            // getCartInfo();
+        })
+        .catch(error => { console.log(error); });
+}
 
 onMounted(() => {
     getProduct();
