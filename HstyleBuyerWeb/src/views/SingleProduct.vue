@@ -61,7 +61,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import axios from 'axios';
 import { Swiper, SwiperSlide } from 'swiper/vue';
@@ -87,7 +87,7 @@ const getProduct = async () => {
         .then(response => {
             product.value = response.data;
             SelectSpecId.value = product.value.specs[0].specId;
-            console.log(product.value.specs[0].specId);
+            // console.log(product.value.specs[0].specId);
         })
         .catch(error => { console.log(error); });
 }
@@ -96,13 +96,17 @@ const getProduct = async () => {
 const modules = ref([Pagination]);
 
 //加入購物車
+const emit =defineEmits(['update']);
+const watchedNum =ref(0);
+watch(watchedNum,(newValue) =>{
+    emit('update',newValue)
+})
 const SelectSpecId = ref(0);
-
 const addItem = async () => {
     await axios.post(`https://localhost:7243/api/Cart/${SelectSpecId.value}`)
         .then(response => {
             alert("新增成功");
-            // getCartInfo();
+            watchedNum.value += 1;
         })
         .catch(error => { console.log(error); });
 }

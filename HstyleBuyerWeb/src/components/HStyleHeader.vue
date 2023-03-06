@@ -69,16 +69,13 @@
     <Cart />
     <CheckIn />
 </template>
-<script>
+<script setup>
 import Cart from './Cart.vue'
 import CheckIn from './CheckIn.vue'
-export default {
-    components: {
-        Cart,
-        CheckIn,
-    },
-    mounted() {
-        window.addEventListener("scroll", function () {
+import { ref, onMounted } from "vue";
+
+onMounted(() => {
+    window.addEventListener("scroll", function () {
             var header = document.querySelector("header");
             header.classList.toggle("sticky", window.scrollY > 0)
                 ;
@@ -87,9 +84,8 @@ export default {
         document.querySelector(".search").addEventListener("click", function () {
             document.querySelector("#search").focus();
         });
+});
 
-    }
-}
 </script>
 <style scoped>
 .search {
