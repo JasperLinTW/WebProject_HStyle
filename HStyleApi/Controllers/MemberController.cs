@@ -132,7 +132,7 @@ namespace HStyleApi.Controllers
             return Ok(userData);
         }
 
-        [HttpGet("id")]
+        [HttpGet("id")] //測試用
         public int GetMemberId()
         {
             var claims = User.FindFirst("MemberId");
