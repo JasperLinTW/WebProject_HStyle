@@ -1,41 +1,42 @@
 <template>
     <div class="container my-5">
         <div class="order-header border-bottom border-dark">
-            <div class="row mb-2">
-                <div class="col-1"></div>
-                <div class="col-2">訂單編號</div>
-                <div class="col-2">金額</div>
-                <div class="col-2">日期</div>
-                <div class="col-2">付款方式</div>
-                <div class="col-1">狀態</div>
-                <div class="col-2">幫助</div>
+            <div class="row mb-2 ps-4">
+                <div class="col-2 text-center">訂單編號</div>
+                <div class="col-2 text-center">金額</div>
+                <div class="col-2 text-center">日期</div>
+                <div class="col-2 text-center">付款方式</div>
+                <div class="col-1 text-center">狀態</div>
+                <div class="col-2 text-center">幫助</div>
             </div>
         </div>
-        <div v-for="(order, index) in orders" :key="order.orderId" class="accordion-item border-bottom my-4" id="accordionExample">
-            <div class="row accordion-header px-0 pb-3">
-                <div class="col-1"  data-bs-toggle="collapse">
-                    <i v-if="selectProduct === index" @click="hideDetails(index)" class="fa-regular fa-square-minus"></i>
-                    <i v-else @click="showDetails(index)" class="fa-regular fa-square-plus"></i>
-                </div>
-                <div class="col-2">{{ order.orderId }}</div>
-                <div class="col-2">NT$ {{ order.total }}</div>
-                <div class="col-2">{{ order.createdTime.slice(0, 10) }}</div>
-                <div class="col-2">{{ order.payment }}</div>
-                <div class="col-1">
+        <div class="accordion" id="accordionExample"> 
+       <div  v-for="(order, index) in orders" :key="order.orderId" class="accordion-item">
+    <div class="accordion-header" :id="'heading' + index">
+      <button class="accordion-button btn-order d-flex " type="button" data-bs-toggle="collapse" 
+        :data-bs-target="'#collapse' + index" 
+        :aria-expanded="index===0" 
+        :aria-controls="'collapse' + index">
+        <div class="col-2 text-center">{{ order.orderId }}</div>
+                <div class="col-2 text-center">NT$ {{ order.total }}</div>
+                <div class="col-2 text-center">{{ order.createdTime.slice(0, 10) }}</div>
+                <div class="col-2 text-center">{{ order.payment }}</div>
+                <div class="col-1 text-center">
                     <div v-if="order.statusId === 1">
                         <a :href="`https://www.sandbox.paypal.com/checkoutnow?token=${order.payInfo}`" class="alink">待付款</a>
                     </div>
                     <div v-else>
                         {{ order.status }}
                     </div> 
-                
                 </div>
-                <div class="col-2">
+                <div class="col-2  text-center">
                     <a>聯絡客服</a>
                 </div>
-            </div>
-            <div class="accordion-collapse collapse show py-1 px-3" v-if="selectProduct === index">
-                <div class="row bg-dark text-white font-weight-bold  py-2">
+      </button>
+    </div>
+    <div :id="'collapse' + index" class="accordion-collapse collapse" :class="{show}" :aria-labelledby="'heading' + index" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+       <div class="row bg-dark text-white font-weight-bold  py-2">
                     <div class="col-1"></div>
                     <div class="col-2">品名</div>
                     <div class="col-2">規格</div>
@@ -61,9 +62,11 @@
                         <div class=" text-right">H幣折抵：{{ order.discount }}</div>
                     </div>
                 </div>
-            </div> 
-        </div>
+      </div>
     </div>
+  </div>
+        </div>
+</div>
 </template>
   
   
@@ -129,9 +132,25 @@ onMounted(() => {
 }
 
 .accordion-item {
+    border-top: none;
+    border-radius: none;
 
-    border: none;
+}
 
+.accordion {
+    background-color: transparent;
+    --bs-accordion-border-radius: 0%;
+}
+
+.btn-order{
+    background: none;
+    color: #000;
+    box-shadow:none;
+}
+
+.btn-order:focus{
+    outline-color: none;
+    box-shadow: none;
 }
 </style>
   
