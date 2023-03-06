@@ -19,8 +19,10 @@ namespace HStyleApi.Models.DTOs
 		public string Status { get; set; }
 		public int? StatusDescriptionId { get; set; }
 		public int Discount { get; set; }
+		public string PayInfo { get; set; }
 
-	}
+
+    }
 
 	public static class OrderExtension
 	{
@@ -42,7 +44,8 @@ namespace HStyleApi.Models.DTOs
 				Status = value.Status.Status,
 				StatusDescriptionId = value.StatusDescriptionId,
 				Freight = value.Freight,
-				Discount = value.Discount ?? 0
+				Discount = value.Discount ?? 0,
+				PayInfo = value.PayInfo,
 
 			};
 			return data;

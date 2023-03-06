@@ -16,9 +16,8 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 		{
 			var data = _db.Orders.Include(o => o.OrderDetails)
 								.Include(o => o.Status)
-								.Where(o => o.MemberId== memberId).Select(x => x.ToDTO());
+								.Where(o => o.MemberId== memberId).OrderByDescending(x => x.OrderId).Select(x => x.ToDTO());
 
-			
 			return data;
 			
 		}

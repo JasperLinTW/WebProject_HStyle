@@ -1,16 +1,6 @@
-<script>
+<script setup>
 import HStyleHeader from './components/HStyleHeader.vue'
 import HStyleFooter from './components/HStyleFooter.vue'
-
-export default {
-  name: "App",
-  components: {
-    HStyleHeader,
-    HStyleFooter,
-  }
-};
-
-
 </script>
 
 <template>

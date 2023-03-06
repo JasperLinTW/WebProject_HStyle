@@ -51,24 +51,9 @@
     </div>
 </template>
   
-<script>
+<script setup>
 import Back2Top from '../components/Back2Top.vue';
-export default {
-    components: {
-        Back2Top
-    },
-    data() {
-        return {
-            // 在這裡添加您的數據
-        };
-    },
-    methods: {
-        // 在這裡添加您的方法
-    },
-    mounted() {
-        // 在這裡添加組件初始化邏輯
-    }
-};
+
 </script>
 
 <style scoped>
@@ -85,4 +70,104 @@ export default {
     color: #fff;
     border-color: #46a3ff;
 }
+
+.box {
+  width: 500px;
+  height: 700px;
+}
+
+
+.area {
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+  background-position: center center;
+  overflow: auto;
+
+}
+
+.area1 {
+  background-image: url(../assets/image/chanel1.jpg);
+  background-attachment: fixed;
+}
+
+.area2 {
+  background-image: url(../assets/image/chanel2.jpg);
+  background-attachment: fixed;
+}
+
+.area3 {
+  background-image: url(../assets/image/chanel3.jpg);
+  background-attachment: fixed;
+}
+
+.area4 {
+  background-image: url(../assets/image/chanel4.jpg);
+  background-attachment: fixed;
+}
+
+.area5 {
+  background-image: url(../assets/image/chanel5.jpg);
+  background-attachment: fixed;
+}
+
+.myList .list-group-item {
+  position: relative;
+  padding: 0;
+  margin: 0;
+  width: 20px;
+  height: 20px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  margin-bottom: 5px;
+  opacity: 0.5;
+}
+
+.myList .active {
+  background-color: #1b9dc4;
+  opacity: 0.7;
+}
+
+.myList .list-group-item:hover::after {
+  position: absolute;
+  top: -2px;
+  left: -60px;
+  background-color: rgb(141, 218, 241);
+  content: attr(option-text);
+  width: 50px;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.title {
+  text-align: center;
+}
+
+/* 文字下移 */
+
+.hero-text {
+  text-align: center;
+  color: #fff;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.trans1 {
+  text-transform: uppercase;
+  padding-top: 5px;
+}
+
+.section1 {
+  text-align: center;
+  color: #fff;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 </style>
