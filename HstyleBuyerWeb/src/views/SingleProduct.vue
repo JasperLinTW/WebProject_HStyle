@@ -22,7 +22,7 @@
                 <div class="row">
                     <div class="col-lg-8 d-flex justify-content-start">
                         <div v-for="(image, index) in product.imgs" :key="index" class="thumb">
-                            <img :src="image" class="pe-3">
+                            <img :src="image" class="pe-3" @click="changeImage(index)">
                         </div>
                     </div>
                     <div class="col-lg-12 text-start">
@@ -30,12 +30,6 @@
                     </div>
                     <div class="col-lg-12 mb-5 text-start">
                         <div>
-                            <!-- <div class="pb-4">
-                                <label>尺寸:</label>
-                                <button class="mx-2 btn-underline px-2" v-for="size in product.specs" :value="size.size">{{
-                                    size.size
-                                }}</button>
-                            </div> -->
                             <div class="product-options">
                                 <label>規格:</label>
                                 <select v-model="SelectSpecId" class="mx-2">
@@ -46,6 +40,7 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-lg-12"></div>
                     <div class="col-lg-12  mt-5 text-start">
                         <button @click="addItem()" class="add-to-cart"> NT$ {{ product.unitPrice }}<span
                                 class="border-start border-dark ms-2"><span class="ps-2">加入購物車</span></span></button>
@@ -54,6 +49,20 @@
                         <span class="m-3" v-else @click="isClicked = false"><i class="fa-solid fa-heart fz-18"></i></span>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 pb-2">
+                <button class="btn-underline" @click="showComment = false" :class="{ active: !showComment }">商品描述</button>
+            </div>
+            <div class="col-md-6">
+                <button class="btn-underline" @click="showComment = true" :class="{ active: showComment }">商品評論</button>
+            </div>
+            <div v-if="showComment" class="col-md-12 border-top pt-5 px-6 h200px">明天再做</div>
+            <div v-else class="col-md-12 border-top pt-5 px-6 h200px">
+                {{ product.description }}
             </div>
         </div>
     </div>
@@ -80,6 +89,7 @@ const route = useRoute();
 const product = ref([]);
 
 const isClicked = ref(false);
+const showComment = ref(true);
 
 //商品呈現
 const getProduct = async () => {
@@ -96,16 +106,15 @@ const getProduct = async () => {
 const modules = ref([Pagination]);
 
 //加入購物車
-const emit =defineEmits(['update']);
-const watchedNum =ref(0);
-watch(watchedNum,(newValue) =>{
-    emit('update',newValue)
+const emit = defineEmits(['update']);
+const watchedNum = ref(0);
+watch(watchedNum, (newValue) => {
+    emit('update', newValue)
 })
 const SelectSpecId = ref(0);
 const addItem = async () => {
     await axios.post(`https://localhost:7243/api/Cart/${SelectSpecId.value}`)
         .then(response => {
-            alert("新增成功");
             watchedNum.value += 1;
         })
         .catch(error => { console.log(error); });
@@ -120,13 +129,22 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.px-6 {
+    padding-left: 15%;
+    padding-right: 15%;
+}
+
+.h200px {
+    height: 200px;
+}
+
 .btn-underline {
     position: relative;
     padding: 0;
     border: none;
     background: none;
     text-decoration: none;
-    font-size: 15pt;
+    font-size: 12pt;
     color: #333;
     cursor: pointer;
 }
@@ -165,7 +183,7 @@ onMounted(() => {
 }
 
 .MySwiper {
-    width: 620px;
+    width: 617px;
     height: 550px;
 }
 
