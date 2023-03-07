@@ -1,6 +1,6 @@
 <template>
     <div class="container my-5">
-        <div class="order-header border pt-2">
+        <div class="order-header border-top border-bottom pt-2">
             <div class="row mb-2 px-5">
                 <div class="col-2 text-center">訂單編號</div>
                 <div class="col-2 text-center">金額</div>
@@ -10,20 +10,19 @@
                 <div class="col-2 text-center">幫助</div>
             </div>
         </div>
-        <div class="accordion" id="accordionExample">
+        <div class="accordion  accordion-flush" id="accordionExample">
             <div v-for="(order, index) in orders" :key="order.orderId" class="accordion-item">
                 <div class="accordion-header" :id="'heading' + index">
                     <button class="accordion-button btn-order" type="button" data-bs-toggle="collapse"
-                        :data-bs-target="'#collapse' + index" :aria-expanded="index === 0"
+                        :data-bs-target="'#collapse' + index" :class="{ 'collapsed': index !== -1 }" aria-expanded="false"
                         :aria-controls="'collapse' + index">
                         <div class="col-2 text-center">{{ order.orderId }}</div>
                         <div class="col-2 text-center">NT$ {{ order.total }}</div>
                         <div class="col-2 text-center">{{ order.createdTime.slice(0, 10) }}</div>
                         <div class="col-2 text-center">{{ order.payment }}</div>
                         <div class="col-1 text-center ps-1">
-                            <div v-if="order.statusId === 1">
-                                <a @click.prevent="goToPay(order.payInfo)" class="alink">待付款<i
-                                        class="fa-solid fa-arrow-up-right-from-square fz-sm ps-2"></i></a>
+                            <div v-if="order.statusId === 1" @click.prevent="goToPay(order.payInfo)">
+                                <a class="alink">待付款<i class="fa-solid fa-arrow-up-right-from-square fz-sm ps-2"></i></a>
                             </div>
                             <div v-else>
                                 {{ order.status }}
@@ -34,8 +33,8 @@
                         </div>
                     </button>
                 </div>
-                <div :id="'collapse' + index" class="accordion-collapse collapse" :class="{ show }"
-                    :aria-labelledby="'heading' + index" data-bs-parent="#accordionExample">
+                <div :id="'collapse' + index" class="accordion-collapse collapse" :aria-labelledby="'heading' + index"
+                    data-bs-parent="#accordionExample">
                     <div class="accordion-body">
                         <div class="row bg-dark text-white font-weight-bold  py-2">
                             <div class="col-1"></div>
@@ -46,7 +45,7 @@
                             <div class="col-2 text-center">小計</div>
                             <div class="col-1"></div>
                         </div>
-                        <div v-for="(product, index) in order.orderDetails" :key="index"
+                        <div v-for="(product, index) in     order.orderDetails" :key="index"
                             class="row accordion-body border-start border-end py-3 px-0">
                             <div class="col-1"></div>
                             <div class="col-2 text-center">{{ product.productName }}</div>
