@@ -172,6 +172,8 @@ namespace H2StyleStore.Controllers
 		[HttpPost]
 		public ActionResult EditCustomerQ(EditCustomerQVM model)
 		{
+			if (!ModelState.IsValid) return View(model);
+
 			string user = User.Identity.Name;
 			model.Employee_Name = user;
 
@@ -189,7 +191,7 @@ namespace H2StyleStore.Controllers
 				ModelState.AddModelError(string.Empty, ex.Message);
 			}
 
-			if (ModelState.IsValid) return RedirectToAction("Index");
+			if (ModelState.IsValid) return RedirectToAction("GetCustomerQ");
 			return View(model);
 		}
 	}

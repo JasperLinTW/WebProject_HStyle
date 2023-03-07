@@ -33,14 +33,14 @@ namespace H2StyleStore.Models.ViewModels
 		[Display(Name = "檔案名稱")]
 		public string FilePath { get; set; }
 
-		[Display(Name = "詢問時間")]
-		public DateTime AskTime { get; set; }
+		//[Display(Name = "詢問時間")]
+		//public DateTime AskTime { get; set; }
 
 		[Display(Name = "回答描述")]
 		public string Solution_Description { get; set; }
 
-		[Display(Name = "回答時間")]
-		public DateTime? SolveTime { get; set; }
+		//[Display(Name = "回答時間")]
+		//public DateTime? SolveTime { get; set; }
 
 		[Display(Name = "回答員工")]
 		public string Employee_Name { get; set; }
@@ -58,10 +58,10 @@ namespace H2StyleStore.Models.ViewModels
 				Title = model.Title,
 				Problem_Description = model.Problem_Description,
 				FilePath = model.FilePath,
-				AskTime = model.AskTime,
+				//AskTime = model.AskTime,
 				Solution_Description = model.Solution_Description,
-				SolveTime = model.SolveTime,
-				Employee_Name = model.Employee_Name,
+				//SolveTime = model.SolveTime,
+				//Employee_Name = model.Employee_Name,
 			};
 		}
 
@@ -75,9 +75,9 @@ namespace H2StyleStore.Models.ViewModels
 				Title = model.Title,
 				Problem_Description = model.Problem_Description,
 				FilePath = model.FilePath,
-				AskTime = model.AskTime,
+				//AskTime = model.AskTime,
 				Solution_Description = model.Solution_Description,
-				SolveTime = model.SolveTime,
+				//SolveTime = model.SolveTime,
 				Employee_Name = model.Employee_Name,
 			};
 		}

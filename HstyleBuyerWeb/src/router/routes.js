@@ -15,7 +15,7 @@ const routes = [
     { path: '/EssaysBlog',name:'EssaysBlog', component:()=> import('../views/EssaysBlog.vue') },
     { path: '/member',name:'member', component:()=> import('../views/Member.vue') },
     { path: '/google',name:'google', component:()=> import('../views/google.vue') },
-    { path: '/Questions',name:'Questions', component:()=> import('../views/CustomerService.vue') }
+    { path: '/Questions',name:'Questions', component:()=> import('../views/FAQ.vue') }
 
   ]
 export default routes

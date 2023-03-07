@@ -28,14 +28,15 @@
                         class="form-control"
                         id="Qcontent"
                         v-model="problemDescription"
-                        placeholder="請輸入問題內容..."
+                        placeholder="請協助加以描述您遇到的問題..."
                         rows="3"
                         required
                      ></textarea>
                   </div>
                   <div class="mb-3">
                      <label for="imageFile" class="form-label">圖片上傳</label>
-                     <input class="form-control" type="file" id="imageFile" required />
+                     <input class="form-control" type="file" id="imageFile" accept="image/*" />
+                     <div class="fs14">只可上傳一個檔案，且大小需小於4MB的圖檔，如果檔案大大或格式限制無法順利上傳，建議改以連結方式提供。</div>
                   </div>
                   <button type="submit" class="btn btn-primary">送出</button>
                </form>
@@ -62,31 +63,37 @@ const getQCategoryInfo = async () => {
       });
 };
 
+// 檔案上傳
+// todo
+const fileUploader = document.querySelector("#imageFile");
+// fileUploader.addEventListener('change', (e) => {
+//   e.target.files; // FileList object
+//   e.target.files[0]; // File Object (Special Blob)
+// });
+
+// 送出表單
 const qcategoryId = ref([]);
 const title = ref([]);
 const problemDescription = ref([]);
 const askTime = ref([]);
+const filePath = ref([]);
 const postMemberQ = async () => {
-   if (userId <= 0) {
-      alert("請先登入會員");
-   } else {
-      await axios
-         .post("https://localhost:7243/CustomerQ", {
-            memberId: userId,
-            qcategoryId: qcategoryId.value,
-            title: title.value,
-            problemDescription: problemDescription.value,
-            filePath: null,
-            askTime: new Date(),
-         })
-         .then((response) => {
-            console.log(response.data);
-            alert("感謝您的回饋");
-         })
-         .catch((error) => {
-            console.log(error);
-         });
-   }
+   await axios
+      .post("https://localhost:7243/CustomerQ", {
+         memberId: userId,
+         qcategoryId: qcategoryId.value,
+         title: title.value,
+         problemDescription: problemDescription.value,
+         filePath: null,
+         askTime: new Date(),
+      })
+      .then((response) => {
+         console.log(response.data);
+         alert("感謝您的回饋");
+      })
+      .catch((error) => {
+         console.log(error);
+      });
 };
 
 onMounted(() => {
@@ -94,4 +101,8 @@ onMounted(() => {
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.fs14 {
+   font-size: 14px;
+}
+</style>
