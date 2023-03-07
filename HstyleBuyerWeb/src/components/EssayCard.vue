@@ -24,14 +24,15 @@
           <!-- <span><i class="fa-regular fa-bookmark"></i></span> -->
           <div class="card-text text-end">
           <span v-if="!item.isClicked" @click="item.isClicked = true"><i
-                            class="fa-regular fa-heart icon-hover fz-18"></i></span>
-                    <span v-else @click="item.isClicked = false"><i class="fa-solid fa-heart SolidHeart fz-18"></i></span>
+                            class="fa-regular fa-bookmark icon-hover fz-18"></i></span>
+          <span v-else @click="item.isClicked = false"><i class="fa-solid fa-bookmark SolidHeart fz-18"></i></span>
            </div>
         </div>
       </div>
     </div>
   </div>
 </div> 
+
 </template>
 <script setup>
 import { ref, onMounted} from "vue";
@@ -60,6 +61,7 @@ const likesEssay = async () => {
         .then(response => {
             if (response.data.length > 0) {
                 likes.value = response.data;
+                console.log(likes.value);
                 Essays.value = likes.value.map(e => {
                     return e.essayId
                 });

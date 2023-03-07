@@ -41,67 +41,16 @@
     <h4>文章列表<span style="margin-left:30px;margin-bottom:10px;"> @Html.ActionLink("新增文章", "NewEssay", null, new { @class = "btn btn-secondary" })</span> </h4>
 
 </div>
-@*<p>
-        @Html.ActionLink("Create New", "Create")
-    </p>*@
+
 
 
 <table class="table">
-    @*<tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Influencer_Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UplodTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ETitle)
-            </th>
 
-            <th>
-                @Html.DisplayNameFor(model => model.EContent)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CategoryName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpLoad)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Removed)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Images)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Tags)
-            </th>
-        </tr>*@
 
     @foreach (var item in Model)
     {
         <tr>
-            @*<td>
-                    @Html.DisplayFor(modelItem => item.Influencer_Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UplodTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ETitle)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EContent)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CategoryName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UpLoad)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Removed)
-                </td>*@
+
         <tr>
             <td>
                 <br />

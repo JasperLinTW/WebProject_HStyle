@@ -29,7 +29,7 @@ namespace HStyleApi.Controllers
 
 		// GET api/<EssayController>/5
 		[HttpGet("{id}")]
-		public async Task<IEnumerable<EssayDTO>> GetEssay(int id)
+		public async Task<EssayDTO> GetEssay(int id)
 		{
 
 			return await _service.GetEssays(id);
