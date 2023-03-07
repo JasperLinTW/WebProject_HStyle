@@ -365,6 +365,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\PCommentImages\714bf8f965154b15ae72ddf353ba6b44.jpg" />
     <Content Include="Images\ProductImages\00e6331aaf304946a1fcae8a639c0495.jfif" />
     <Content Include="Images\ProductImages\05e3edcaab334819bf606197bc0d1a08.jpg" />
     <Content Include="Images\ProductImages\09ab90a804354a41a3857221a08637cd.jpg" />
@@ -632,7 +633,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="files\" />
-    <Folder Include="Images\PCommentImages\" />
     <Folder Include="obj\" />
   </ItemGroup>
   <ItemGroup>

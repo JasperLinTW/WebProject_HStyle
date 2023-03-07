@@ -45,9 +45,9 @@
                         <button @click="addItem()" class="add-to-cart"> NT$ {{ product.unitPrice }}<span
                                 class="border-start border-dark ms-2" data-bs-target="#exampleModal"><span
                                     class="ps-2">加入購物車</span></span></button>
-                        <span class="m-3" v-if="!isClicked" @click="isClicked = true"><i
+                        <span class="m-3" v-if="!isClicked" @click="likesProduct()"><i
                                 class="fa-regular fa-heart icon-hover fz-18"></i></span>
-                        <span class="m-3" v-else @click="isClicked = false"><i class="fa-solid fa-heart fz-18"></i></span>
+                        <span class="m-3" v-else @click="likesProduct()"><i class="fa-solid fa-heart fz-18"></i></span>
                     </div>
                 </div>
             </div>
@@ -61,14 +61,15 @@
             <div class="col-md-6">
                 <button class="btn-underline" @click="showComment = true" :class="{ active: showComment }">商品評論</button>
             </div>
-            <div v-if="showComment" class="col-md-12 border-top pt-5 px-6 h200px">明天再做</div>
-            <div v-else class="col-md-12 border-top pt-5 px-6 h200px">
+            <div v-if="showComment" class="col-md-12 border-top pt-3 h200px mb-big">
+                <PComment></PComment>
+            </div>
+            <div v-else class="col-md-12 border-top pt-5 px-6 h200px mb-big">
                 {{ product.description }}
             </div>
         </div>
     </div>
-    <Back2Top></Back2Top>
-    <Cart />
+    <Back2Top />
 </template>
 
 <script setup>
@@ -76,7 +77,8 @@ import { onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import axios from 'axios';
 import { Swiper, SwiperSlide } from 'swiper/vue';
-import Back2Top from "../components/Back2Top.vue"
+import Back2Top from "../components/Back2Top.vue";
+import PComment from "../components/PComment.vue";
 
 // Import Swiper styles
 import 'swiper/css';
@@ -91,7 +93,7 @@ const route = useRoute();
 const product = ref([]);
 
 const isClicked = ref(false);
-const showComment = ref(true);
+const showComment = ref(false);
 
 //商品呈現
 const getProduct = async () => {
@@ -99,7 +101,7 @@ const getProduct = async () => {
         .then(response => {
             product.value = response.data;
             SelectSpecId.value = product.value.specs[0].specId;
-            // console.log(product.value.specs[0].specId);
+            isClicked.value = likeProductsId.value.includes(parseInt(route.params.id));
         })
         .catch(error => { console.log(error); });
 }
@@ -122,9 +124,35 @@ const addItem = async () => {
         .catch(error => { console.log(error); });
 }
 
+//收藏
+let likes = ref([]);
+const likeProductsId = ref([])
+
+const likesProducts = async () => {
+    await axios.get("https://localhost:7243/api/Products/products/likes")
+        .then(response => {
+            if (response.data.length > 0) {
+                likes.value = response.data;
+                likeProductsId.value = likes.value.map(p => {
+                    return p.productId;
+                });
+            }
+        })
+        .catch(error => { console.log(error); });
+}
+
+const likesProduct = async () => {
+    await axios.post(`https://localhost:7243/api/Products/product/like?product_id=${route.params.id}`)
+        .then(response => {
+            isClicked.value = !isClicked.value;
+        })
+        .catch(error => { console.log(error); });
+}
+
 
 
 onMounted(() => {
+    likesProducts();
     getProduct();
 })
 
@@ -136,6 +164,10 @@ onMounted(() => {
 .px-6 {
     padding-left: 15%;
     padding-right: 15%;
+}
+
+.mb-big {
+    margin-bottom: 20%;
 }
 
 .h200px {
