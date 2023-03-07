@@ -64,15 +64,15 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			}
 			_db.SaveChanges();
 
-			var videoOther = _db.Videos.SingleOrDefault(v => v.Title == dto.Title && v.ImageId == dto.ImageId);
-			//VideoView videoView = new VideoView()
-			//{
-			//	VideoId = videoOther.Id,
-			//	Views = 0,
-			//};
+			var videoOther = _db.Videos.SingleOrDefault(v => v.Title == dto.Title);
+			VideoView videoView = new VideoView()
+			{
+				VideoId = videoOther.Id,
+				Views = 0,
+			};
 
-			//_db.VideoViews.Add(videoView);
-			//_db.SaveChanges();
+			_db.VideoViews.Add(videoView);
+			_db.SaveChanges();
 		}
 
 		public IEnumerable<SelectListItem> GetVideoCategories()

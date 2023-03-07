@@ -24,7 +24,7 @@ namespace HStyleApi.Models.DTOs
 
 		public DateTime CreatedTime { get; set; }
 
-		public string? Image { get; set; }
+		public string Image { get; set; }
 
 		public IEnumerable<string> Tags { get; set; }
 
@@ -45,8 +45,10 @@ namespace HStyleApi.Models.DTOs
 
 	public static class VideoExts
 	{
+		private static readonly object _basePath = "https://localhost:44313/Images";
 		public static VideoDTO ToVideoDTO(this Video source)
 		{
+			
 			return new VideoDTO()
 			{
 				Id = source.Id,
@@ -55,7 +57,7 @@ namespace HStyleApi.Models.DTOs
 				FilePath = source.FilePath,
 				CategoryId = source.CategoryId,
 				ImageId = source.ImageId,
-				Image=source.Image.ToString(),
+				Image=$"{_basePath}/VideoImages/{source.Image.Path}",
 				OnShelffTime = source.OnShelffTime,
 				OffShelffTime = source.OffShelffTime,
 				CreatedTime = source.CreatedTime,

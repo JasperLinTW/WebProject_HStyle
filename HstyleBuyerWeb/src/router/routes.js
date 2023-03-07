@@ -13,8 +13,8 @@ const routes = [
     ]},
     { path: '/EssaysBlog',name:'EssaysBlog', component:()=> import('../views/EssaysBlog.vue') },
     { path: '/VideoBlog',name:'VideoBlog', component:()=> import('../views/VideoBlog.vue') },
+    { path: '/VideoBlog/:id',name:'SingleVideo', component:()=> import('../views/SingleVideo.vue')},
     { path: '/member',name:'member', component:()=> import('../views/Member.vue') },
-    { path: '/google',name:'google', component:()=> import('../views/google.vue') }
-
+    { path: '/google',name:'google', component:()=> import('../views/google.vue')}
   ]
 export default routes
