@@ -29,8 +29,8 @@ const videos=ref([])
 const likeVideosId=ref([])
 const likes=ref([])
 
-const getVideos=async()=> {
-    await axios.get("https://localhost:7243/api/Video")
+const getVideos=async()=>{
+    await axios.get(`https://localhost:7243/api/Video`)
         .then(response=> {
             response.data.map(v=> {
             v.isClicked=likeVideosId.value.includes(v.id);
@@ -41,14 +41,14 @@ const getVideos=async()=> {
         .catch(error=> {console.log(error);});
 }
 
-const postLike=()=>{
-    axios.post("https://localhost:7243/api/Video/Like",video.id)
-    .then(response=>{
-        if(response.data.length>0){
-            likes.value=response.data;
-        }
-    }).catch(error=>{console.log(error);});
-}
+// const postLike=()=>{
+//     axios.post("https://localhost:7243/api/Video/Like",video.id)
+//     .then(response=>{
+//         if(response.data.length>0){
+//             likes.value=response.data;
+//         }
+//     }).catch(error=>{console.log(error);});
+// }
 
 
 onMounted(() => {

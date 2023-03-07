@@ -51,16 +51,18 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 		}
 
 		//單一影片資訊
-		public async Task<IEnumerable<VideoDTO>> GetVideo(int id)
+		public async Task<VideoDTO> GetVideo(int id)
 		{
-			IEnumerable<VideoDTO> video = await _db.Videos.Where(v => v.Id == id)
+			IEnumerable<VideoDTO> data = await _db.Videos
 												.Include(v => v.Image)
 												.Include(v => v.Category)
 												.Include(v => v.Tags)
 												.Include(v => v.VideoLikes)
-												.Include(v => v.VideoView).Where(v => v.IsOnShelff == true).Select(v => v.ToVideoDTO())
+												.Include(v => v.VideoView)
+												.Where(v => v.IsOnShelff == true)
+												.Select(v => v.ToVideoDTO())
 												.ToListAsync();
-
+			var video = data.SingleOrDefault(v => v.Id == id);
 			if (video == null)
 			{
 				throw new Exception("找不到這部影片!");

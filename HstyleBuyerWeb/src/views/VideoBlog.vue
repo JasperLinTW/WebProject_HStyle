@@ -8,7 +8,7 @@
 </template>
 
 <script setup>
-import VideoCard from '../components/VideoCard.vue'
+import VideoCard from '../components/VideoCard.vue';
 
 </script>
 
