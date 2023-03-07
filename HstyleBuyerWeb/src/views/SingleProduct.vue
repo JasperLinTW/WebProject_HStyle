@@ -120,6 +120,8 @@ const addItem = async () => {
         .catch(error => { console.log(error); });
 }
 
+
+
 onMounted(() => {
     getProduct();
 })
