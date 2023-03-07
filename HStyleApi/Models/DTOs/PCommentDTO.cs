@@ -11,6 +11,10 @@ namespace HStyleApi.Models.DTOs
 		public string Size { get; set; }
 		public string CommentContent { get; set; }
 		public int Score { get; set; }
+		public string CreatedTime { get; set; }
+
+		public string Account { get; set; }
+
 		public IEnumerable<string> PcommentImgs { get; set; }
 	}
 
@@ -21,12 +25,14 @@ namespace HStyleApi.Models.DTOs
 		{
 			return new PCommentDTO
 			{
-			   CommentId = source.CommentId,
-			   CommentContent = source.CommentContent,
-			   PcommentImgs = source.PcommentImgs.Select(x => $"{_basePath}/PCommentImages/{x.Path}"),
+				CommentId = source.CommentId,
+				CommentContent = source.CommentContent,
+				PcommentImgs = source.PcommentImgs.Select(x => $"{_basePath}/PCommentImages/{x.Path}"),
 				Score = source.Score,
-			   Color = source.Order.OrderDetails.Where(x => x.OrderId == source.OrderId).FirstOrDefault(x => x.ProductId == source.ProductId).Color,
-			   Size = source.Order.OrderDetails.Where(x => x.OrderId == source.OrderId).FirstOrDefault(x => x.ProductId == source.ProductId).Size
+				Account = source.Order.Member.Account,
+				Color = source.Order.OrderDetails.Where(x => x.OrderId == source.OrderId).FirstOrDefault(x => x.ProductId == source.ProductId).Color,
+				Size = source.Order.OrderDetails.Where(x => x.OrderId == source.OrderId).FirstOrDefault(x => x.ProductId == source.ProductId).Size,
+				CreatedTime = source.CreatedTime.ToString("yyyy-MM-dd HH:mm:ss"),
 			};
 
 		}

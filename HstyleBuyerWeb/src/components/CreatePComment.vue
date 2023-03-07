@@ -110,6 +110,6 @@ export default {
 .star-rating i {
   cursor: pointer;
   font-size: 15pt;
-  color: #000000;
+  color: rgb(255, 208, 0);
 }
 </style>

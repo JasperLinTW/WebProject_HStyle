@@ -61,12 +61,13 @@
             <div class="col-md-6">
                 <button class="btn-underline" @click="showComment = true" :class="{ active: showComment }">商品評論</button>
             </div>
-            <div v-if="showComment" class="col-md-12 border-top pt-3 h200px mb-big">
+            <div v-if="showComment" class="col-md-12 border-top pt-3 mb-big">
                 <PComment></PComment>
             </div>
-            <div v-else class="col-md-12 border-top pt-5 px-6 h200px mb-big">
+            <div v-else class="col-md-12 border-top pt-5 px-6  mb-big">
                 {{ product.description }}
             </div>
+            <div class="col-md-12 h200px line"><span class="px-5">專屬推薦</span></div>
         </div>
     </div>
     <Back2Top />
@@ -161,6 +162,18 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.line {
+    border-top: 1px solid #dee2e6;
+    text-align: center;
+    line-height: 0.1em;
+    margin: 10px 0 10px 0;
+}
+
+.line span {
+    background: #fff;
+    padding: 0 10px;
+}
+
 .px-6 {
     padding-left: 15%;
     padding-right: 15%;
@@ -186,7 +199,7 @@ onMounted(() => {
 }
 
 .btn-underline:hover {
-    color: #46A3FF;
+    color: #000000;
 }
 
 
@@ -197,7 +210,7 @@ onMounted(() => {
     left: 0;
     width: 100%;
     height: 2px;
-    background-color: #46A3FF;
+    background-color: #000000;
     transform: scaleX(0);
     transition: transform 0.3s ease;
 }

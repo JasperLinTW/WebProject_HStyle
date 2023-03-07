@@ -78,7 +78,7 @@
                 </div>
                 <div class="d-flex justify-content-between pb-2">
                     <div class="fw-bold">使用H幣</div>
-                    <input v-model="discount" type="text" class="textbox" name="" id="">
+                    <input v-model="discount" type="text" class="textbox form-floating" name="" id="" placeholder="請輸入數量">
                 </div>
                 <div class="fz-sm text-end pb-4">目前有{{ H_Coin }}枚，最高可使用{{ coinUseLimit }}枚</div>
                 <div class="d-flex justify-content-between border-top py-4">
@@ -127,7 +127,7 @@ const shipName = ref("");
 const shipAddress = ref("");
 const shipPhone = ref("");
 const payment = ref("")
-const discount = ref(0)
+const discount = ref("")
 const totalIncludeHcoin = computed(() => {
     return products.value.total - discount.value;
 });
