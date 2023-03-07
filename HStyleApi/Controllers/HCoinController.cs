@@ -33,7 +33,7 @@ namespace HStyleApi.Controllers
 		[HttpGet("CheckIn/{memberId}")]
 		public async Task<HCheckInDTO> GetHCheckIn(int memberId)
 		{
-			if (memberId == null)
+			if (memberId <=0)
 			{
 				throw new Exception("請先登入會員");
 			}
@@ -47,10 +47,10 @@ namespace HStyleApi.Controllers
 
 		// PUT api/<HCoinController>/5
 		// 將打卡紀錄傳回資料庫
-		[HttpPut("CheckIn/{id}")]
+		[HttpPut("CheckIn/{memberId}")]
 		public async Task<ActionResult> PutCheckIn(int memberId)
 		{
-			if (memberId == null)
+			if (memberId <= 0)
 			{
 				throw new Exception("請先登入會員");
 			}

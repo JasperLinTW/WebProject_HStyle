@@ -42,11 +42,20 @@ namespace H2StyleStore.Models.DTOs
 	{
 		public static CustomerQuestionDTO ToDTO(this CustomerQuestion source)
 		{
+			string member_Name;
+			if (source.Member_Id == null)
+			{
+				member_Name = string.Empty;
+			}
+			else
+			{
+				member_Name = source.Member.Name;
+			}
 			return new CustomerQuestionDTO
 			{
 				CustomerQuestion_Id = source.CustomerQuestion_Id,
 				Member_Id = source.Member_Id,
-				Member_Name=source.Member.Name,
+				Member_Name = member_Name,
 				QCategory_Id = source.QCategory_Id,
 				QCategory_Name =source.Question_Categories.Category_Name,
 				Title = source.Title,

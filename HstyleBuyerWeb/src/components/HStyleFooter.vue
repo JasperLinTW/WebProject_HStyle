@@ -15,7 +15,7 @@
                 </div>
                 <div class="col-lg-2">
                     <div class="nav-link text-white pb-2">售後服務</div>
-                    <router-link to="/" class="nav-link text-secondary"><span class="txt-hover">常見問題</span></router-link>
+                    <router-link to="/Questions" class="nav-link text-secondary"><span class="txt-hover">常見問題</span></router-link>
                 </div>
             </div>
         </div>

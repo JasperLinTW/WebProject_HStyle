@@ -14,7 +14,7 @@ namespace HStyleApi.Controllers
 	[ApiController]
 	public class QuestionsController : ControllerBase
 	{
-		private readonly QuestionService _service;
+		private QuestionService _service;
 		public QuestionsController(AppDbContext db)
 		{
 			_service = new QuestionService(db);

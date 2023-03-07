@@ -628,6 +628,7 @@
     <Content Include="Views\Question\EditCommonQ.cshtml" />
     <Content Include="Views\Question\DeleteCommonQ.cshtml" />
     <Content Include="Views\Question\GetCustomerQ.cshtml" />
+    <Content Include="Views\Question\EditCustomerQ.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
