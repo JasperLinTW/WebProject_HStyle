@@ -36,18 +36,6 @@
 
 </div>
 
-
-
-<!-- <div>
-    <h1>Google Login</h1>
-    <div v-if="!loggedIn">
-      <button @click="googlelogin">Login with Google</button>
-    </div>
-    <div v-else>
-      <p>Welcome, {{ user.name }}!</p>
-      <button @click="logout">Logout</button>
-    </div>
-  </div> -->
   
 <div id="g_id_onload"
      data-client_id="826430034566-tvq18h6l8duepd5chu8rc1gekodbc4a5.apps.googleusercontent.com"
@@ -125,9 +113,7 @@ export default {
             memberId: null,
         }
     },
-  //   mounted() { 
-  //   this.memberId = this.getCookieValue("MemberId"); //新加的
-  // },
+
   methods: {
     login(e) {
       e.preventDefault();
@@ -148,16 +134,7 @@ export default {
         })
         .catch(error => console.error(error));
     },
-    // getCookieValue(key) {
-    //   var cookies = document.cookie.split(";");
-    //   for (var i = 0; i < cookies.length; i++) {
-    //     var cookie = cookies[i].trim();
-    //     if (cookie.indexOf(key + "=") == 0) {
-    //       return cookie.substring(key.length + 1, cookie.length);
-    //     }
-    //   }
-    //   return null;
-    // },
+
     Logout(e){
         //e.preventDefault()
         fetch('https://localhost:7243/api/Member/LogOut', {

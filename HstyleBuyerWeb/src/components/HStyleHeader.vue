@@ -40,7 +40,7 @@
                         <!-- <a class="nav-link targetAll" href="#">測試用會員</a> -->
                     </li>
                     <li class="nav-item dropdown">
-                        <router-link to="/MemberLogin" class="nav-link targetAll">測試用會員123</router-link>
+                        <router-link to="/LogIn" class="nav-link targetAll">會員登入</router-link>
                         <!-- <a class="nav-link targetAll" href="#">測試用會員</a> -->
                     </li>
                 </ul>
