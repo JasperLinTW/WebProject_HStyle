@@ -11,8 +11,9 @@
             <input type="password" v-model="password" required>
         </label>
         <button type="button" @click="login" class="btn btn-light">登入</button>
-        <button type="button" @click="logout" class="btn btn-light">登出</button>
+
         <button type="button" @click="getMemberId" class="btn btn-light">取id</button>
+        <button type="button" @click="getCartInfo" class="btn btn-light">取購物車測試</button>
 
     </div>
 </template>
@@ -28,24 +29,15 @@ const login = () => {
         password: password.value
     }, { withCredentials: true }).then((response) => {
         console.log(response.data)
+        window.location = "http://localhost:5173";
 
     }).catch((err) => {
         console.log(err)
     })
 };
-const logout = () => {
-    axios.post('https://localhost:7243/api/Member/LogOut', {}, {
-        withCredentials: true,
-    })
-        .then((response) => {
-            console.log(response.data);
-        })
-        .catch((error) => {
-            console.error(error);
-        });
-};
+
 const getMemberId = () => {
-    axios.get('https://localhost:7243/api/Member/id', {withCredentials: true,})
+    axios.get('https://localhost:7243/api/Member/id', { withCredentials: true, })
         .then((response) => {
             console.log(response.data);
         })
@@ -53,6 +45,18 @@ const getMemberId = () => {
             console.error(error);
         });
 };
+
+const getCartInfo = async () => {
+    await axios.get("https://localhost:7243/api/Cart", { withCredentials: true, })
+        .then(response => { console.log(response.data); })
+        .catch(error => {
+            console.log(error.response.status);
+            if (error.response.status === 401) {
+                window.location = "http://localhost:5173"
+            }
+
+        });
+}
 
 
 

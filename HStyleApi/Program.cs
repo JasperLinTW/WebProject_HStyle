@@ -29,6 +29,8 @@ builder.Services.AddDbContext<AppDbContext>(option => option.UseLazyLoadingProxi
 
 builder.Services.AddSingleton<WebSocketController>();
 
+builder.Services.AddHttpContextAccessor();
+
 string MyAllowOrigins = "AllowAny";
 builder.Services.AddCors(options => {
 	options.AddPolicy(
@@ -46,7 +48,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     //option.Cookie.Domain = "localhost:7243";
     //option.Cookie.Expiration = DateTime.UtcNow.AddDays(1);
     //未登入時會自動導到這個網址
-    //option.LoginPath = null; //先改成null
+    option.LoginPath = new PathString("/api/Member/NoLogin"); //先改成null
 });
 
 var app = builder.Build();

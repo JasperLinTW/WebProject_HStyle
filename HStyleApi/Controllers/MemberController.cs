@@ -39,15 +39,13 @@ namespace HStyleApi.Controllers
         public MemberController(AppDbContext context)
         {
             _context = context;
-        }
-        // GET: api/<MemberController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+			
 
-        [HttpPost("LogIn")]
+		}
+		// GET: api/<MemberController>
+
+
+		[HttpPost("LogIn")]
         [AllowAnonymous]
         public IActionResult LogIn(LogInDTO value)
         {
@@ -111,8 +109,14 @@ namespace HStyleApi.Controllers
                 return (-1);
             }
         }
+		[HttpGet("NoLogin")]
+		public IActionResult NoLogin()
+        {
+            return Unauthorized();
+        }
 
-        [Authorize]
+
+		[Authorize]
         [HttpPost("LogOut")]
         public async Task<IActionResult> LogOut()
         {
