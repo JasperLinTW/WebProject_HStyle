@@ -119,7 +119,7 @@ namespace H2StyleStore.Controllers
 		{
 
 			ViewBag.VideoCategoriesItems = new EssayRepository(new AppDbContext()).GetCategories(null);
-			if (ModelState.IsValid)
+			if (!ModelState.IsValid)
 			{
 				return View(model);
 			}
@@ -161,7 +161,7 @@ namespace H2StyleStore.Controllers
 				ModelState.AddModelError("UpLoad", ex.Message);
 
 			}
-			if (ModelState.IsValid)
+			if (!ModelState.IsValid)
 			{
 				return View(model);
 			}
@@ -169,7 +169,7 @@ namespace H2StyleStore.Controllers
 			if (files[1] != null)
 			{
 
-				string path = Server.MapPath("/images/Essaysimage");
+				string path = Server.MapPath("/Images/Essaysimage");
 				var helper = new UploadFileHelper();
 
 				if (model.Images == null) { model.Images = new List<string>(); }
@@ -185,7 +185,7 @@ namespace H2StyleStore.Controllers
 						//string OriginalFileName = System.IO.Path.GetFileName(file.FileName);
 						string FileName = result;
 
-						model.Images.Add($"../../Images/Essaysimage/{FileName}");
+						model.Images.Add($"{FileName}");
 					}
 					catch (Exception ex)
 					{
@@ -234,7 +234,7 @@ namespace H2StyleStore.Controllers
 			if (files[1] != null)
 			{
 
-				string path = Server.MapPath("/images/Essaysimage");
+				string path = Server.MapPath("/Images/Essaysimage");
 				var helper = new UploadFileHelper();
 
 				if (model.Images == null) { model.Images = new List<string>(); }
@@ -250,7 +250,7 @@ namespace H2StyleStore.Controllers
 						//string OriginalFileName = System.IO.Path.GetFileName(file.FileName);
 						string FileName = result;
 
-						model.Images.Add($"../../Images/Essaysimage/{FileName}");
+						model.Images.Add($"{FileName}");
 					}
 					catch (Exception ex)
 					{

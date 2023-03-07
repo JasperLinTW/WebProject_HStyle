@@ -20,7 +20,11 @@ namespace ScheduleWork
 			// 發放購物活動H幣
 			//HcoinForOrder(today);
 
-			ChangeIsOnShelf(today);
+			//ChangeIsOnShelf(today);
+
+			// 文章的排程
+			ChangePon(today);
+
 		}
 
 		/// <summary>
@@ -29,7 +33,6 @@ namespace ScheduleWork
 		/// <param name="today">今天的日期</param>
 		private static void HcoinForBirth(DateTime today)
 		{
-			//AppDbContext _db = new AppDbContext();
 			// 生日活動Id
 			int activityId = 2;
 			// 生日活動發放的H幣
@@ -38,7 +41,7 @@ namespace ScheduleWork
 				.H_Value;
 			// 這個月份生日的會員
 			var memberInBirth = _db.Members
-				.Where(m => m.Birthday.Month.Equals(today.Month))
+				.Where(m => m.Birthday != null && m.Birthday.Value.Month == today.Month)
 				.ToList();
 			// 這個月份生日的會員的Id
 			var memberInBirthId = memberInBirth.Select(m => m.Id);
@@ -214,7 +217,60 @@ namespace ScheduleWork
 					{
 						video.IsOnShelff = false;
 					}
-				}	
+				}
+			}
+			_db.SaveChanges();
+		}
+
+		/// <summary>
+		/// 檢查PON欄位是否符合上架時間，若不符合則改動
+		/// </summary>
+		public static void ChangePon(DateTime today)
+		{
+			IEnumerable<Essay> data = _db.Essays;
+
+			foreach (Essay essay in data)
+			{
+				essay.PON = null;
+				if (essay.UpLoad == null && essay.Removed == null)
+				{
+					essay.PON = true;
+				}
+				else if (essay.UpLoad.HasValue && essay.Removed == null)
+				{
+					if (today >= essay.UpLoad)
+					{
+						essay.PON = true;
+					}
+					else
+					{
+						essay.PON = false;
+					}
+
+				}
+				else if (essay.UpLoad == null && essay.Removed.HasValue)
+				{
+					if (today < essay.Removed)
+					{
+						essay.PON = true;
+					}
+					else
+					{
+						essay.PON = false;
+					}
+				}
+				else
+				{
+					if (today >= essay.UpLoad && today < essay.Removed)
+					{
+						essay.PON = true;
+					}
+					else
+					{
+						essay.PON = false;
+					}
+				}
+
 			}
 			_db.SaveChanges();
 		}

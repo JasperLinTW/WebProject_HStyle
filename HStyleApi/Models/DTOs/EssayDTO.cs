@@ -33,6 +33,7 @@ namespace HStyleApi.Models.DTOs
 	}
 	public static class EssayExts
 	{
+		private static readonly object _basePath = "https://localhost:44313/Images";
 		public static EssayDTO ToEssayDTO(this Essay source)
 		{
 			return new EssayDTO()
@@ -45,7 +46,9 @@ namespace HStyleApi.Models.DTOs
 				UplodTime = source.UplodTime,
 				Removed = source.Removed,
 				CategoryId = source.CategoryId,
-				Imgs = source.Imgs.Select(x => x.Path),
+				//Imgs = source.Imgs.Select(x => x.Path),
+
+				Imgs = source.Imgs.Select(x => $"{_basePath}/EssayImages/{x.Path}"),
 				Tags = source.Tags.Select(x => x.TagName),
 				Like = source.Elikes.GroupBy(x => x.EssayId).Count(),
 				CategoryName = source.Category.CategoryName,
