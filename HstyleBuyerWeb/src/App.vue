@@ -3,8 +3,10 @@ import HStyleHeader from './components/HStyleHeader.vue'
 import HStyleFooter from './components/HStyleFooter.vue'
 import { ref } from 'vue'
 
+const btnClicked = ref(false);
 const updateHandler = (data) =>{
   headerKey.value = data;
+  btnClicked.value = true;
 }
 const headerKey = ref(0);
 
@@ -12,7 +14,7 @@ const headerKey = ref(0);
 
 <template>
   <div id="app">
-    <HStyleHeader :key="headerKey"  />
+    <HStyleHeader :key="headerKey" />
     <router-view @update="updateHandler" class="viewContent" />
     <HStyleFooter />
   </div>

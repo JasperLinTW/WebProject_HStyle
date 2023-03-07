@@ -59,20 +59,29 @@
                             class="fa-regular fa-circle-user icon-hover"></i></router-link>
                 </div>
                 <div class="btn-light mx-3">
-                    <a href="#" title="購物車" class="text-dark"><i class="fa-solid fa-cart-shopping icon-hover"
-                            data-bs-toggle="modal" data-bs-target="#exampleModal"> </i></a>
+                    <a  href="#" title="購物車" class="text-dark">
+                        <i  class="fa-solid fa-cart-shopping icon-hover position-relative"
+                            data-bs-toggle="modal" data-bs-target="#exampleModal"><span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger
+                            ">{{ cartItemsNum }}</span></i>
+                        </a>
 
                 </div>
             </div>
         </div>
     </nav>
-    <Cart />
+    <Cart @CartCount="UpdateCartCount" />
     <CheckIn />
+
 </template>
 <script setup>
 import Cart from './Cart.vue'
 import CheckIn from './CheckIn.vue'
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watchEffect,nextTick } from "vue";
+const cartItemsNum = ref()
+const UpdateCartCount = (CartCount) =>{
+    cartItemsNum.value = CartCount;
+}
+
 
 onMounted(() => {
     window.addEventListener("scroll", function () {
@@ -88,6 +97,10 @@ onMounted(() => {
 
 </script>
 <style scoped>
+.badge{
+
+    font-size: .30em;
+} 
 .search {
     cursor: pointer;
 }
