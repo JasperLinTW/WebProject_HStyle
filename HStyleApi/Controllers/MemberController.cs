@@ -162,7 +162,7 @@ namespace HStyleApi.Controllers
                 //ConfirmCode = Guid.NewGuid().ToString("N"),
 
                 Name = register.Name,                         //試抓出   MemberRepository
-                Email = register.Email,
+                Email = register.Email,   //Email 必須輸入正確的 要改驗證
                 Account = register.Account,
                 PhoneNumber = register.Phone_Number, //手機號碼
                 Address = register.Address,
