@@ -19,7 +19,8 @@
                 <div class="card-text text-end">
                     <span v-if="!item.isClicked" @click="likesProduct(item.product_Id, item)"><i
                             class="fa-regular fa-heart icon-hover fz-18"></i></span>
-                    <span v-else @click="likesProduct(item.product_Id, item)"><i class="fa-solid fa-heart fz-18"></i></span>
+                    <span v-else @click="likesProduct(item.product_Id, item)"><i
+                            class="fa-solid fa-heart  fz-18"></i></span>
                 </div>
             </div>
         </div>
@@ -99,6 +100,10 @@ onMounted(() => {
 .fz-18 {
     font-size: 20px;
     cursor: pointer;
+}
+
+.solidHeart {
+    color: #46A3FF;
 }
 
 .fz-9 {

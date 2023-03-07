@@ -60,11 +60,12 @@
                             class="fa-regular fa-circle-user icon-hover"></i></router-link>
                 </div>
                 <div class="btn-light mx-3">
-                    <a  href="#" title="購物車" class="text-dark">
-                        <i  class="fa-solid fa-cart-shopping icon-hover position-relative"
-                            data-bs-toggle="modal" data-bs-target="#exampleModal"><span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger
-                            ">{{ cartItemsNum }}</span></i>
-                        </a>
+                    <a href="#" title="購物車" class="text-dark">
+                        <i class="fa-solid fa-cart-shopping icon-hover position-relative" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal"><span
+                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill  bg-danger font-monospace px-1  ">{{
+                                    cartItemsNum }}</span></i>
+                    </a>
 
                 </div>
             </div>
@@ -78,10 +79,12 @@
 import Cart from './Cart.vue'
 import CheckIn from './CheckIn.vue'
 import CreatePComment from './CreatePComment.vue';
-import { ref, onMounted, watchEffect,nextTick } from "vue";
+import { ref, onMounted, watchEffect, nextTick } from "vue";
 const cartItemsNum = ref()
-const UpdateCartCount = (CartCount) =>{
+const UpdateCartCount = (CartCount) => {
+    //$('#exampleModal').modal('show');
     cartItemsNum.value = CartCount;
+
 }
 
 
@@ -99,10 +102,10 @@ onMounted(() => {
 
 </script>
 <style scoped>
-.badge{
+.badge {
+    font-size: 5px;
+}
 
-    font-size: .30em;
-} 
 .search {
     cursor: pointer;
 }

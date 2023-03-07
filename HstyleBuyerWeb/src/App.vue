@@ -3,10 +3,8 @@ import HStyleHeader from './components/HStyleHeader.vue'
 import HStyleFooter from './components/HStyleFooter.vue'
 import { ref } from 'vue'
 
-const btnClicked = ref(false);
-const updateHandler = (data) =>{
+const updateHandler = async (data) => {
   headerKey.value = data;
-  btnClicked.value = true;
 }
 const headerKey = ref(0);
 

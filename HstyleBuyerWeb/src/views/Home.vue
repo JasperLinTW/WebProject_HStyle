@@ -108,7 +108,7 @@ export default {
 }
 
 .area5 {
-    background-image: url(./assets/image/chanel5.jpg);
+    background-image: url(../assets/image/chanel5.jpg);
     background-attachment: fixed;
 }
 

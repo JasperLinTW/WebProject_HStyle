@@ -118,7 +118,6 @@ const addItem = async () => {
     await axios.post(`https://localhost:7243/api/Cart/${SelectSpecId.value}`)
         .then(response => {
             watchedNum.value += 1;
-            $('#exampleModal').modal('show');
         })
         .catch(error => { console.log(error); });
 }

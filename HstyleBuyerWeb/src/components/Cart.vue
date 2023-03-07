@@ -62,7 +62,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed, watch  } from "vue";
+import { ref, onMounted, computed, watch } from "vue";
 import axios from "axios";
 
 
@@ -70,10 +70,11 @@ const products = ref([]);
 const emit = defineEmits(['CartCount']);
 const getCartInfo = async () => {
     await axios.get("https://localhost:7243/api/Cart")
-        .then(response => { products.value = response.data;
-            emit('CartCount',cartCount) 
+        .then(response => {
+            products.value = response.data;
+            emit('CartCount', cartCount)
             // console.log(SumDataforEach(products.value.cartItems))
-})
+        })
         .catch(error => { console.log(error); });
 }
 
@@ -95,9 +96,9 @@ const minusItem = async (specId) => {
 
 
 const cartCount = computed(() => {
-    var sum=0;
-    products.value.cartItems.forEach(function(element) {
-        sum+=element.quantity;
+    var sum = 0;
+    products.value.cartItems.forEach(function (element) {
+        sum += element.quantity;
     });
     return sum;
 });
