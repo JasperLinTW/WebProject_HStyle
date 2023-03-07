@@ -55,4 +55,5 @@ public class GoogleLoginController : ControllerBase
     {
         public string IdToken { get; set; }
     }
+
 }

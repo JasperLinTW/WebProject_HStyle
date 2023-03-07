@@ -38,7 +38,7 @@
 
 
 
-<div>
+<!-- <div>
     <h1>Google Login</h1>
     <div v-if="!loggedIn">
       <button @click="googlelogin">Login with Google</button>
@@ -47,10 +47,11 @@
       <p>Welcome, {{ user.name }}!</p>
       <button @click="logout">Logout</button>
     </div>
-  </div>
+  </div> -->
+  
 <div id="g_id_onload"
      data-client_id="826430034566-tvq18h6l8duepd5chu8rc1gekodbc4a5.apps.googleusercontent.com"
-     data-login_uri="https://localhost:7046/Home/ValidGoogleLogin"
+     data-login_uri="http://localhost:5173/member"
      data-auto_prompt="false">
 </div>
 <div class="g_id_signin"
