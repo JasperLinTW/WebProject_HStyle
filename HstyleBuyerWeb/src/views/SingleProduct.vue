@@ -43,7 +43,8 @@
                     <div class="col-lg-12"></div>
                     <div class="col-lg-12  mt-5 text-start">
                         <button @click="addItem()" class="add-to-cart"> NT$ {{ product.unitPrice }}<span
-                                class="border-start border-dark ms-2"><span class="ps-2">加入購物車</span></span></button>
+                                class="border-start border-dark ms-2" data-bs-target="#exampleModal"><span
+                                    class="ps-2">加入購物車</span></span></button>
                         <span class="m-3" v-if="!isClicked" @click="isClicked = true"><i
                                 class="fa-regular fa-heart icon-hover fz-18"></i></span>
                         <span class="m-3" v-else @click="isClicked = false"><i class="fa-solid fa-heart fz-18"></i></span>
@@ -67,6 +68,7 @@
         </div>
     </div>
     <Back2Top></Back2Top>
+    <Cart />
 </template>
 
 <script setup>
@@ -116,6 +118,7 @@ const addItem = async () => {
     await axios.post(`https://localhost:7243/api/Cart/${SelectSpecId.value}`)
         .then(response => {
             watchedNum.value += 1;
+            $('#exampleModal').modal('show');
         })
         .catch(error => { console.log(error); });
 }
