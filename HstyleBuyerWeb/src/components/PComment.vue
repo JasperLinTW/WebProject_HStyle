@@ -36,6 +36,8 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 
+
+//跳createCModal的 data-bs-toggle="modal" data-bs-target="#ProductCommentModal"
 const props = defineProps({
     data: Object
 })

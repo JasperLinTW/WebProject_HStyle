@@ -67,12 +67,17 @@
             <div v-else class="col-md-12 border-top pt-5 px-6  mb-big">
                 {{ product.description }}
             </div>
-            <div class="col-md-12 line"><span class="px-5">專屬推薦</span></div>
-            <div class="col-md-12">
-                <div class="row">
-                    <RecommendCard v-for="item in rec" :data="item"></RecommendCard>
+            <div class="h500px">
+                <div class="col-md-12 line">
+                    <span class="px-5">專屬推薦</span>
+                </div>
+                <div class="col-md-12">
+                    <div class="row">
+                        <RecommendCard v-for="item in rec" :data="item"></RecommendCard>
+                    </div>
                 </div>
             </div>
+
         </div>
     </div>
     <Back2Top />
@@ -296,6 +301,11 @@ onMounted(() => {
     background-color: #000;
     color: #fff;
 }
+
+.h500px {
+    height: 500px;
+}
+
 
 .product-options label {
     font-weight: bold;

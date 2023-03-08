@@ -48,8 +48,7 @@
 
             <div class="nav justify-content-end ps-5">
                 <div class="mx-3">
-                    <a href="#" title="喜歡" class="text-dark"><i class="fa-regular fa-heart icon-hover fz-18"
-                            data-bs-toggle="modal" data-bs-target="#ProductCommentModal"></i></a>
+                    <a href="#" title="喜歡" class="text-dark"><i class="fa-regular fa-heart icon-hover fz-18"></i></a>
                 </div>
                 <div class="btn-light mx-3">
                     <a href="#" title="打卡" class="text-dark"><i class="fa-regular fa-circle-check  icon-hover fz-18"
