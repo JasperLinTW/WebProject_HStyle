@@ -11,8 +11,8 @@ using System.Security.Claims;
 
 namespace HStyleApi.Controllers
 {
-   
-	[EnableCors("AllowAny")]
+    [Authorize]
+    [EnableCors("AllowAny")]
 	[Route("api/[controller]")]
     [ApiController]
     public class CartController : ControllerBase
@@ -52,7 +52,7 @@ namespace HStyleApi.Controllers
         }
 
 		// GET: api/<CartController>
-		[Authorize]
+		
 		[HttpGet]
         public CartListDTO Get()
         {
