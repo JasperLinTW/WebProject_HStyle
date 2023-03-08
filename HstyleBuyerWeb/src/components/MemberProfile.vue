@@ -17,19 +17,22 @@
 </template>
     
 <script setup>
-// import { onMounted, ref } from 'vue';
-// import axios from "axios";
 
-// const Member = ref([]);
+import { ref } from 'vue';
+import axios from 'axios';
+const account = ref("");
+const password = ref("")
+const login = () => {
+    axios.post('https://localhost:7243/api/Member/LogIn', {
+        account: account.value,
+        password: password.value
+    }, { withCredentials: true }).then((response) => {
+        console.log(response.data)
+        window.location = "http://localhost:5173";
 
-// const getOrdersInfo = async () => {
-//     await axios.get("https://localhost:7243/api/Member")
-//         .then(response => { Member.value = response.data; })
-//         .catch(error => { console.log(error); });
-// }
-
-// onMounted(() => {
-//     getOrdersInfo();
-// });
+    }).catch((err) => {
+        console.log(err)
+    })
+};
 </script>
 <style></style>

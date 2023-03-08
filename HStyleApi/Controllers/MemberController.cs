@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 using Google.Apis.Auth;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using PayPalCheckoutSdk.Orders;
 
 
 
@@ -43,10 +44,42 @@ namespace HStyleApi.Controllers
 			
 
 		}
-		// GET: api/<MemberController>
+        // GET: api/<MemberController>
+        [HttpGet]
+        public IActionResult GetMemberInfo()
+        {
+            var memberId = int.Parse(HttpContext.User.FindFirst("memberId")!.Value);
+            var member = _context.Members                
+            .Include(x => x.Permission)
+            .Where(x => x.Id == memberId)
+            .Select(x => new MemberDTO
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Account = x.Account,
+                PhoneNumber = x.PhoneNumber,
+                Address = x.Address,
+                Gender = x.Gender,
+                Birthday = x.Birthday,
+                PermissionId = x.PermissionId,
+                Jointime = x.Jointime,
+                MailVerify = x.MailVerify,
+                EncryptedPassword = x.EncryptedPassword,
+                TotalH = x.TotalH,
 
 
-		[HttpPost("LogIn")]
+            });
+
+
+
+
+            return Ok(member);
+
+        }
+
+
+
+        [HttpPost("LogIn")]
         [AllowAnonymous]
         public IActionResult LogIn(LogInDTO value)
         {
@@ -242,6 +275,86 @@ namespace HStyleApi.Controllers
             }
         }
 
+        [HttpPost("ForgetPassword")]
+        public string ForgetPassword(ForgetPasswordDTO forgetPasseordMember)
+        {
+            if (ModelState.IsValid == false)
+            {
+                return "帳號或信箱輸入錯誤";
+            }
+            var member = _context.Members.SingleOrDefault(x => x.Account == forgetPasseordMember.Account);
+            if (member == null) { return "帳號或信箱輸入錯誤"; }
+            if (string.Compare(forgetPasseordMember.Email, member.Email) == 0)
+            {
+                string newpassword = Guid.NewGuid().ToString("N").Substring(0, 8);
+                SendForgetPasswordEmail(member, newpassword);  //改這行
+                member.EncryptedPassword = HashUtility.ToSHA256(newpassword, RegisterDTO.SALT);
+                _context.SaveChanges();
+                return "電子郵件已寄出";
+            }
+            else
+            {
+                return "帳號或信箱輸入錯誤";
+            }
+        }
+
+        [HttpPost("ResetPassword")]
+        public string ResetPassword(string account, string oldPassword, string newPassword)
+        {
+
+            var member = _context.Members.SingleOrDefault(x => x.Account == account);
+            var encryptedPassword = HashUtility.ToSHA256(oldPassword, RegisterDTO.SALT);
+            if (member == null)
+            {
+                return "帳號或密碼輸入錯誤";
+            }
+            else if (string.Compare(member.EncryptedPassword, encryptedPassword) == 0)
+            {
+                member.EncryptedPassword = HashUtility.ToSHA256(newPassword, RegisterDTO.SALT);
+                _context.SaveChanges();
+                return "修改成功";
+            }
+            else
+            {
+                return "帳號或密碼輸入錯誤";
+            }
+        }
+        [HttpPost("SendForgetPasswordEmail")]
+        public string SendForgetPasswordEmail(Member member, string newPassword)
+        {
+
+            var message = new MimeMessage();
+
+            // 添加寄件者
+            message.From.Add(new MailboxAddress("PawPaw", "pawpawpetSite@gmail.com"));
+
+            // 添加收件者
+            message.To.Add(new MailboxAddress("New Member", $"{member.Email}"));
+
+            // 設定郵件標題
+            message.Subject = "會員新密碼";
+
+            // 使用 BodyBuilder 建立郵件內容
+            var bodyBuilder = new BodyBuilder();
+
+            string result = Request.Scheme + "://" + Request.Host + $"/api/Members/LogIn";  //前端驗證完成頁面  給他個驗證完成
+
+            // 設定 HTML 內容
+            bodyBuilder.HtmlBody = $"<p>新密碼:{newPassword}</p>" +
+                                   $"<a href=\"{result}\">點此連結登入</a>";
+
+            // 設定郵件內容
+            message.Body = bodyBuilder.ToMessageBody();
+
+            using (var client = new SmtpClient())
+            {
+                client.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
+                client.Authenticate("pawpawpetSite@gmail.com", "fbqolajjiyshkxyg");
+                client.Send(message);
+                client.Disconnect(true);
+            }
+            return "成功";
+        }
         // GET api/<MemberController>/5
         [HttpGet("{id}")]
         public string Get(int id)
