@@ -1,38 +1,65 @@
 <template>
     <div>
-        <p>會員資料</p>
+        <h1>會員資料</h1>
+    <hr>
+        
+    <label for="firstName">名</label> .
+    <input type="text" placeholder="名 *" id="firstName" required="">
+        信箱 {{member.email}},
+        手機 {{member.phoneNumber}},
+        性別 {{member.gender}},
+        生日 {{member.birthday}},
+        加入會員時間 {{member.jointime}},
+        優惠幣數量 {{member.totalH}},
+        <table class="table table-hover"> 信箱 {{member.email}},</table>
+
+        <div class="row bg-dark text-white font-weight-bold  py-2">
+                            <div class="col-1"></div>
+                            <div class="col-2 text-center">名稱  {{member.name}},</div>
+                            <div class="col-2 text-center">規格帳號 {{ member.account }},</div>
+                            <div class="col-2 text-center">單價</div>
+                            <div class="col-2 text-center">數量</div>
+                            <div class="col-2 text-center">小計</div>
+                            <div class="col-1"></div>
+                        </div>
+
+
+
+
+
     </div>
-
-    <!-- <div v-for="m in member" class="row border-bottom py-3">
-                    <div class="col-1"></div>
-                    <div class="col-2">{{  }}</div>
-                    <div class="col-2">{{ product.color }}</div>
-                    <div class="col-2">{{ product.unitPrice }}</div>
-                    <div class="col-2">{{ product.quantity }}</div>
-                    <div class="col-2">{{ product.subTotal }}</div>
-    </div> -->
-
 
 
 </template>
     
 <script setup>
 
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import axios from 'axios';
-const account = ref("");
-const password = ref("")
-const login = () => {
-    axios.post('https://localhost:7243/api/Member/LogIn', {
-        account: account.value,
-        password: password.value
-    }, { withCredentials: true }).then((response) => {
-        console.log(response.data)
-        window.location = "http://localhost:5173";
 
-    }).catch((err) => {
-        console.log(err)
-    })
-};
+const member = ref([]);
+
+
+const getMemberInfo = async () => {
+    await axios.get("https://localhost:7243/api/Member",{ withCredentials: true, })
+        .then(response => {
+            member.value = response.data;
+            console.log(member.value)
+        })
+        .catch(error => { console.log(error); });
+}
+
+
+onMounted(() => {
+    getMemberInfo();
+});
+
+
 </script>
-<style></style>
+<style>
+
+h1 {
+  text-align: left;
+  text-indent: 20px
+}
+</style>

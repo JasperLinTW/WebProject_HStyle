@@ -35,40 +35,35 @@ namespace HStyleApi.Controllers
         //{
         //    _Service = new MemberServices(db);
         //}
+        private readonly int _memberId;
 
         private readonly AppDbContext _context;
-
-        public MemberController(AppDbContext context)
+        public MemberController(AppDbContext context, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
-			
-
-		}
-        // GET: api/<MemberController>
-        [HttpGet]
-        public IActionResult GetMemberInfo()
-        {
-            var memberId = int.Parse(HttpContext.User.FindFirst("memberId")!.Value);
-            var member = _context.Members                
-            .Include(x => x.Permission)
-            .Where(x => x.Id == memberId)
-            .Select(x => new MemberDTO
+            var claims = httpContextAccessor.HttpContext.User.Claims;
+            if (claims.Any())
             {
-                Id = x.Id,
-                Name = x.Name,
-                Account = x.Account,
-                PhoneNumber = x.PhoneNumber,
-                Address = x.Address,
-                Gender = x.Gender,
-                Birthday = x.Birthday,
-                PermissionId = x.PermissionId,
-                Jointime = x.Jointime,
-                MailVerify = x.MailVerify,
-                EncryptedPassword = x.EncryptedPassword,
-                TotalH = x.TotalH,
+                var data = int.TryParse(claims.Where(x => x.Type == "MemberId").FirstOrDefault().Value, out int memberid);
+                _memberId = memberid;
+            }
+            //TODO從COOKIE取
 
+        }
+        //      public MemberController(AppDbContext context) 整合上面
+        //      {
+        //          _context = context;
 
-            });
+        //}
+        // GET: api/<MemberController>
+        [Authorize]
+        [HttpGet]
+        public ActionResult<MemberDTO> GetMemberInfo()
+        {
+            //var memberId = int.Parse(HttpContext.User.FindFirst("memberId")!.Value);
+            MemberDTO member = _context.Members                
+            .Include(x => x.Permission)
+            .FirstOrDefault(x => x.Id == _memberId).ToDto();
 
 
 
