@@ -13,7 +13,6 @@ const routes = [
     ]},
     { path: '/EssaysBlog',name:'EssaysBlog', component:()=> import('../views/EssaysBlog.vue'),meta: { requiresAuth: false } },
     { path: '/member',name:'member', component:()=> import('../views/Member.vue'),meta: { requiresAuth: false } },
-    { path: '/google',name:'google', component:()=> import('../views/google.vue'),meta: { requiresAuth: false } },
     { path: '/login',name:'Login', component:()=> import('../views/Login.vue'),meta: { requiresAuth: false } }
 
   ]
