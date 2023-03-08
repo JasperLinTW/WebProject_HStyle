@@ -31,8 +31,8 @@
             </div>
 
         </div>
-        <!-- <button type="button" @click="getMemberId" class="btn btn-light">取id</button>
-        <button type="button" @click="getCartInfo" class="btn btn-light">取購物車測試</button> -->
+        <button type="button" @click="getMemberId" class="btn btn-light">取id</button>
+        <button type="button" @click="getCartInfo" class="btn btn-light">取購物車測試</button>
     </div>
 </template>
   
