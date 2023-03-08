@@ -199,7 +199,7 @@ namespace H2StyleStore.Controllers
 		}
 
 		public ActionResult EditVideo(int id)
-		{
+		{  
 			EditVideoVM model = _videoRepository.GetVideoById(id).ToEditVM();
 			var videoCategory = _videoRepository.GetVideoCategories(id).ToList();
 			ViewBag.VideoCategoryItems = videoCategory;

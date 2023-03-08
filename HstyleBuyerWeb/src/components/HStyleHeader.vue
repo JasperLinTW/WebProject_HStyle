@@ -32,7 +32,7 @@
                         <router-link to="/EssaysBlog" class="nav-link targetAll">文章部落格</router-link>
                     </li>
                     <li class="nav-item dropdown">
-                        <router-link to="/blog" class="nav-link text-dark px-3"><span
+                        <router-link to="/VideoBlog" class="nav-link text-dark px-3"><span
                                 class="targetAll">影片部落格</span></router-link>
                     </li>
                     <li class="nav-item dropdown">

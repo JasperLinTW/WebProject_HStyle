@@ -43,7 +43,7 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 				ImageId = imageid.Image_Id,
 				OnShelffTime = dto.OnShelffTime,
 				OffShelffTime = dto.OffShelffTime,
-				IsOnShelff = dto.IsOnShelff,
+				//IsOnShelff = dto.IsOnShelff,
 				CreatedTime = DateTime.Now
 			};
 			_db.Videos.Add(video);
@@ -64,7 +64,7 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			}
 			_db.SaveChanges();
 
-			var videoOther = _db.Videos.SingleOrDefault(v => v.Title == dto.Title && v.ImageId == dto.ImageId);
+			var videoOther = _db.Videos.SingleOrDefault(v => v.Title == dto.Title);
 			VideoView videoView = new VideoView()
 			{
 				VideoId = videoOther.Id,

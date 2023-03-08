@@ -15,11 +15,12 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 	public class VideoRepository
 	{
 		private AppDbContext _db;
-		private ProductRepo _PRepo;
+		private readonly ProductRepo _PRepo;
 
 		public VideoRepository(AppDbContext db)
 		{
 			_db = db;
+			_PRepo = new ProductRepo(db);
 		}
 
 		//影片列表：取出所有影片、篩選
@@ -28,8 +29,8 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 			IEnumerable<Video> data = await _db.Videos.Include(v => v.Image)
 															.Include(v => v.Tags)
 															.Include(v => v.VideoLikes)
-															.Include(v=>v.Category)
-															.Include(v => v.VideoView).Where(v=>v.IsOnShelff==true)
+															.Include(v => v.Category)
+															.Include(v => v.VideoView).Where(v => v.IsOnShelff == true)
 															.ToListAsync();
 
 			if (data == null)
@@ -44,22 +45,24 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 			}
 			else
 			{
-				IEnumerable<VideoDTO> selectVideos = data.Where(v => v.Title.Contains(keyword)||v.Tags.Select(t=>t.TagName).Contains(keyword)).Select(x => x.ToVideoDTO());
+				IEnumerable<VideoDTO> selectVideos = data.Where(v => v.Title.Contains(keyword) || v.Tags.Select(t => t.TagName).Contains(keyword)).Select(x => x.ToVideoDTO());
 				return selectVideos;
-			}			
-		 }
+			}
+		}
 
 		//單一影片資訊
-		public async Task<IEnumerable<VideoDTO>> GetVideo(int id)
+		public async Task<VideoDTO> GetVideo(int id)
 		{
-			IEnumerable<VideoDTO> video = await _db.Videos.Where(v => v.Id == id)
+			IEnumerable<VideoDTO> data = await _db.Videos
 												.Include(v => v.Image)
 												.Include(v => v.Category)
 												.Include(v => v.Tags)
 												.Include(v => v.VideoLikes)
-												.Include(v => v.VideoView).Where(v => v.IsOnShelff == true).Select(v=>v.ToVideoDTO())
+												.Include(v => v.VideoView)
+												.Where(v => v.IsOnShelff == true)
+												.Select(v => v.ToVideoDTO())
 												.ToListAsync();
-
+			var video = data.SingleOrDefault(v => v.Id == id);
 			if (video == null)
 			{
 				throw new Exception("找不到這部影片!");
@@ -71,43 +74,33 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 		//根據影片推薦相關商品
 		public async Task<IEnumerable<ProductDto>> GetRecommendationProduct(int videoId)
 		{
-			//var video = await _db.Videos.Where(v => v.Id == videoId).ToListAsync();
-			//var tags = video.Select(v => v.Tags).ToList();
-			//var video = video.Select(v => v.Tags).ToList();
-			//var videoTags = _db.Tags.Where(t => t.Id == video).ToListAsync();
+			var videoTags = _db.Videos
+				.SingleOrDefault(v => v.Id == videoId).ToVideoDTO();
+			//.Select(v => v.tags).ToList();
+			var product = await _db.Products.Include(v => v.ProductLikes).ToListAsync();
 
-			//var products = _db.Products.Include(p => p.Tags).Where(v => v.Tags == tags)
-			//										.OrderByDescending(p => p.ProductLikes.Count())
-			//										.Take(3).Select(p => p.ToDto()).ToList();
+			List<string> tags = new List<string>();
+			foreach (var tag in videoTags.Tags)
+			{
+				tags.Add(tag);
+			}
+			var productId = _PRepo.GetProductsByTagsName(tags);
+			List<Product> recoProduct = new List<Product>();
+			foreach (int id in productId)
+			{
+				var recoProductItem = product
+					.FirstOrDefault(p => p.ProductId == id);
+				recoProduct.Add(recoProductItem);
+			}
 
-			//IEnumerable<ProductDto> products = await _db.Products.Include(p => p.Imgs)
-			//											.Include(p => p.Tags)
-			//											.Include(p => p.Category)
-			//											.Where(p => p.Tags == videoTags)
-			//											.OrderByDescending(p => p.ProductLikes.Count())
-			//											.Take(3).Select(p => p.ToDto()).ToArrayAsync();
-
-			//List<int> productsId = new List<int>();
-
-			//foreach (var item in products)
-			//{
-			//	foreach (var tag in tags)
-			//	{
-			//		if (item.Tags.Any(x => x.TagName == tag) == true)
-			//		{
-			//			productsId.Add(item.ProductId);
-			//		}
-			//	}
-			//}
-			//return products_id;
-			var data = new List<ProductDto> { };//程式碼建置未過，加上此行讓程式能動
-			return data;
+			return recoProduct.OrderByDescending(p => p.ProductLikes.Count())
+				.Take(3).Select(p => p.ToDto()).ToList();
 		}
 
 		//最新影片
-		public async Task <IEnumerable<VideoDTO>> GetNews()
+		public async Task<IEnumerable<VideoDTO>> GetNews()
 		{
-			IEnumerable<Video> data = await _db.Videos.Include(v=>v.VideoView). Include(v => v.Category).Include(v => v.Image)
+			IEnumerable<Video> data = await _db.Videos.Include(v => v.VideoView).Include(v => v.Category).Include(v => v.Image)
 				 										.Include(v => v.Tags)
 														.ThenInclude(v => v.Essays)
 														.ToListAsync();
@@ -120,21 +113,21 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 		}
 
 		//使用者收藏的影片
-		public async Task <IEnumerable<VideoLikeDTO>> GetLikeVideos(int memberId)
+		public async Task<IEnumerable<VideoLikeDTO>> GetLikeVideos(int memberId)
 		{
-			IEnumerable<VideoLike> data =await _db.VideoLikes.Include(v => v.Video)
+			IEnumerable<VideoLike> data = await _db.VideoLikes.Include(v => v.Video)
 																.ThenInclude(v => v.Image)
-																.Include(v=>v.Video)
-																.ThenInclude(v=>v.Category)
-																.Include(v=>v.Video)
-																.ThenInclude(v=>v.Tags)
-																.Include(v=>v.Video)
-																.ThenInclude(v=>v.VideoView)
-																.Where(v=>v.MemberId==memberId)
+																.Include(v => v.Video)
+																.ThenInclude(v => v.Category)
+																.Include(v => v.Video)
+																.ThenInclude(v => v.Tags)
+																.Include(v => v.Video)
+																.ThenInclude(v => v.VideoView)
+																.Where(v => v.MemberId == memberId)
 																.ToListAsync();
 
 			IEnumerable<VideoLikeDTO> likeVideos = data.Select(v => v.ToLikeDTO());
-																//.Where(v=>v.IsOnShelff==true)
+			//.Where(v=>v.IsOnShelff==true)
 
 			return likeVideos;
 		}
@@ -142,7 +135,7 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 		//收藏影片
 		public void PostLike(int memberId, int videoId)
 		{
-			var data = _db.VideoLikes.Where(v=>v.MemberId==memberId).FirstOrDefault(v => v.VideoId == videoId);
+			var data = _db.VideoLikes.Where(v => v.MemberId == memberId).FirstOrDefault(v => v.VideoId == videoId);
 			if (data == null)
 			{
 				VideoLike like = new VideoLike
@@ -158,18 +151,19 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 		}
 
 		//瀏覽次數
-		public void PostView(int videoId) 
+		public void PostView(int videoId)
 		{
 			var data = _db.VideoViews.Find(videoId);
 			if (data == null)
 			{
 				VideoView view = new VideoView()
 				{
-					VideoId= videoId,
-					Views= 1
+					VideoId = videoId,
+					Views = 1
 				};
 				_db.VideoViews.Add(view);
-			}else
+			}
+			else
 			{
 				data.Views++;
 			}
@@ -179,7 +173,7 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 		//Get評論
 		public async Task<IEnumerable<VideoCommentDTO>> GetComments(int videoId)
 		{
-			IEnumerable < VideoCommentDTO > data= await _db.VideoComments	
+			IEnumerable<VideoCommentDTO> data = await _db.VideoComments
 														.Where(v => v.VideoId == videoId)
 														.Select(v => v.ToCommentDTO()).ToListAsync();
 			return data;
@@ -188,15 +182,15 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 		//Post評論
 		public void CreateComment(string comment, int memberId, int videoId)
 		{
-			if (comment == null||memberId==0||videoId==0) throw new Exception();
+			if (comment == null || memberId == 0 || videoId == 0) throw new Exception();
 
 			VideoComment videoComment = new VideoComment()
 			{
-				VideoId=videoId,
-				MemberId=memberId,
-				CreatedTime=DateTime.Now,
-				Comment=comment,
-				Like=0
+				VideoId = videoId,
+				MemberId = memberId,
+				CreatedTime = DateTime.Now,
+				Comment = comment,
+				Like = 0
 			};
 			_db.Add(videoComment);
 			_db.SaveChanges();

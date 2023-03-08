@@ -18,10 +18,12 @@ namespace HStyleApi.Controllers
 	public class VideoController : ControllerBase
 	{
 		private VideoService _service;
+		private readonly int _memberId;
 
 		public VideoController(AppDbContext db)
 		{
 			_service = new VideoService(db);
+			_memberId = 1;
 		}
 		// GET: api/<VideoController>
 		[HttpGet]
@@ -41,16 +43,16 @@ namespace HStyleApi.Controllers
 
 		// GET api/<VideoController>/5  
 		[HttpGet("{id}")]
-		public async Task<ActionResult<IEnumerable<VideoDTO>>> GetVideo(int id)
+		public async Task<ActionResult<VideoDTO>> GetVideo(int id)
 		{
 			try
 			{
-				IEnumerable<VideoDTO> data = await _service.GetVideo(id);
+				VideoDTO data = await _service.GetVideo(id);
 				return Ok(data);
 			}
 			catch(Exception ex)
 			{
-				return BadRequest(ex.Message);
+				return BadRequest(ex.Message); 
 			}
 		}
 
