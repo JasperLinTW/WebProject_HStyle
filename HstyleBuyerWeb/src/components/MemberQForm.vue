@@ -35,8 +35,9 @@
                   </div>
                   <div class="mb-3">
                      <label for="imageFile" class="form-label">圖片上傳</label>
-                     <input class="form-control" type="file" id="imageFile" accept="image/*" />
+                     <input class="form-control" type="file" id="imageFile" accept="image/*" @Change="handleUpload" />
                      <div class="fs14">只可上傳一個檔案，且大小需小於4MB的圖檔，如果檔案大大或格式限制無法順利上傳，建議改以連結方式提供。</div>
+                     <div v-if="errorMessage">{{ errorMessage }}</div>
                   </div>
                   <button type="submit" class="btn btn-primary">送出</button>
                </form>
@@ -44,12 +45,16 @@
          </div>
       </div>
    </div>
+   <button id="AlertModal" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ThanksModal" style="display: none">
+      alertThanks
+   </button>
+   <AlertModal />
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import axios from "axios";
-const userId = 0;
+import AlertModal from "../components/AlertModal.vue";
 
 const categoryQ = ref([]);
 const getQCategoryInfo = async () => {
@@ -63,38 +68,105 @@ const getQCategoryInfo = async () => {
       });
 };
 
-// 檔案上傳
-// todo
-const fileUploader = document.querySelector("#imageFile");
-// fileUploader.addEventListener('change', (e) => {
-//   e.target.files; // FileList object
-//   e.target.files[0]; // File Object (Special Blob)
-// });
+// 檔案
+const file = ref(null);
+const errorMessage = ref(null);
+const handleUpload = (event) => {
+   file.value = event.target.files[0];
+};
+watch(file, (newFile, oldFile) => {
+   if (newFile) {
+      const formData = new FormData();
+      formData.append("file", newFile);
+      const fileSize = newFile.size / 1024 / 1024; // 轉換為 MB
+      if (fileSize > 4) {
+         // 限制檔案大小為 4 MB
+         errorMessage.value = "檔案大小超過限制";
+         file.value = null;
+      } else {
+         errorMessage.value = null;
+      }
+   }
+});
 
 // 送出表單
 const qcategoryId = ref([]);
 const title = ref([]);
 const problemDescription = ref([]);
 const askTime = ref([]);
-const filePath = ref([]);
 const postMemberQ = async () => {
-   await axios
-      .post("https://localhost:7243/CustomerQ", {
-         memberId: userId,
-         qcategoryId: qcategoryId.value,
-         title: title.value,
-         problemDescription: problemDescription.value,
-         filePath: null,
-         askTime: new Date(),
-      })
-      .then((response) => {
-         console.log(response.data);
-         alert("感謝您的回饋");
-      })
-      .catch((error) => {
-         console.log(error);
-      });
+   if (file.value) {
+      const formData = new FormData();
+      formData.append("memberId", null);
+      formData.append("filePath", null);
+      formData.append("file", file.value);
+      formData.append("qcategoryId", qcategoryId.value);
+      formData.append("title", title.value);
+      formData.append("problemDescription", problemDescription.value);
+      formData.append("askTime", new Date());
+
+      await axios
+         .post("https://localhost:7243/MemberQ", formData, {
+            headers: {
+               "Content-Type": "multipart/form-data",
+            },
+            withCredentials: true,
+         })
+         .then((response) => {
+            console.log(response.data);
+            console.log("檔案上傳");
+            document.getElementById("AlertModal").click();
+         })
+         .catch((error) => {
+            console.log(error);
+         });
+   } else {
+      await axios
+         .post(
+            "https://localhost:7243/MemberQ",
+            {
+               memberId: null,
+               qcategoryId: qcategoryId.value,
+               title: title.value,
+               problemDescription: problemDescription.value,
+               filePath: null,
+               file: null,
+               askTime: new Date(),
+            },
+            { withCredentials: true }
+         )
+         .then((response) => {
+            console.log(response.data);
+            console.log("資料上傳");
+            document.getElementById("AlertModal").click();
+         })
+         .catch((error) => {
+            console.log(error);
+         });
+   }
 };
+// await axios
+//    .post(
+//       "https://localhost:7243/MemberQ",
+//       {
+//          memberId: null,
+//          qcategoryId: qcategoryId.value,
+//          title: title.value,
+//          problemDescription: problemDescription.value,
+//          filePath: null,
+//          file: file.value,
+//          askTime: new Date(),
+//       },
+//       { withCredentials: true }
+//    )
+//    .then((response) => {
+//       console.log(response.data);
+//       document.getElementById("AlertModal").click();
+//       // alert("感謝您的回饋");
+//    })
+//    .catch((error) => {
+//       console.log(error);
+//    });
 
 onMounted(() => {
    getQCategoryInfo();

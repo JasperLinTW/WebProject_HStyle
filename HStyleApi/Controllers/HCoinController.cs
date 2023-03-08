@@ -1,6 +1,7 @@
 ﻿using HStyleApi.Models.DTOs;
 using HStyleApi.Models.EFModels;
 using HStyleApi.Models.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -15,23 +16,22 @@ namespace HStyleApi.Controllers
 	[ApiController]
 	public class HCoinController : ControllerBase
 	{
-		private HCoinService _service;
-		private int _member_id;
-		public HCoinController(AppDbContext db)
+		private readonly HCoinService _service;
+		private readonly int _member_id;
+		public HCoinController(AppDbContext db, IHttpContextAccessor httpContextAccessor)
 		{
 			_service = new HCoinService(db);
-			_member_id = 3; //之後用Cookie取
+			var claims = httpContextAccessor.HttpContext.User.Claims;
+			if (claims.Any())
+			{
+				var data = int.TryParse(claims.Where(x => x.Type == "MemberId").FirstOrDefault().Value, out int memberid);
+				_member_id = memberid;
+			}
 		}
-
-		// GET: api/<HCoinController>
-		//[HttpGet]
-		//public IEnumerable<string> Get()
-		//{
-		//	return new string[] { "value1", "value2" };
-		//}
 
 		// GET api/<HCoinController>/5
 		// 得到打卡資料
+		[Authorize]
 		[HttpGet("CheckIn")]
 		public async Task<HCheckInDTO> GetHCheckIn()
 		{
@@ -50,6 +50,7 @@ namespace HStyleApi.Controllers
 
 		// PUT api/<HCoinController>/5
 		// 將打卡紀錄傳回資料庫
+		[Authorize]
 		[HttpPut("CheckIn")]
 		public async Task<ActionResult> PutCheckIn()
 		{
@@ -74,6 +75,7 @@ namespace HStyleApi.Controllers
 		}
 
 		// 取得會員的總HCoin金額
+		[Authorize]
 		[HttpGet("TotalHCoin")]
 		public async Task<int> GetTotalHCoin()
 		{
@@ -90,6 +92,7 @@ namespace HStyleApi.Controllers
 
 		// 將會員花費的HCoin記錄到
 		// POST api/<HCoinController>
+		[Authorize]
 		[HttpPost("CostHCoin")]
 		public void PostCostHCoin([FromBody] int value)
 		{

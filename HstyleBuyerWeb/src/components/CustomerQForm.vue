@@ -39,11 +39,16 @@
          </div>
       </div>
    </div>
+   <button id="AlertModal" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ThanksModal" style="display: none">
+      alertThanks
+   </button>
+   <AlertModal />
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
 import axios from "axios";
+import AlertModal from "../components/AlertModal.vue";
 
 const categoryQ = ref([]);
 const getQCategoryInfo = async () => {
@@ -69,12 +74,13 @@ const postCustomerQ = async () => {
          title: title.value,
          problemDescription: problemDescription.value,
          filePath: null,
+         file: null,
          askTime: new Date(),
       })
       .then((response) => {
-         console.log(response.data);
-         alert("感謝您的回饋");
-         window.location = "http://localhost:5173/Questions";
+         // console.log(response.data);
+         document.getElementById("AlertModal").click();
+         // window.location = "http://localhost:5173/Questions";
       })
       .catch((error) => {
          console.log(error);

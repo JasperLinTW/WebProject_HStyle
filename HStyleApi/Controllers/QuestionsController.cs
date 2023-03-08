@@ -1,6 +1,8 @@
-﻿using HStyleApi.Models.DTOs;
+﻿using H2StyleStore.Models.Infrastructures;
+using HStyleApi.Models.DTOs;
 using HStyleApi.Models.EFModels;
 using HStyleApi.Models.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -14,12 +16,17 @@ namespace HStyleApi.Controllers
 	[ApiController]
 	public class QuestionsController : ControllerBase
 	{
-		private QuestionService _service;
+		private readonly QuestionService _service;
 		private readonly int _member_id;
-		public QuestionsController(AppDbContext db)
+		public QuestionsController(AppDbContext db, IHttpContextAccessor httpContextAccessor)
 		{
 			_service = new QuestionService(db);
-			_member_id = 1; //之後用Cookie取
+			var claims = httpContextAccessor.HttpContext.User.Claims;
+			if (claims.Any())
+			{
+				var data = int.TryParse(claims.Where(x => x.Type == "MemberId").FirstOrDefault().Value, out int memberid);
+				_member_id = memberid;
+			}
 		}
 
 		// 得到所有常見問題
@@ -37,11 +44,13 @@ namespace HStyleApi.Controllers
 		}
 
 		// 得到會員的問題
+		[Authorize]
 		[HttpGet("/MemberQResponse")]//此行與上一支api衝突，修改名稱
 		public async Task<IEnumerable<MemberResponseDTO>> GetMemberQResponse()
 		{
 			int memberId = _member_id;
-			if(memberId <= 0) { 
+			if (memberId <= 0)
+			{
 				throw new Exception("請先登入會員");
 			}
 			else
@@ -49,7 +58,7 @@ namespace HStyleApi.Controllers
 				return await _service.GetMemberQResponse(memberId);
 
 			}
-		}		
+		}
 
 		// 傳送顧客提的問題(新增資料)
 		[HttpPost("/CustomerQ")]
@@ -59,9 +68,28 @@ namespace HStyleApi.Controllers
 		}
 
 		// 傳送會員提的問題(新增資料)，主要用於訂單問題
+		[Authorize]
 		[HttpPost("/MemberQ")]//此行與上一支api衝突，修改名稱
 		public void PostMemberQuestion([FromBody] CustomerQuestionDTO dto)
 		{
+
+			string path = "../H2StyleStore/Images/QuestionImages/";
+
+			try
+			{
+				if (dto.file!=null)
+				{
+					var helper = new UploadFileHelper();
+					string result = helper.SaveAs(path, dto.file);
+					string FileName = result;
+					dto.FilePath = $"{FileName}";
+				}
+			}
+			catch (Exception ex)
+			{
+				BadRequest(ex.Message);
+			}
+
 			int memberId = _member_id;
 			if (memberId <= 0)
 			{

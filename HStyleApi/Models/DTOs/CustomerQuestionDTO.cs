@@ -10,6 +10,7 @@ namespace HStyleApi.Models.DTOs
 		public string? Title { get; set; }
 		public string? ProblemDescription { get; set; }
 		public string? FilePath { get; set; }
+		public IFormFile? file { get; set; }
 		public DateTime AskTime { get; set; }
 
 		//public string SolutionDescription { get; set; }
