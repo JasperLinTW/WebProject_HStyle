@@ -27,42 +27,40 @@
       </form>
    </div>
 
-     <div>
-    <!-- 分類選擇 -->
-    <select v-model="selectedCategory" @change="handleCategoryChange">
-      <option value="">全部分類</option>
-      <option v-for="(category, index) in categories" :key="index" :value="category">
-        {{ category }}
-      </option>
-    </select>
-
-    <!-- 常見問題列表 -->
-    <ul>
-      <li v-for="(item, index) in filteredItems" :key="index" @click="toggleAnswer(index)">
-        <h3>{{ item.title }}</h3>
-        <p v-if="activeIndex === index">{{ item.content }}</p>
-      </li>
-    </ul>
-  </div>
-
-   <div style="text-align: center">
-      <p class="clickable" onclick="toggleSubtitles('subtitles-1')">這是第一行文字</p>
-      <div id="subtitles-1" style="display: none">
-         <p>作品</p>
-         <p>服務</p>
+   <!-- 嘗試5 -->
+   <div>
+      <div class="category">
+         <h3>問題分類</h3>
+         <p v-for="category in categoryQ" :key="category.qcategoryId" @click="selectCategory(category.qcategoryId)">
+            {{ category.categoryName }}
+         </p>
+         <div class="question-list" v-if="showQuestions">
+            <h3>問題列表</h3>
+            <p v-for="question in filteredQuestions" :key="question.commonQuestionId" @click="showAnswer(question)">
+               {{ question.question }}
+            </p>
+         </div>
+         <div class="answer" v-if="selectedQuestion">
+            <h3>{{ selectedQuestion.question }}</h3>
+            <p>{{ selectedQuestion.answer }}</p>
+            <div>
+               <p>是否有回答你的問題?</p>
+               <button type="button" @click="SatisfYes(selectedQuestion.commonQuestionId)" class="btn btn-light">是</button>
+               <button type="button" @click="SatisfNo(selectedQuestion.commonQuestionId)" class="btn btn-light">否</button>
+            </div>
+         </div>
       </div>
    </div>
-
    <!-- Button trigger modal -->
-   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#CustomerQModal">顧客提問</button>
-   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#MemberQModal">會員提問</button>
+   <button id="CustomerQForm" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#CustomerQModal" style="display:none;">顧客提問</button>
+   <button id="MemberQForm" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#MemberQModal" style="display:none;">會員提問</button>
 
    <CustmorQForm />
    <MemberQForm />
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import axios from "axios";
 import CustmorQForm from "../components/CustomerQForm.vue";
 import MemberQForm from "../components/MemberQForm.vue";
@@ -80,13 +78,62 @@ const getQCategoryInfo = async () => {
       });
 };
 
-const commonQ = ref({});
+const questions = ref({});
 const getCommonQInfo = async () => {
    await axios
       .get(`https://localhost:7243/CommonQ`)
       .then((response) => {
-         commonQ.value = response.data;
+         questions.value = response.data;
          console.log(response.data);
+      })
+      .catch((error) => {
+         console.log(error);
+      });
+};
+
+// test5
+const selectedQuestion = ref(null);
+const selectedCategoryId = ref(null);
+const showQuestions = ref(false);
+
+function selectCategory(categoryId) {
+   selectedCategoryId.value = categoryId;
+   selectedQuestion.value = null;
+   showQuestions.value = true;
+}
+
+function showAnswer(question) {
+   selectedQuestion.value = question;
+}
+
+function goBackToList() {
+   selectedQuestion.value = null;
+}
+
+const filteredQuestions = computed(() => {
+   if (!selectedCategoryId.value) {
+      return questions.value;
+   }
+   return questions.value.filter((question) => question.qcategoryId == selectedCategoryId.value);
+});
+
+// 詢問滿意度
+const SatisfYes = async (id) => {
+   await axios
+      .put(`https://localhost:7243/api/Questions/SatisfYes/${id}`)
+      .then((response) => {
+         alert("感謝您的回饋!");
+      })
+      .catch((error) => {
+         console.log(error);
+      });
+};
+
+const SatisfNo = async (id) => {
+   await axios
+      .put(`https://localhost:7243/api/Questions/SatisfNo/${id}`)
+      .then((response) => {
+         document.getElementById("CustomerQForm").click();
       })
       .catch((error) => {
          console.log(error);
