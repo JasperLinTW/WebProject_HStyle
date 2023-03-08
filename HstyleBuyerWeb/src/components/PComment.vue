@@ -5,7 +5,8 @@
             <div class="col-md-4">
                 <div class="row text-start">
                     <div class="col-md-2 mb-4">{{ data.account }}</div>
-                    <div class="col-md-4 star-rating"><i v-for="(star, index) in 5" class="fa-solid fa-star"></i></div>
+                    <div class="col-md-4 star-rating"><i v-for="(star, index) in data.score " class="fa-solid fa-star"></i>
+                    </div>
                     <div class="fz-comment col-md-12">{{ data.commentContent }}</div>
                     <div class="col-md-12 my-2"></div>
                     <div class="col-md-6 mt-4"> <label class="pe-3">購買規格:</label>Size {{ data.size }} | Color {{ data.color
@@ -27,8 +28,10 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-1 text-end ">
-                <i class="fa-regular fa-thumbs-up fz-icon"><span class="fz-6 ps-2">有幫助</span></i>
+            <div class="col-md-1 text-end">
+                <i v-if="!isClicked" class="fa-regular fa-thumbs-up fz-icon" @click="helpfulComment(data.commentId)"></i>
+                <i v-else="isClicked" class="fa-solid fa-thumbs-up fz-icon"></i>
+                <span class="fz-6 ps-2">有幫助</span>
             </div>
         </div>
     </div>
@@ -41,13 +44,9 @@ import { onMounted, ref } from 'vue';
 const props = defineProps({
     data: Object
 })
-const starClass = (index) => {
-    if (index < selectedRating.value) {
-        return 'fa-solid fa-star';
-    } else {
-        return 'fa-regular fa-star';
-    }
-}
+
+const isClicked = ref(true);
+
 </script>
 <style scoped>
 .fz-comment {
