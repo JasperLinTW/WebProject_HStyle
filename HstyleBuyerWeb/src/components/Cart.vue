@@ -63,12 +63,12 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed, watch } from "vue";
 import axios from "axios";
 
 const products = ref([]);
 const isEmpty = ref(true);
-
+const emit = defineEmits(['CartCount']);
 const getCartInfo = async () => {
     await axios.get("https://localhost:7243/api/Cart")
         .then(response => { 
@@ -79,7 +79,9 @@ const getCartInfo = async () => {
             else{
                 isEmpty.value = true;
             }
+            emit('CartCount', cartCount)
         })
+        
         .catch(error => { console.log(error); });
 }
 
@@ -97,6 +99,17 @@ const minusItem = async (specId) => {
         })
         .catch(error => { console.log(error); });
 }
+
+
+
+const cartCount = computed(() => {
+    var sum = 0;
+    products.value.cartItems.forEach(function (element) {
+        sum += element.quantity;
+    });
+    return sum;
+});
+
 onMounted(() => {
     getCartInfo();
 });
@@ -139,6 +152,7 @@ onMounted(() => {
     padding: 10px 28px;
     border-radius: 25px;
     border: 1px solid rgb(12, 13, 12);
+    transition: all 0.3s ease;
 }
 
 .checkoutbtn:not(.nav-btns button):hover {

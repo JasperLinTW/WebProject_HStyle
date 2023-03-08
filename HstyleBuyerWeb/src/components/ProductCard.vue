@@ -17,9 +17,10 @@
                 <div class="card-title fw-bold">{{ item.product_Name }}</div>
                 <span>$NT {{ item.unitPrice }}</span>
                 <div class="card-text text-end">
-                    <span v-if="!item.isClicked" @click="item.isClicked = true"><i
+                    <span v-if="!item.isClicked" @click="likesProduct(item.product_Id, item)"><i
                             class="fa-regular fa-heart icon-hover fz-18"></i></span>
-                    <span v-else @click="item.isClicked = false"><i class="fa-solid fa-heart fz-18"></i></span>
+                    <span v-else @click="likesProduct(item.product_Id, item)"><i
+                            class="fa-solid fa-heart  fz-18"></i></span>
                 </div>
             </div>
         </div>
@@ -56,6 +57,13 @@ const likesProducts = async () => {
 }
 
 
+const likesProduct = async (product_Id, item) => {
+    await axios.post(`https://localhost:7243/api/Products/product/like?product_id=${product_Id}`)
+        .then(response => {
+            item.isClicked = !item.isClicked;
+        })
+        .catch(error => { console.log(error); });
+}
 
 
 //商品預覽

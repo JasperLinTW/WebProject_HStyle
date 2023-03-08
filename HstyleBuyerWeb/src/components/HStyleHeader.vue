@@ -56,32 +56,47 @@
                             class="fa-regular fa-circle-user icon-hover"></i></router-link>
                 </div>
                 <div class="btn-light mx-3">
-                    <a href="#" title="購物車" class="text-dark"><i class="fa-solid fa-cart-shopping icon-hover"
-                            data-bs-toggle="modal" data-bs-target="#exampleModal"> </i></a>
+                    <a href="#" title="購物車" class="text-dark">
+                        <i class="fa-solid fa-cart-shopping icon-hover position-relative" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal"><span
+                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill  bg-danger font-monospace px-1  ">{{
+                                    cartItemsNum }}</span></i>
+                    </a>
 
                 </div>
             </div>
         </div>
     </nav>
-    <Cart />
+    <Cart @CartCount="UpdateCartCount" />
     <CheckIn />
+    <CreatePComment />
 </template>
 <script setup>
-import { onMounted } from 'vue';
 import Cart from './Cart.vue'
-import CheckIn from './CheckIn.vue'
+export default {
+    components: {
+        Cart,
+        CheckIn,
+    },
+    mounted() {
+        window.addEventListener("scroll", function () {
+            var header = document.querySelector("header");
+            header.classList.toggle("sticky", window.scrollY > 0)
+                ;
+        })
 
-onMounted(() => {
-    window.addEventListener("scroll", function () {
-        var header = document.querySelector("header");
-        header.classList.toggle("sticky", window.scrollY > 0);
-    })
-    document.querySelector(".search").addEventListener("click", function () {
-        document.querySelector("#search").focus();
-    });    
-});
+        document.querySelector(".search").addEventListener("click", function () {
+            document.querySelector("#search").focus();
+        });
+
+    }
+}
 </script>
 <style scoped>
+.badge {
+    font-size: 5px;
+}
+
 .search {
     cursor: pointer;
 }
@@ -134,26 +149,28 @@ onMounted(() => {
 .textbox:focus {
     border-bottom-color: #ced4da;
 }
+
 header {
-  background-color: white;
-  color: rgb(12, 13, 12);
-  opacity: 0.9;
-  /* 內距 */
-  padding-top: 5px;
-  padding-bottom: 5px;
-  text-align: center;
+    background-color: white;
+    color: rgb(12, 13, 12);
+    opacity: 0.9;
+    /* 內距 */
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
 }
 
 header:hover {
-  background-color: black;
-  transition: 0.5s;
+    background-color: black;
+    transition: 0.5s;
 }
 
 header.sticky {
-  padding: 5px 100px;
-  background: #fff;
+    padding: 5px 100px;
+    background: #fff;
 }
+
 header .sticky ul li a {
-  color: #000;
+    color: #000;
 }
 </style>

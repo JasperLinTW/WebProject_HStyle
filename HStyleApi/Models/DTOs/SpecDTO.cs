@@ -4,6 +4,7 @@ namespace HStyleApi.Models.DTOs
 {
 	public class SpecDto
 	{
+		public int SpecId { get; set; }
 		public string Color { get; set; }
 
 		public string Size { get; set; }
@@ -17,6 +18,7 @@ namespace HStyleApi.Models.DTOs
 		public static SpecDto ToDto(this Spec source)
 		=> new SpecDto
 		{
+			SpecId = source.Id,
 			Color = source.Color,
 			Size = source.Size,
 			Stock = source.Stock,
