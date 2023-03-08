@@ -16,27 +16,16 @@
       </div>
       <div class="col-lg-2"></div>
       <div class="col-lg-5">
-        <swiper
-          :direction="'vertical'"
-          :pagination="{
-            clickable: true,
-          }"
-          :modules="modules"
-          class="MySwiper"
-        >
-          <swiper-slide v-for="(image, index) in product.imgs" :key="index"
-            ><img :src="image"
-          /></swiper-slide>
+        <swiper :direction="'vertical'" :pagination="{
+          clickable: true,
+        }" :modules="modules" class="MySwiper">
+          <swiper-slide v-for="(image, index) in product.imgs" :key="index"><img :src="image" /></swiper-slide>
         </swiper>
       </div>
       <div class="col-lg-5">
         <div class="row">
           <div class="col-lg-8 d-flex justify-content-start">
-            <div
-              v-for="(image, index) in product.imgs"
-              :key="index"
-              class="thumb"
-            >
+            <div v-for="(image, index) in product.imgs" :key="index" class="thumb">
               <img :src="image" class="pe-3" @click="changeImage(index)" />
             </div>
           </div>
@@ -59,18 +48,12 @@
           <div class="col-lg-12 mt-5 text-start">
             <button @click="addItem()" class="add-to-cart">
               NT$ {{ product.unitPrice
-              }}<span
-                class="border-start border-dark ms-2"
-                data-bs-target="#exampleModal"
-                ><span class="ps-2">加入購物車</span></span
-              >
+              }}<span class="border-start border-dark ms-2" data-bs-target="#exampleModal"><span
+                  class="ps-2">加入購物車</span></span>
             </button>
-            <span class="m-3" v-if="!isClicked" @click="likesProduct()"
-              ><i class="fa-regular fa-heart icon-hover fz-18"></i
-            ></span>
-            <span class="m-3" v-else @click="likesProduct()"
-              ><i class="fa-solid fa-heart fz-18"></i
-            ></span>
+            <span class="m-3" v-if="!isClicked" @click="likesProduct()"><i
+                class="fa-regular fa-heart icon-hover fz-18"></i></span>
+            <span class="m-3" v-else @click="likesProduct()"><i class="fa-solid fa-heart fz-18"></i></span>
           </div>
         </div>
       </div>
@@ -79,20 +62,12 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6 pb-2">
-        <button
-          class="btn-underline"
-          @click="showComment = false"
-          :class="{ active: !showComment }"
-        >
+        <button class="btn-underline" @click="showComment = false" :class="{ active: !showComment }">
           商品描述
         </button>
       </div>
       <div class="col-md-6">
-        <button
-          class="btn-underline"
-          @click="showComment = true"
-          :class="{ active: showComment }"
-        >
+        <button class="btn-underline" @click="showComment = true" :class="{ active: showComment }">
           商品評論
         </button>
       </div>
@@ -125,6 +100,7 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import Back2Top from "../components/Back2Top.vue";
 import PComment from "../components/PComment.vue";
 import RecommendCard from "../components/RecommendCard.vue";
+import { eventBus } from "../mybus";
 
 // Import Swiper styles
 import "swiper/css";
@@ -132,6 +108,8 @@ import "swiper/css";
 import "swiper/css/pagination";
 // import required modules
 import { Pagination } from "swiper";
+
+
 
 const objtest = {
   name: "test",
@@ -166,11 +144,8 @@ const getProduct = async () => {
 const modules = ref([Pagination]);
 
 //加入購物車
-const emit = defineEmits(["update"]);
-const watchedNum = ref(0);
-watch(watchedNum, (newValue) => {
-  emit("update", newValue);
-});
+
+
 const SelectSpecId = ref(0);
 const addItem = async () => {
   await axios
@@ -180,7 +155,8 @@ const addItem = async () => {
       { withCredentials: true }
     )
     .then((response) => {
-      watchedNum.value += 1;
+      eventBus.emit("addCartEvent");
+      eventBus.emit("showCartEvent")
     })
     .catch((error) => {
       console.log(error);

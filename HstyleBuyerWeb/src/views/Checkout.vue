@@ -14,33 +14,19 @@
               </div>
             </div>
             <div class="ms-5">
-              <span class="card-title"
-                >{{ item.productName }}
-                <span class="border-start ps-2"
-                  >規格: {{ item.color + ", " + item.size }}</span
-                >
+              <span class="card-title">{{ item.productName }}
+                <span class="border-start ps-2">規格: {{ item.color + ", " + item.size }}</span>
               </span>
             </div>
             <div class="flex-grow-1 text-end pe-6">
               <div class="btn-group" role="group">
-                <button
-                  type="button"
-                  class="btn btn-custom btn-outline-secondary btn-s"
-                  @click="minusItem(item.specId)"
-                >
+                <button type="button" class="btn btn-custom btn-outline-secondary btn-s" @click="minusItem(item.specId)">
                   <i class="fa-solid fa-minus fa-xs"></i>
                 </button>
-                <button
-                  type="button"
-                  class="btn btn-custom btn-outline-secondary btn-s quantity"
-                >
+                <button type="button" class="btn btn-custom btn-outline-secondary btn-s quantity">
                   {{ item.quantity }}
                 </button>
-                <button
-                  type="button"
-                  class="btn btn-custom btn-outline-secondary btn-s"
-                  @click="addItem(item.specId)"
-                >
+                <button type="button" class="btn btn-custom btn-outline-secondary btn-s" @click="addItem(item.specId)">
                   <i class="fa-solid fa-plus fa-xs"></i>
                 </button>
               </div>
@@ -57,40 +43,18 @@
         </div>
         <div class="my-4 d-flex justify-content-between">
           <label for="name" class="form-label fw-bold pe-3">姓名</label>
-          <input
-            v-model="shipName"
-            type="text"
-            class="textbox_ship flex-grow-1"
-            id="name"
-            placeholder="請輸入姓名"
-          />
+          <input v-model="shipName" type="text" class="textbox_ship flex-grow-1" id="name" placeholder="請輸入姓名" />
           <label for="phone" class="form-label fw-bold pe-3">電話</label>
-          <input
-            v-model="shipPhone"
-            type="text"
-            class="textbox_ship flex-grow-1"
-            id="phone"
-            placeholder="請輸入電話號碼"
-          />
+          <input v-model="shipPhone" type="text" class="textbox_ship flex-grow-1" id="phone" placeholder="請輸入電話號碼" />
         </div>
         <div class="mb-4 d-flex justify-content-between">
           <label for="address" class="form-label fw-bold pe-3">地址</label>
-          <input
-            v-model="shipAddress"
-            type="text"
-            class="textbox_ship flex-grow-1"
-            id="address"
-            placeholder="請輸入地址"
-          />
+          <input v-model="shipAddress" type="text" class="textbox_ship flex-grow-1" id="address" placeholder="請輸入地址" />
         </div>
         <div class="mb-3 d-flex justify-content-between">
           <label for="payment" class="form-label fw-bold pe-3">付款方式</label>
           <div class="flex-grow-1">
-            <select
-              v-model="payment"
-              aria-label="Select payment method"
-              id="payment"
-            >
+            <select v-model="payment" aria-label="Select payment method" id="payment">
               <option value="">選擇付款方式</option>
               <option value="信用卡">信用卡</option>
               <option value="Paypal">PayPal</option>
@@ -113,14 +77,7 @@
         </div>
         <div class="d-flex justify-content-between pb-2">
           <div class="fw-bold">使用H幣</div>
-          <input
-            v-model="discount"
-            type="text"
-            class="textbox form-floating"
-            name=""
-            id=""
-            placeholder="請輸入數量"
-          />
+          <input v-model="discount" type="text" class="textbox form-floating" name="" id="" placeholder="請輸入數量" />
         </div>
         <div class="fz-sm text-end pb-4">
           目前有{{ H_Coin }}枚，最高可使用{{ coinUseLimit }}枚
@@ -130,12 +87,7 @@
           <div>NT$ {{ totalIncludeHcoin }}</div>
         </div>
         <div class="text-end mt-1 mb-5">
-          <button
-            :disabled="progressing"
-            @click="checkout"
-            type="button"
-            class="btn checkoutbtn"
-          >
+          <button :disabled="progressing" @click="checkout" type="button" class="btn checkoutbtn">
             提交訂單
           </button>
           <div id="result"></div>
@@ -145,11 +97,7 @@
   </div>
   <div v-if="progressing" id="modal" class="modal">
     <div class="modal-content">
-      <img
-        class="loading"
-        src="../assets/progressGif/loading.gif"
-        alt="Loading..."
-      />
+      <img class="loading" src="../assets/progressGif/loading.gif" alt="Loading..." />
     </div>
   </div>
 </template>
@@ -157,6 +105,7 @@
 <script setup>
 import { ref, onMounted, computed, onBeforeMount } from "vue";
 import axios from "axios";
+import { eventBus } from "../mybus";
 
 //呈現購物車
 const products = ref([]);
@@ -165,6 +114,9 @@ const getCartInfo = async () => {
     .get("https://localhost:7243/api/Cart", { withCredentials: true })
     .then((response) => {
       products.value = response.data;
+      if (response.data.cartItems.length === 0) {
+        window.location = "http://localhost:5173/product";
+      }
     })
     .catch((error) => {
       console.log(error);
@@ -180,6 +132,7 @@ const addItem = async (specId) => {
     )
     .then((response) => {
       getCartInfo();
+      eventBus.emit("addCartEvent");
     })
     .catch((error) => {
       console.log(error);
@@ -192,10 +145,12 @@ const minusItem = async (specId) => {
     })
     .then((response) => {
       getCartInfo();
+      eventBus.emit("addCartEvent");
     })
     .catch((error) => {
       console.log(error);
     });
+  console.log(products.value);
 };
 
 //綁定收件、收費資料
@@ -259,18 +214,6 @@ const checkout = async () => {
     });
   progressing.value = false;
 };
-onBeforeMount(() => {
-  axios
-    .get("https://localhost:7243/api/Cart", { withCredentials: true })
-    .then((response) => {
-      if (response.data.cartItems.length === 0) {
-        window.location = "http://localhost:5173/product";
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-});
 
 onMounted(() => {
   getCartInfo();
@@ -384,8 +327,11 @@ select:focus {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 100px; /* 設置寬度為 200px */
-  height: 100px; /* 設置高度為 200px */
-  margin: auto; /* 將margin設置為auto使其垂直和水平居中 */
+  width: 100px;
+  /* 設置寬度為 200px */
+  height: 100px;
+  /* 設置高度為 200px */
+  margin: auto;
+  /* 將margin設置為auto使其垂直和水平居中 */
 }
 </style>

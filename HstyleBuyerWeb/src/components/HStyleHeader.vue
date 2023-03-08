@@ -15,65 +15,42 @@
       <div id="NavbarContent" class="nav">
         <ul class="navbar-nav">
           <li class="nav-item dropdown">
-            <router-link to="/recommend" class="nav-link text-dark px-3"
-              ><span class="targetAll">推薦商品</span></router-link
-            >
+            <router-link to="/recommend" class="nav-link text-dark px-3"><span class="targetAll">推薦商品</span></router-link>
           </li>
           <a href="#"></a>
           <li class="nav-item dropdown">
-            <router-link to="/product" class="nav-link text-dark px-3"
-              ><span class="targetAll">新品上市</span></router-link
-            >
+            <router-link to="/product" class="nav-link text-dark px-3"><span class="targetAll">新品上市</span></router-link>
           </li>
           <li class="nav-item dropdown">
-            <router-link to="/product" class="nav-link text-dark px-3"
-              ><span class="targetAll">服飾名品</span></router-link
-            >
+            <router-link to="/product" class="nav-link text-dark px-3"><span class="targetAll">服飾名品</span></router-link>
           </li>
           <li class="nav-item dropdown">
-            <router-link to="/Blog" class="nav-link text-dark px-3"
-              ><span class="targetAll">部落格</span></router-link
-            >
+            <router-link to="/Blog" class="nav-link text-dark px-3"><span class="targetAll">部落格</span></router-link>
           </li>
           <li class="nav-item dropdown">
-            <router-link to="/Login" class="nav-link targetAll"
-              >測試用會員</router-link
-            >
+            <router-link to="/Login" class="nav-link targetAll">測試用會員</router-link>
           </li>
         </ul>
       </div>
 
       <div class="nav justify-content-end ps-5">
         <div class="mx-3">
-          <a href="#" title="喜歡" class="text-dark"
-            ><i class="fa-regular fa-heart icon-hover fz-18"></i
-          ></a>
+          <a href="#" title="喜歡" class="text-dark"><i class="fa-regular fa-heart icon-hover fz-18"></i></a>
         </div>
         <div class="btn-light mx-3">
-          <a href="#" title="打卡" class="text-dark"
-            ><i
-              class="fa-regular fa-circle-check icon-hover fz-18"
-              data-bs-toggle="modal"
-              data-bs-target="#checkInModal"
-            ></i
-          ></a>
+          <a href="#" title="打卡" class="text-dark"><i class="fa-regular fa-circle-check icon-hover fz-18"
+              data-bs-toggle="modal" data-bs-target="#checkInModal"></i></a>
         </div>
         <div class="btn-light mx-3">
-          <router-link to="/account/memberprofile" class="text-dark"
-            ><i class="fa-regular fa-circle-user icon-hover"></i
-          ></router-link>
+          <router-link to="/account/memberprofile" class="text-dark"><i
+              class="fa-regular fa-circle-user icon-hover"></i></router-link>
         </div>
         <div class="btn-light mx-3">
           <a href="#" title="購物車" class="text-dark">
-            <i
-              class="fa-solid fa-cart-shopping icon-hover position-relative"
-              data-bs-toggle="modal"
-              data-bs-target="#exampleModal"
-              ><span
-                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger font-monospace px-1"
-                >{{ cartItemsNum }}</span
-              ></i
-            >
+            <i class="fa-solid fa-cart-shopping icon-hover position-relative" data-bs-toggle="modal"
+              data-bs-target="#cartModal"><span
+                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger font-monospace px-1">{{
+                  cartItemsNum }}</span></i>
           </a>
         </div>
       </div>
@@ -86,11 +63,23 @@
 import Cart from "./Cart.vue";
 import CheckIn from "./CheckIn.vue";
 import { ref, onMounted, watchEffect, nextTick } from "vue";
+import { eventBus } from "../mybus";
+
 const cartItemsNum = ref();
 const UpdateCartCount = (CartCount) => {
   //$('#exampleModal').modal('show');
   cartItemsNum.value = CartCount;
 };
+
+
+const showCart = () => {
+  $("#cartModal").modal('show');
+}
+eventBus.on('showCartEvent', showCart)
+
+
+
+
 onMounted(() => {
   window.addEventListener("scroll", function () {
     var header = document.querySelector("header");
