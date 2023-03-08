@@ -102,10 +102,6 @@ onMounted(() => {
     cursor: pointer;
 }
 
-.solidHeart {
-    color: #46A3FF;
-}
-
 .fz-9 {
     font-size: 15px;
     color: rgb(116, 129, 143);

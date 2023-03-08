@@ -4,7 +4,7 @@
             <div class="col-lg-12 ps-5 mb-5">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="http://localhost:5173/">首頁</a></li>
+                        <li class="breadcrumb-item"><a href="http://localhost:5173/">Home</a></li>
                         <li class="breadcrumb-item"><a href="#">{{ product.pCategoryName }}</a></li>
                         <li class="breadcrumb-item active">{{ product.product_Name }}</li>
                     </ol>
@@ -62,12 +62,17 @@
                 <button class="btn-underline" @click="showComment = true" :class="{ active: showComment }">商品評論</button>
             </div>
             <div v-if="showComment" class="col-md-12 border-top pt-3 mb-big">
-                <PComment></PComment>
+                <PComment v-for="item in comment" :data="item"></PComment>
             </div>
             <div v-else class="col-md-12 border-top pt-5 px-6  mb-big">
                 {{ product.description }}
             </div>
-            <div class="col-md-12 h200px line"><span class="px-5">專屬推薦</span></div>
+            <div class="col-md-12 line"><span class="px-5">專屬推薦</span></div>
+            <div class="col-md-12">
+                <div class="row">
+                    <RecommendCard v-for="item in rec" :data="item"></RecommendCard>
+                </div>
+            </div>
         </div>
     </div>
     <Back2Top />
@@ -80,6 +85,9 @@ import axios from 'axios';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import Back2Top from "../components/Back2Top.vue";
 import PComment from "../components/PComment.vue";
+import RecommendCard from '../components/RecommendCard.vue';
+
+
 
 // Import Swiper styles
 import 'swiper/css';
@@ -87,6 +95,11 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 // import required modules
 import { Pagination } from 'swiper';
+
+const objtest = {
+    name: 'test',
+    quantity: 1,
+}
 
 
 //路由
@@ -150,11 +163,34 @@ const likesProduct = async () => {
         .catch(error => { console.log(error); });
 }
 
+const rec = ref([]);
+//推薦商品
+const getRecommend = async () => {
+    await axios.get(`https://localhost:7243/api/Products/ProdRec/${route.params.id}`)
+        .then(response => {
+            rec.value = response.data;
+            //console.log(rec.value);
+        })
+        .catch(error => { console.log(error); });
+}
+
+const comment = ref([]);
+//評論
+const getComment = async () => {
+    await axios.get(`https://localhost:7243/api/Products/comments`)
+        .then(response => {
+            comment.value = response.data;
+            console.log(comment.value);
+        })
+        .catch(error => { console.log(error); });
+}
 
 
 onMounted(() => {
     likesProducts();
     getProduct();
+    getRecommend();
+    getComment();
 })
 
 
@@ -166,7 +202,6 @@ onMounted(() => {
     border-top: 1px solid #dee2e6;
     text-align: center;
     line-height: 0.1em;
-    margin: 10px 0 10px 0;
 }
 
 .line span {
@@ -274,6 +309,11 @@ onMounted(() => {
     border-radius: 5%;
     font-size: 15px;
 
+}
+
+a {
+    text-decoration-line: none;
+    color: #000;
 }
 </style>
 <style>

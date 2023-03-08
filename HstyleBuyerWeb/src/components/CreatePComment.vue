@@ -40,22 +40,20 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { onMounted, ref } from 'vue';
 import Back2Top from "./Back2Top.vue"
 import axios from 'axios';
 
-
-export default {
-  props: {
+  const props = defineProps({
     maxRating: {
       default: 5
     },
     initialRating: {
       default: 0
-    }
-  },
-  setup(props) {
+    }});
+
+
     const selectedRating = ref(props.initialRating);
     const stars = ref(Array(props.maxRating).fill(false));
 
@@ -73,16 +71,9 @@ export default {
 
     onMounted(() => {
       stars.value.splice(props.initialRating, props.maxRating - props.initialRating, true);
+      
     });
 
-    return {
-      selectedRating,
-      stars,
-      selectRating,
-      starClass
-    }
-  }
-}
 
 </script>
 

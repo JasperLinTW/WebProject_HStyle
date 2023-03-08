@@ -4,12 +4,13 @@
             <div class="col-md-1"></div>
             <div class="col-md-4">
                 <div class="row text-start">
-                    <div class="col-md-2 mb-4">ac***t</div>
+                    <div class="col-md-2 mb-4">{{ data.account }}</div>
                     <div class="col-md-4 star-rating"><i v-for="(star, index) in 5" class="fa-solid fa-star"></i></div>
-                    <div class="fz-comment col-md-12">讚讚</div>
+                    <div class="fz-comment col-md-12">{{ data.commentContent }}</div>
                     <div class="col-md-12 my-2"></div>
-                    <div class="col-md-6 mt-4"> 購買規格: Size: L | Color: 白 </div>
-                    <div class="col-md-6 mt-4"> 2023-02-21 12:46:52 </div>
+                    <div class="col-md-6 mt-4"> <label class="pe-3">購買規格:</label>Size {{ data.size }} | Color {{ data.color
+                    }} </div>
+                    <div class="col-md-6 mt-4">{{ data.createdTime }} </div>
                 </div>
             </div>
             <div class="col-md-3"></div>
@@ -20,20 +21,10 @@
                             class="active" aria-current="true" aria-label="Slide 1"></button>
                     </div>
                     <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img src="../assets/image/chanel1.jpg" class="d-block img-fluid rounded-start " alt="...">
+                        <div class="carousel-item active img-comment pe-5">
+                            <img :src="data.pcommentImgs" class="d-block img-fluid" alt="...">
                         </div>
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-                        data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-                        data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
                 </div>
             </div>
             <div class="col-md-1 text-end ">
@@ -45,6 +36,9 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 
+const props = defineProps({
+    data: Object
+})
 const starClass = (index) => {
     if (index < selectedRating.value) {
         return 'fa-solid fa-star';
@@ -80,5 +74,17 @@ const starClass = (index) => {
     font-size: 12pt;
     color: rgb(255, 208, 0);
     padding-top: 5px;
+}
+
+.img-comment {
+    width: 300px;
+    height: 150px;
+    overflow: hidden;
+}
+
+.img-comment img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 </style>
