@@ -2,7 +2,7 @@
     <div>
 
     </div>
-    <div class="sidebar">
+    <div class="sidebar mt-5">
         <ul class="list-unstyled">
             <li>
                 <router-link to="/account/MemberProfile" class="text-decoration-none text-dark">會員資料</router-link>

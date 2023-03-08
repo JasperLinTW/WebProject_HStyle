@@ -66,27 +66,20 @@
     <Cart />
     <CheckIn />
 </template>
-<script>
+<script setup>
+import { onMounted } from 'vue';
 import Cart from './Cart.vue'
 import CheckIn from './CheckIn.vue'
-export default {
-    components: {
-        Cart,
-        CheckIn,
-    },
-    mounted() {
-        window.addEventListener("scroll", function () {
-            var header = document.querySelector("header");
-            header.classList.toggle("sticky", window.scrollY > 0)
-                ;
-        })
 
-        document.querySelector(".search").addEventListener("click", function () {
-            document.querySelector("#search").focus();
-        });
-
-    }
-}
+onMounted(() => {
+    window.addEventListener("scroll", function () {
+        var header = document.querySelector("header");
+        header.classList.toggle("sticky", window.scrollY > 0);
+    })
+    document.querySelector(".search").addEventListener("click", function () {
+        document.querySelector("#search").focus();
+    });    
+});
 </script>
 <style scoped>
 .search {
@@ -140,5 +133,27 @@ export default {
 
 .textbox:focus {
     border-bottom-color: #ced4da;
+}
+header {
+  background-color: white;
+  color: rgb(12, 13, 12);
+  opacity: 0.9;
+  /* 內距 */
+  padding-top: 5px;
+  padding-bottom: 5px;
+  text-align: center;
+}
+
+header:hover {
+  background-color: black;
+  transition: 0.5s;
+}
+
+header.sticky {
+  padding: 5px 100px;
+  background: #fff;
+}
+header .sticky ul li a {
+  color: #000;
 }
 </style>

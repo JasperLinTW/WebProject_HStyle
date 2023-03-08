@@ -117,14 +117,14 @@ namespace HStyleApi.Controllers
 			//todo紀錄付款人，修改訂單狀態，改向畫面網址
 
 			_orderService.UpdateOrder(token);
-			return Redirect("http://localhost:5174/");
+			return Redirect("http://localhost:5173/ordercomplete");
 		}
 
 		[HttpGet("cancel")]
 		public IActionResult Cancel()
 		{
 			//todo導向訂單頁面
-			return Redirect("http://localhost:5174/");
+			return Redirect("http://localhost:5173/account/orders");
 		}
 
 		//[HttpPost("{orderId}")]

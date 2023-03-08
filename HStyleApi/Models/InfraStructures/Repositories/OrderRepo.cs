@@ -16,15 +16,14 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 		{
 			var data = _db.Orders.Include(o => o.OrderDetails)
 								.Include(o => o.Status)
-								.Where(o => o.MemberId== memberId).Select(x => x.ToDTO());
+								.Where(o => o.MemberId== memberId).OrderByDescending(x => x.OrderId).Select(x => x.ToDTO());
 
-			
 			return data;
 			
 		}
 		public OrderDTO GetOrder(int orderId)
 		{
-			var data = _db.Orders.Include(o => o.OrderDetails).Where(o => o.OrderId == orderId).Select(x => x.ToDTO()).FirstOrDefault();
+			var data = _db.Orders.Include(o => o.OrderDetails).Include(o => o.Status).Where(o => o.OrderId == orderId).Select(x => x.ToDTO()).FirstOrDefault();
 
 
 			return data;

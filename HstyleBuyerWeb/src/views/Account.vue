@@ -14,14 +14,10 @@
     </div>
 </template>
   
-<script>
+<script setup>
+
 import MemberSidebar from '../components/MemberSidebar.vue';
 
-export default {
-    components: {
-        MemberSidebar,
-    },
-}
 </script>
 
 <style></style>

@@ -2,11 +2,11 @@
 <template>
     <div class="container mt-3">
         <div class="row">
-            <div class="col-md-12 mb-3">
+            <div class="col-md-12 mb-3 cartContent">
                 <div class="text-start border-bottom">
                     <h5 class="fw-bold">購物車</h5>
                 </div>
-                <div v-for="item in products.cartItems" class="py-3 border-bottom row">
+                <div v-for="item in products.cartItems" class=" py-3 border-bottom row">
                     <div class="col-md-12 d-flex align-items-center">
                         <div class="">
                             <div class="custom">
@@ -85,7 +85,7 @@
                     <div class="fw-bold">總金額</div>
                     <div>NT$ {{ totalIncludeHcoin }}</div>
                 </div>
-                <div class="text-end mt-1">
+                <div class="text-end mt-1 mb-5">
                     <button :disabled="progressing" @click="checkout" type="button" class="btn checkoutbtn ">提交訂單</button>
                     <img src="../assets/progressGif/icons8-sup.gif" v-show="progressing" />
                     <div id="result"></div>
@@ -96,14 +96,19 @@
 </template>
   
 <script setup>
-import { ref, onMounted, computed, reactive } from "vue";
+import { ref, onMounted, computed } from "vue";
 import axios from "axios";
 
 //呈現購物車
 const products = ref([]);
 const getCartInfo = async () => {
     await axios.get("https://localhost:7243/api/Cart")
-        .then(response => { products.value = response.data; })
+        .then(response => {
+            products.value = response.data;
+            if (products.value.cartItems.length === 0) {
+                window.location = 'http://localhost:5173/product';
+            }
+        })
         .catch(error => { console.log(error); });
 }
 
@@ -148,7 +153,7 @@ const coinUseLimit = computed(() => {
 const checkout = async () => {
     progressing.value = true;
     await axios.post(`https://localhost:7243/api/Cart/Checkout`, {
-        payment: shipName.value,
+        payment: payment.value,
         shipVia: "黑貓",//todo。運送方式改成後台管理頁面填寫
         freight: 0,//todo，考慮運費拿掉全部免運
         discount: discount.value,
@@ -168,6 +173,7 @@ const checkout = async () => {
 
 onMounted(() => {
     getCartInfo();
+
     getCoin();
 });
 
@@ -259,5 +265,9 @@ select:focus {
 
 .textbox:focus {
     border-bottom-color: #ccc;
+}
+
+.cartContent {
+    min-height: 200px;
 }
 </style>

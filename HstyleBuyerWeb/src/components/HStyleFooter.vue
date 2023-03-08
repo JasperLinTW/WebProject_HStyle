@@ -23,24 +23,9 @@
     <Back2Top></Back2Top>
 </template>
 
-<script>
+<script setup>
 import Back2Top from "./Back2Top.vue"
-export default {
-    components: {
-        Back2Top
-    },
-    data() {
-        return {
-            // 在這裡添加您的數據
-        };
-    },
-    methods: {
-        // 在這裡添加您的方法
-    },
-    mounted() {
-        // 在這裡添加組件初始化邏輯
-    }
-};
+
 </script>
 
 <style scoped>

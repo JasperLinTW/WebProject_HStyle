@@ -10,6 +10,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body mt-3">
+                    <div v-if="isEmpty"><p>您的購物車沒有商品</p></div>
                     <div v-for="item in products.cartItems" class="row g-2 align-items-center border-bottom pb-4 mb-3 mt-2">
                         <div class="col-md-4 img-sz">
                             <img :src="item.image" class="img-fluid" alt="Product Image" />
@@ -66,10 +67,19 @@ import { ref, onMounted } from "vue";
 import axios from "axios";
 
 const products = ref([]);
+const isEmpty = ref(true);
 
 const getCartInfo = async () => {
     await axios.get("https://localhost:7243/api/Cart")
-        .then(response => { products.value = response.data; })
+        .then(response => { 
+            products.value = response.data;
+            if(products.value.cartItems.length > 0){
+                isEmpty.value = false;
+            }
+            else{
+                isEmpty.value = true;
+            }
+        })
         .catch(error => { console.log(error); });
 }
 

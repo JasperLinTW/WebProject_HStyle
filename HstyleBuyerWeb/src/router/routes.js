@@ -13,7 +13,9 @@ const routes = [
     ]},
     { path: '/EssaysBlog',name:'EssaysBlog', component:()=> import('../views/EssaysBlog.vue'),meta: { requiresAuth: false } },
     { path: '/member',name:'member', component:()=> import('../views/Member.vue'),meta: { requiresAuth: false } },
-    { path: '/login',name:'Login', component:()=> import('../views/Login.vue'),meta: { requiresAuth: false } }
+    { path: '/login',name:'Login', component:()=> import('../views/Login.vue'),meta: { requiresAuth: false } },
+    { path: '/EssaysBlog', name: 'EssaysBlog', component: () => import('../views/EssaysBlog.vue'), meta: { requiresAuth: false } },
+    { path: '/OrderComplete', name: 'OrderComplete', component: () => import('../views/OrderComplete.vue'), meta: { requiresAuth: false } }
 
   ]
 export default routes
