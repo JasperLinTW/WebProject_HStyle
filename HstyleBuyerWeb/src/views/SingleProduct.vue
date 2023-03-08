@@ -92,8 +92,6 @@ import Back2Top from "../components/Back2Top.vue";
 import PComment from "../components/PComment.vue";
 import RecommendCard from '../components/RecommendCard.vue';
 
-
-
 // Import Swiper styles
 import 'swiper/css';
 

@@ -28,13 +28,14 @@
                         <router-link to="/product" class="nav-link text-dark px-3"><span
                                 class="targetAll">服飾名品</span></router-link>
                     </li>
+                    
                     <li class="nav-item dropdown">
-                        <router-link to="/EssaysBlog" class="nav-link targetAll">文章部落格</router-link>
+                        <router-link to="/Blog" class="nav-link targetAll">部落格</router-link>
                     </li>
-                    <li class="nav-item dropdown">
-                        <router-link to="/VideoBlog" class="nav-link text-dark px-3"><span
-                                class="targetAll">影片部落格</span></router-link>
-                    </li>
+                    <li class="nav-item dropdown"><router-link to="/Blog/EssaysBlog" class="nav-link targetAll">文章部落格</router-link></li>
+                    <li class="nav-item dropdown"><router-link to="/Blog/VideoBlog" class="nav-link text-dark"><span
+                                class="targetAll">影片部落格</span></router-link></li>
+                   
                     <li class="nav-item dropdown">
                         <router-link to="/Login" class="nav-link targetAll">測試用會員</router-link>
                         <!-- <a class="nav-link targetAll" href="#">測試用會員</a> -->

@@ -52,7 +52,7 @@ namespace HStyleApi.Controllers
         }
 
 		// GET: api/<CartController>
-		
+		[Authorize]
 		[HttpGet]
         public CartListDTO Get()
         {
