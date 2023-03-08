@@ -13,7 +13,7 @@ const headerKey = ref(0);
 <template>
   <div id="app">
     <HStyleHeader :key="headerKey" />
-    <router-view @update="updateHandler" class="viewContent" />
+    <router-view @update="updateHandler" />
     <HStyleFooter />
   </div>
 </template>

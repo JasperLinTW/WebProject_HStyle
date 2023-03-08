@@ -69,7 +69,7 @@
     </nav>
     <Cart @CartCount="UpdateCartCount" />
     <CheckIn />
-    <CreatePComment />
+    
 </template>
 <script setup>
 import Cart from './Cart.vue'
