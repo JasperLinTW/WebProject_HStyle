@@ -57,9 +57,15 @@ import { useRoute } from 'vue-router';
 import axios from 'axios';
 import { ref, onMounted } from 'vue';
 
+
+//商品預覽
+const products = ref([]);
+const route = useRoute();
+console.log(route.params.tag);
+
+//商品收藏
 const likeProductsId = ref([]);
 let likes = ref([]);
-
 const likesProducts = async () => {
   await axios.get("https://localhost:7243/api/Products/products/likes")
     .then(response => {
@@ -74,11 +80,6 @@ const likesProducts = async () => {
     .catch(error => { console.log(error); });
 }
 
-//商品預覽
-const products = ref([]);
-const route = useRoute();
-console.log(route.params.tag);
-
 const loadProducts = async () => {
   await axios.get("https://localhost:7243/api/Products/products")
     .then(response => {
@@ -86,7 +87,8 @@ const loadProducts = async () => {
         p.isClicked = likeProductsId.value.includes(p.product_Id);
       })
       if (route.params.tag == "new") {
-        products.value = response.data.map(p => p.tags.includes("新品"));
+        products.value = response.data.filter(p => p.tags.includes("新品"));
+        console.log(products.value);
       }
       else { products.value = response.data }
     })

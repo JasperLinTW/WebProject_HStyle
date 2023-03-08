@@ -14,9 +14,9 @@
                 <div class="card-title fw-bold">{{ data.product_Name }}</div>
                 <span>$NT {{ data.unitPrice }}</span>
                 <div class="card-text text-end">
-                    <span v-if="!data.isClicked" @click="likesProduct(data.product_Id, data)"><i
-                            class="fa-regular fa-heart icon-hover fz-18"></i></span>
-                    <span v-else @click="likesProduct(data)"><i class="fa-solid fa-heart  fz-18"></i></span>
+                    <span v-if="!data.isClicked"><i class="fa-regular fa-heart icon-hover fz-18"
+                            @click="likesProduct(data)"></i></span>
+                    <span v-else><i class="fa-solid fa-heart  fz-18" @click="likesProduct(data)"></i></span>
                 </div>
             </div>
         </div>
@@ -25,23 +25,23 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import axios from 'axios';
+
 const props = defineProps({
     data: Object
 })
 
 
 const likesProduct = async (data) => {
-    // await axios.post(`https://localhost:7243/api/Products/product/like?product_id=${data.product_Id}`)
-    //     .then(response => {
-    //         isClicked.value = !isClicked.value;
-    //     })
-    //     .catch(error => { console.log(error); });
-    console.log(data);
+    await axios.post(`https://localhost:7243/api/Products/product/like?product_id=${props.data.product_Id}`)
+        .then(response => {
+            data.isClicked = !data.isClicked;
+        })
+        .catch(error => { console.log(error); });
 }
 //收藏
 
 onMounted(() => {
-    likesProduct();
 });
 
 //圖片動畫
