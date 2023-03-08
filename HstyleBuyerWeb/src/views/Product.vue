@@ -55,11 +55,10 @@ import Back2Top from '../components/Back2Top.vue'
 import ProductCard from '../components/ProductCard.vue'
 import { useRoute } from 'vue-router';
 import axios from 'axios';
+import { ref, onMounted } from 'vue';
 
-//收藏
+const likeProductsId = ref([]);
 let likes = ref([]);
-
-const likeProductsId = ref([])
 
 const likesProducts = async () => {
   await axios.get("https://localhost:7243/api/Products/products/likes")
@@ -77,6 +76,8 @@ const likesProducts = async () => {
 
 //商品預覽
 const products = ref([]);
+const route = useRoute();
+console.log(route.params.tag);
 
 const loadProducts = async () => {
   await axios.get("https://localhost:7243/api/Products/products")
@@ -84,13 +85,15 @@ const loadProducts = async () => {
       response.data.map(p => {
         p.isClicked = likeProductsId.value.includes(p.product_Id);
       })
-      products.value = response.data;
+      if (route.params.tag == "new") {
+        products.value = response.data.map(p => p.tags.includes("新品"));
+      }
+      else { products.value = response.data }
     })
     .catch(error => { console.log(error); });
 }
 
-//新品
-const newProduct = ref("新品");
+
 
 onMounted(() => {
   likesProducts();
@@ -98,8 +101,8 @@ onMounted(() => {
 
 });
 
-const route = useRoute();
-console.log(route.params.tag);
+
+
 
 </script>
 <style scoped>

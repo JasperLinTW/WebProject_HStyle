@@ -3,9 +3,8 @@
         <div class="card d-flex justify-content-center align-items-center">
             <router-link :to="'/product/' + data.product_Id">
                 <div class="img-sz">
-                    <img v-if="!item.isIn" @mouseover="item.isIn = true" :src="data.imgs[0]" class="card-img-top"
-                        alt="Product Image">
-                    <img v-else @mouseout="item.isIn = false" :src="data.imgs[1]" class="card-img-top" alt="Product Image">
+                    <img v-if="!isIn" @mouseover="isIn = true" :src="data.imgs[0]" class="card-img-top" alt="Product Image">
+                    <img v-else @mouseout="isIn = false" :src="data.imgs[1]" class="card-img-top" alt="Product Image">
                 </div>
             </router-link>
             <div class="card-body position-relative">
@@ -17,8 +16,7 @@
                 <div class="card-text text-end">
                     <span v-if="!data.isClicked" @click="likesProduct(data.product_Id, data)"><i
                             class="fa-regular fa-heart icon-hover fz-18"></i></span>
-                    <span v-else @click="likesProduct(data.product_Id, data)"><i
-                            class="fa-solid fa-heart  fz-18"></i></span>
+                    <span v-else @click="likesProduct(data)"><i class="fa-solid fa-heart  fz-18"></i></span>
                 </div>
             </div>
         </div>
@@ -32,19 +30,24 @@ const props = defineProps({
 })
 
 
-const likesProduct = async (product_Id, item) => {
-    await axios.post(`https://localhost:7243/api/Products/product/like?product_id=${product_Id}`)
-        .then(response => {
-            item.isClicked = !item.isClicked;
-        })
-        .catch(error => { console.log(error); });
+const likesProduct = async (data) => {
+    // await axios.post(`https://localhost:7243/api/Products/product/like?product_id=${data.product_Id}`)
+    //     .then(response => {
+    //         isClicked.value = !isClicked.value;
+    //     })
+    //     .catch(error => { console.log(error); });
+    console.log(data);
 }
+//收藏
 
-
+onMounted(() => {
+    likesProduct();
+});
 
 //圖片動畫
 const isIn = ref(false);
-
+//新品
+const newProduct = ref("新品");
 
 
 </script>
