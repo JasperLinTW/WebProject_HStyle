@@ -13,6 +13,7 @@ using MimeKit;
 using Microsoft.AspNetCore.Authorization;
 using Google.Apis.Auth;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 
 
@@ -42,10 +43,33 @@ namespace HStyleApi.Controllers
         }
         // GET: api/<MemberController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get()
         {
-            return new string[] { "value1", "value2" };
-        }
+            var memeberId = int.Parse(HttpContext.User.FindFirst("MemberId")!.Value);
+            var member = _context.Members
+            .Include(m => m.Permission)
+            .Where(m => m.Id == memeberId)
+            .Select(x => new MemberDTO
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Email = x.Email,
+                Account = x.Account,
+                PhoneNumber = x.PhoneNumber,
+                Address = x.Account,
+                Gender = x.Gender,
+                Birthday = x.Birthday,
+                PermissionId = x.PermissionId,
+                Jointime = x.Jointime,
+                TotalH = x.TotalH,
+            });
+
+
+
+            return Ok(member);            
+
+        }        
+
 
         [HttpPost("LogIn")]
         [AllowAnonymous]

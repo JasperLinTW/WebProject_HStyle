@@ -1,6 +1,6 @@
 <template>
     <div>
-        <p>會員資料頁(含編輯)</p>
+        <p>會員資料</p>
     </div>
 </template>
     
