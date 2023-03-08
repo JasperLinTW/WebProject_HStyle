@@ -126,10 +126,10 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 			_db.SaveChanges();
 		}
 
-		public IEnumerable<PCommentDTO> LoadComments()
+		public IEnumerable<PCommentDTO> LoadComments(int product_id)
 		{
 			IEnumerable<ProductComment> data = _db.ProductComments.Include(x => x.PcommentImgs)
-																  .Include(x => x.Product)
+																  .Include(x => x.Product).Where(x => x.ProductId == product_id)
 																  .Include(x => x.Order).ThenInclude(x => x.Member)
 																  .Include(x => x.Order).ThenInclude(x => x.OrderDetails);
 

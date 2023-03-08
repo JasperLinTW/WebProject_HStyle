@@ -274,13 +274,13 @@ namespace HStyleApi.Controllers
 		}
 
 		//所有評論瀏覽
-		[HttpGet("comments")]
-		public ActionResult<PCommentDTO> LoadComments()
+		[HttpGet("comments/{product_id}")]
+		public ActionResult<PCommentDTO> LoadComments(int product_id)
 		{
 			IEnumerable<PCommentDTO> data;
 			try
 			{
-				 data = _Service.LoadComments();	
+				 data = _Service.LoadComments(product_id);	
 			}
 			catch (Exception ex)
 			{

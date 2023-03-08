@@ -14,26 +14,27 @@
         <div class="accordion  accordion-flush" id="accordionExample">
             <div v-for="(order, index) in orders" :key="order.orderId" class="accordion-item">
                 <div class="accordion-header row" :id="'heading' + index">
-                    
-                        <div class="col-1 text-center"><button class="accordion-button btn-order" type="button" data-bs-toggle="collapse"
-                        :data-bs-target="'#collapse' + index" :class="{ 'collapsed': index !== -1 }" aria-expanded="false"
-                        :aria-controls="'collapse' + index"></button></div>
-                        <div class="col-1 text-center pt-2">{{ order.orderId }}</div>
-                        <div class="col-2 text-center pt-2">NT$ {{ order.total }}</div>
-                        <div class="col-2 text-center pt-2">{{ order.createdTime.slice(0, 10) }}</div>
-                        <div class="col-2 text-center pt-2">{{ order.payment }}</div>
-                        <div class="col-1 text-center pt-2 ps-1">
-                            <div v-if="order.statusId === 1" @click.prevent="goToPay(order.payInfo)">
-                                <a class="alink">待付款<i class="fa-solid fa-arrow-up-right-from-square fz-sm ps-2"></i></a>
-                            </div>
-                            <div v-else>
-                                {{ order.status }}
-                            </div>
+
+                    <div class="col-1 text-center"><button class="accordion-button btn-order" type="button"
+                            data-bs-toggle="collapse" :data-bs-target="'#collapse' + index"
+                            :class="{ 'collapsed': index !== -1 }" aria-expanded="false"
+                            :aria-controls="'collapse' + index"></button></div>
+                    <div class="col-1 text-center pt-2">{{ order.orderId }}</div>
+                    <div class="col-2 text-center pt-2">NT$ {{ order.total }}</div>
+                    <div class="col-2 text-center pt-2">{{ order.createdTime.slice(0, 10) }}</div>
+                    <div class="col-2 text-center pt-2">{{ order.payment }}</div>
+                    <div class="col-1 text-center pt-2 ps-1">
+                        <div v-if="order.statusId === 1" @click.prevent="goToPay(order.payInfo)">
+                            <a class="alink">待付款<i class="fa-solid fa-arrow-up-right-from-square fz-sm ps-2"></i></a>
                         </div>
-                        <div class="col-2 pt-2 text-center">
-                            <a>聯絡客服</a>
+                        <div v-else>
+                            {{ order.status }}
                         </div>
-                    
+                    </div>
+                    <div class="col-2 pt-2 text-center">
+                        <a>聯絡客服</a>
+                    </div>
+
                 </div>
                 <div :id="'collapse' + index" class="accordion-collapse collapse" :aria-labelledby="'heading' + index"
                     data-bs-parent="#accordionExample">
@@ -55,7 +56,12 @@
                             <div class="col-2 text-center">{{ product.unitPrice }}</div>
                             <div class="col-2 text-center">{{ product.quantity }}</div>
                             <div class="col-2 text-center">{{ product.subTotal }}</div>
-                            <div class="col-1">我要評論</div>
+                            <div class="col-1 py-0">
+                                <button
+                                    @click="createCommonModal(product.productId, product.orderId, product.productName, product.color, product.size)"
+                                    type="button" data-bs-toggle="modal" class="btn btn-link b-0 px-1"
+                                    data-bs-target="#ProductCommentModal">我要評論</button>
+                            </div>
                         </div>
                         <div class="row order-item-footer py-2 border ">
                             <div class="col-1"></div>
@@ -70,12 +76,14 @@
             </div>
         </div>
     </div>
+    <CreatePComment :modalData="commentParams"></CreatePComment>
 </template>
   
   
 <script setup>
 import { onMounted, ref } from 'vue';
 import axios from "axios";
+import CreatePComment from './CreatePComment.vue';
 
 const orders = ref([]);
 
@@ -107,6 +115,20 @@ function getReviewLink(orderId) {
 
 function getContactLink(orderId) {
     return `contact/${orderId}`;
+}
+
+const commentParams = ref({
+    productId: 0,
+    orderId: 0,
+    productName: "",
+    productSpec: "",
+})
+const createCommonModal = (productId, orderId, productName, color, size) => {
+    commentParams.value.productId = productId;
+    commentParams.value.orderId = orderId;
+    commentParams.value.productName = productName;
+    commentParams.value.productSpec = `${color}, ${size}`;
+    console.log(commentParams.value)
 }
 
 onMounted(() => {
@@ -151,6 +173,17 @@ onMounted(() => {
 .btn-order:focus {
     outline-color: none;
     box-shadow: none;
+}
+
+.button-comment:focus,
+.button-comment:active {
+    box-shadow: none;
+    outline: none;
+}
+
+.btn-link {
+    text-decoration-line: none;
+    color: #46A3FF;
 }
 </style>
   

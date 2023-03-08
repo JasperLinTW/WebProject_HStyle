@@ -43,7 +43,7 @@
 
   <div class="container">
     <div class="row">
-      <ProductCard />
+      <ProductCard v-for="item in products" :data="item" />
     </div>
   </div>
 
@@ -53,7 +53,53 @@
 <script setup>
 import Back2Top from '../components/Back2Top.vue'
 import ProductCard from '../components/ProductCard.vue'
+import { useRoute } from 'vue-router';
+import axios from 'axios';
 
+//收藏
+let likes = ref([]);
+
+const likeProductsId = ref([])
+
+const likesProducts = async () => {
+  await axios.get("https://localhost:7243/api/Products/products/likes")
+    .then(response => {
+      if (response.data.length > 0) {
+        likes.value = response.data;
+        likeProductsId.value = likes.value.map(p => {
+          return p.productId
+        });
+      }
+
+    })
+    .catch(error => { console.log(error); });
+}
+
+//商品預覽
+const products = ref([]);
+
+const loadProducts = async () => {
+  await axios.get("https://localhost:7243/api/Products/products")
+    .then(response => {
+      response.data.map(p => {
+        p.isClicked = likeProductsId.value.includes(p.product_Id);
+      })
+      products.value = response.data;
+    })
+    .catch(error => { console.log(error); });
+}
+
+//新品
+const newProduct = ref("新品");
+
+onMounted(() => {
+  likesProducts();
+  loadProducts();
+
+});
+
+const route = useRoute();
+console.log(route.params.tag);
 
 </script>
 <style scoped>

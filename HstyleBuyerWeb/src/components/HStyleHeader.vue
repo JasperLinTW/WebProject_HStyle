@@ -21,32 +21,34 @@
                     </li>
                     <a href="#"></a>
                     <li class="nav-item dropdown">
-                        <router-link to="/product" class="nav-link text-dark px-3"><span
+                        <router-link to="/products/new" class="nav-link text-dark px-3"><span
                                 class="targetAll">新品上市</span></router-link>
                     </li>
                     <li class="nav-item dropdown">
-                        <router-link to="/product" class="nav-link text-dark px-3"><span
+                        <router-link to="/products/all" class="nav-link text-dark px-3"><span
                                 class="targetAll">服飾名品</span></router-link>
                     </li>
-                    
+
                     <li class="nav-item dropdown">
                         <router-link to="/Blog" class="nav-link targetAll">部落格</router-link>
                     </li>
-                    <li class="nav-item dropdown"><router-link to="/Blog/EssaysBlog" class="nav-link targetAll">文章部落格</router-link></li>
+                    <li class="nav-item dropdown"><router-link to="/Blog/EssaysBlog"
+                            class="nav-link targetAll">文章部落格</router-link></li>
                     <li class="nav-item dropdown"><router-link to="/Blog/VideoBlog" class="nav-link text-dark"><span
                                 class="targetAll">影片部落格</span></router-link></li>
-                   
+
                     <li class="nav-item dropdown">
                         <router-link to="/Login" class="nav-link targetAll">測試用會員</router-link>
                         <!-- <a class="nav-link targetAll" href="#">測試用會員</a> -->
                     </li>
-                    
+
                 </ul>
             </div>
 
             <div class="nav justify-content-end ps-5">
                 <div class="mx-3">
-                    <a href="#" title="喜歡" class="text-dark"><i class="fa-regular fa-heart icon-hover fz-18"></i></a>
+                    <router-link to="/account/MemberCollection" title="喜歡" class="text-dark"><i
+                            class="fa-regular fa-heart icon-hover fz-18"></i></router-link>
                 </div>
                 <div class="btn-light mx-3">
                     <a href="#" title="打卡" class="text-dark"><i class="fa-regular fa-circle-check  icon-hover fz-18"
@@ -70,7 +72,6 @@
     </nav>
     <Cart @CartCount="UpdateCartCount" />
     <CheckIn />
-    
 </template>
 <script setup>
 import Cart from './Cart.vue'
@@ -88,7 +89,7 @@ onMounted(() => {
     })
     document.querySelector(".search").addEventListener("click", function () {
         document.querySelector("#search").focus();
-    });    
+    });
 });
 </script>
 <style scoped>

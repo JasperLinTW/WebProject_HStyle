@@ -62,7 +62,8 @@
                 <button class="btn-underline" @click="showComment = true" :class="{ active: showComment }">商品評論</button>
             </div>
             <div v-if="showComment" class="col-md-12 border-top pt-3 mb-big">
-                <PComment v-for="item in comment" :data="item"></PComment>
+                <PComment v-if="comment.length > 0" v-for="item in comment" :data="item"></PComment>
+                <div v-else class="pt-4">- 此商品無評論 -</div>
             </div>
             <div v-else class="col-md-12 border-top pt-5 px-6  mb-big">
                 {{ product.description }}
@@ -98,12 +99,6 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 // import required modules
 import { Pagination } from 'swiper';
-
-const objtest = {
-    name: 'test',
-    quantity: 1,
-}
-
 
 //路由
 const route = useRoute();
@@ -180,7 +175,7 @@ const getRecommend = async () => {
 const comment = ref([]);
 //評論
 const getComment = async () => {
-    await axios.get(`https://localhost:7243/api/Products/comments`)
+    await axios.get(`https://localhost:7243/api/Products/comments/${route.params.id}`)
         .then(response => {
             comment.value = response.data;
             console.log(comment.value);

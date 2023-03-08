@@ -11,16 +11,16 @@
         <form>
           <div class="modal-body text-start">
             <div class="form-group">
-              <label for="productName" class="mb-2">商品名稱: <div></div></label>
+              <label for="productName" class="mb-2">商品名稱: <span class="ms-2">{{ modalData.productName }}</span></label>
             </div>
             <div class="form-group">
               <div class="star-rating">
-                <label for="productRating" class="mb-2 me-3">商品評分: </label>
+                <label for="productRating" class="mb-2 me-2">商品評分: </label>
                 <i v-for="(star, index) in 5" :key="index" :class="starClass(index)" @click="selectRating(index)"></i>
               </div>
             </div>
             <div class="form-group">
-              <label for="productSize">尺寸: </label>
+              <label for="productSize">尺寸:<span class="ms-2">{{ modalData.productSpec }}</span></label>
             </div>
             <div class="form-group form-floating my-3">
               <textarea class="form-control h200px" id="productComment"></textarea>
@@ -32,7 +32,7 @@
             </div>
           </div>
           <div class="modal-footer mt-0 border-0">
-            <button type="button" class="btn savebtn">送出</button>
+            <button type="button" @click="createComment" class="btn savebtn">送出</button>
           </div>
         </form>
       </div>
@@ -45,34 +45,39 @@ import { onMounted, ref } from 'vue';
 import Back2Top from "./Back2Top.vue"
 import axios from 'axios';
 
-  const props = defineProps({
-    maxRating: {
-      default: 5
-    },
-    initialRating: {
-      default: 0
-    }});
+const props = defineProps({
+  maxRating: {
+    default: 5
+  },
+  initialRating: {
+    default: 0
+  },
+  modalData: { Object },
+});
 
+const createComment = () => {
+  alert(`${props.modalData.productId}, ${props.modalData.orderId}`);
+}
 
-    const selectedRating = ref(props.initialRating);
-    const stars = ref(Array(props.maxRating).fill(false));
+const selectedRating = ref(props.initialRating);
+const stars = ref(Array(props.maxRating).fill(false));
 
-    const selectRating = (index) => {
-      selectedRating.value = index + 1;
-    }
+const selectRating = (index) => {
+  selectedRating.value = index + 1;
+}
 
-    const starClass = (index) => {
-      if (index < selectedRating.value) {
-        return 'fa-solid fa-star';
-      } else {
-        return 'fa-regular fa-star';
-      }
-    }
+const starClass = (index) => {
+  if (index < selectedRating.value) {
+    return 'fa-solid fa-star';
+  } else {
+    return 'fa-regular fa-star';
+  }
+}
 
-    onMounted(() => {
-      stars.value.splice(props.initialRating, props.maxRating - props.initialRating, true);
-      
-    });
+onMounted(() => {
+  stars.value.splice(props.initialRating, props.maxRating - props.initialRating, true);
+
+});
 
 
 </script>
