@@ -10,9 +10,8 @@
                             <span class="tag">#{{tag}}</span>
                         </div>
                         <div class="likeIcon d-flex flex-row-reverse">
-                            <!-- <span v-if="!video.isClicked" @click="video.isClicked = true"><i class="fa-regular fa-heart fz-18"></i></span> -->
-                            <span v-if="!video.isClicked" @click="video.isClicked = true"><i class="fa-regular fa-heart fz-18"></i></span>
-                        <span v-else @click="video.isClicked = false"><i class="fa-solid fa-heart fz-18"></i></span>
+                            <span v-if="!video.isClicked" @click="video.isClicked==true"><i class="fa-regular fa-heart fz-18"></i></span>
+                            <span v-else @click="video.isClicked = false"><i class="fa-solid fa-heart fz-18"></i></span>
                         </div>
                     </div>
                 </div>
@@ -26,19 +25,33 @@ import axios from 'axios';
 import {ref,onMounted} from 'vue';
 
 const videos=ref([])
-const likeVideosId=ref([])
+const videoLikesId=ref([])
 const likes=ref([])
+
+// const likesVideos = async () => {
+//     await axios.post("https://localhost:7243/api/likes")
+//         .then(response => {
+//             if (response.data.length > 0) {
+//                 likes.value = response.data;
+//                 likeProductsId.value = likes.value.map(p => {
+//                     return p.productId
+//                 });
+//             }
+
+//         })
+//         .catch(error => { console.log(error); });
+// }
 
 const getVideos=async()=>{
     await axios.get(`https://localhost:7243/api/Video`)
-        .then(response=> {
-            response.data.map(v=> {
-            v.isClicked=likeVideosId.value.includes(v.id);
+    .then(response=>{
+        response.data.map(v=>{
+            v.isClicked=videoLikesId.value.includes(v=>v.videoId);
         })
-            videos.value=response.data;
-            console.log(videos.value);
-        })
-        .catch(error=> {console.log(error);});
+        videos.value=response.data;
+        videos.log(video.value);
+    })
+    .catch(error=>{console.log(error);});
 }
 
 // const postLike=()=>{
@@ -50,10 +63,11 @@ const getVideos=async()=>{
 //     }).catch(error=>{console.log(error);});
 // }
 
-
 onMounted(() => {
     getVideos();
+    //postLike();
 });
+
 </script>
 
 <style scoped>

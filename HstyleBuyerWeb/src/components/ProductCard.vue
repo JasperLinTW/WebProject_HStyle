@@ -23,7 +23,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 </template>
 
@@ -55,12 +54,8 @@ const likesProducts = async () => {
         .catch(error => { console.log(error); });
 }
 
-
-
-
 //商品預覽
 const products = ref([]);
-
 
 const loadProducts = async () => {
     await axios.get("https://localhost:7243/api/Products/products")

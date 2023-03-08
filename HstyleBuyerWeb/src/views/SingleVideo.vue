@@ -30,9 +30,14 @@
                             </div>
                         </form>
                     </div>
-                    <div class="col-lg-12">
-                        <div class="recoProducts">{{}}</div>
-                    </div>
+                    <br>
+                    <!-- <div class="col-lg-12">
+                        <div class="users">商品推薦</div>
+                        <div class="recoProducts" v-for="comment in videoComments">
+                            <label>留言者 {{ comment.memberId }}</label>
+                            <label>留言 {{ comment.comment }}</label>
+                        </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -58,13 +63,14 @@ const getVideo=async()=>{
     .catch(error=>{console.log(error);});
 }
 
-const getComments=async()=>{
-    await axios.get(`https://localhost:7243/api/Video/Comments/${route.params.id}`)
-    .then(response=>{
-        videoComments.value=response.data;
-        console.log(videoComments.value);
-    })
-}
+// const getComments=async()=>{
+//     await axios.get(`https://localhost:7243/api/Video/Comments/?videoId=${route.params.id}`)
+//     .then(response=>{
+//         videoComments.value=response.data;
+//         console.log(videoComments.value);
+//     })
+// }
+
 // const getRecoProducts=async()=>{
 //     await axios.get(`thhps://localhost:7243/api/Video/${route.params.id}/Recommenations`)
 //     .then(response=>{
@@ -75,7 +81,7 @@ const getComments=async()=>{
 
 onMounted(() => {
     getVideo();
-    getComments();
+    //getComments();
 })
 </script>
 
