@@ -1,25 +1,23 @@
 <template>
-    <div class="col-lg-4 d-flex justify-content-around px-5 py-5" v-for="item in products">
-
+    <div class="col-lg-4 d-flex justify-content-around px-5 py-5">
         <div class="card d-flex justify-content-center align-items-center">
-            <router-link :to="'/product/' + item.product_Id">
+            <router-link :to="'/product/' + data.product_Id">
                 <div class="img-sz">
-
-                    <img v-if="!item.isIn" @mouseover="item.isIn = true" :src="item.imgs[0]" class="card-img-top"
+                    <img v-if="!item.isIn" @mouseover="item.isIn = true" :src="data.imgs[0]" class="card-img-top"
                         alt="Product Image">
-                    <img v-else @mouseout="item.isIn = false" :src="item.imgs[1]" class="card-img-top" alt="Product Image">
+                    <img v-else @mouseout="item.isIn = false" :src="data.imgs[1]" class="card-img-top" alt="Product Image">
                 </div>
             </router-link>
             <div class="card-body position-relative">
-                <div class="position-absolute top-0 end-0 me-2 mt-2" v-for="tag in item.tags"> <label class="fz-9"
+                <div class="position-absolute top-0 end-0 me-2 mt-2" v-for="tag in data.tags"> <label class="fz-9"
                         v-if="tag === newProduct">{{ newProduct
                         }}</label> </div>
-                <div class="card-title fw-bold">{{ item.product_Name }}</div>
-                <span>$NT {{ item.unitPrice }}</span>
+                <div class="card-title fw-bold">{{ data.product_Name }}</div>
+                <span>$NT {{ data.unitPrice }}</span>
                 <div class="card-text text-end">
-                    <span v-if="!item.isClicked" @click="likesProduct(item.product_Id, item)"><i
+                    <span v-if="!data.isClicked" @click="likesProduct(data.product_Id, data)"><i
                             class="fa-regular fa-heart icon-hover fz-18"></i></span>
-                    <span v-else @click="likesProduct(item.product_Id, item)"><i
+                    <span v-else @click="likesProduct(data.product_Id, data)"><i
                             class="fa-solid fa-heart  fz-18"></i></span>
                 </div>
             </div>
@@ -28,32 +26,10 @@
 </template>
 
 <script setup>
-import axios from 'axios';
 import { ref, onMounted } from 'vue';
-
-
-//圖片動畫
-const isIn = ref(false);
-
-
-//收藏
-let likes = ref([]);
-
-const likeProductsId = ref([])
-
-const likesProducts = async () => {
-    await axios.get("https://localhost:7243/api/Products/products/likes")
-        .then(response => {
-            if (response.data.length > 0) {
-                likes.value = response.data;
-                likeProductsId.value = likes.value.map(p => {
-                    return p.productId
-                });
-            }
-
-        })
-        .catch(error => { console.log(error); });
-}
+const props = defineProps({
+    data: Object
+})
 
 
 const likesProduct = async (product_Id, item) => {
@@ -65,28 +41,12 @@ const likesProduct = async (product_Id, item) => {
 }
 
 
-//商品預覽
-const products = ref([]);
 
-const loadProducts = async () => {
-    await axios.get("https://localhost:7243/api/Products/products")
-        .then(response => {
-            response.data.map(p => {
-                p.isClicked = likeProductsId.value.includes(p.product_Id);
-            })
-            products.value = response.data;
-        })
-        .catch(error => { console.log(error); });
-}
+//圖片動畫
+const isIn = ref(false);
 
-//新品
-const newProduct = ref("新品");
 
-onMounted(() => {
-    likesProducts();
-    loadProducts();
 
-});
 </script>
 
 <style scoped>
