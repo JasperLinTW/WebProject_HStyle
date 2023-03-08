@@ -16,7 +16,7 @@ export default {
 <template>
   <div id="app">
     <HStyleHeader />
-    <router-view class="viewContent" />
+    <router-view />
     <HStyleFooter />
   </div>
 </template>
@@ -28,7 +28,5 @@ export default {
 
 }
 
-.viewContent {
-  min-height: 600px;
-}
+
 </style>

@@ -40,38 +40,13 @@ namespace HStyleApi.Controllers
         public MemberController(AppDbContext context)
         {
             _context = context;
-        }
-        // GET: api/<MemberController>
-        [HttpGet]
-        public IActionResult Get()
-        {
-            var memeberId = int.Parse(HttpContext.User.FindFirst("MemberId")!.Value);
-            var member = _context.Members
-            .Include(m => m.Permission)
-            .Where(m => m.Id == memeberId)
-            .Select(x => new MemberDTO
-            {
-                Id = x.Id,
-                Name = x.Name,
-                Email = x.Email,
-                Account = x.Account,
-                PhoneNumber = x.PhoneNumber,
-                Address = x.Account,
-                Gender = x.Gender,
-                Birthday = x.Birthday,
-                PermissionId = x.PermissionId,
-                Jointime = x.Jointime,
-                TotalH = x.TotalH,
-            });
+			
+
+		}
+		// GET: api/<MemberController>
 
 
-
-            return Ok(member);            
-
-        }        
-
-
-        [HttpPost("LogIn")]
+		[HttpPost("LogIn")]
         [AllowAnonymous]
         public IActionResult LogIn(LogInDTO value)
         {
@@ -118,7 +93,7 @@ namespace HStyleApi.Controllers
             // 將JavaScript對象傳遞回前端
             return Ok(userData);
         }
-
+  
         [HttpGet("id")] //測試用
         public int GetMemberId()
         {
@@ -132,14 +107,21 @@ namespace HStyleApi.Controllers
             else
             {
                 // 無法獲取 MemberId，返回未授權狀態碼
-                return (1213);
+                return (-1);
             }
         }
+		[HttpGet("NoLogin")]
+		public IActionResult NoLogin()
+        {
+            return Unauthorized();
+        }
 
-        [Authorize]
+
+		[Authorize]
         [HttpPost("LogOut")]
         public async Task<IActionResult> LogOut()
         {
+
             var claims = User.FindFirst("MemberId");
             if (claims != null)
             {
@@ -147,14 +129,13 @@ namespace HStyleApi.Controllers
                 // Do something with the member ID
             }
             if (User.Identity.IsAuthenticated)
-                {
+            {
                 await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
                 return Ok("登出成功");
             }
-            else
-            {
-                return BadRequest("您尚未登入");
-            }
+            
+            return BadRequest("您尚未登入");
+            
 
         }
 

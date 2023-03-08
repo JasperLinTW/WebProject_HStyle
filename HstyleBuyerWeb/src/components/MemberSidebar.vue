@@ -17,10 +17,25 @@
                 <router-link to="/account/MemberCollection" class="text-decoration-none text-dark">收藏清單</router-link>
             </li>
         </ul>
+        <button type="button" @click="logout" class="btn btn-light">登出</button>
     </div>
 </template>
   
-<script>
+<script setup>
+import axios from 'axios';
+
+const logout = () => {
+    axios.post('https://localhost:7243/api/Member/LogOut', {}, {
+        withCredentials: true,
+    })
+        .then((response) => {
+            console.log(response.data);
+            window.location = "http://localhost:5173";
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+};
 </script>
   
 <style scoped>

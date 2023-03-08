@@ -36,13 +36,10 @@
                                 class="targetAll">影片部落格</span></router-link>
                     </li>
                     <li class="nav-item dropdown">
-                        <router-link to="/member" class="nav-link targetAll">測試用會員</router-link>
+                        <router-link to="/Login" class="nav-link targetAll">測試用會員</router-link>
                         <!-- <a class="nav-link targetAll" href="#">測試用會員</a> -->
                     </li>
-                    <li class="nav-item dropdown">
-                        <router-link to="/LogIn" class="nav-link targetAll">會員登入</router-link>
-                        <!-- <a class="nav-link targetAll" href="#">測試用會員</a> -->
-                    </li>
+                    
                 </ul>
             </div>
 

@@ -2,13 +2,16 @@
 using HStyleApi.Models.EFModels;
 using HStyleApi.Models.InfraStructures.Repositories;
 using HStyleApi.Models.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace HStyleApi.Controllers
 {
+   
 	[EnableCors("AllowAny")]
 	[Route("api/[controller]")]
     [ApiController]
@@ -16,12 +19,22 @@ namespace HStyleApi.Controllers
     {
         private readonly CartService _CartService;
         private readonly int _memberId;
-        public CartController(AppDbContext db)
+        public CartController(AppDbContext db, IHttpContextAccessor httpContextAccessor)
         {
             _CartService = new CartService(db);
-			_memberId = 1;//TODO從COOKIE取
+			var claims = httpContextAccessor.HttpContext.User.Claims;
+			if (claims.Any())
+			{
+				var data = int.TryParse(claims.Where(x => x.Type == "MemberId").FirstOrDefault().Value, out int memberid);
+				_memberId = memberid;
+			}
+			//TODO從COOKIE取
+			
 		}
-        [HttpPost("Checkout")]
+		
+
+		
+		[HttpPost("Checkout")]
         public IActionResult Checkout(CheckoutDTO value)
         {
             int orderId = 0;
@@ -38,15 +51,18 @@ namespace HStyleApi.Controllers
 			return Ok(orderId);
         }
 
-        // GET: api/<CartController>
-        [HttpGet]
+		// GET: api/<CartController>
+		
+		[HttpGet]
         public CartListDTO Get()
         {
-            return _CartService.GetCart(_memberId);
+	
+			return _CartService.GetCart(_memberId);
         }
 
-        // POST api/<CartController>
-        [HttpPost("{specId}")]
+		// POST api/<CartController>
+		
+		[HttpPost("{specId}")]
         public ActionResult Add(int specId)
         {
             
@@ -86,8 +102,10 @@ namespace HStyleApi.Controllers
 			return Ok("刪除成功");
 		}
 
-	
+		
 
-       
-    }
+
+
+
+	}
 }
