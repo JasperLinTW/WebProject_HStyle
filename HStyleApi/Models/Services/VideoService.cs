@@ -23,9 +23,9 @@ namespace HStyleApi.Models.Services
 			return data;
 		}
 
-		public async Task<VideoDTO> GetVideo(int id)
+		public async Task<VideoDTO> GetVideo(int videoId)
 		{
-			var data = _videoRepository.GetVideo(id);
+			var data = _videoRepository.GetVideo(videoId);
 			return await data;
 		}
 

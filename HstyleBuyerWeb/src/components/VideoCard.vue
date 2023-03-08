@@ -10,8 +10,13 @@
                             <span class="tag">#{{tag}}</span>
                         </div>
                         <div class="likeIcon d-flex flex-row-reverse">
+                            
                             <span v-if="!video.isClicked" @click="video.isClicked==true"><i class="fa-regular fa-heart fz-18"></i></span>
                             <span v-else @click="video.isClicked = false"><i class="fa-solid fa-heart fz-18"></i></span>
+                            <div class="influence">
+                                <label ><i class="fa-solid fa-eye"></i>{{video.views}}</label>
+                                <label ><i class="fa-solid fa-thumbs-up"></i>{{video.likes}}</label>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -45,11 +50,8 @@ const likes=ref([])
 const getVideos=async()=>{
     await axios.get(`https://localhost:7243/api/Video`)
     .then(response=>{
-        response.data.map(v=>{
-            v.isClicked=videoLikesId.value.includes(v=>v.videoId);
-        })
         videos.value=response.data;
-        videos.log(video.value);
+        console.log(videos.value);
     })
     .catch(error=>{console.log(error);});
 }
@@ -87,12 +89,20 @@ onMounted(() => {
     text-align:left;
 }
 
-a{
+a {
     text-decoration: none;
 }
 
 .tags{
     color: black;
+    text-decoration:none;
+    text-align:left;
+}
+
+.influence{
+    color:darkgrey;
+    /* color: black; */
+    font-size: 70%;
     text-decoration:none;
     text-align:left;
 }
