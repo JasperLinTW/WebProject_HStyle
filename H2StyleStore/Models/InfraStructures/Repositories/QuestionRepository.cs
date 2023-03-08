@@ -104,7 +104,7 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			CustomerQuestion question = _db.CustomerQuestions.Find(dto.CustomerQuestion_Id);
 
 			question.Solution_Description = dto.Solution_Description;
-			question.SolveTime = dto.SolveTime;
+			question.SolveTime = DateTime.Now;
 			question.Employee_Id = _db.Employees.Where(x => x.Account == dto.Employee_Name).FirstOrDefault().Employee_id;
 			_db.SaveChanges();
 		}

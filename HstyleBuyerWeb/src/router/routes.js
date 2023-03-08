@@ -10,6 +10,7 @@ const routes = [
       { path: 'MemberProfile',component: () => import('../components/MemberProfile.vue')},
       { path: 'MemberCollection',component: () => import('../components/MemberCollection.vue')},
       { path: 'MemberAddresses',component: () => import('../components/MemberAddresses.vue')},
+      { path: 'responses',component: () => import('../components/QResponses.vue')},
     ]},
     { path: '/EssaysBlog',name:'EssaysBlog', component:()=> import('../views/EssaysBlog.vue'),meta: { requiresAuth: false } },
     { path: '/VideoBlog', name: 'VideoBlog', component: () => import('../views/VideoBlog.vue'), meta: { requiresAuth: false } },
@@ -18,6 +19,7 @@ const routes = [
     { path: '/login',name:'Login', component:()=> import('../views/Login.vue'),meta: { requiresAuth: false } },
     { path: '/EssaysBlog', name: 'EssaysBlog', component: () => import('../views/EssaysBlog.vue'), meta: { requiresAuth: false } },
     { path: '/OrderComplete', name: 'OrderComplete', component: () => import('../views/OrderComplete.vue'), meta: { requiresAuth: false } }
+    { path: '/Questions', name: 'Questions', component: () => import('../views/FAQ.vue'), meta: { requiresAuth: false } }
 
   ]
 export default routes

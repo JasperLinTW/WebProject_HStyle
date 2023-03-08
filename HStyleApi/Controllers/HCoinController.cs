@@ -16,9 +16,11 @@ namespace HStyleApi.Controllers
 	public class HCoinController : ControllerBase
 	{
 		private HCoinService _service;
+		private int _member_id;
 		public HCoinController(AppDbContext db)
 		{
 			_service = new HCoinService(db);
+			_member_id = 3; //之後用Cookie取
 		}
 
 		// GET: api/<HCoinController>
@@ -30,10 +32,11 @@ namespace HStyleApi.Controllers
 
 		// GET api/<HCoinController>/5
 		// 得到打卡資料
-		[HttpGet("CheckIn/{memberId}")]
-		public async Task<HCheckInDTO> GetHCheckIn(int memberId)
+		[HttpGet("CheckIn")]
+		public async Task<HCheckInDTO> GetHCheckIn()
 		{
-			if (memberId == null)
+			int memberId = _member_id;
+			if (memberId <= 0)
 			{
 				throw new Exception("請先登入會員");
 			}
@@ -47,10 +50,11 @@ namespace HStyleApi.Controllers
 
 		// PUT api/<HCoinController>/5
 		// 將打卡紀錄傳回資料庫
-		[HttpPut("CheckIn/{id}")]
-		public async Task<ActionResult> PutCheckIn(int memberId)
+		[HttpPut("CheckIn")]
+		public async Task<ActionResult> PutCheckIn()
 		{
-			if (memberId == null)
+			int memberId = _member_id;
+			if (memberId <= 0)
 			{
 				throw new Exception("請先登入會員");
 			}
@@ -70,10 +74,11 @@ namespace HStyleApi.Controllers
 		}
 
 		// 取得會員的總HCoin金額
-		[HttpGet("TotalHCoin/{memberId}")]
-		public async Task<int> GetTotalHCoin(int memberId)
+		[HttpGet("TotalHCoin")]
+		public async Task<int> GetTotalHCoin()
 		{
-			if (memberId == null)
+			int memberId = _member_id;
+			if (memberId <= 0)
 			{
 				throw new Exception("請先登入會員");
 			}
@@ -85,10 +90,11 @@ namespace HStyleApi.Controllers
 
 		// 將會員花費的HCoin記錄到
 		// POST api/<HCoinController>
-		[HttpPost("CostHCoin/{memberId}")]
-		public void PostCostHCoin(int memberId, [FromBody] int value)
+		[HttpPost("CostHCoin")]
+		public void PostCostHCoin([FromBody] int value)
 		{
-			if (memberId == null)
+			int memberId = _member_id;
+			if (memberId <= 0)
 			{
 				throw new Exception("請先登入會員");
 			}

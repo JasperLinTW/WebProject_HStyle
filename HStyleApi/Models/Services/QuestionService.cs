@@ -26,6 +26,12 @@ namespace HStyleApi.Models.Services
 			return await data;
 		}
 
+		public async Task<IEnumerable<MemberResponseDTO>> GetMemberQResponse(int memberId)
+		{
+			var data = _questionRepository.GetMemberQResponse(memberId);
+			return await data;
+		}
+
 		public void PostCustomerQuestion(CustomerQuestionDTO dto)
 		{
 			if (dto == null)

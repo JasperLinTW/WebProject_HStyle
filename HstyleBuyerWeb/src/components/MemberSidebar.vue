@@ -16,6 +16,9 @@
             <li>
                 <router-link to="/account/MemberCollection" class="text-decoration-none text-dark">收藏清單</router-link>
             </li>
+            <li>
+                <router-link to="/account/responses" class="text-decoration-none text-dark">客服回覆</router-link>
+            </li>
         </ul>
         <button type="button" @click="logout" class="btn btn-light">登出</button>
     </div>

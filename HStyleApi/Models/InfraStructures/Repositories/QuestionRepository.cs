@@ -37,6 +37,13 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 			return data;
 		}
 
+		public async Task<IEnumerable<MemberResponseDTO>> GetMemberQResponse(int memberId)
+		{
+			var data = await _db.CustomerQuestions.Where(q=>q.MemberId== memberId)
+				.Select(q => q.ToMemberResponseDTO()).ToListAsync();
+			return data;
+		}
+
 		public void PostCustomerQuestion(CustomerQuestionDTO dto)
 		{
 			CustomerQuestion question = dto.ToCustomerQ();
