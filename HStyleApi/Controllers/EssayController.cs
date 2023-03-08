@@ -21,7 +21,7 @@ namespace HStyleApi.Controllers
 		// GET: api/<EssayController>
 		[HttpGet]
 		//FromQuery  =傳value篩選 代 service rpst
-		public async Task<IEnumerable<EssayDTO>> GetEssays([FromQuery] string keyword)
+		public async Task<IEnumerable<EssayDTO>> GetEssays([FromQuery] string? keyword)
 		{
 			IEnumerable<EssayDTO> data = await _service.GetEssays(keyword);
 			return data;
@@ -29,7 +29,7 @@ namespace HStyleApi.Controllers
 
 		// GET api/<EssayController>/5
 		[HttpGet("{id}")]
-		public async Task<IEnumerable<EssayDTO>> GetEssay(int id)
+		public async Task<EssayDTO> GetEssay(int id)
 		{
 
 			return await _service.GetEssays(id);

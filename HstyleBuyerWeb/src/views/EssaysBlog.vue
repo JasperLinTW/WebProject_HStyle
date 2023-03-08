@@ -1,9 +1,11 @@
 <!-- Blog.EssaysBlog -->
 <template>
-    <P>文章部落格頁面</P>
+    <EssayCard ></EssayCard>
+    
 </template>
   
-<script>
+<script setup>
+import EssayCard from '../components/EssayCard.vue'
 //   寫JS
 </script>
 

@@ -12,6 +12,7 @@ namespace ScheduleWork.EFModels
 		{
 		}
 
+		public virtual DbSet<Essay> Essays { get; set; }
 		public virtual DbSet<H_Activities> H_Activities { get; set; }
 		public virtual DbSet<H_CheckIns> H_CheckIns { get; set; }
 		public virtual DbSet<H_Source_Details> H_Source_Details { get; set; }

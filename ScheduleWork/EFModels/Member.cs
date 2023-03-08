@@ -26,26 +26,23 @@ namespace ScheduleWork.EFModels
         [StringLength(50)]
         public string Email { get; set; }
 
-        [Required]
         [StringLength(50)]
         public string Account { get; set; }
 
-        [Required]
         [StringLength(10)]
         public string Phone_Number { get; set; }
 
-        [Required]
         [StringLength(100)]
         public string Address { get; set; }
 
-        public bool Gender { get; set; }
+        public bool? Gender { get; set; }
 
         [Column(TypeName = "datetime2")]
-        public DateTime Birthday { get; set; }
+        public DateTime? Birthday { get; set; }
 
         public int? Permission_Id { get; set; }
 
-        public DateTime Jointime { get; set; }
+        public DateTime? Jointime { get; set; }
 
         public bool? Mail_verify { get; set; }
 

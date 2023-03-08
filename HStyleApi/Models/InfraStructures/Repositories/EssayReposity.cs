@@ -26,6 +26,7 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 				.Include(e => e.Tags)
 				.Include(e => e.Elikes)
 				.Include(e => e.Category)
+				.Where(e => e.Pon == true)
 				.ToListAsync();
 			if (data == null)
 			{
@@ -43,20 +44,24 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 			}
 		}
 		//單一文章
-		public async Task<IEnumerable<EssayDTO>> GetEssay(int id)
+		public async Task<EssayDTO> GetEssay(int id)
 		{
-			IEnumerable<EssayDTO> essays = await _db.Essays.Where(e => e.EssayId == id)
+			IEnumerable<EssayDTO> data = await _db.Essays
 				.Include(e => e.Imgs)
 				.Include(e => e.Category)
 				.Include(e => e.Tags)
-				.Include(e => e.Elikes).Select(e => e.ToEssayDTO())
+				.Include(e => e.Elikes)
+				.Where(e => e.Pon == true).Select(e => e.ToEssayDTO())
 				.ToListAsync();
-			if (essays == null)
+
+			if (data == null)
 			{
 				throw new Exception();
 			}
 
-			return essays;
+			var essay = data.SingleOrDefault(e => e.EssayId == id);
+
+			return essay;
 		}
         public async Task<IEnumerable<EssayDTO>> GetNews()
         {

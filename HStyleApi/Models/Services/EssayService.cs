@@ -23,7 +23,7 @@ namespace HStyleApi.Models.Services
 			var data = await _essayReposity.GetEssays(keyword);
 			return data;
 		}
-		public async Task<IEnumerable<EssayDTO>> GetEssays(int id)
+		public async Task<EssayDTO> GetEssays(int id)
 		{
 			var data = _essayReposity.GetEssay(id);
 			return await data;
