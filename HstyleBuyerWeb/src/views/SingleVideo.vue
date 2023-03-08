@@ -2,9 +2,15 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col-lg-8">
-                <div class="">
-                    <video class="video" :src="video.filePath"></video>
+                <!-- plyr影片串接 -->
+                <div>
+                    <video ref="player" class="plyr__video-embed" playsinline controls>
+                    <source :src="video.filePath" type="video/mp4">
+                    </video>
                 </div>
+                <!-- <div class="">
+                    <video class="video" :src="video.filePath"></video>
+                </div> -->
                 <div class="content">
                     <div v-for="tag in video.tags">#{{tag}}</div>
                     <div class="videoLike">
@@ -62,9 +68,22 @@
 </template>
 
 <script setup>
+
+
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import axios from 'axios';
+import Plyr from 'plyr';
+// export default {
+//   data() {
+//     return {
+//       videoUrl: 'path/to/video.mp4'
+//     };
+//   },
+//   mounted() {
+//     const player = new Plyr(this.$refs.player);
+//   }
+// };
 
 const video=ref([]);
 const route = useRoute();
@@ -138,10 +157,12 @@ onMounted(() => {
     getComments();
     getRecommenations();
     postView();
+    const player = new Plyr(this.$refs.player);
 })
 </script>
 
 <style scoped>
+@import '~plyr/dist/plyr.css';
 .video{
     width:800px;
 }
@@ -149,4 +170,5 @@ onMounted(() => {
 img{
     height: 140px;
 }
+
 </style>
