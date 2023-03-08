@@ -48,7 +48,7 @@ namespace HStyleApi.Models.DTOs
 				CategoryId = source.CategoryId,
 				//Imgs = source.Imgs.Select(x => x.Path),
 
-				Imgs = source.Imgs.Select(x => $"{_basePath}/EssayImages/{x.Path}"),
+				Imgs = source.Imgs.Select(x => $"{_basePath}/Essaysimage/{x.Path}"),
 				Tags = source.Tags.Select(x => x.TagName),
 				Like = source.Elikes.GroupBy(x => x.EssayId).Count(),
 				CategoryName = source.Category.CategoryName,

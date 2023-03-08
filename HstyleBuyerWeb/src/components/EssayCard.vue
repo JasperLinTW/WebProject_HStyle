@@ -8,6 +8,7 @@
       <div class="card border-0 card1">
         <div class="card-img w-100 h200px rounded overflow-hidden">
           <img :src="item.imgs[0]" class="card-img-top" alt="Essays Image">
+
         </div>
         <div class="card-header d-flex bg-white border-bottom-0">
           <span class="badge bg-secondary opacity-50 me-1" v-for="tag in item.tags">{{ tag }}</span>
