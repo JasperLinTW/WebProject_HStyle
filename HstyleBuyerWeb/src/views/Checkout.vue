@@ -240,7 +240,13 @@ const checkout = async () => {
     )
     .then((response) => {
       axios
-        .post(`https://localhost:7243/api/Paypal/${response.data}`)
+        .post(
+          `https://localhost:7243/api/Paypal/${response.data}`,
+          {},
+          {
+            withCredentials: true,
+          }
+        )
         .then((response) => {
           window.location = response.data.paypalLink;
         })

@@ -2,6 +2,7 @@
 using HStyleApi.Models.InfraStructures.Repositories;
 using HStyleApi.Models.Services;
 using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -25,8 +26,8 @@ namespace HStyleApi.Controllers
 			_config = config;
 			_orderService = new OrderService(new OrderRepo(db));
 		}
-		
 
+		[Authorize]
 		[HttpPost("{orderId}")]
 		public async Task<IActionResult> CreateOrder(int orderId)
 		{
