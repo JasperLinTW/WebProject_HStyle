@@ -73,24 +73,22 @@
 </template>
 <script setup>
 import Cart from './Cart.vue'
-export default {
-    components: {
-        Cart,
-        CheckIn,
-    },
-    mounted() {
-        window.addEventListener("scroll", function () {
-            var header = document.querySelector("header");
-            header.classList.toggle("sticky", window.scrollY > 0)
-                ;
-        })
-
-        document.querySelector(".search").addEventListener("click", function () {
-            document.querySelector("#search").focus();
-        });
-
-    }
+import CheckIn from './CheckIn.vue'
+import { ref, onMounted, watchEffect, nextTick } from "vue";
+const cartItemsNum = ref()
+const UpdateCartCount = (CartCount) => {
+    //$('#exampleModal').modal('show');
+    cartItemsNum.value = CartCount;
 }
+onMounted(() => {
+    window.addEventListener("scroll", function () {
+        var header = document.querySelector("header");
+        header.classList.toggle("sticky", window.scrollY > 0);
+    })
+    document.querySelector(".search").addEventListener("click", function () {
+        document.querySelector("#search").focus();
+    });    
+});
 </script>
 <style scoped>
 .badge {
