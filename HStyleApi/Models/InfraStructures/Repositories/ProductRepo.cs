@@ -72,10 +72,13 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 
 			_db.ProductComments.Add(pcomment);
 
-			foreach (string path in dto.PcommentImgs)
+			if (dto.files != null)
 			{
-				Image image = new Image { Path = path, };
-				pcomment.PcommentImgs.Add(image);
+				foreach (string path in dto.PcommentImgs)
+				{
+					Image image = new Image { Path = path, };
+					pcomment.PcommentImgs.Add(image);
+				}
 			}
 
 			_db.SaveChanges();
@@ -126,10 +129,10 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 			_db.SaveChanges();
 		}
 
-		public IEnumerable<PCommentDTO> LoadComments()
+		public IEnumerable<PCommentDTO> LoadComments(int product_id)
 		{
 			IEnumerable<ProductComment> data = _db.ProductComments.Include(x => x.PcommentImgs)
-																  .Include(x => x.Product)
+																  .Include(x => x.Product).Where(x => x.ProductId == product_id)
 																  .Include(x => x.Order).ThenInclude(x => x.Member)
 																  .Include(x => x.Order).ThenInclude(x => x.OrderDetails);
 

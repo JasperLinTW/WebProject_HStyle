@@ -3,6 +3,7 @@ using HStyleApi.Models.DTOs;
 using HStyleApi.Models.EFModels;
 using HStyleApi.Models.InfraStructures.Repositories;
 using HStyleApi.Models.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Mvc;
@@ -24,12 +25,17 @@ namespace HStyleApi.Controllers
 		private readonly int _member_id;
 		private readonly AppDbContext _db;
 
-		public ProductsController(AppDbContext db)
+		public ProductsController(AppDbContext db, IHttpContextAccessor httpContextAccessor)
 		{
 			_Service = new ProductServices(db);
 			_db = db;
-			_member_id = 1; //之後用Cookie取
-		}
+            var claims = httpContextAccessor.HttpContext.User.Claims;
+            if (claims.Any())
+            {
+                var data = int.TryParse(claims.Where(x => x.Type == "MemberId").FirstOrDefault().Value, out int memberid);
+                _member_id = memberid;
+            }
+        }
 
 		[HttpGet("test")]
 		public dynamic GetTags(int product_id)
@@ -160,6 +166,7 @@ namespace HStyleApi.Controllers
 
 
 		//商品收藏
+		[Authorize]
 		[HttpPost("product/like")]
 		public ActionResult LikesProduct (int product_id)
 		{
@@ -168,6 +175,7 @@ namespace HStyleApi.Controllers
 		}
 
 		//商品收藏瀏覽
+		[Authorize]
 		[HttpGet("products/likes")]
 		public ActionResult LoadLikeProducts()
 		{
@@ -235,30 +243,33 @@ namespace HStyleApi.Controllers
 		[HttpPost("comment")]
 		public IActionResult CreateComment([FromForm] PCommentPostDTO comment, int orderId, int productId)
 		{
-			long size = comment.files.Sum(f => f.Length);
 			string path = "../H2StyleStore/Images/PCommentImages/";
 
 			comment.PcommentImgs = new List<string>();
 
-			foreach (var file in comment.files)
+			if (comment.files != null)
 			{
-				try
+				foreach (var file in comment.files)
 				{
-					if (file.Length > 0)
+					try
 					{
-						var helper = new UploadFileHelper();
-						string result = helper.SaveAs(path, file);
-						string FileName = result;
-						comment.PcommentImgs.Add($"{FileName}");
+						if (file.Length > 0)
+						{
+							var helper = new UploadFileHelper();
+							string result = helper.SaveAs(path, file);
+							string FileName = result;
+							comment.PcommentImgs.Add($"{FileName}");
+						}
 					}
-				}
-				catch (Exception ex)
-				{
+					catch (Exception ex)
+					{
 
-					return BadRequest(ex.Message);
-				}
+						return BadRequest(ex.Message);
+					}
 
+				}
 			}
+			
 			var data = _Service.CreateComment(comment, orderId, productId);
 
 			return Ok("新增成功");
@@ -274,13 +285,13 @@ namespace HStyleApi.Controllers
 		}
 
 		//所有評論瀏覽
-		[HttpGet("comments")]
-		public ActionResult<PCommentDTO> LoadComments()
+		[HttpGet("comments/{product_id}")]
+		public ActionResult<PCommentDTO> LoadComments(int product_id)
 		{
 			IEnumerable<PCommentDTO> data;
 			try
 			{
-				 data = _Service.LoadComments();	
+				 data = _Service.LoadComments(product_id);	
 			}
 			catch (Exception ex)
 			{

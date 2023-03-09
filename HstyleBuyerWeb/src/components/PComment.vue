@@ -30,14 +30,24 @@
             </div>
             <div class="col-md-1 text-end">
                 <i v-if="!isClicked" class="fa-regular fa-thumbs-up fz-icon" @click="helpfulComment(data.commentId)"></i>
-                <i v-else="isClicked" class="fa-solid fa-thumbs-up fz-icon"></i>
-                <span class="fz-6 ps-2">有幫助</span>
+                <i v-else="isClicked" class="fa-solid fa-thumbs-up fz-icon" @click="helpfulComment(data.commentId)"></i>
             </div>
         </div>
     </div>
 </template>
 <script setup>
 import { onMounted, ref } from 'vue';
+import axios from 'axios';
+
+const isClicked = ref(false);
+
+const helpfulComment = async (commentId) => {
+    await axios.post(`https://localhost:7243/api/Products/helpfulComment?comment_id=${commentId}`)
+        .then(response => {
+            isClicked.value = !isClicked.value;
+        })
+        .catch(error => { console.log(error); });
+}
 
 
 //跳createCModal的 data-bs-toggle="modal" data-bs-target="#ProductCommentModal"
@@ -45,7 +55,10 @@ const props = defineProps({
     data: Object
 })
 
-const isClicked = ref(true);
+onMounted(() => {
+    helpfulComment();
+});
+
 
 </script>
 <style scoped>

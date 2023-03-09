@@ -51,11 +51,12 @@
             </div>
           </div>
           <div class="col-2 pt-2 text-center">
+            <a>聯絡客服</a>
+            <br />
             <a
-              class="blink"
-              data-bs-toggle="modal"
-              data-bs-target="#MemberQModal"
-              >聯絡客服</a
+              v-if="order.status != '退貨處理中'"
+              @click="returnGoods(order.orderId)"
+              >我要退貨</a
             >
           </div>
         </div>
@@ -86,7 +87,25 @@
               <div class="col-2 text-center">{{ product.unitPrice }}</div>
               <div class="col-2 text-center">{{ product.quantity }}</div>
               <div class="col-2 text-center">{{ product.subTotal }}</div>
-              <div class="col-1">我要評論</div>
+              <div class="col-1 py-0">
+                <button
+                  @click="
+                    createCommonModal(
+                      product.productId,
+                      product.orderId,
+                      product.productName,
+                      product.color,
+                      product.size
+                    )
+                  "
+                  type="button"
+                  data-bs-toggle="modal"
+                  class="btn btn-link b-0 px-1"
+                  data-bs-target="#ProductCommentModal"
+                >
+                  我要評論
+                </button>
+              </div>
             </div>
             <div class="row order-item-footer py-2 border">
               <div class="col-1"></div>
@@ -101,7 +120,8 @@
       </div>
     </div>
   </div>
-  <MemberQForm></MemberQForm>
+  <CreatePComment :modalData="commentParams"></CreatePComment>
+   <MemberQForm></MemberQForm>
 </template>
   
   
@@ -109,6 +129,7 @@
 import { onMounted, ref } from "vue";
 import axios from "axios";
 import MemberQForm from "./MemberQForm.vue";
+import CreatePComment from "./CreatePComment.vue";
 
 const orders = ref([]);
 
@@ -129,21 +150,31 @@ function goToPay(token) {
   window.location.href = `https://www.sandbox.paypal.com/checkoutnow?token=${token}`;
 }
 
-function timeFormat(date) {
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
+const returnGoods = async (orderId) => {
+  await axios
+    .put(`https://localhost:7243/api/Order/${orderId}`)
+    .then((response) => {
+      console.log(response.data);
+      getOrdersInfo();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
 
-  return `${year}-${month}-${day}`;
-}
-
-function getReviewLink(orderId) {
-  return `review/${orderId}`;
-}
-
-function getContactLink(orderId) {
-  return `contact/${orderId}`;
-}
+const commentParams = ref({
+  productId: 0,
+  orderId: 0,
+  productName: "",
+  productSpec: "",
+});
+const createCommonModal = (productId, orderId, productName, color, size) => {
+  commentParams.value.productId = productId;
+  commentParams.value.orderId = orderId;
+  commentParams.value.productName = productName;
+  commentParams.value.productSpec = `${color}, ${size}`;
+  console.log(commentParams.value);
+};
 
 onMounted(() => {
   getOrdersInfo();
@@ -191,6 +222,17 @@ onMounted(() => {
 .btn-order:focus {
   outline-color: none;
   box-shadow: none;
+}
+
+.button-comment:focus,
+.button-comment:active {
+  box-shadow: none;
+  outline: none;
+}
+
+.btn-link {
+  text-decoration-line: none;
+  color: #46a3ff;
 }
 </style>
   
