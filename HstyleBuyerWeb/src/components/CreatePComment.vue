@@ -23,12 +23,13 @@
               <label for="productSize">尺寸:<span class="ms-2">{{ modalData.productSpec }}</span></label>
             </div>
             <div class="form-group form-floating my-3">
-              <textarea class="form-control h200px" id="productComment"></textarea>
+              <textarea class="form-control h200px" id="productComment" v-model="CommentContent"></textarea>
               <label for="productComment">商品評論</label>
             </div>
             <div class="form-group mb-2">
               <label for="productImage" class="mb-2">上傳照片</label>
-              <input type="file" class="form-control" accept=".png, .jpg" id="productImage">
+              <input type="file" multiple class="form-control" accept=".png, .jpg" id="productImage" ref="fileInput"
+                @change="handleFileUpload">
             </div>
           </div>
           <div class="modal-footer mt-0 border-0">
@@ -55,9 +56,6 @@ const props = defineProps({
   modalData: { Object },
 });
 
-const createComment = () => {
-  alert(`${props.modalData.productId}, ${props.modalData.orderId}`);
-}
 
 const selectedRating = ref(props.initialRating);
 const stars = ref(Array(props.maxRating).fill(false));
@@ -73,6 +71,32 @@ const starClass = (index) => {
     return 'fa-regular fa-star';
   }
 }
+
+//檔案上傳資料綁定
+const commentContent = ref('');
+const selectedFiles = ref([]);
+const handleFileUpload = (event) => {
+  selectedFiles.value = event.target.files;
+};
+const orderId = ref(modalData.productId);
+const productId = ref(modalData.orderId);
+
+
+const createComment = async () => {
+  const formData = new FormData();
+  formData.append('Score', selectedRating.value);
+  formData.append('CommentContent', commentContent.value);
+  for (let i = 0; i < selectedFiles.value.length; i++) {
+    formData.append('files', selectedFiles.value[i]);
+  }
+  axios.post('https://localhost:7243/api/Products/comment', formData)
+    .then(response => {
+      console.log(response);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+};
 
 onMounted(() => {
   stars.value.splice(props.initialRating, props.maxRating - props.initialRating, true);
