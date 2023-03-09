@@ -45,8 +45,7 @@ const login = () => {
     axios.post('https://localhost:7243/api/Member/LogIn', {
         account: account.value,
         password: password.value
-    }, { withCredentials: true })
-    .then((response) => {
+    }, { withCredentials: true }).then((response) => {
         console.log(response.data)
         window.location = "http://localhost:5173";
 
