@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -133,8 +134,8 @@ namespace HStyleApi.Controllers
 		//POST api/<VideoController>/Comment/5
 		//POST 評論
 		[Authorize]
-		[HttpPost("Comment")]
-		public void CreateComment([FromBody] string comment, int videoId)
+		[HttpPost("Comment/{videoId}")]
+		public void CreateComment([FromBody]JObject comment, int videoId)
 		{
 			var memberId = _memberId;
 			if (memberId <=0)
@@ -143,7 +144,7 @@ namespace HStyleApi.Controllers
 			}
 			else
 			{
-				_service.CreateComment(comment, memberId, videoId);
+				_service.CreateComment(comment.ToString(), memberId, videoId);
 			}
 		}
 

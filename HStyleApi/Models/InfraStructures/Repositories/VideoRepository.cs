@@ -189,7 +189,7 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 				VideoId = videoId,
 				MemberId = memberId,
 				CreatedTime = DateTime.Now,
-				Comment = comment,
+				Comment = comment.ToString(),
 				Like = 0
 			};
 			_db.Add(videoComment);
