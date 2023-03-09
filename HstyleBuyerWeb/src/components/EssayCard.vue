@@ -3,12 +3,17 @@
     <!-- <div v-html="decodeURI(item.econtent)"></div> -->
     <P>文章部落格頁面</P>
     <div class="container">
+
+      
   <div class="row">
     <div class="col-md-4  mb-4" v-for="item in essays">
-      <div class="card border-0 card1">
-        <div class="card-img w-100 h200px rounded overflow-hidden">
+        <div class="card border-0 card1">
+        <div class="card-img w-100 h200px rounded overflow-hidden"> 
+          
           <img :src="item.imgs[0]" class="card-img-top" alt="Essays Image">
-        </div>
+          
+  </div>
+
         <div class="card-header d-flex bg-white border-bottom-0">
           <span class="badge bg-secondary opacity-50 me-1" v-for="tag in item.tags">{{ tag }}</span>
           <!-- <span>
@@ -16,10 +21,15 @@
           </span> -->
         </div>
         <div class="card-body">
+          <!-- <router-link :to="'/EssaysBlog/' + item.essayId">  
           <a class="text-dark text-decoration-none stretched-link" href="" target="_blank">{{ item.etitle }}</a>
+          </router-link> -->
+          <router-link :to="'/EssaysBlog/' + item.essayId" class="text-dark text-decoration-none stretched-link">{{ item.etitle }}</router-link>
+
         </div>
         <div class="card-footer bg-white border-top-0 d-flex">
-            <span class="me-auto">{{ item.uplodTime.slice(0, 10) }}</span>
+          
+          <span class="me-auto">{{ item.uplodTime.slice(0, 10) }}</span>
            
           <!-- <span><i class="fa-regular fa-bookmark"></i></span> -->
           <div class="card-text text-end">
@@ -28,7 +38,7 @@
           <span v-else @click="item.isClicked = false"><i class="fa-solid fa-bookmark SolidHeart fz-18"></i></span>
            </div>
         </div>
-      </div>
+      </div>    
     </div>
   </div>
 </div> 
@@ -73,7 +83,7 @@ const likesEssay = async () => {
 
 
 </script>
-<style>
+<style scoped>
 .h200px{
             height: 200px;
         }

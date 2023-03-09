@@ -1,6 +1,6 @@
 <!-- Blog.EssaysBlog -->
 <template>
-    <p>test</p>
+   
     <EssayCard ></EssayCard>
     
 </template>

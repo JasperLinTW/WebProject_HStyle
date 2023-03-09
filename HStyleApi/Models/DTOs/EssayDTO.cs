@@ -6,6 +6,7 @@ namespace HStyleApi.Models.DTOs
 	{
 		public int EssayId { get; set; }
 		public int InfluencerId { get; set; }
+		public string InfluencerName { get; set; }
 		public DateTime UplodTime { get; set; }
 		public string Etitle { get; set; }
 		public string Econtent { get; set; }
@@ -40,6 +41,7 @@ namespace HStyleApi.Models.DTOs
 			{
 				EssayId = source.EssayId,
 				InfluencerId = source.InfluencerId,
+				InfluencerName = source.Influencer.Account,
 				UpLoad = source.UpLoad,
 				Etitle = source.Etitle,
 				Econtent = source.Econtent,
@@ -48,7 +50,7 @@ namespace HStyleApi.Models.DTOs
 				CategoryId = source.CategoryId,
 				//Imgs = source.Imgs.Select(x => x.Path),
 
-				Imgs = source.Imgs.Select(x => $"{_basePath}/EssayImages/{x.Path}"),
+				Imgs = source.Imgs.Select(x => $"{_basePath}/Essaysimage/{x.Path}"),
 				Tags = source.Tags.Select(x => x.TagName),
 				Like = source.Elikes.GroupBy(x => x.EssayId).Count(),
 				CategoryName = source.Category.CategoryName,

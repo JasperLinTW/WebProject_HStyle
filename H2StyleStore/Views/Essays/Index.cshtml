@@ -1,5 +1,7 @@
 ﻿@model PagedList.IPagedList<H2StyleStore.Models.ViewModels.EssayVM>
 @using PagedList.Mvc;
+@using System;
+
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
@@ -7,7 +9,7 @@
     var categories = ViewBag.Categories as IEnumerable<SelectListItem>;
     var eTitle = ViewBag.EssayTitle as string;
     var tagName = ViewBag.TagName as string;
-  
+
 }
 
 @*@{
@@ -58,9 +60,17 @@
 
                     <div class="col-md-2">
 
+                        @*@foreach (var img in item.Images)
+        {
+            <img class="img w-100 " style="object-fit: cover; width: 100%; height: 100%" src="../../Images/Essaysimage/@img" />
+        }*@
+
                         @foreach (var img in item.Images)
                         {
-                            <img class="img w-100 " style="object-fit: cover; width: 100%; height: 100%" src="../../Images/Essaysimage/@img" />
+                            @*<img class="img w-100" style="object-fit: cover;" src="../../Images/Essaysimage/@img" />*@
+
+                            <img class="img w-100" style="object-fit: cover; width: 200px; height: 150px;" src="../../Images/Essaysimage/@img" />
+
                         }
                     </div>
                     <br />
@@ -69,6 +79,8 @@
                             <b style="color: #78BEF5; font-size: large; font-weight: bold;">@Html.DisplayFor(modelItem => item.ETitle)</b>
                         </p>
                         <label class="econtent">@item.EContent</label>
+
+                        @*<label class="econtent">@((item.EContent.Length > 150) ? (item.EContent.Substring(0, 150)) : item.EContent)</label>*@
 
                         @*<td>
                                 @item.EContent;
@@ -103,7 +115,7 @@
             @Html.ActionLink("Edit", "EditEssays", new { id = item.Essay_Id }, new { @class = "btn btn-default" }) |
             @*@Html.ActionLink("Details", "Details", new { id = item.Essay_Id }) |*@
             @Html.ActionLink("Delete", "Delete", new { id = item.Essay_Id, }, new { @class = "btn btn-danger" })|
-            <b style="color: hotpink; " ;>by</b><b class="ml-1" style="color: hotpink; font-size: medium;" >@Html.DisplayFor(modelItem => item.Influencer_Name)</b>
+            <b style="color: hotpink; " ;>by</b><b class="ml-1" style="color: hotpink; font-size: medium;">@Html.DisplayFor(modelItem => item.Influencer_Name)</b>
 
         </td>
         </tr>
@@ -115,12 +127,45 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
 
 @Html.PagedListPager(Model, page => Url.Action("Index",
     new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+
+@*@section Scripts{
+        <script>
+            $(".econtent").each(function () {
+                var decodedContent = decodeURI($(this)).html();
+                var trimmedContent = decodedContent.Substring(0, 150);
+                $(this).html(trimmedContent);
+                if (decodedContent.length > 150) {
+                    $(this).append('<span>...</span>');
+                }
+            });
+        </script>
+
+    }*@
+
+<style>
+    .econtent {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        height:85px;
+    }
+
+    /*.img {
+        max-width: 500px;
+        max-height: 500px;
+    }*/
+
+</style>
+
 @section Scripts{
     <script>
         $(".econtent").each(function () {
 
             $(this).html(decodeURI($(this).html()));
-            console.log(decodeURI($(this).html()));
-        });</script>
+            console.log(decodeURI($(this)));
+           
+        });
+    </script>
 
 }
+
