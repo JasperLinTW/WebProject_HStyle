@@ -15,6 +15,7 @@ using Google.Apis.Auth;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using PayPalCheckoutSdk.Orders;
+using static System.Net.WebRequestMethods;
 
 
 
@@ -66,13 +67,55 @@ namespace HStyleApi.Controllers
             .FirstOrDefault(x => x.Id == _memberId).ToDto();
 
 
-
-
             return Ok(member);
 
         }
 
+        [Authorize]
+        [HttpGet]
+        [Route("GetAddressInfo")]
+        public IActionResult GetAddressInfo()
+        {
+            //var memberId = int.Parse(HttpContext.User.FindFirst("memberId")!.Value);
+            //AddAddressDTO AddAddress = _context.Addresses
+            // .Include(X => X.Member)
+            //.FirstOrDefault(x => x.MemberId == _memberId).ToDTO();
 
+            IEnumerable<AddAddressDTO> address = _context.Addresses.Include(x => x.Member).Where(x => x.MemberId == _memberId).Select(x => x.ToDTO());
+
+
+            return Ok(address);
+
+        }
+
+        //[HttpPut("{id}")] //edit
+        //public async Task<IActionResult> PutMember(int id, Member member)
+        //{
+        //    if (id != member.Id)
+        //    {
+        //        return BadRequest();
+        //    }
+
+        //    _context.Entry(member).State = EntityState.Modified;
+
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!MemberExists(id))  //這條改下
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
+
+        //    return NoContent();
+        //}
 
         [HttpPost("LogIn")]
         [AllowAnonymous]
@@ -167,6 +210,46 @@ namespace HStyleApi.Controllers
 
         }
 
+
+        [HttpPost("EditMember")]
+        public async Task<string> EditMember(EditMemberDTO dto)
+        {
+       
+            var member = _context.Members.FirstOrDefault(m => m.Id == _memberId);
+            if (member == null)
+            {
+                return ("會員不存在");
+            }
+
+            member.Name = dto.Name;                   //試抓出   MemberRepository
+            //member.Email = dto.Email;  //Email 唯一值必須驗證
+            //member.Account = dto.Account;
+            member.PhoneNumber = dto.PhoneNumber;//手機號碼
+            member.Address = dto.Address;
+            member.Gender = dto.Gender;
+            member.Birthday = dto.Birthday;
+
+            _context.SaveChanges();
+            return "更新成功";
+        }
+
+        [HttpPost("AddAddress")]
+        public async Task<string> AddAddress(AddAddressDTO dto)
+        {
+            MemberDTO member = _context.Members.FirstOrDefault(m => m.Id == _memberId).ToDto();
+
+            Address address = new Address
+            {
+                DestinationName = dto.DestinationName,                       
+                Destination = dto.Destination,
+                DestinationThe = dto.DestinationThe,
+                //DestinationCategory = dto.DestinationCategory,
+                MemberId= member.Id,
+            };            
+            _context.Addresses.Add(address);
+            _context.SaveChanges();
+            return "新增地址成功";
+        }
 
         [Authorize]
         [HttpPost("Register")]
@@ -332,7 +415,9 @@ namespace HStyleApi.Controllers
             // 使用 BodyBuilder 建立郵件內容
             var bodyBuilder = new BodyBuilder();
 
-            string result = Request.Scheme + "://" + Request.Host + $"/api/Members/LogIn";  //前端驗證完成頁面  給他個驗證完成
+            //string result = Request.Scheme + "://" + Request.Host + $"/api/Members/LogIn";  //前端驗證完成頁面  給他個驗證完成  改這邊
+
+            string result = "https://localhost:44313/Images/MemberImage/123.jpg";  //前端驗證完成頁面  給他個驗證完成  改這邊
 
             // 設定 HTML 內容
             bodyBuilder.HtmlBody = $"<p>新密碼:{newPassword}</p>" +
