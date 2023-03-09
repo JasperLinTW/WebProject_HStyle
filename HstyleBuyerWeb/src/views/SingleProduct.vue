@@ -43,7 +43,7 @@
                     <div class="col-lg-12"></div>
                     <div class="col-lg-12  mt-5 text-start">
                         <button @click="addItem()" class="add-to-cart"> NT$ {{ product.unitPrice }}<span
-                                class="border-start border-dark ms-2" data-bs-target="#exampleModal"><span
+                                class="border-start  ms-2" data-bs-target="#exampleModal"><span
                                     class="ps-2">加入購物車</span></span></button>
                         <span class="m-3" v-if="!isClicked" @click="likesProduct()"><i
                                 class="fa-regular fa-heart icon-hover fz-18"></i></span>
