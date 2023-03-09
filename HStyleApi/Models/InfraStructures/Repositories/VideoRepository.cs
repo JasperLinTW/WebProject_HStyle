@@ -51,7 +51,7 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 		}
 
 		//單一影片資訊
-		public async Task<VideoDTO> GetVideo(int id)
+		public async Task<VideoDTO> GetVideo(int videoId)
 		{
 			IEnumerable<VideoDTO> data = await _db.Videos
 												.Include(v => v.Image)
@@ -62,7 +62,7 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 												.Where(v => v.IsOnShelff == true)
 												.Select(v => v.ToVideoDTO())
 												.ToListAsync();
-			var video = data.SingleOrDefault(v => v.Id == id);
+			var video = data.SingleOrDefault(v => v.Id == videoId);
 			if (video == null)
 			{
 				throw new Exception("找不到這部影片!");
@@ -189,7 +189,7 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 				VideoId = videoId,
 				MemberId = memberId,
 				CreatedTime = DateTime.Now,
-				Comment = comment,
+				Comment = comment.ToString(),
 				Like = 0
 			};
 			_db.Add(videoComment);
