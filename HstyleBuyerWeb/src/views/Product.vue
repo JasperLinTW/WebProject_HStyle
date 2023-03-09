@@ -55,7 +55,7 @@ import Back2Top from '../components/Back2Top.vue'
 import ProductCard from '../components/ProductCard.vue'
 import { useRoute } from 'vue-router';
 import axios from 'axios';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 
 
 //商品預覽
@@ -94,12 +94,15 @@ const loadProducts = async () => {
     })
     .catch(error => { console.log(error); });
 }
-
+watch(() => route.params.tag, (newTag, oldTag) => {
+  loadProducts();
+})
 
 
 onMounted(() => {
   likesProducts();
   loadProducts();
+
 
 });
 
