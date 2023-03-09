@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.Authorization;
 using Google.Apis.Auth;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using PayPalCheckoutSdk.Orders;
+using static System.Net.WebRequestMethods;
 
 
 
@@ -34,19 +36,88 @@ namespace HStyleApi.Controllers
         //{
         //    _Service = new MemberServices(db);
         //}
+        private readonly int _memberId;
 
         private readonly AppDbContext _context;
-
-        public MemberController(AppDbContext context)
+        public MemberController(AppDbContext context, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
-			
+            var claims = httpContextAccessor.HttpContext.User.Claims;
+            if (claims.Any())
+            {
+                var data = int.TryParse(claims.Where(x => x.Type == "MemberId").FirstOrDefault().Value, out int memberid);
+                _memberId = memberid;
+            }
+            //TODO從COOKIE取
 
-		}
-		// GET: api/<MemberController>
+        }
+        //      public MemberController(AppDbContext context) 整合上面
+        //      {
+        //          _context = context;
+
+        //}
+        // GET: api/<MemberController>
+        [Authorize]
+        [HttpGet]
+        public ActionResult<MemberDTO> GetMemberInfo()
+        {
+            //var memberId = int.Parse(HttpContext.User.FindFirst("memberId")!.Value);
+            MemberDTO member = _context.Members                
+            .Include(x => x.Permission)
+            .FirstOrDefault(x => x.Id == _memberId).ToDto();
 
 
-		[HttpPost("LogIn")]
+            return Ok(member);
+
+        }
+
+        [Authorize]
+        [HttpGet]
+        [Route("GetAddressInfo")]
+        public IActionResult GetAddressInfo()
+        {
+            //var memberId = int.Parse(HttpContext.User.FindFirst("memberId")!.Value);
+            //AddAddressDTO AddAddress = _context.Addresses
+            // .Include(X => X.Member)
+            //.FirstOrDefault(x => x.MemberId == _memberId).ToDTO();
+
+            IEnumerable<AddAddressDTO> address = _context.Addresses.Include(x => x.Member).Where(x => x.MemberId == _memberId).Select(x => x.ToDTO());
+
+
+            return Ok(address);
+
+        }
+
+        //[HttpPut("{id}")] //edit
+        //public async Task<IActionResult> PutMember(int id, Member member)
+        //{
+        //    if (id != member.Id)
+        //    {
+        //        return BadRequest();
+        //    }
+
+        //    _context.Entry(member).State = EntityState.Modified;
+
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!MemberExists(id))  //這條改下
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
+
+        //    return NoContent();
+        //}
+
+        [HttpPost("LogIn")]
         [AllowAnonymous]
         public IActionResult LogIn(LogInDTO value)
         {
@@ -139,6 +210,46 @@ namespace HStyleApi.Controllers
 
         }
 
+
+        [HttpPost("EditMember")]
+        public async Task<string> EditMember(EditMemberDTO dto)
+        {
+       
+            var member = _context.Members.FirstOrDefault(m => m.Id == _memberId);
+            if (member == null)
+            {
+                return ("會員不存在");
+            }
+
+            member.Name = dto.Name;                   //試抓出   MemberRepository
+            //member.Email = dto.Email;  //Email 唯一值必須驗證
+            //member.Account = dto.Account;
+            member.PhoneNumber = dto.PhoneNumber;//手機號碼
+            member.Address = dto.Address;
+            member.Gender = dto.Gender;
+            member.Birthday = dto.Birthday;
+
+            _context.SaveChanges();
+            return "更新成功";
+        }
+
+        [HttpPost("AddAddress")]
+        public async Task<string> AddAddress(AddAddressDTO dto)
+        {
+            MemberDTO member = _context.Members.FirstOrDefault(m => m.Id == _memberId).ToDto();
+
+            Address address = new Address
+            {
+                DestinationName = dto.DestinationName,                       
+                Destination = dto.Destination,
+                DestinationThe = dto.DestinationThe,
+                //DestinationCategory = dto.DestinationCategory,
+                MemberId= member.Id,
+            };            
+            _context.Addresses.Add(address);
+            _context.SaveChanges();
+            return "新增地址成功";
+        }
 
         [Authorize]
         [HttpPost("Register")]
@@ -242,6 +353,88 @@ namespace HStyleApi.Controllers
             }
         }
 
+        [HttpPost("ForgetPassword")]
+        public string ForgetPassword(ForgetPasswordDTO forgetPasseordMember)
+        {
+            if (ModelState.IsValid == false)
+            {
+                return "帳號或信箱輸入錯誤";
+            }
+            var member = _context.Members.SingleOrDefault(x => x.Account == forgetPasseordMember.Account);
+            if (member == null) { return "帳號或信箱輸入錯誤"; }
+            if (string.Compare(forgetPasseordMember.Email, member.Email) == 0)
+            {
+                string newpassword = Guid.NewGuid().ToString("N").Substring(0, 8);
+                SendForgetPasswordEmail(member, newpassword);  //改這行
+                member.EncryptedPassword = HashUtility.ToSHA256(newpassword, RegisterDTO.SALT);
+                _context.SaveChanges();
+                return "電子郵件已寄出";
+            }
+            else
+            {
+                return "帳號或信箱輸入錯誤";
+            }
+        }
+
+        [HttpPost("ResetPassword")]
+        public string ResetPassword(string account, string oldPassword, string newPassword)
+        {
+
+            var member = _context.Members.SingleOrDefault(x => x.Account == account);
+            var encryptedPassword = HashUtility.ToSHA256(oldPassword, RegisterDTO.SALT);
+            if (member == null)
+            {
+                return "帳號或密碼輸入錯誤";
+            }
+            else if (string.Compare(member.EncryptedPassword, encryptedPassword) == 0)
+            {
+                member.EncryptedPassword = HashUtility.ToSHA256(newPassword, RegisterDTO.SALT);
+                _context.SaveChanges();
+                return "修改成功";
+            }
+            else
+            {
+                return "帳號或密碼輸入錯誤";
+            }
+        }
+        [HttpPost("SendForgetPasswordEmail")]
+        public string SendForgetPasswordEmail(Member member, string newPassword)
+        {
+
+            var message = new MimeMessage();
+
+            // 添加寄件者
+            message.From.Add(new MailboxAddress("PawPaw", "pawpawpetSite@gmail.com"));
+
+            // 添加收件者
+            message.To.Add(new MailboxAddress("New Member", $"{member.Email}"));
+
+            // 設定郵件標題
+            message.Subject = "會員新密碼";
+
+            // 使用 BodyBuilder 建立郵件內容
+            var bodyBuilder = new BodyBuilder();
+
+            //string result = Request.Scheme + "://" + Request.Host + $"/api/Members/LogIn";  //前端驗證完成頁面  給他個驗證完成  改這邊
+
+            string result = "https://localhost:44313/Images/MemberImage/123.jpg";  //前端驗證完成頁面  給他個驗證完成  改這邊
+
+            // 設定 HTML 內容
+            bodyBuilder.HtmlBody = $"<p>新密碼:{newPassword}</p>" +
+                                   $"<a href=\"{result}\">點此連結登入</a>";
+
+            // 設定郵件內容
+            message.Body = bodyBuilder.ToMessageBody();
+
+            using (var client = new SmtpClient())
+            {
+                client.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
+                client.Authenticate("pawpawpetSite@gmail.com", "fbqolajjiyshkxyg");
+                client.Send(message);
+                client.Disconnect(true);
+            }
+            return "成功";
+        }
         // GET api/<MemberController>/5
         [HttpGet("{id}")]
         public string Get(int id)
