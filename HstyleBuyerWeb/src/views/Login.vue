@@ -1,45 +1,25 @@
 <template>
-  <div class="container mt-5 mb-6 py-2 login px-10">
+  <div v-show="!isLoging" class="container mt-5 mb-6 py-2 login px-10">
     <div class="row">
       <div class="col-md-12 mt-5 mb-4 fz-big">會員登入</div>
       <div class="col-md-6 pb-2 border-bottom">
-        <button
-          class="btn-underline"
-          @click="showLogin = false"
-          :class="{ active: !showLogin }"
-        >
+        <button class="btn-underline" @click="showLogin = false" :class="{ active: !showLogin }">
           新會員註冊
         </button>
       </div>
       <div class="col-md-6 border-bottom">
-        <button
-          class="btn-underline"
-          @click="showLogin = true"
-          :class="{ active: showLogin }"
-        >
+        <button class="btn-underline" @click="showLogin = true" :class="{ active: showLogin }">
           會員登入
         </button>
       </div>
       <div v-if="showLogin" class="m-0 p-0">
         <div class="mt-3">
           <div class="form-floating mb-3">
-            <input
-              type="text"
-              class="form-control"
-              id="floatingInput"
-              v-model="account"
-              required
-            />
+            <input type="text" class="form-control" id="floatingInput" v-model="account" required />
             <label for="floatingInput">帳號</label>
           </div>
           <div class="form-floating">
-            <input
-              type="password"
-              class="form-control"
-              id="floatingPassword"
-              v-model="password"
-              require
-            />
+            <input type="password" class="form-control" id="floatingPassword" v-model="password" require />
             <label for="floatingPassword">密碼</label>
           </div>
         </div>
@@ -64,10 +44,14 @@
 </template>
   
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import axios from "axios";
+import { useRouter } from "vue-router";
+const router = useRouter();
 const account = ref("");
 const password = ref("");
+
+const isLoging = ref(true)
 const login = () => {
   axios
     .post(
@@ -80,39 +64,47 @@ const login = () => {
     )
     .then((response) => {
       console.log(response.data);
-      window.location = "http://localhost:5173";
+      router.go(-1);
     })
     .catch((err) => {
       console.log(err);
     });
 };
 
-const getMemberId = () => {
+const checkLogin = () => {
   axios
     .get("https://localhost:7243/api/Member/id", { withCredentials: true })
     .then((response) => {
-      console.log(response.data);
+      if (response.data <= 0) {
+        isLoging.value = false;
+      }
+      else {
+        router.push("/");
+      }
     })
     .catch((error) => {
       console.error(error);
     });
 };
 
-const getCartInfo = async () => {
-  await axios
-    .get("https://localhost:7243/api/Cart", { withCredentials: true })
-    .then((response) => {
-      console.log(response.data);
-    })
-    .catch((error) => {
-      console.log(error.response.status);
-      if (error.response.status === 401) {
-        window.location = "http://localhost:5173/login";
-      }
-    });
-};
-
+// const getCartInfo = async () => {
+//   await axios
+//     .get("https://localhost:7243/api/Cart", { withCredentials: true })
+//     .then((response) => {
+//       console.log(response.data);
+//     })
+//     .catch((error) => {
+//       console.log(error.response.status);
+//       if (error.response.status === 401) {
+//         window.location = "http://localhost:5173/login";
+//       }
+//     });
+// };
 const showLogin = ref(true);
+
+onMounted(() => {
+  checkLogin();
+})
 </script>
   
 <style scoped>

@@ -207,12 +207,14 @@ const checkout = async () => {
         })
         .catch((error) => {
           console.log(error);
+          progressing.value = false;
         });
     })
     .catch((error) => {
       console.log(error);
+      progressing.value = false;
     });
-  progressing.value = false;
+
 };
 
 onMounted(() => {

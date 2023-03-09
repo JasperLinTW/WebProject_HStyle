@@ -6,9 +6,7 @@
           <div class="card-header text-center fw-bold">付款成功</div>
           <div class="card-body text-center mb-4">已收到訂單，感謝您的購買</div>
           <div class="text-center mx-5">
-            <router-link class="returnbtn" to="/product"
-              >點此繼續購物</router-link
-            >
+            <router-link class="returnbtn" to="/products/all">點此繼續購物</router-link>
           </div>
         </div>
       </div>
@@ -23,6 +21,7 @@
 .container {
   min-height: 550px;
 }
+
 .card {
   border: none;
 }

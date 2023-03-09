@@ -27,7 +27,7 @@ namespace HStyleApi.Models.DTOs
                 DestinationName = source.DestinationName,
                 Destination = source.Destination,
                 DestinationThe= source.DestinationThe,
-                Preset=source.Preset,
+                Preset=source.Preset ?? false,
 
             };
         }
