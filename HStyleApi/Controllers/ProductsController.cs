@@ -235,30 +235,33 @@ namespace HStyleApi.Controllers
 		[HttpPost("comment")]
 		public IActionResult CreateComment([FromForm] PCommentPostDTO comment, int orderId, int productId)
 		{
-			long size = comment.files.Sum(f => f.Length);
 			string path = "../H2StyleStore/Images/PCommentImages/";
 
 			comment.PcommentImgs = new List<string>();
 
-			foreach (var file in comment.files)
+			if (comment.files != null)
 			{
-				try
+				foreach (var file in comment.files)
 				{
-					if (file.Length > 0)
+					try
 					{
-						var helper = new UploadFileHelper();
-						string result = helper.SaveAs(path, file);
-						string FileName = result;
-						comment.PcommentImgs.Add($"{FileName}");
+						if (file.Length > 0)
+						{
+							var helper = new UploadFileHelper();
+							string result = helper.SaveAs(path, file);
+							string FileName = result;
+							comment.PcommentImgs.Add($"{FileName}");
+						}
 					}
-				}
-				catch (Exception ex)
-				{
+					catch (Exception ex)
+					{
 
-					return BadRequest(ex.Message);
-				}
+						return BadRequest(ex.Message);
+					}
 
+				}
 			}
+			
 			var data = _Service.CreateComment(comment, orderId, productId);
 
 			return Ok("新增成功");

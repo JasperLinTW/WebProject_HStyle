@@ -70,7 +70,7 @@
             </div>
             <div class="h500px">
                 <div class="col-md-12 line">
-                    <span class="px-5">專屬推薦</span>
+                    <span class="px-5">猜你喜歡</span>
                 </div>
                 <div class="col-md-12">
                     <div class="row">
@@ -267,6 +267,7 @@ onMounted(() => {
 .MySwiper {
     width: 617px;
     height: 550px;
+    overflow: hidden;
 }
 
 .MySwiper .swiper-slide img {

@@ -72,10 +72,13 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 
 			_db.ProductComments.Add(pcomment);
 
-			foreach (string path in dto.PcommentImgs)
+			if (dto.files != null)
 			{
-				Image image = new Image { Path = path, };
-				pcomment.PcommentImgs.Add(image);
+				foreach (string path in dto.PcommentImgs)
+				{
+					Image image = new Image { Path = path, };
+					pcomment.PcommentImgs.Add(image);
+				}
 			}
 
 			_db.SaveChanges();

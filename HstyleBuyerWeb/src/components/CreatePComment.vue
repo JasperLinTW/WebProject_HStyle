@@ -23,12 +23,13 @@
               <label for="productSize">尺寸:<span class="ms-2">{{ modalData.productSpec }}</span></label>
             </div>
             <div class="form-group form-floating my-3">
-              <textarea class="form-control h200px" id="productComment" v-model="CommentContent"></textarea>
-              <label for="productComment">商品評論</label>
+              <textarea class="form-control h200px" id="v" name="CommentContent" v-model="CommentContent"
+                ref="files"></textarea>
+              <label for="CommentContent">商品評論</label>
             </div>
             <div class="form-group mb-2">
               <label for="productImage" class="mb-2">上傳照片</label>
-              <input type="file" multiple class="form-control" accept=".png, .jpg" id="productImage" ref="fileInput"
+              <input type="file" multiple class="form-control" accept=".png, .jpg" id="productImage" ref="files"
                 @change="handleFileUpload">
             </div>
           </div>
@@ -73,30 +74,35 @@ const starClass = (index) => {
 }
 
 //檔案上傳資料綁定
-const commentContent = ref('');
+const CommentContent = ref('');
 const selectedFiles = ref([]);
 const handleFileUpload = (event) => {
   selectedFiles.value = event.target.files;
 };
-const orderId = ref(modalData.productId);
-const productId = ref(modalData.orderId);
 
 
-const createComment = async () => {
-  const formData = new FormData();
-  formData.append('Score', selectedRating.value);
-  formData.append('CommentContent', commentContent.value);
-  for (let i = 0; i < selectedFiles.value.length; i++) {
-    formData.append('files', selectedFiles.value[i]);
-  }
-  axios.post('https://localhost:7243/api/Products/comment', formData)
-    .then(response => {
-      console.log(response);
-    })
-    .catch(error => {
-      console.log(error);
-    });
-};
+//todo 檔案上傳
+// const createComment = async () => {
+//   const formData = new FormData();
+//   formData.append('Score', selectedRating.value);
+//   formData.append('CommentContent', CommentContent.value);
+//   for (let i = 0; i < selectedFiles.value.length; i++) {
+//     formData.append('files', selectedFiles.value[i]);
+//   }
+
+//   console.log(formData.value);
+// axios.post(`https://localhost:7243/api/Products/comment?orderId=${props.modalData.orderId}&productId=${props.modalData.productId}`, {
+//   headers: {
+//     'Content-Type': 'multipart/form-data'
+//   }
+// })
+//   .then((response) => {
+//     console.log(response.data);
+//   })
+//   .catch((error) => {
+//     console.log(error.response.data);
+//   });
+// };
 
 onMounted(() => {
   stars.value.splice(props.initialRating, props.maxRating - props.initialRating, true);
