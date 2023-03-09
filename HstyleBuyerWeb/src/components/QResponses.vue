@@ -27,6 +27,8 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import axios from "axios";
+import { useRouter } from "vue-router";
+const router = useRouter();
 
 const memberQ = ref({});
 const isSolve = ref(false);
@@ -38,7 +40,10 @@ const getMemberQInfo = async () => {
          console.log(memberQ.value);
       })
       .catch((error) => {
-         console.error(error);
+         console.log(error.response.status);
+         if (error.response.status === 401) {
+            router.push("/login");
+         }
       });
 };
 

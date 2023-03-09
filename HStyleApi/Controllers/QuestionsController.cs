@@ -70,7 +70,7 @@ namespace HStyleApi.Controllers
 		// 傳送會員提的問題(新增資料)，主要用於訂單問題
 		[Authorize]
 		[HttpPost("/MemberQ")]//此行與上一支api衝突，修改名稱
-		public IActionResult PostMemberQuestion([FromBody] CustomerQuestionDTO dto)
+		public IActionResult PostMemberQuestion([FromForm] CustomerQuestionDTO dto)
 		{
 
 			string path = "../H2StyleStore/Images/QuestionImages/";

@@ -5,11 +5,12 @@
          <div class="modal-content">
             <div class="modal-header">
                <h5 class="modal-title" id="exampleModalLabel">聯絡客服</h5>
-               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+               <button type="button" id="closeModal" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                <div>請提供以下資料，我們的客服將盡快回復。</div>
-               <form @submit.prevent="postMemberQ">
+               <form @submit.prevent="postMemberQ" enctype="multipart/form-data" id="userForm">
+                  <input type="hidden" name="customerQuestionId" class="form-control" value="0" />
                   <div class="mb-3">
                      <label for="Qcategory" class="form-label">問題類別</label>
                      <select id="Qcategory" v-model="qcategoryId" class="form-select" aria-label="Default select example" required>
@@ -55,6 +56,8 @@
 import { ref, onMounted, watch } from "vue";
 import axios from "axios";
 import AlertModal from "../components/AlertModal.vue";
+import { useRouter } from "vue-router";
+const router = useRouter();
 
 const categoryQ = ref([]);
 const getQCategoryInfo = async () => {
@@ -79,13 +82,11 @@ watch(file, (newFile, oldFile) => {
       const formData = new FormData();
       formData.append("file", newFile);
       const fileSize = newFile.size / 1024 / 1024; // 轉換為 MB
-      if (fileSize > 2) {
+      if (fileSize > 4) {
          // 限制檔案大小為 4 MB
-         console.log(file.value);
          errorMessage.value = "檔案大小超過限制";
          file.value = null;
       } else {
-         console.log(file.value);
          errorMessage.value = null;
       }
    }
@@ -98,59 +99,56 @@ const problemDescription = ref([]);
 const askTime = ref([]);
 const postMemberQ = async () => {
    if (file.value) {
-      const formData = new FormData();
-      formData.append("memberId", null);
+      const form = document.forms.namedItem("userForm");
+      const formData = new FormData(form);
+      formData.append("memberId", 0);
       formData.append("filePath", null);
       formData.append("qcategoryId", qcategoryId.value);
       formData.append("title", title.value);
       formData.append("problemDescription", problemDescription.value);
-      formData.append("askTime", new Date());
+      formData.append("askTime", new Date().toDateString());
       formData.append("file", file.value);
+      console.log(formData.get("file"));
 
       await axios
          .post("https://localhost:7243/MemberQ", formData, {
-            headers: {
-               "Content-Type": "multipart/form-data",
-            },
+            // headers: {
+            //    "Content-Type": "multipart/form-data",
+            // },
             withCredentials: true,
-            contentType: "image/png", // 必須設定為 false
-            processData: false, // 必須設定為 false
          })
          .then((response) => {
-            console.log(formData);
             console.log("檔案上傳");
             document.getElementById("AlertModal").click();
          })
          .catch((error) => {
             console.log(error.response.status);
+            // document.getElementById("#MemberQModal").closest();
             if (error.response.status === 401) {
-               window.location = "http://localhost:5173/login";
+               router.push("/login");
             }
          });
    } else {
+      const form = document.forms.namedItem("userForm");
+      const formData = new FormData(form);
+      formData.append("memberId", 0);
+      formData.append("filePath", null);
+      formData.append("qcategoryId", qcategoryId.value);
+      formData.append("title", title.value);
+      formData.append("problemDescription", problemDescription.value);
+      formData.append("askTime", new Date().toDateString());
+      formData.append("file", null);
       await axios
-         .post(
-            "https://localhost:7243/MemberQ",
-            {
-               memberId: null,
-               qcategoryId: qcategoryId.value,
-               title: title.value,
-               problemDescription: problemDescription.value,
-               filePath: null,
-               file: null,
-               askTime: new Date(),
-            },
-            { withCredentials: true }
-         )
+         .post("https://localhost:7243/MemberQ", formData, { withCredentials: true })
          .then((response) => {
-            console.log(response.data);
             console.log("資料上傳");
             document.getElementById("AlertModal").click();
          })
          .catch((error) => {
             console.log(error.response.status);
             if (error.response.status === 401) {
-               window.location = "http://localhost:5173/login";
+               router.push("/login");
+               // window.location = "http://localhost:5173/login";
             }
          });
    }

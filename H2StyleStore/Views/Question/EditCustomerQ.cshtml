@@ -53,6 +53,7 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.FilePath, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.FilePath, "", new { @class = "text-danger" })
+                <img class="m-2" src="../../Images/QuestionImages/@Model.FilePath" width="500" name=""/>
             </div>
         </div>
 
