@@ -4,20 +4,24 @@ using Newtonsoft.Json;
 using System.Collections.Concurrent;
 using System.Net.WebSockets;
 using System.Text;
+using Microsoft.AspNetCore.Cors;
 
 namespace HStyleApi.Controllers
 {
-	public class WebSocketController : Controller
+	[EnableCors("AllowAny")]
+	[Route("api/[controller]")]
+	[ApiController]
+	public class WebSocketController : ControllerBase
 	{
 		static ConcurrentDictionary<int, WebSocket> WebSockets = new ConcurrentDictionary<int, WebSocket>();
 
-		public IActionResult Index()
-		{
-			return View();
-		}
+		//public IActionResult Index()
+		//{
+		//	return View();
+		//}
 
 		//這邊用route有錯，不符合rest
-		[HttpGet("/ws")]
+		[HttpGet("")]
 		public async Task Get()
 		{
 			if (HttpContext.WebSockets.IsWebSocketRequest)

@@ -11,8 +11,9 @@
                   <img id="Check" v-for="i in checkIns.checkInTimes" :key="i" :src="`../src/assets/image/Checked.jpg`" alt="Image" />
                   <img id="unCheck" v-for="i in leftTimes" :key="i" :src="`../src/assets/image/Hcoin.png`" alt="Image" />
                </div>
+               <div id="alertLogin" class="fs-2" style="display: none">請先登入會員</div>
             </div>
-            <div class="modal-footer">
+            <div id="checkButton" class="modal-footer">
                <button type="button" class="btn btn-primary" @click="checkIn()">簽到</button>
             </div>
          </div>
@@ -29,14 +30,19 @@ let leftTimes = 0;
 
 const getCheckInfo = async () => {
    await axios
-      .get(`https://localhost:7243/api/HCoin/CheckIn`)
+      .get(`https://localhost:7243/api/HCoin/CheckIn`, { withCredentials: true })
       .then((response) => {
          checkIns.value = response.data;
          leftTimes = 7 - checkIns.value.checkInTimes;
          //  console.log(checkIns.value);
       })
       .catch((error) => {
-         console.log(error);
+         console.log(error.response.status);
+         document.getElementById("alertLogin").style.display = "block";
+         document.getElementById("checkButton").style.display = "none";
+         // if (error.response.status === 401) {
+         //     window.location = "http://localhost:5173/login"
+         // }
       });
 };
 
@@ -48,7 +54,7 @@ const checkIn = async () => {
       alert("今天打卡過囉!!");
    } else {
       await axios
-         .put(`https://localhost:7243/api/HCoin/CheckIn`)
+         .put(`https://localhost:7243/api/HCoin/CheckIn`, {}, { withCredentials: true })
          .then((response) => {
             getCheckInfo();
             alert("打卡成功!!!");
