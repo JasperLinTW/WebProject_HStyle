@@ -85,20 +85,20 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from 'vue';
-import { useRoute } from 'vue-router';
-import axios from 'axios';
-import { Swiper, SwiperSlide } from 'swiper/vue';
+import { onMounted, ref, watch } from "vue";
+import { useRoute } from "vue-router";
+import axios from "axios";
+import { Swiper, SwiperSlide } from "swiper/vue";
 import Back2Top from "../components/Back2Top.vue";
 import PComment from "../components/PComment.vue";
-import RecommendCard from '../components/RecommendCard.vue';
+import RecommendCard from "../components/RecommendCard.vue";
 
 // Import Swiper styles
-import 'swiper/css';
+import "swiper/css";
 
-import 'swiper/css/pagination';
+import "swiper/css/pagination";
 // import required modules
-import { Pagination } from 'swiper';
+import { Pagination } from "swiper";
 
 //路由
 const route = useRoute();
@@ -109,159 +109,182 @@ const showComment = ref(false);
 
 //商品呈現
 const getProduct = async () => {
-    await axios.get(`https://localhost:7243/api/Products/${route.params.id}`)
-        .then(response => {
-            product.value = response.data;
-            SelectSpecId.value = product.value.specs[0].specId;
-            isClicked.value = likeProductsId.value.includes(parseInt(route.params.id));
-        })
-        .catch(error => { console.log(error); });
-}
+  await axios
+    .get(`https://localhost:7243/api/Products/${route.params.id}`)
+    .then((response) => {
+      product.value = response.data;
+      SelectSpecId.value = product.value.specs[0].specId;
+      isClicked.value = likeProductsId.value.includes(
+        parseInt(route.params.id)
+      );
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
 
 //照片輪播
 const modules = ref([Pagination]);
 
 //加入購物車
-const emit = defineEmits(['update']);
+const emit = defineEmits(["update"]);
 const watchedNum = ref(0);
 watch(watchedNum, (newValue) => {
-    emit('update', newValue)
-})
+  emit("update", newValue);
+});
 const SelectSpecId = ref(0);
 const addItem = async () => {
-    await axios.post(`https://localhost:7243/api/Cart/${SelectSpecId.value}`)
-        .then(response => {
-            watchedNum.value += 1;
-        })
-        .catch(error => { console.log(error); });
-}
+  await axios
+    .post(`https://localhost:7243/api/Cart/${SelectSpecId.value}`)
+    .then((response) => {
+      watchedNum.value += 1;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
 
 //收藏
 let likes = ref([]);
-const likeProductsId = ref([])
+const likeProductsId = ref([]);
 
 const likesProducts = async () => {
-    await axios.get("https://localhost:7243/api/Products/products/likes")
-        .then(response => {
-            if (response.data.length > 0) {
-                likes.value = response.data;
-                likeProductsId.value = likes.value.map(p => {
-                    return p.productId;
-                });
-            }
-        })
-        .catch(error => { console.log(error); });
-}
+  await axios
+    .get("https://localhost:7243/api/Products/products/likes", {
+      withCredentials: true,
+    })
+    .then((response) => {
+      if (response.data.length > 0) {
+        likes.value = response.data;
+        likeProductsId.value = likes.value.map((p) => {
+          return p.productId;
+        });
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
 
 const likesProduct = async () => {
-    await axios.post(`https://localhost:7243/api/Products/product/like?product_id=${route.params.id}`)
-        .then(response => {
-            isClicked.value = !isClicked.value;
-        })
-        .catch(error => { console.log(error); });
-}
+  await axios
+    .post(
+      `https://localhost:7243/api/Products/product/like?product_id=${route.params.id}`,
+      {},
+      {
+        withCredentials: true,
+      }
+    )
+    .then((response) => {
+      isClicked.value = !isClicked.value;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
 
 const rec = ref([]);
 //推薦商品
 const getRecommend = async () => {
-    await axios.get(`https://localhost:7243/api/Products/ProdRec/${route.params.id}`)
-        .then(response => {
-            rec.value = response.data;
-            //console.log(rec.value);
-        })
-        .catch(error => { console.log(error); });
-}
+  await axios
+    .get(`https://localhost:7243/api/Products/ProdRec/${route.params.id}`)
+    .then((response) => {
+      rec.value = response.data;
+      //console.log(rec.value);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
 
 const comment = ref([]);
 //評論
 const getComment = async () => {
-    await axios.get(`https://localhost:7243/api/Products/comments/${route.params.id}`)
-        .then(response => {
-            comment.value = response.data;
-            console.log(comment.value);
-        })
-        .catch(error => { console.log(error); });
-}
-
+  await axios
+    .get(`https://localhost:7243/api/Products/comments/${route.params.id}`)
+    .then((response) => {
+      comment.value = response.data;
+      console.log(comment.value);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
 
 onMounted(() => {
-    likesProducts();
-    getProduct();
-    getRecommend();
-    getComment();
-})
-
-
-
+  likesProducts();
+  getProduct();
+  getRecommend();
+  getComment();
+});
 </script>
 
 <style scoped>
 .line {
-    border-top: 1px solid #dee2e6;
-    text-align: center;
-    line-height: 0.1em;
+  border-top: 1px solid #dee2e6;
+  text-align: center;
+  line-height: 0.1em;
 }
 
 .line span {
-    background: #fff;
-    padding: 0 10px;
+  background: #fff;
+  padding: 0 10px;
 }
 
 .px-6 {
-    padding-left: 15%;
-    padding-right: 15%;
+  padding-left: 15%;
+  padding-right: 15%;
 }
 
 .mb-big {
-    margin-bottom: 20%;
+  margin-bottom: 20%;
 }
 
 .h200px {
-    height: 200px;
+  height: 200px;
 }
 
 .btn-underline {
-    position: relative;
-    padding: 0;
-    border: none;
-    background: none;
-    text-decoration: none;
-    font-size: 12pt;
-    color: #333;
-    cursor: pointer;
+  position: relative;
+  padding: 0;
+  border: none;
+  background: none;
+  text-decoration: none;
+  font-size: 12pt;
+  color: #333;
+  cursor: pointer;
 }
 
 .btn-underline:hover {
-    color: #000000;
+  color: #000000;
 }
 
-
 .btn-underline::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background-color: #000000;
-    transform: scaleX(0);
-    transition: transform 0.3s ease;
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #000000;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
 }
 
 .btn-underline:hover::after {
-    transform: scaleX(1);
+  transform: scaleX(1);
 }
 
 .thumb {
-    width: 100px;
-    height: 100px;
-    margin-bottom: 10px;
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px;
 }
 
 .thumb img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .MySwiper {
@@ -271,57 +294,55 @@ onMounted(() => {
 }
 
 .MySwiper .swiper-slide img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .fz-18 {
-    font-size: 20px;
-    cursor: pointer;
+  font-size: 20px;
+  cursor: pointer;
 }
 
 .add-to-cart {
-    background-color: #fff;
-    color: rgb(12, 13, 12);
-    padding: 10px 28px;
-    border-radius: 25px;
-    border: 1px solid rgb(12, 13, 12);
-    transition: all 0.3s ease;
+  background-color: #fff;
+  color: rgb(12, 13, 12);
+  padding: 10px 28px;
+  border-radius: 25px;
+  border: 1px solid rgb(12, 13, 12);
+  transition: all 0.3s ease;
 }
 
 .add-to-cart:hover {
-    background-color: #000;
-    color: #fff;
+  background-color: #000;
+  color: #fff;
 }
 
 .h500px {
-    height: 500px;
+  height: 500px;
 }
 
-
 .product-options label {
-    font-weight: bold;
-    margin-right: 10px;
+  font-weight: bold;
+  margin-right: 10px;
 }
 
 .product-options select {
-    outline: none;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5%;
-    font-size: 15px;
-
+  outline: none;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5%;
+  font-size: 15px;
 }
 
 a {
-    text-decoration-line: none;
-    color: #000;
+  text-decoration-line: none;
+  color: #000;
 }
 </style>
 <style>
 .swiper-pagination-bullet {
-    background: var(--bs-gray-500) !important;
+  background: var(--bs-gray-500) !important;
 }
 </style>
