@@ -53,5 +53,15 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 			_db.OrderLogs.Add(dataLog);
 			_db.SaveChanges();
         }
+
+        public void returnGoods(int orderId)
+        {
+            var order = _db.Orders.Where(x => x.OrderId == orderId).SingleOrDefault();
+			order.RequestRefundTime = DateTime.Now;
+			order.RequestRefund = true;
+			order.StatusId = 7;
+			order.StatusDescriptionId = 6;
+			_db.SaveChanges();
+        }
     }
 }

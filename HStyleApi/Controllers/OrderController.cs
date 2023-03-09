@@ -60,8 +60,15 @@ namespace HStyleApi.Controllers
 			return order;
 		}
 
-		
+        [HttpPut("{orderId}")]
+        public IActionResult returnGoods(int orderId)
+        {
+            _orderService.returnGoods(orderId);
+            return Ok("退貨申請成功");
+        }
 
-		
-	}
+
+
+
+    }
 }

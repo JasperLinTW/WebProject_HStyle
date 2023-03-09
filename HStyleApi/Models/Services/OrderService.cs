@@ -33,5 +33,10 @@ namespace HStyleApi.Models.Services
         {
             _repo.UpdateOrder(paypaltoken);
         }
+
+        public void returnGoods(int orderId)
+        {
+            _repo.returnGoods(orderId);
+        }
     }
 }
