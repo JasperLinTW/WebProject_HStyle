@@ -27,9 +27,9 @@ namespace HStyleApi.Models.DTOs
 				//CustomerQuestionId = dto.CustomerQuestionId,
 				MemberId = dto.MemberId,
 				QcategoryId = dto.QcategoryId,
-				Title = dto.Title,
-				ProblemDescription = dto.ProblemDescription,
-				FilePath = dto.FilePath,
+				Title = dto.Title ?? "",
+				ProblemDescription = dto.ProblemDescription ?? "",
+				FilePath = dto.FilePath ?? "",
 				AskTime = dto.AskTime,
 			};
 		}

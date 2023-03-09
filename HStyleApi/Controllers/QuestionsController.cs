@@ -70,14 +70,14 @@ namespace HStyleApi.Controllers
 		// 傳送會員提的問題(新增資料)，主要用於訂單問題
 		[Authorize]
 		[HttpPost("/MemberQ")]//此行與上一支api衝突，修改名稱
-		public void PostMemberQuestion([FromBody] CustomerQuestionDTO dto)
+		public IActionResult PostMemberQuestion([FromBody] CustomerQuestionDTO dto)
 		{
 
 			string path = "../H2StyleStore/Images/QuestionImages/";
 
 			try
 			{
-				if (dto.file!=null)
+				if (dto.file != null)
 				{
 					var helper = new UploadFileHelper();
 					string result = helper.SaveAs(path, dto.file);
@@ -87,19 +87,20 @@ namespace HStyleApi.Controllers
 			}
 			catch (Exception ex)
 			{
-				BadRequest(ex.Message);
+				return BadRequest(ex.Message);
 			}
 
 			int memberId = _member_id;
 			if (memberId <= 0)
 			{
-				throw new Exception("請先登入會員");
+				return BadRequest("請先登入會員");
 			}
 			else
 			{
 				dto.MemberId = memberId;
 				_service.PostCustomerQuestion(dto);
 			}
+			return Ok("新增成功");
 		}
 
 		// 傳送滿意度好的紀錄

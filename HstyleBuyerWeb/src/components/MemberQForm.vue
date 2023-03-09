@@ -35,8 +35,8 @@
                   </div>
                   <div class="mb-3">
                      <label for="imageFile" class="form-label">圖片上傳</label>
-                     <input class="form-control" type="file" id="imageFile" accept="image/*" @Change="handleUpload" />
-                     <div class="fs14">只可上傳一個檔案，且大小需小於4MB的圖檔，如果檔案大大或格式限制無法順利上傳，建議改以連結方式提供。</div>
+                     <input class="form-control" type="file" id="imageFile" accept=".png, .jpg" @change="handleUpload" />
+                     <div class="fs14">只可上傳一個檔案，且大小需小於2MB的圖檔，如果檔案大大或格式限制無法順利上傳，建議改以連結方式提供。</div>
                      <div v-if="errorMessage">{{ errorMessage }}</div>
                   </div>
                   <button type="submit" class="btn btn-primary">送出</button>
@@ -79,11 +79,13 @@ watch(file, (newFile, oldFile) => {
       const formData = new FormData();
       formData.append("file", newFile);
       const fileSize = newFile.size / 1024 / 1024; // 轉換為 MB
-      if (fileSize > 4) {
+      if (fileSize > 2) {
          // 限制檔案大小為 4 MB
+         console.log(file.value);
          errorMessage.value = "檔案大小超過限制";
          file.value = null;
       } else {
+         console.log(file.value);
          errorMessage.value = null;
       }
    }
@@ -99,11 +101,11 @@ const postMemberQ = async () => {
       const formData = new FormData();
       formData.append("memberId", null);
       formData.append("filePath", null);
-      formData.append("file", file.value);
       formData.append("qcategoryId", qcategoryId.value);
       formData.append("title", title.value);
       formData.append("problemDescription", problemDescription.value);
       formData.append("askTime", new Date());
+      formData.append("file", file.value);
 
       await axios
          .post("https://localhost:7243/MemberQ", formData, {
@@ -111,14 +113,19 @@ const postMemberQ = async () => {
                "Content-Type": "multipart/form-data",
             },
             withCredentials: true,
+            contentType: "image/png", // 必須設定為 false
+            processData: false, // 必須設定為 false
          })
          .then((response) => {
-            console.log(response.data);
+            console.log(formData);
             console.log("檔案上傳");
             document.getElementById("AlertModal").click();
          })
          .catch((error) => {
-            console.log(error);
+            console.log(error.response.status);
+            if (error.response.status === 401) {
+               window.location = "http://localhost:5173/login";
+            }
          });
    } else {
       await axios
@@ -141,32 +148,13 @@ const postMemberQ = async () => {
             document.getElementById("AlertModal").click();
          })
          .catch((error) => {
-            console.log(error);
+            console.log(error.response.status);
+            if (error.response.status === 401) {
+               window.location = "http://localhost:5173/login";
+            }
          });
    }
 };
-// await axios
-//    .post(
-//       "https://localhost:7243/MemberQ",
-//       {
-//          memberId: null,
-//          qcategoryId: qcategoryId.value,
-//          title: title.value,
-//          problemDescription: problemDescription.value,
-//          filePath: null,
-//          file: file.value,
-//          askTime: new Date(),
-//       },
-//       { withCredentials: true }
-//    )
-//    .then((response) => {
-//       console.log(response.data);
-//       document.getElementById("AlertModal").click();
-//       // alert("感謝您的回饋");
-//    })
-//    .catch((error) => {
-//       console.log(error);
-//    });
 
 onMounted(() => {
    getQCategoryInfo();
