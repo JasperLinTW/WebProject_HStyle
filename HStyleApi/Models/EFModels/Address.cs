@@ -9,11 +9,11 @@ namespace HStyleApi.Models.EFModels
     {
         public int AddressId { get; set; }
         public int MemberId { get; set; }
-        public bool Gender { get; set; }
+        public bool? Gender { get; set; }
         public string DestinationName { get; set; }
         public string Destination { get; set; }
         public string DestinationThe { get; set; }
-        public bool Preset { get; set; }
+        public bool? Preset { get; set; }
         public string DestinationCategory { get; set; }
 
         public virtual Member Member { get; set; }

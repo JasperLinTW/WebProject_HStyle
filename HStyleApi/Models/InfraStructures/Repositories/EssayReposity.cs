@@ -51,6 +51,7 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 				.Include(e => e.Category)
 				.Include(e => e.Tags)
 				.Include(e => e.Elikes)
+				.Include(e => e.Influencer)
 				.Where(e => e.Pon == true).Select(e => e.ToEssayDTO())
 				.ToListAsync();
 

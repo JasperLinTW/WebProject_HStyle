@@ -6,6 +6,7 @@ namespace HStyleApi.Models.DTOs
 	{
 		public int EssayId { get; set; }
 		public int InfluencerId { get; set; }
+		public string InfluencerName { get; set; }
 		public DateTime UplodTime { get; set; }
 		public string Etitle { get; set; }
 		public string Econtent { get; set; }
@@ -40,6 +41,7 @@ namespace HStyleApi.Models.DTOs
 			{
 				EssayId = source.EssayId,
 				InfluencerId = source.InfluencerId,
+				InfluencerName = source.Influencer.Account,
 				UpLoad = source.UpLoad,
 				Etitle = source.Etitle,
 				Econtent = source.Econtent,
