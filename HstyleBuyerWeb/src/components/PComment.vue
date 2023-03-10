@@ -18,13 +18,24 @@
                 <img :src="data.pcommentImgs[0]" alt="...">
             </div>
             <div class="col-md-3 text-end" v-else-if="data.pcommentImgs && data.pcommentImgs.length > 1">
-                <!-- TODO 輪播 <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
                     <div class="carousel-inner">
-                        <div class="carousel-item" v-for="(item, index) in data.pcommentImgs" :key="index">
-                            <img :src="item[0]" alt="...">
+                        <div class="carousel-item" v-for="(item, index) in data.pcommentImgs" :key="index"
+                            :class="{ 'active': index === 0 }">
+                            <img :src="item" class="d-block img-fluid" alt="...">
                         </div>
                     </div>
-                </div> -->
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade"
+                        data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade"
+                        data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
             </div>
             <div class="col-md-3 text-end" v-else>
                 <!-- 如果沒有照片 -->
