@@ -93,7 +93,7 @@ const loadProducts = async () => {
       withCredentials: true,
     })
     .then((response) => {
-      console.log(response.data);
+      //console.log(response.data);
       response.data.map((p) => {
         p.isClicked = likeProductsId.value.includes(p.product_Id);
       });

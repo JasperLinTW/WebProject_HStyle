@@ -60,7 +60,7 @@
       <div class="col-md-6">
         <button class="btn-underline" @click="showComment = true" :class="{ active: showComment }">商品評論</button>
       </div>
-      <div v-if="showComment" class="col-md-12 border-top pt-5 mb-big">
+      <div v-if="showComment" class="col-md-12 border-top pt-3 mb-big">
         <PComment v-if="comment.length > 0" v-for="item in comment" :data="item"></PComment>
         <div v-else class="pt-4">- 此商品無評論 -</div>
       </div>
@@ -208,7 +208,7 @@ const getComment = async () => {
     .get(`https://localhost:7243/api/Products/comments/${route.params.id}`)
     .then((response) => {
       comment.value = response.data;
-      console.log(comment.value);
+      //console.log(comment.value);
     })
     .catch((error) => {
       console.log(error);
