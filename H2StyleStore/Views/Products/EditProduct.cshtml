@@ -150,14 +150,15 @@
                         if (spec.Size == item.Value) { item.Selected = true; }
                     }
                     <div class="form-group spec">
-                        <div class="col-md-10 input-group specs mb-2">
-                            <input class="form-control text-box Color" name="" type="text" value="@spec.Color" placeholder="顏色">
-                            @Html.DropDownList("Size", list, new { @class = "form-control text-box Size" })
+                                    <div class="col-md-10 input-group specs mb-2">
+                                        <input class="form-control text-box Color" name="" type="text" value="@spec.Color" placeholder="顏色">
+                                        @Html.DropDownList("Size", list, new { @class = "form-control text-box Size" })
 
-                            @*<input class="form-control text-box Size" name="" type="text" value="@spec.Size" placeholder="尺寸">*@
-                            <input class="form-control text-box Stock" name="" type="number" value="@spec.Stock" placeholder="庫存">
-                            <button type="button" class="btn btn-default delSpecBtn">刪除</button>
-                        </div>
+                                        @*<input class="form-control text-box Size" name="" type="text" value="@spec.Size" placeholder="尺寸">*@
+                                        <input class="form-control text-box Stock" name="" type="number" value="@spec.Stock" placeholder="庫存">
+                                        <input class="form-control text-box specId" name="" value="@spec.Id" hidden>
+                                        <button type="button" class="btn btn-default delSpecBtn">刪除</button>
+                                    </div>
 
                         @{i++;
                         }
@@ -260,6 +261,11 @@
                 $(".Stock").each(function () {
                     $(this).attr('name', `Specs[${k}].Stock`);
                     k++;
+                });
+                var l = 0;
+                $(".specId").each(function () {
+                    $(this).attr('name', `Specs[${l}].Id`);
+                    l++;
                 });
 
             });

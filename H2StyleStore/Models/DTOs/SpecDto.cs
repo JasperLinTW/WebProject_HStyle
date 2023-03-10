@@ -28,6 +28,7 @@ namespace H2StyleStore.Models.DTOs
 		public static SpecDto ToDto(this Spec source)
 		=> new SpecDto
 		{
+			Id = source.Id,
 			Color= source.Color,
 			Size= source.Size,
 			Stock= source.Stock,
@@ -36,6 +37,7 @@ namespace H2StyleStore.Models.DTOs
 		public static SpecDto ToDto(this SpecVm source)
 		=> new SpecDto
 		{
+			Id = source.Id,
 			Color = source.Color,
 			Size = source.Size,
 			Stock = source.Stock,
