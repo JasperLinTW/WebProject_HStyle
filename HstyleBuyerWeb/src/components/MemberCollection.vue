@@ -1,10 +1,61 @@
 <template>
-    <div>
-        <p>會員收藏</p>
+    <ul class="nav nav-tabs mt-5">
+        <li class="nav-item">
+            <a class="nav-link" :class="{ active: currentTab === 'Product' }" aria-current="page" href="#"
+                @click.prevent="currentTab = 'Product'">商品收藏</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" :class="{ active: currentTab === 'Essay' }" href="#"
+                @click.prevent="currentTab = 'Essay'">文章收藏</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" :class="{ active: currentTab === 'Video' }" href="#"
+                @click.prevent="currentTab = 'Video'">影片收藏</a>
+        </li>
+    </ul>
+    <div v-if="currentTab === 'Product'" class="mt-4 container-fluid">
+        <div class="row">
+            <ProductCollection v-for="item in likes" :data="item" />
+        </div>
     </div>
+    <div v-if="currentTab === 'Essay'">
+    </div>
+    <div v-if="currentTab === 'Video'">
+    </div>
+    <Back2Top />
 </template>
     
-<script>
+<script setup>
+import ProductCollection from "./ProductCollection.vue";
+import Back2Top from "./Back2Top.vue";
+import axios from "axios";
+import { ref, onMounted, watch } from "vue";
+import { eventBus } from "../mybus";
+
+const currentTab = ref('Product');
+//收藏
+let likes = ref([]);
+const likesProducts = async () => {
+    await axios
+        .get("https://localhost:7243/api/Products/products/likes", {
+            withCredentials: true,
+        })
+        .then((response) => {
+            likes.value = response.data;
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+};
+
+
+onMounted(() => {
+    likesProducts();
+});
 
 </script>
-<style></style>
+<style scoped>
+.nav-link {
+    color: darkgrey;
+}
+</style>

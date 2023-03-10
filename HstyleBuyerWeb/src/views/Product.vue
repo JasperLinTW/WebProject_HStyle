@@ -5,12 +5,7 @@
       <div class="col-lg-5 border-bottom">
         <div class="d-flex justify-content-start">
           <div class="filter">
-            <div
-              class="dropdown-toggle"
-              id="dropdownMenuButton"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
+            <div class="dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
               排序
             </div>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -18,12 +13,7 @@
             </ul>
           </div>
           <div class="filter">
-            <div
-              class="dropdown-toggle"
-              id="dropdownMenuButton"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
+            <div class="dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
               尺寸
             </div>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -31,12 +21,7 @@
             </ul>
           </div>
           <div class="filter">
-            <div
-              class="dropdown-toggle"
-              id="dropdownMenuButton"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
+            <div class="dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
               類別
             </div>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -44,12 +29,7 @@
             </ul>
           </div>
           <div class="filter">
-            <div
-              class="dropdown-toggle"
-              id="dropdownMenuButton"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
+            <div class="dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
               顏色
             </div>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -61,7 +41,7 @@
     </div>
   </div>
 
-  <div class="container">
+  <div class="container d-flex justify-content-between">
     <div class="row">
       <ProductCard v-for="item in products" :data="item" />
     </div>
@@ -93,7 +73,7 @@ const likesProducts = async () => {
     })
     .then((response) => {
       if (response.data.length > 0) {
-        console.log(response.data);
+        //console.log(response.data);
         likes.value = response.data;
         likeProductsId.value = likes.value.map((p) => {
           return p.productId;
@@ -119,7 +99,7 @@ const loadProducts = async () => {
       });
       if (route.params.tag == "new") {
         products.value = response.data.filter((p) => p.tags.includes("新品"));
-        console.log(products.value);
+        //console.log(products.value);
       } else {
         products.value = response.data;
       }
