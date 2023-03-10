@@ -3,41 +3,20 @@
     <div class="card d-flex justify-content-center align-items-center">
       <router-link :to="'/product/' + data.product_Id">
         <div class="img-sz">
-          <img
-            v-if="!isIn"
-            @mouseover="isIn = true"
-            :src="data.imgs[0]"
-            class="card-img-top"
-            alt="Product Image"
-          />
-          <img
-            v-else
-            @mouseout="isIn = false"
-            :src="data.imgs[1]"
-            class="card-img-top"
-            alt="Product Image"
-          />
+          <img v-if="!isIn" @mouseover="isIn = true" :src="data.imgs[0]" class="card-img-top" alt="Product Image" />
+          <img v-else @mouseout="isIn = false" :src="data.imgs[1]" class="card-img-top" alt="Product Image" />
         </div>
       </router-link>
       <div class="card-body position-relative">
-        <div
-          class="position-absolute top-0 end-0 me-2 mt-2"
-          v-for="tag in data.tags"
-        >
+        <div class="position-absolute top-0 end-0 me-2 mt-2" v-for="tag in data.tags">
           <label class="fz-9" v-if="tag === newProduct">{{ newProduct }}</label>
         </div>
         <div class="card-title fw-bold">{{ data.product_Name }}</div>
         <span>$NT {{ data.unitPrice }}</span>
         <div class="card-text text-end">
-          <span v-if="!data.isClicked"
-            ><i
-              class="fa-regular fa-heart icon-hover fz-18"
-              @click="likesProduct(data)"
-            ></i
-          ></span>
-          <span v-else
-            ><i class="fa-solid fa-heart fz-18" @click="likesProduct(data)"></i
-          ></span>
+          <span v-if="!data.isClicked"><i class="fa-regular fa-heart icon-hover fz-18"
+              @click="likesProduct(data)"></i></span>
+          <span v-else><i class="fa-solid fa-heart fz-18" @click="likesProduct(data)"></i></span>
         </div>
       </div>
     </div>
@@ -75,7 +54,7 @@ const likesProduct = async (data) => {
 };
 //收藏
 
-onMounted(() => {});
+onMounted(() => { });
 
 //圖片動畫
 const isIn = ref(false);
