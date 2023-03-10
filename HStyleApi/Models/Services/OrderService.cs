@@ -36,7 +36,14 @@ namespace HStyleApi.Models.Services
 
         public void returnGoods(int orderId)
         {
-            _repo.returnGoods(orderId);
+			//檢查時間、狀態
+			bool canReturn = _repo.CheckStatus(orderId);
+			if(canReturn)
+			{
+                _repo.returnGoods(orderId);
+            }
+
+            
         }
     }
 }

@@ -63,5 +63,20 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 			order.StatusDescriptionId = 6;
 			_db.SaveChanges();
         }
+
+        public bool CheckStatus(int orderId)
+        {
+			var order = _db.Orders.Where(x => x.OrderId == orderId).FirstOrDefault();
+
+            if (order.CreatedTime.AddDays(14) < DateTime.Now)
+			{
+				throw new Exception("您的訂單已超過允許退貨時間");
+			}
+			if(order.StatusId == 7)
+			{
+                throw new Exception("您的訂單退貨申請已在處理中");
+            }
+			return true;
+        }
     }
 }

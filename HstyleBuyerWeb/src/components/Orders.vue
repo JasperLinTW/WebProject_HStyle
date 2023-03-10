@@ -12,12 +12,22 @@
       </div>
     </div>
     <div class="accordion accordion-flush" id="accordionExample">
-      <div v-for="(order, index) in orders" :key="order.orderId" class="accordion-item">
+      <div
+        v-for="(order, index) in orders"
+        :key="order.orderId"
+        class="accordion-item"
+      >
         <div class="accordion-header row" :id="'heading' + index">
           <div class="col-1 text-center">
-            <button class="accordion-button btn-order" type="button" data-bs-toggle="collapse"
-              :data-bs-target="'#collapse' + index" :class="{ collapsed: index !== -1 }" aria-expanded="false"
-              :aria-controls="'collapse' + index"></button>
+            <button
+              class="accordion-button btn-order"
+              type="button"
+              data-bs-toggle="collapse"
+              :data-bs-target="'#collapse' + index"
+              :class="{ collapsed: index !== -1 }"
+              aria-expanded="false"
+              :aria-controls="'collapse' + index"
+            ></button>
           </div>
           <div class="col-1 text-center pt-2">{{ order.orderId }}</div>
           <div class="col-2 text-center pt-2">NT$ {{ order.total }}</div>
@@ -26,22 +36,43 @@
           </div>
           <div class="col-2 text-center pt-2">{{ order.payment }}</div>
           <div class="col-1 text-center pt-2 ps-1">
-            <div v-if="order.statusId === 1" @click.prevent="goToPay(order.payInfo)">
-              <a class="alink">待付款<i class="fa-solid fa-arrow-up-right-from-square fz-sm ps-2"></i></a>
+            <div
+              v-if="order.statusId === 1"
+              @click.prevent="goToPay(order.payInfo)"
+            >
+              <a class="alink"
+                >待付款<i
+                  class="fa-solid fa-arrow-up-right-from-square fz-sm ps-2"
+                ></i
+              ></a>
             </div>
             <div v-else>
               {{ order.status }}
             </div>
           </div>
           <div class="col-2 pt-2 text-center">
-            <a class="blink" data-bs-toggle="modal" data-bs-target="#MemberQModal">聯絡客服</a>
+            <a
+              class="blink"
+              data-bs-toggle="modal"
+              data-bs-target="#MemberQModal"
+              >聯絡客服</a
+            >
             <br />
 
-            <a v-if="order.status != '退貨處理中'" class="blink" @click="returnGoods(order.orderId)">我要退貨</a>
+            <a
+              v-if="order.status != '退貨處理中'"
+              class="blink"
+              @click="returnGoods(order.orderId)"
+              >我要退貨</a
+            >
           </div>
         </div>
-        <div :id="'collapse' + index" class="accordion-collapse collapse" :aria-labelledby="'heading' + index"
-          data-bs-parent="#accordionExample">
+        <div
+          :id="'collapse' + index"
+          class="accordion-collapse collapse"
+          :aria-labelledby="'heading' + index"
+          data-bs-parent="#accordionExample"
+        >
           <div class="accordion-body">
             <div class="row bg-dark text-white font-weight-bold py-2">
               <div class="col-1"></div>
@@ -52,25 +83,35 @@
               <div class="col-2 text-center">小計</div>
               <div class="col-1"></div>
             </div>
-            <div v-for="(product, index) in order.orderDetails" :key="index"
-              class="row accordion-body border-start border-end py-3 px-0">
+            <div
+              v-for="(product, index) in order.orderDetails"
+              :key="index"
+              class="row accordion-body border-start border-end py-3 px-0"
+            >
               <div class="col-1"></div>
               <div class="col-2 text-center">{{ product.productName }}</div>
-              <div class="col-2 text-center">{{ `${product.color}, ${product.size}` }}</div>
+              <div class="col-2 text-center">
+                {{ `${product.color}, ${product.size}` }}
+              </div>
               <div class="col-2 text-center">{{ product.unitPrice }}</div>
               <div class="col-2 text-center">{{ product.quantity }}</div>
               <div class="col-2 text-center">{{ product.subTotal }}</div>
               <div class="col-1 py-0">
-                <button @click="
-                  createCommonModal(
-                    product.productId,
-                    product.orderId,
-                    product.productName,
-                    product.color,
-                    product.size
-                  )
-                " type="button" data-bs-toggle="modal" class="btn btn-link b-0 px-1"
-                  data-bs-target="#ProductCommentModal">
+                <button
+                  @click="
+                    createCommonModal(
+                      product.productId,
+                      product.orderId,
+                      product.productName,
+                      product.color,
+                      product.size
+                    )
+                  "
+                  type="button"
+                  data-bs-toggle="modal"
+                  class="btn btn-link b-0 px-1"
+                  data-bs-target="#ProductCommentModal"
+                >
                   我要評論
                 </button>
               </div>
@@ -126,7 +167,8 @@ const returnGoods = async (orderId) => {
       getOrdersInfo();
     })
     .catch((error) => {
-      console.log(error);
+      alert(error.response.data);
+      console.log(error.response.data);
     });
 };
 
