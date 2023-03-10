@@ -1,10 +1,13 @@
 <!-- Blog.vue -->
 <template>
- 
-  <div class="container-car">
+  <div class="container">
     <div class="wrap">
-      <a class="slide-arrow" id="slidePrev"><i class="fa-solid fa-chevron-left"></i></a>
-      <a class="slide-arrow right" id="slideNext"><i class="fa-solid fa-chevron-right"></i></a>
+      <a class="slide-arrow" id="slidePrev"
+        ><i class="fa-solid fa-chevron-left"></i
+      ></a>
+      <a class="slide-arrow right" id="slideNext"
+        ><i class="fa-solid fa-chevron-right"></i
+      ></a>
       <ul class="slide-img" id="slideImg">
         <li><img src="../assets/image/chanel1.jpg" alt="" /></li>
         <li><img src="../assets/image/chanel2.jpg" alt="" /></li>
@@ -14,8 +17,10 @@
       </ul>
       <div class="card-img-overlay">
         <div class="card-title">
-          <h5 class="">This is a wider card with supporting text below as a natural lead-in to additional content. This
-            content is a little bit longer.</h5>
+          <h5 class="">
+            This is a wider card with supporting text below as a natural lead-in
+            to additional content. This content is a little bit longer.
+          </h5>
         </div>
       </div>
       <ul class="pages">
@@ -27,101 +32,96 @@
       </ul>
     </div>
 
+    <div class="">
+      <div class="vegas-slide-container">
+        <div id="example"></div>
+      </div>
 
-
-  <div class="">
-    <div class="vegas-slide-container">
-      <div id="example"></div>
+      <hr />
+      <p class="lan">最新消息</p>
+      <hr />
     </div>
-
-    <hr />
-    <p class="lan">最新消息</p>
-    <hr />
-  </div>
-  <div class="container">
-    <div class="row">
-      <EssayCard v-for="item in essays.slice(0, 2)" :data="item"></EssayCard>
-    </div>
-  <!-- <div class="row">
+    <div class="container">
+      <div class="row">
+        <EssayCard v-for="item in essays.slice(0, 2)" :data="item"></EssayCard>
+      </div>
+      <!-- <div class="row">
           <VideoCard v-for="item in videos.slice(0,3)" :data="item"></VideoCard>
         </div>
           <EssayCard v-for="item in newessays.slice(0, 2)" :data="item"></EssayCard> -->
-  </div>
+    </div>
 
-  <!-- 左右兩邊文章專區 -->
+    <!-- 左右兩邊文章專區 -->
 
-  <div v-if="loaded" class="container-essay">
-    
-      <div  class="column">
+    <div v-if="loaded" class="container-essay">
+      <div class="column">
         <router-link :to="'/EssaysBlog/' + essays[1].essayId">
-        
-            <img :src="essays[0].imgs[0]" class="" alt="">
-            <div class="details">
-            <div class="category">{{ essays[0].categoryName}}</div>
-             <div class="title">{{ essays[0].etitle }}</div> 
-             <div class="influencer">{{ essays[0].influencerName }}</div>
-             <div class="formatDate">{{ formatDate(essays[0].uplodTime)}}</div>
-            </div>
-        </router-link> 
+          <img :src="essays[0].imgs[0]" class="" alt="" />
+          <div class="details">
+            <div class="category">{{ essays[0].categoryName }}</div>
+            <div class="title">{{ essays[0].etitle }}</div>
+            <div class="influencer">{{ essays[0].influencerName }}</div>
+            <div class="formatDate">{{ formatDate(essays[0].uplodTime) }}</div>
+          </div>
+        </router-link>
       </div>
-      <div class="column " style="z-index:0;">
-        <img src="../assets/image/jisoo.jpg" alt="Image">
-        <img src="../assets/image/jisoo.jpg" alt="Image">
-        <img src="../assets/image/jisoo.jpg" alt="Image">
+      <div class="column" style="z-index: 0">
+        <img src="../assets/image/jisoo.jpg" alt="Image" />
+        <img src="../assets/image/jisoo.jpg" alt="Image" />
+        <img src="../assets/image/jisoo.jpg" alt="Image" />
       </div>
-      <div class="column" style="z-index:0;">
-        <img src="../assets/image/jisoo.jpg" alt="Image">
-        <img src="../assets/image/jisoo.jpg" alt="Image">
-        <img src="../assets/image/jisoo.jpg" alt="Image">
+      <div class="column" style="z-index: 0">
+        <img src="../assets/image/jisoo.jpg" alt="Image" />
+        <img src="../assets/image/jisoo.jpg" alt="Image" />
+        <img src="../assets/image/jisoo.jpg" alt="Image" />
       </div>
-   
-  </div>
-
-
-  <div class="">
-    <div class="vegas-slide-container">
-      <div id="example"></div>
     </div>
 
-    <hr />
-    <p class="lan">最新消息</p>
-    <hr />
-  </div>
-  <div class="container">
-    <div class="row">
-      <EssayCard v-for="item in essays.slice(0, 2)" :data="item"></EssayCard>
+    <div class="">
+      <div class="vegas-slide-container">
+        <div id="example"></div>
+      </div>
+
+      <hr />
+      <p class="lan">最新消息</p>
+      <hr />
     </div>
-  <!-- <div class="row">
+    <div class="container">
+      <div class="row">
+        <EssayCard v-for="item in essays.slice(0, 2)" :data="item"></EssayCard>
+      </div>
+      <!-- <div class="row">
           <VideoCard v-for="item in videos.slice(0,3)" :data="item"></VideoCard>
         </div>
           <EssayCard v-for="item in newessays.slice(0, 2)" :data="item"></EssayCard> -->
+    </div>
   </div>
-</div>
 </template>
   
 <script setup>
-import EssayCard from '../components/EssayCard.vue'
-import VideoCard from '../components/VideoCard.vue';
+import EssayCard from "../components/EssayCard.vue";
+import VideoCard from "../components/VideoCard.vue";
 import { ref, onMounted } from "vue";
 import axios from "axios";
 
-const loaded = ref(false)
+const loaded = ref(false);
 const essays = ref([]);
 
 const getEssayInfo = async () => {
-  await axios.get("https://localhost:7243/api/Essay")
-    .then(response => {
-      essays.value = response.data; console.log(essays.value)
+  await axios
+    .get("https://localhost:7243/api/Essay")
+    .then((response) => {
+      essays.value = response.data;
+      console.log(essays.value);
       loaded.value = true;
     })
-    .catch(error => { console.log(error); });
-
+    .catch((error) => {
+      console.log(error);
+    });
 };
 onMounted(() => {
   getEssayInfo();
 });
-
-
 
 // const videos=ref([])
 // const getVideos=async()=>{
@@ -146,16 +146,12 @@ const formatDate = (dateString) => {
   return `${year}年${month}月${day}日`;
 };
 
-
 $(function () {
-
   let index = 0;
   let slideMove = 0;
   $(".pages li").eq(0).css("background", "white");
   $(".pages li").on("mouseenter", function () {
-
     index = $(this).index();
-
   });
   let slideLiLength = $(".pages li").length;
   console.log(slideLiLength);
@@ -165,7 +161,6 @@ $(function () {
     if (index >= slideLiLength) {
       index = 0;
     }
-    ;
     moveImg();
   });
   $("#slidePrev").on("click", function () {
@@ -177,7 +172,7 @@ $(function () {
   });
   // 圖片移動
   function moveImg() {
-    slideMove = 0 - index * 800;
+    slideMove = 0 - index * 1300;
     $("#slideImg").css("left", slideMove);
     $(".pages li")
       .eq(index)
@@ -197,16 +192,8 @@ $(function () {
 </script>
 
 <style scoped>
-.container-car{
-  /* max-width:4000px;  change this value to adjust the width as desired 
-  margin: 50px auto; centers the container horizontally */
-}
-.change-width{
-  max-width: 1900px; /* change this value to adjust the width as desired */
-  margin: 0 auto; /* centers the container horizontally */
-}
 .wrap {
-  width: 800px;
+  width: 1300px;
   height: 400px;
   background-color: black;
   margin: 0 auto;
@@ -221,13 +208,13 @@ $(function () {
   left: 0;
   list-style: none;
   display: flex;
-  width: 4000px;
-  left: -1600px;
+  width: 6500px;
+  /* left: -1600px; */
 }
 
 .slide-img li {
-  width: 800px;
-  height: 400px;
+  width: 1300px;
+  height: 500px;
 }
 
 .slide-img li img {
@@ -235,7 +222,6 @@ $(function () {
   height: 100%;
   /* 控制元素內容大小 調整比例 */
   object-fit: cover;
-
 }
 
 .pages {
@@ -301,7 +287,6 @@ hr .lan {
   margin: 300px 0 0 0;
   top: -15em;
   background-color: transparent;
-
 }
 
 /* essay card 排版 */
@@ -317,44 +302,40 @@ hr .lan {
 }
 
 .category {
-  right: 275px;
-  font-family: cursive ;
+  right: 180px;
+  left: 190px;
+  font-family: cursive;
   font-weight: bold;
-  padding:60px;
-  height: 400px;
+  padding: 0px;
+  height: 320px;
 }
 
 .title {
   font-family: 標楷體;
-  font-size: x-large;
+  font-size: large;
   left: 50%;
   transform: translateX(-50%);
   /* padding:60px; */
   height: 300px;
- 
 }
 
 .influencer {
-
-  font-family: cursive  ;
-  padding:60px;
-  height: 210px;
-  left: 130px;
+  font-family: cursive;
+  padding: 60px;
+  height: 180px;
+  left: 115px;
   right: 150px;
 }
 
 .formatDate {
-  left: 130px;
-  right: 150px;
+  left: 80px;
+  right: 90px;
   /* bottom: 20px; */
-  font-family: cursive  ;
+  font-family: cursive;
   font-weight: bold;
-  padding:60px;
-  height: 180px;
+  padding: 60px;
+  height: 150px;
 }
-
-
- 
 
 /* 文章專區 */
 .container-essay {
@@ -364,11 +345,9 @@ hr .lan {
   height: 100vh;
   /* scroll-snap-type: y mandatory; */
   overflow-x: scroll;
- 
-
 }
 
-.card-img-top{
+.card-img-top {
   height: 100vh;
 }
 
@@ -376,7 +355,6 @@ hr .lan {
 .container-essay::-webkit-scrollbar {
   display: none;
 }
-
 
 .container::-webkit-scrollbar-thumb {
   background-color: transparent;
@@ -419,6 +397,4 @@ img {
 a {
   text-decoration: none;
 }
-
-
 </style>
