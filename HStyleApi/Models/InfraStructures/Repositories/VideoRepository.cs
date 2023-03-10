@@ -173,7 +173,7 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 		//Get評論
 		public async Task<IEnumerable<VideoCommentDTO>> GetComments(int videoId)
 		{
-			IEnumerable<VideoCommentDTO> data = await _db.VideoComments.Include(v=>v.Member)
+			IEnumerable<VideoCommentDTO> data = await _db.VideoComments.Include(v => v.Member)
 														.Where(v => v.VideoId == videoId)
 														.Select(v => v.ToCommentDTO()).ToListAsync();
 			return data;
@@ -212,6 +212,15 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 			}
 
 			_db.SaveChanges();
+		}
+
+		//Get會員喜歡的評論
+		public async Task<IEnumerable<VCommentLikeDTO>> GetCommentLikes(int memberId)
+		{
+			IEnumerable<VCommentLikeDTO> data = await _db.VcommentLikes
+														.Where(v => v.MemberId == memberId)
+														.Select(v => v.ToVCommentLikeDTO()).ToListAsync();
+			return data;
 		}
 	}
 }
