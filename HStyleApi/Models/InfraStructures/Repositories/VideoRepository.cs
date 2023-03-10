@@ -173,7 +173,7 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 		//Get評論
 		public async Task<IEnumerable<VideoCommentDTO>> GetComments(int videoId)
 		{
-			IEnumerable<VideoCommentDTO> data = await _db.VideoComments
+			IEnumerable<VideoCommentDTO> data = await _db.VideoComments.Include(v=>v.Member)
 														.Where(v => v.VideoId == videoId)
 														.Select(v => v.ToCommentDTO()).ToListAsync();
 			return data;

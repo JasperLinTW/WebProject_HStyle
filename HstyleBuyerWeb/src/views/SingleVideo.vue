@@ -4,8 +4,8 @@
       <div class="col-lg-8">
         <!-- plyr影片串接 -->
         <div>
-          <video ref="player" class="plyr__video-embed" playsinline controls>
-            <source :src="video.filePath" type="video/mp4" />
+          <video ref="player" class="plyr__video-embed" playsinline controls autoplay>
+            <source :src="video.filePath" type="video/mp4" autoplay/>
           </video>
         </div>
         <!-- <div class="">
@@ -16,13 +16,11 @@
           <div class="videoLike">
             <label>
               <span>影片收藏 </span>
-              <span v-if="!video.isClicked" @click="postVideoLike(video.id)"
-                ><i class="fa-regular fa-heart fz-18"></i
-              ></span>
-              <span v-else @click="video.isClicked = false"></span>
+              <span v-if="!isClicked" @click="postVideoLike(video.id)"
+                ><i class="fa-regular fa-heart icon-hover fz-18"></i></span>
+              <span v-else @click="postVideoLike(video.id)" ><i class="fa-solid fa-heart fz-18"></i></span>
             </label>
           </div>
-          <!-- <label for="" class=" tags" v-for="tag in video.tags">{{tag}}</label> -->
           <label class="title">{{ video.title }}</label>
           <p class="description">{{ video.description }}</p>
         </div>
@@ -35,21 +33,25 @@
                 class="form-group"
                 v-for="comment in videoComments"
                 :key="comment.id"
-              >
-                <label>{{ comment.memberId }}　說：</label>
-                <label>{{ comment.comment }}</label>
-                <label>{{ comment.createdTime.slice(0, 10) }}</label>
-                按讚留言
-                <label
-                  ><span
-                    v-if="!video.isClicked"
-                    @click="postCommentLike(video.id)"
-                    ><i class="fa-regular fa-heart fz-18"></i
-                  ></span>
-                  <span v-else @click="video.isClicked = false"
-                    ><i class="fa-solid fa-heart fz-18"></i
-                  ></span>
-                </label>
+                >
+                <div class="d-flex justify-content-start">
+                  <label>{{ comment.memberName }}　說：</label>
+                  <div>
+                    <label>{{ comment.comment }}</label>
+                  </div>
+                </div>
+                <div class="videoLike">
+                  <label>
+                    <span>留言按讚 </span>
+                    <span v-if="!commentIsClicked" @click="postCommentLike(comment.id)"
+                      ><i class="fa-regular fa-heart icon-hover fz-18"></i></span>
+                    <span v-else @click="postCommentLike(comment.id)" ><i class="fa-solid fa-heart fz-18"></i></span>
+                  </label>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <label>{{ comment.createdTime.slice(0, 10) }}</label>
+                  <!-- 按讚留言 -->
+                </div>
               </div>
             </form>
             <form>
@@ -84,14 +86,16 @@
                   v-for="product in RecoProducts"
                   :key="product.product_Id"
                 >
-                  <div>
-                    <img
-                      class="img-fluid"
-                      :src="product.imgs[0]"
-                      alt="推薦商品圖片"
-                    />
-                  </div>
-                  <label>{{ product.product_Name }}</label>
+                  <a :href="`http://localhost:5173/product/${product.product_Id}`">
+                    <div>
+                      <img
+                        class="img-fluid"
+                        :src="product.imgs[0]"
+                        alt="推薦商品圖片"
+                      />
+                    </div>
+                    <label>{{ product.product_Name }}</label>
+                  </a>
                 </div>
               </div>
             </div>
@@ -124,9 +128,12 @@ const video = ref([]);
 const route = useRoute();
 const RecoProducts = ref([]);
 const videoComments = ref([]);
-const videoLike = ref([]);
+
 const router = useRouter();
 const isLoaded = ref(false);
+const isClicked = ref(false);
+
+const likeCommentId=ref([]);
 
 // get
 const getVideo = async () => {
@@ -135,6 +142,9 @@ const getVideo = async () => {
     .then((response) => {
       video.value = response.data;
       console.log(video.value);
+      isClicked.value = likevideoId.value.includes(
+        parseInt(route.params.id)
+      );
     })
     .catch((error) => {
       console.log(error);
@@ -146,7 +156,7 @@ const getComments = async () => {
     .get(`https://localhost:7243/api/Video/Comments/${route.params.id}`)
     .then((response) => {
       videoComments.value = response.data;
-      console.log(videoComments.value);
+      console.log("commentGet");
     })
     .catch((error) => {
       console.log(error);
@@ -166,6 +176,21 @@ const getRecommenations = async () => {
     });
 };
 
+let likes = ref([]);
+const likevideoId = ref([]);
+const getLikesVideos=async()=>{
+  await axios.get(`https://localhost:7243/api/Video/MyLike`,{ withCredentials: true })
+  .then(response=>{
+    if(response.data.length>0){
+      likes.value = response.data;
+      likevideoId.value = likes.value.map((v) => {
+          return v.videoId;
+        });
+        console.log("likes");
+    }
+  })
+}
+
 // post
 const postVideoLike = (videoId) => {
   // console.log(videoId);
@@ -176,7 +201,9 @@ const postVideoLike = (videoId) => {
       { withCredentials: true }
     )
     .then((response) => {
-      console.log("VideoLike");
+      
+      isClicked.value = !isClicked.value;
+      console.log(isClicked.value);
     })
     .catch((error) => {
       console.log(error.response.status);
@@ -186,14 +213,16 @@ const postVideoLike = (videoId) => {
     });
 };
 
-const postCommentLike = (videoId) => {
+const commentIsClicked=ref(false);
+const postCommentLike = (commentId) => {
   axios
     .post(
-      `https://localhost:7243/api/Video/CommentLike/${videoId}`,
+      `https://localhost:7243/api/Video/CommentLike/${commentId}`,
       {},
       { withCredentials: true }
     )
     .then((response) => {
+      commentIsClicked.value = !commentIsClicked.value;
       console.log("commentLike");
     })
     .catch((error) => {
@@ -217,36 +246,32 @@ const postView = () => {
 
 // 送出留言
 const comment = ref("");
-const postComment = async (comment, videoId) => {
-  // console.log(comment);
-  const data = { comment: comment.value };
+const postComment = async () => {
+  //console.log(comment);
+  //const data = { comment: comment.value };
   //const jsonString = JSON.stringify(data);
   await axios
     .post(
-      `https://localhost:7243/api/Video/Comment/${videoId}`,
-      data,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      },
-
+      `https://localhost:7243/api/Video/Comment/${route.params.id}`,
+      {comment: comment.value},
       { withCredentials: true }
     )
     .then((response) => {
       console.log("Comment");
       console.log(response.data);
-      //getComments();
+      getComments();
+      comment.value = '';
     })
     .catch((error) => {
       console.log(error.response.status);
       if (error.response.status === 401) {
-        //window.location = "http://localhost:5173/login";
+        window.location = "http://localhost:5173/login";
       }
     });
 };
 
 onMounted(async () => {
+  await getLikesVideos();
   await getVideo();
   await getComments();
   await getRecommenations();

@@ -88,7 +88,7 @@ namespace HStyleApi.Controllers
 
 		//GET api/<VideoController>/MyLike/5  
 		[Authorize]
-		[HttpGet("MyLike/{memberId}")]
+		[HttpGet("MyLike")]
 		public async Task<IEnumerable<VideoLikeDTO>> GetLikeVideos()
 		{
 			var memberId = _memberId;
@@ -135,7 +135,7 @@ namespace HStyleApi.Controllers
 		//POST 評論
 		[Authorize]
 		[HttpPost("Comment/{videoId}")]
-		public void CreateComment([FromBody]JObject comment, int videoId)
+		public void CreateComment([FromBody]CommentDTO comment, int videoId)
 		{
 			var memberId = _memberId;
 			if (memberId <=0)
@@ -144,14 +144,22 @@ namespace HStyleApi.Controllers
 			}
 			else
 			{
-				_service.CreateComment(comment.ToString(), memberId, videoId);
+				_service.CreateComment(comment.comment, memberId, videoId);
 			}
+		}
+
+		//TODO 抓到使用者按讚的留言
+		//GET api/<VideoController>/Comment/Likes
+		[HttpGet("comment/Likes")]
+		public async Task<IEnumerable<VCommentLikeDTO>> GetCommentLikes(int commentId)
+		{
+
 		}
 
 		//POST api/<VideoController>/CommentLike
 		[Authorize]
 		[HttpPost("CommentLike/{CommentId}")]
-		public void PostCommentLike(int CommentId)
+		public void PostCommentLike(int commentId)
 		{
 			var memberId = _memberId;
 			if (memberId == null)
@@ -160,8 +168,12 @@ namespace HStyleApi.Controllers
 			}
 			else
 			{
-				_service.PostCommentLike(memberId, CommentId);
+				_service.PostCommentLike(memberId, commentId);
 			}
 		}
+	}
+	public class CommentDTO
+	{
+		public string comment{ get; set; }
 	}
 }
