@@ -1,75 +1,44 @@
 <template>
-   <div class="container" id="app">
-      <div class="row">
-         <input class="col-3 m-1" v-model="userName" placeholder="User name" />
-         <input class="col-6 m-1" v-model="message" placeholder="Message" />
-         <button class="col-2 m-1 btn btn-light" @click="sendMessage">Send</button>
-      </div>
-      <div class="p-2 chat">
-         <ul>
-            <li v-for="(item, index) in chatHistory" :key="index">{{ item.userName }} 說: {{ item.message }}</li>
-         </ul>
-      </div>
-   </div>
+  <div>
+    <h1>Chat Room</h1>
+    <ul>
+      <li v-for="(message, index) in messages" :key="index">{{ message }}</li>
+    </ul>
+    <form @submit.prevent="handleSubmit">
+      <input v-model="message" type="text" placeholder="Type your message" />
+      <button type="submit">Send</button>
+    </form>
+  </div>
 </template>
 
 <script>
 import { ref, onMounted } from "vue";
-import axios from "axios";
+// 引入 socket.io-client 模組
+import io from "socket.io-client";
 
 export default {
-   setup() {
-      const userName = ref("");
-      const message = ref("");
-      const chatHistory = ref([]);
+  name: "ChatRoom",
+  setup() {
+    const message = ref("");
+    const messages = ref([]);
 
-      let socket;
+    function handleSubmit() {
+      messages.value.push(message.value);
+      message.value = "";
+    }
 
-      async function connect() {
-         try {
-            const { data } = await axios.get("https://localhost:7243/api/WebSocket");
-            socket = new WebSocket("wss://localhost:7243/api/WebSocket");
-            socket.onmessage = function (e) {
-               processMessage(e.data);
-            };
-         } catch (error) {
-            console.error(error);
-         }
-      }
-
-      function processMessage(data) {
-         const content = JSON.parse(data);
-         chatHistory.value.push(content);
-      }
-
-      function sendMessage() {
-         if (socket && socket.readyState === WebSocket.OPEN) {
-            const data = {
-               userName: userName.value,
-               message: message.value,
-            };
-            socket.send(JSON.stringify(data));
-            message.value = "";
-         }
-      }
-
-      onMounted(() => {
-         connect();
+    onMounted(() => {
+      const socket = io("https://localhost:7243/ws");
+      socket.on("message", (message) => {
+        messages.value.push(message);
       });
+    });
 
-      function handleKeyPress(event) {
-         if (event.keyCode === 13) {
-            sendMessage();
-         }
-      }
-
-      return {
-         userName,
-         message,
-         chatHistory,
-         sendMessage,
-         handleKeyPress,
-      };
-   },
+    return {
+      message,
+      messages,
+      handleSubmit,
+    };
+  },
 };
 </script>

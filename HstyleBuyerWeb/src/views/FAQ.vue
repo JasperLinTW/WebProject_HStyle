@@ -90,7 +90,7 @@
    <CustmorQForm />
    <MemberQForm />
    <AlertModal />
-   <!-- <ChatRoom /> -->
+   <ChatRoom />
 </template>
 
 <script setup>
@@ -99,7 +99,7 @@ import axios from "axios";
 import CustmorQForm from "../components/CustomerQForm.vue";
 import MemberQForm from "../components/MemberQForm.vue";
 import AlertModal from "../components/AlertModal.vue";
-// import ChatRoom from "../components/ChatRoom.vue";
+import ChatRoom from "../components/ChatRoom.vue";
 
 // 常見問題
 const categoryQ = ref([]);
