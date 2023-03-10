@@ -27,58 +27,53 @@
          </div>
       </div>
       <!-- 所有問題 -->
-      <div v-else>
-         <div class="row">
-            <div class="col-3 text-center">
-               <div class="accordion accordion-flush" id="accordionExample">
-                  <div v-for="(category, index) in categoryQ" :key="category.categoryId" class="accordion-item">
-                     <div class="accordion-header row" :id="'heading' + index">
-                        <button
-                           class="accordion-button collapsed"
-                           type="button"
-                           data-bs-toggle="collapse"
-                           :data-bs-target="'#collapse' + index"
-                           aria-expanded="false"
-                           :aria-controls="'collapse' + index"
-                           @click="selectCategory(category.qcategoryId)"
-                        >
-                           {{ category.categoryName }}
-                        </button>
-                     </div>
-                     <div
-                        :id="'collapse' + index"
-                        class="accordion-collapse collapse"
-                        :aria-labelledby="'heading' + index"
-                        data-bs-parent="#accordionExample"
+      <!-- <div v-else> -->
+      <div class="row">
+         <div class="col-3 text-center">
+            <div class="accordion accordion-flush" id="accordionExample">
+               <div v-for="(category, index) in categoryQ" :key="category.categoryId" class="accordion-item">
+                  <div class="accordion-header row" :id="'heading' + index">
+                     <button
+                        class="accordion-button collapsed"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        :data-bs-target="'#collapse' + index"
+                        aria-expanded="true"
+                        :aria-controls="'collapse' + index"
+                        @click="selectCategory(category.qcategoryId)"
                      >
-                        <div
-                           class="accordion-body"
-                           v-for="question in filteredQuestions"
-                           :key="question.commonQuestionId"
-                           @click="showAnswer(question)"
-                        >
-                           <p id="qTitle">{{ question.question }}</p>
-                        </div>
+                        {{ category.categoryName }}
+                     </button>
+                  </div>
+                  <div
+                     :id="'collapse' + index"
+                     class="accordion-collapse collapse"
+                     :aria-labelledby="'heading' + index"
+                     data-bs-parent="#accordionExample"
+                  >
+                     <div class="accordion-body" v-for="question in filteredQuestions" :key="question.commonQuestionId" @click="showAnswer(question)">
+                        <p id="qTitle">{{ question.question }}</p>
                      </div>
                   </div>
                </div>
             </div>
-            <!-- 單一問題 -->
-            <div class="col-7 answer m-5" v-if="selectedQuestion">
-               <div>
-                  <h3 class="border-bottom">{{ selectedQuestion.question }}</h3>
-                  <div class="mt-5">{{ selectedQuestion.answer }}</div>
-               </div>
-               <div class="mt-5">
-                  <p>
-                     是否有回答你的問題?
-                     <button type="button" @click="SatisfYes(selectedQuestion.commonQuestionId)" class="btn btn-light ms-2">是</button>
-                     <button type="button" @click="SatisfNo(selectedQuestion.commonQuestionId)" class="btn btn-light ms-2">否</button>
-                  </p>
-               </div>
+         </div>
+         <!-- 單一問題 -->
+         <div class="col-7 answer m-5" v-if="selectedQuestion">
+            <div>
+               <h3 class="border-bottom">{{ selectedQuestion.question }}</h3>
+               <div class="mt-5">{{ selectedQuestion.answer }}</div>
+            </div>
+            <div class="mt-5">
+               <p>
+                  是否有回答你的問題?
+                  <button type="button" @click="SatisfYes(selectedQuestion.commonQuestionId)" class="btn btn-light ms-2">是</button>
+                  <button type="button" @click="SatisfNo(selectedQuestion.commonQuestionId)" class="btn btn-light ms-2">否</button>
+               </p>
             </div>
          </div>
       </div>
+      <!-- </div> -->
    </div>
 
    <!-- Button trigger modal -->
