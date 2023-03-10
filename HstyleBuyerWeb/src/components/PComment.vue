@@ -13,16 +13,16 @@
                     <div class="col-md-5 mt-4">{{ data.createdTime }} </div>
                 </div>
             </div>
-            <div class="col-md-3"></div>
-            <div class="col-md-3 text-end img-comment pe-5" v-if="data.pcommentImgs && data.pcommentImgs.length === 1">
+            <div class="col-md-2"></div>
+            <div class="col-md-3 img-comment" v-if="data.pcommentImgs && data.pcommentImgs.length === 1">
                 <img :src="data.pcommentImgs[0]" alt="...">
             </div>
-            <div class="col-md-3 text-end" v-else-if="data.pcommentImgs && data.pcommentImgs.length > 1">
-                <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
-                    <div class="carousel-inner">
+            <div class="col-md-3 ps-6" v-else-if="data.pcommentImgs && data.pcommentImgs.length > 1">
+                <div id="carouselExampleFade" class="carousel slide carousel-fade img-comment" data-bs-ride="carousel">
+                    <div class="carousel-inner ">
                         <div class="carousel-item" v-for="(item, index) in data.pcommentImgs" :key="index"
                             :class="{ 'active': index === 0 }">
-                            <img :src="item" class="d-block img-fluid" alt="...">
+                            <img :src="item" alt="...">
                         </div>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade"
@@ -74,6 +74,10 @@ onMounted(() => {
 
 </script>
 <style scoped>
+.ps-6 {
+    padding-left: 8%;
+}
+
 .fz-comment {
     font-size: 18px;
     height: 100%;
@@ -103,9 +107,10 @@ onMounted(() => {
 }
 
 .img-comment {
-    width: 300px;
+    width: 150px;
     height: 150px;
     overflow: hidden;
+    padding: 0;
 }
 
 .img-comment img {

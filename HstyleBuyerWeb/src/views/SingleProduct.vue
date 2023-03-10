@@ -21,9 +21,10 @@
       <div class="col-lg-5">
         <div class="row">
           <div class="col-lg-8 d-flex justify-content-start">
-            <div v-for="(image, index) in product.imgs" :key="index" class="thumb">
-              <img :src="image" class="pe-3" @click="changeImage(index)">
+            <div v-for="(image, index) in product.imgs" :key="index" class="thumb" @click="showMultiple">
+              <img :src="image" class="pe-3">
             </div>
+            <vue-easy-lightbox :visible="visibleRef" :imgs="imgsRef" :index="indexRef" @hide="onHide"></vue-easy-lightbox>
           </div>
           <div class="col-lg-12 text-start">
             <h5 class="py-5">{{ product.product_Name }}</h5>
@@ -93,7 +94,11 @@ import PComment from "../components/PComment.vue";
 import RecommendCard from "../components/RecommendCard.vue";
 import { eventBus } from "../mybus";
 
-// Import Swiper styles
+//照片放大套件
+import VueEasyLightbox from 'vue-easy-lightbox'
+import 'vue-easy-lightbox/external-css/vue-easy-lightbox.css'
+
+// Import Swiper styles 輪播套件
 import "swiper/css";
 
 import "swiper/css/pagination";
@@ -119,6 +124,7 @@ const getProduct = async () => {
       isClicked.value = likeProductsId.value.includes(
         parseInt(route.params.id)
       );
+
     })
     .catch((error) => {
       console.log(error);
@@ -128,6 +134,24 @@ const getProduct = async () => {
 //照片輪播
 const modules = ref([Pagination]);
 
+//點照片放大
+const visibleRef = ref(false)
+const indexRef = ref(0)
+const imgsRef = ref([]);
+const onShow = () => {
+  visibleRef.value = true
+}
+const showMultiple = () => {
+  // 提取圖像 URL 並賦值給 imgsRef
+  imgsRef.value = product.value.imgs.map(imgs => imgs);
+  console.log(imgsRef.value);
+  indexRef.value = 0 // 图片顺序索引
+  onShow();
+}
+
+const onHide = () => {
+  visibleRef.value = false
+}
 //加入購物車
 
 const SelectSpecId = ref(0);
@@ -292,8 +316,8 @@ onMounted(() => {
 }
 
 .MySwiper {
-  width: 617px;
-  height: 550px;
+  width: 500px;
+  height: 600px;
   overflow: hidden;
 }
 

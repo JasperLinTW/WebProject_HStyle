@@ -41,7 +41,7 @@
     </div>
   </div>
 
-  <div class="container d-flex justify-content-between">
+  <div class="container">
     <div class="row">
       <ProductCard v-for="item in products" :data="item" />
     </div>
@@ -57,12 +57,10 @@ import { useRoute } from "vue-router";
 import axios from "axios";
 import { ref, onMounted, watch } from "vue";
 import { eventBus } from "../mybus";
-
 //商品預覽
 const products = ref([]);
 const route = useRoute();
 //console.log(route.params.tag);
-
 //商品收藏
 const likeProductsId = ref([]);
 let likes = ref([]);
@@ -86,7 +84,6 @@ const likesProducts = async () => {
       loadProducts();
     });
 };
-
 const loadProducts = async () => {
   await axios
     .get("https://localhost:7243/api/Products/products", {
@@ -114,13 +111,12 @@ watch(
     loadProducts();
   }
 );
-
 eventBus.on("addProductLike", () => {
   likesProducts();
 });
-
 onMounted(() => {
   likesProducts();
+
 });
 </script>
 <style scoped>

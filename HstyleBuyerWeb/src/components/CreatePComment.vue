@@ -33,7 +33,7 @@
               <label for="productImage" class="mb-2">上傳照片</label>
               <input type="file" multiple class="form-control" accept=".png, .jpg" id="productImage" ref="files"
                 @change="handleFileUpload">
-              <div class="fs14">只檔案大小需為小於4MB的圖檔(限.png, .jpg)</div>
+              <div class="fs14">檔案大小需為小於2MB的圖檔(限.png, .jpg)</div>
               <div v-if="errorMessage">{{ errorMessage }}</div>
             </div>
           </div>
@@ -88,73 +88,83 @@ const handleFileUpload = (event) => {
 // 檔案
 const errorMessage = ref(null);
 
-watch(files, (newFile, oldFile) => {
-  if (newFile) {
+watch(files, (newFiles, oldFiles) => {
+  const errors = {};
+
+  newFiles.forEach((newFile) => {
     const formData = new FormData();
     formData.append("file", newFile);
     const fileSize = newFile.size / 1024 / 1024; // 轉換為 MB
-    if (fileSize > 4) {
+    if (fileSize > 2) {
       // 限制檔案大小為 4 MB
-      errorMessage.value = "檔案大小超過限制";
-      files.value = null;
-    } else {
-      errorMessage.value = null;
+      errors[newFile.name] = "檔案大小超過限制";
     }
+  });
+
+  if (Object.keys(errors).length > 0) {
+    // 顯示錯誤訊息
+    errorMessage.value = "有檔案大小超過限制";
+    files.value = null;
+  } else {
+    // 沒有錯誤，執行上傳
+    errorMessage.value = null;
+    const createComment = async () => {
+      if (files.value) {
+        const form = document.forms.namedItem("PCommentForm");
+        const formData = new FormData(form);
+        formData.append("CommentId", 0);
+        formData.append("PcommentImgs", null);
+        formData.append("CreatedTime", new Date().toDateString());
+        formData.append('Score', selectedRating.value);
+        formData.append('CommentContent', CommentContent.value);
+        for (let i = 0; i < files.value.length; i++) {
+          formData.append('files', files.value[i]);
+        }
+        axios.post(`https://localhost:7243/api/Products/comment?orderId=${props.modalData.orderId}&productId=${props.modalData.productId}`, formData,
+          {
+            withCredentials: true,
+          })
+          .then((response) => {
+            alert("發表評論成功");
+            window.location = "http://localhost:5173/account/orders"
+          })
+          .catch((error) => {
+            console.log(error.response.data);
+            if (error.response.status === 401) {
+              router.push("/login");
+            }
+          });
+      }
+      else {
+        const form = document.forms.namedItem("PCommentForm");
+        const formData = new FormData(form);
+        formData.append("CommentId", 0);
+        formData.append("PcommentImgs", null);
+        formData.append("CreatedTime", new Date().toDateString());
+        formData.append('Score', selectedRating.value);
+        formData.append('CommentContent', CommentContent.value);
+        formData.append('files', null);
+        axios.post(`https://localhost:7243/api/Products/comment?orderId=${props.modalData.orderId}&productId=${props.modalData.productId}`, formData,
+          {
+            withCredentials: true,
+          })
+          .then((response) => {
+            alert("發表評論成功");
+          })
+          .catch((error) => {
+            alert(error.response.data);
+            if (error.response.status === 401) {
+              router.push("/login");
+            }
+          });
+      }
+    };
   }
 });
 
 
-const createComment = async () => {
-  if (files.value) {
-    const form = document.forms.namedItem("PCommentForm");
-    const formData = new FormData(form);
-    formData.append("CommentId", 0);
-    formData.append("PcommentImgs", null);
-    formData.append("CreatedTime", new Date().toDateString());
-    formData.append('Score', selectedRating.value);
-    formData.append('CommentContent', CommentContent.value);
-    for (let i = 0; i < files.value.length; i++) {
-      formData.append('files', files.value[i]);
-    }
-    axios.post(`https://localhost:7243/api/Products/comment?orderId=${props.modalData.orderId}&productId=${props.modalData.productId}`, formData,
-      {
-        withCredentials: true,
-      })
-      .then((response) => {
-        alert("發表評論成功");
-        window.location = "http://localhost:5173/account/orders"
-      })
-      .catch((error) => {
-        console.log(error.response.data);
-        if (error.response.status === 401) {
-          router.push("/login");
-        }
-      });
-  }
-  else {
-    const form = document.forms.namedItem("PCommentForm");
-    const formData = new FormData(form);
-    formData.append("CommentId", 0);
-    formData.append("PcommentImgs", null);
-    formData.append("CreatedTime", new Date().toDateString());
-    formData.append('Score', selectedRating.value);
-    formData.append('CommentContent', CommentContent.value);
-    formData.append('files', null);
-    axios.post(`https://localhost:7243/api/Products/comment?orderId=${props.modalData.orderId}&productId=${props.modalData.productId}`, formData,
-      {
-        withCredentials: true,
-      })
-      .then((response) => {
-        alert("發表評論成功");
-      })
-      .catch((error) => {
-        console.log(error.response.data);
-        if (error.response.status === 401) {
-          router.push("/login");
-        }
-      });
-  }
-};
+
+
 
 onMounted(() => {
   stars.value.splice(
