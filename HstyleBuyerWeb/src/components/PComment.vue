@@ -1,7 +1,6 @@
 <template>
-    <div class="card border-0 border-bottom pb-3 mb-3">
-        <div class="row g-0">
-            <div class="col-md-1"></div>
+    <div class="card border-0 border-bottom pb-3 mb-3 container">
+        <div class="row d-flex justify-content-between mt-2">
             <div class="col-md-4">
                 <div class="row text-start">
                     <div class="col-md-2 mb-4">{{ data.account }}</div>
@@ -9,13 +8,13 @@
                     </div>
                     <div class="fz-comment col-md-12">{{ data.commentContent }}</div>
                     <div class="col-md-12 my-2"></div>
-                    <div class="col-md-6 mt-4"> <label class="pe-3">購買規格:</label>Size {{ data.size }} | Color {{ data.color
-                    }} </div>
-                    <div class="col-md-6 mt-4">{{ data.createdTime }} </div>
+                    <div class="col-md-7 mt-4"> <label class="pe-3">購買規格:</label>Size {{ data.size }} | Color {{ data.color
+                    }}</div>
+                    <div class="col-md-5 mt-4">{{ data.createdTime }} </div>
                 </div>
             </div>
             <div class="col-md-3"></div>
-            <div class="col-md-3 text-end">
+            <div class="col-md-3 text-end" v-if="data.pcommentImgs[0] != null">
                 <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-indicators">
                         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
@@ -23,7 +22,7 @@
                     </div>
                     <div class="carousel-inner">
                         <div class="carousel-item active img-comment pe-5">
-                            <img :src="data.pcommentImgs" class="d-block img-fluid" alt="...">
+                            <img :src="data.pcommentImgs[0]" class="d-block img-fluid" alt="...">
                         </div>
                     </div>
                 </div>

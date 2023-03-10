@@ -239,7 +239,7 @@ namespace HStyleApi.Controllers
 		}
 
 		//新增評論++
-
+		[Authorize]
 		[HttpPost("comment")]
 		public IActionResult CreateComment([FromForm] PCommentPostDTO comment, int orderId, int productId)
 		{

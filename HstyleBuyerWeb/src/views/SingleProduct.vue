@@ -1,87 +1,86 @@
 <template>
-    <div class="container-fluid  m-5">
+  <div class="container-fluid  m-5">
+    <div class="row">
+      <div class="col-lg-12 ps-5 mb-5">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="http://localhost:5173/">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">{{ product.pCategoryName }}</a></li>
+            <li class="breadcrumb-item active">{{ product.product_Name }}</li>
+          </ol>
+        </nav>
+      </div>
+      <div class="col-lg-2"></div>
+      <div class="col-lg-5">
+        <swiper :direction="'vertical'" :pagination="{
+          clickable: true,
+        }" :modules="modules" class="MySwiper">
+          <swiper-slide v-for="(image, index) in product.imgs" :key="index"><img :src="image"></swiper-slide>
+        </swiper>
+      </div>
+      <div class="col-lg-5">
         <div class="row">
-            <div class="col-lg-12 ps-5 mb-5">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="http://localhost:5173/">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">{{ product.pCategoryName }}</a></li>
-                        <li class="breadcrumb-item active">{{ product.product_Name }}</li>
-                    </ol>
-                </nav>
+          <div class="col-lg-8 d-flex justify-content-start">
+            <div v-for="(image, index) in product.imgs" :key="index" class="thumb">
+              <img :src="image" class="pe-3" @click="changeImage(index)">
             </div>
-            <div class="col-lg-2"></div>
-            <div class="col-lg-5">
-                <swiper :direction="'vertical'" :pagination="{
-                    clickable: true,
-                }" :modules="modules" class="MySwiper">
-                    <swiper-slide v-for="(image, index) in product.imgs" :key="index"><img :src="image"></swiper-slide>
-                </swiper>
+          </div>
+          <div class="col-lg-12 text-start">
+            <h5 class="py-5">{{ product.product_Name }}</h5>
+          </div>
+          <div class="col-lg-12 mb-5 text-start">
+            <div>
+              <div class="product-options">
+                <label>規格:</label>
+                <select v-model="SelectSpecId" class="mx-2">
+                  <option v-for="spec in product.specs" :value="spec.specId">
+                    {{ `${spec.color}, ${spec.size}` }}
+                  </option>
+                </select>
+              </div>
             </div>
-            <div class="col-lg-5">
-                <div class="row">
-                    <div class="col-lg-8 d-flex justify-content-start">
-                        <div v-for="(image, index) in product.imgs" :key="index" class="thumb">
-                            <img :src="image" class="pe-3" @click="changeImage(index)">
-                        </div>
-                    </div>
-                    <div class="col-lg-12 text-start">
-                        <h5 class="py-5">{{ product.product_Name }}</h5>
-                    </div>
-                    <div class="col-lg-12 mb-5 text-start">
-                        <div>
-                            <div class="product-options">
-                                <label>規格:</label>
-                                <select v-model="SelectSpecId" class="mx-2">
-                                    <option v-for="spec in product.specs" :value="spec.specId">
-                                        {{ `${spec.color}, ${spec.size}` }}
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-12"></div>
-                    <div class="col-lg-12  mt-5 text-start">
-                        <button @click="addItem()" class="add-to-cart"> NT$ {{ product.unitPrice }}<span
-                                class="border-start  ms-2" data-bs-target="#exampleModal"><span
-                                    class="ps-2">加入購物車</span></span></button>
-                        <span class="m-3" v-if="!isClicked" @click="likesProduct()"><i
-                                class="fa-regular fa-heart icon-hover fz-18"></i></span>
-                        <span class="m-3" v-else @click="likesProduct()"><i class="fa-solid fa-heart fz-18"></i></span>
-                    </div>
-                </div>
-            </div>
+          </div>
+          <div class="col-lg-12"></div>
+          <div class="col-lg-12  mt-5 text-start">
+            <button @click="addItem()" class="add-to-cart"> NT$ {{ product.unitPrice }}<span class="border-start  ms-2"
+                data-bs-target="#exampleModal"><span class="ps-2">加入購物車</span></span></button>
+            <span class="m-3" v-if="!isClicked" @click="likesProduct()"><i
+                class="fa-regular fa-heart icon-hover fz-18"></i></span>
+            <span class="m-3" v-else @click="likesProduct()"><i class="fa-solid fa-heart fz-18"></i></span>
+          </div>
         </div>
+      </div>
     </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 pb-2">
-                <button class="btn-underline" @click="showComment = false" :class="{ active: !showComment }">商品描述</button>
-            </div>
-            <div class="col-md-6">
-                <button class="btn-underline" @click="showComment = true" :class="{ active: showComment }">商品評論</button>
-            </div>
-            <div v-if="showComment" class="col-md-12 border-top pt-3 mb-big">
-                <PComment v-if="comment.length > 0" v-for="item in comment" :data="item"></PComment>
-                <div v-else class="pt-4">- 此商品無評論 -</div>
-            </div>
-            <div v-else class="col-md-12 border-top pt-5 px-6  mb-big">
-                {{ product.description }}
-            </div>
-            <div class="h500px">
-                <div class="col-md-12 line">
-                    <span class="px-5">猜你喜歡</span>
-                </div>
-                <div class="col-md-12">
-                    <div class="row">
-                        <RecommendCard v-for="item in rec" :data="item"></RecommendCard>
-                    </div>
-                </div>
-            </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 pb-2">
+        <button class="btn-underline" @click="showComment = false" :class="{ active: !showComment }">商品描述</button>
+      </div>
+      <div class="col-md-6">
+        <button class="btn-underline" @click="showComment = true" :class="{ active: showComment }">商品評論</button>
+      </div>
+      <div v-if="showComment" class="col-md-12 border-top pt-5 mb-big">
+        <PComment v-if="comment.length > 0" v-for="item in comment" :data="item"></PComment>
+        <div v-else class="pt-4">- 此商品無評論 -</div>
+      </div>
+      <div v-else class="col-md-12 border-top pt-5 px-6  mb-big">
+        {{ product.description }}
+      </div>
+      <div class="h500px">
+        <div class="col-md-12 line">
+          <span class="px-5">猜你喜歡</span>
+        </div>
+        <div class="col-md-12">
+          <div class="row">
+            <RecommendCard v-for="item in rec" :data="item"></RecommendCard>
+          </div>
+        </div>
+      </div>
 
-        </div>
     </div>
-    <Back2Top />
+  </div>
+  <Back2Top />
 </template>
 
 <script setup>
@@ -293,9 +292,9 @@ onMounted(() => {
 }
 
 .MySwiper {
-    width: 617px;
-    height: 550px;
-    overflow: hidden;
+  width: 617px;
+  height: 550px;
+  overflow: hidden;
 }
 
 .MySwiper .swiper-slide img {

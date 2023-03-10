@@ -72,7 +72,6 @@ namespace HStyleApi.Models.EFModels
                     .HasColumnName("destination");
 
                 entity.Property(e => e.DestinationCategory)
-                    .IsRequired()
                     .HasMaxLength(50)
                     .HasColumnName("destination_category");
 
@@ -915,7 +914,6 @@ namespace HStyleApi.Models.EFModels
                 entity.Property(e => e.CommentId).HasColumnName("Comment_id");
 
                 entity.Property(e => e.CommentContent)
-                    .IsRequired()
                     .HasMaxLength(1000)
                     .HasColumnName("Comment_content");
 
