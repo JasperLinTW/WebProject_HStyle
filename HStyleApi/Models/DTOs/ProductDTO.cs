@@ -42,7 +42,7 @@ namespace HStyleApi.Models.DTOs
 			DisplayOrder = source.DisplayOrder,
 			PCategoryName = source.Category.PcategoryName,
 			Imgs = source.Imgs.Select(x => $"{_basePath}/ProductImages/{x.Path}"),
-			Specs = source.Specs.Select(x => x.ToDto()),
+			Specs = source.Specs.Where(x => x.Discontinued == false).Select(x => x.ToDto()),
 			Tags = source.Tags.Select(x => x.TagName),
 
 		};

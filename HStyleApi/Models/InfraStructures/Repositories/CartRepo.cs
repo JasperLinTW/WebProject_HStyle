@@ -42,6 +42,7 @@ namespace HStyleApi.Models.InfraStructures.Repositories
                 SpecId= x.SpecId,
                 Size= x.Spec.Size,
                 Color= x.Spec.Color,
+                Discontinued = x.Spec.Discontinued,
                 Quantity= x.Quantity,
 				UnitPrice = x.Spec.Product.UnitPrice,
 

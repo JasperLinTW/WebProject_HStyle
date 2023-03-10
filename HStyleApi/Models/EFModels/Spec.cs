@@ -17,8 +17,9 @@ namespace HStyleApi.Models.EFModels
         public string Color { get; set; }
         public string Size { get; set; }
         public int Stock { get; set; }
+		public bool Discontinued { get; set; }
 
-        public virtual Product Product { get; set; }
+		public virtual Product Product { get; set; }
         public virtual ICollection<Cart> Carts { get; set; }
     }
 }

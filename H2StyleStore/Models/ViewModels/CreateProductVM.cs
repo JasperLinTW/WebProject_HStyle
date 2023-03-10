@@ -80,7 +80,7 @@ namespace H2StyleStore.Models.ViewModels
 			DisplayOrder = source.DisplayOrder,
 			Category_Id = source.Category_Id,
 			images = source.Images.Select(x => x.Path).ToList(),
-			specs = source.Specs.Select(x => x.ToDto()).ToList(),
+			specs = source.Specs.Where(x => x.Discontinued == false).Select(x => x.ToDto()).ToList(),
 			tags = source.Tags.Select(x => x.TagName).ToList(),
 
 		};

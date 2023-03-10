@@ -235,6 +235,7 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 
 			List<Spec> specs = dto.specs.Select(x => new Spec
 			{
+				Id = x.Id,
 				Color = x.Color,
 				Size = x.Size,
 				Stock = x.Stock,
@@ -242,19 +243,37 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 			
 			var dbSpecs = _db.Specs.Where(x => x.Product_Id == dto.ProductID).ToArray();
 
-			foreach (var dbSpec in dbSpecs)
-			{
-				_db.Specs.Remove(dbSpec);
-			}
-			
-			
+			//foreach (var dbSpec in dbSpecs)
+			//{
+			//	_db.Specs.Remove(dbSpec);
+			//}
 
+			var dbSpecId = dbSpecs.Select(x => x.Id);
+			var dtoSpIds = new List<int>();
 			foreach (var spec in specs)
 			{
-				product.Specs.Add(spec);
+				if (dbSpecId.Contains(spec.Id) == false)
+				{
+					product.Specs.Add(spec);
+					dtoSpIds.Add(spec.Id);
+				}
+				else if (dbSpecId.Contains(spec.Id))
+				{
+					var dbspec = product.Specs.Where(x => x.Id == spec.Id).FirstOrDefault();
+					dbspec = specs.Where(x => x.Id == spec.Id).FirstOrDefault();
+					dtoSpIds.Add(spec.Id);
+				}
+			}
+			foreach (var spec in dbSpecs)
+			{
+				if (dtoSpIds.Contains(spec.Id) == false)
+				{
+					spec.Discontinued = true;
+				}
 			}
 
-			
+
+
 			foreach (var dbimg in _db.Images.ToArray())
 			{
 				product.Images.Remove(dbimg);
