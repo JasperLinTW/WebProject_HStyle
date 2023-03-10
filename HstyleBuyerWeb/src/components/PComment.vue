@@ -14,18 +14,20 @@
                 </div>
             </div>
             <div class="col-md-3"></div>
-            <div class="col-md-3 text-end" v-if="data.pcommentImgs[0] != null">
-                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
-                            class="active" aria-current="true" aria-label="Slide 1"></button>
-                    </div>
+            <div class="col-md-3 text-end img-comment pe-5" v-if="data.pcommentImgs && data.pcommentImgs.length === 1">
+                <img :src="data.pcommentImgs[0]" alt="...">
+            </div>
+            <div class="col-md-3 text-end" v-else-if="data.pcommentImgs && data.pcommentImgs.length > 1">
+                <!-- TODO 輪播 <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
-                        <div class="carousel-item active img-comment pe-5">
-                            <img :src="data.pcommentImgs[0]" class="d-block img-fluid" alt="...">
+                        <div class="carousel-item" v-for="(item, index) in data.pcommentImgs" :key="index">
+                            <img :src="item[0]" alt="...">
                         </div>
                     </div>
-                </div>
+                </div> -->
+            </div>
+            <div class="col-md-3 text-end" v-else>
+                <!-- 如果沒有照片 -->
             </div>
             <div class="col-md-1 text-end">
                 <i v-if="!isClicked" class="fa-regular fa-thumbs-up fz-icon" @click="helpfulComment(data.commentId)"></i>
