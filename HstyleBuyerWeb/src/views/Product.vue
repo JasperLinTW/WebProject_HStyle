@@ -98,11 +98,12 @@ const likesProducts = async () => {
         likeProductsId.value = likes.value.map((p) => {
           return p.productId;
         });
-        loadProducts();
       }
+      loadProducts();
     })
     .catch((error) => {
       console.log(error);
+      loadProducts();
     });
 };
 
