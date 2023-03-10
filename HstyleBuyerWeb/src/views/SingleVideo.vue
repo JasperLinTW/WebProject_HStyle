@@ -1,6 +1,6 @@
 <template>
   <div class="container mt-5">
-    <div class="row">
+    <div v-if="isLoaded" class="row">
       <div class="col-lg-8">
         <!-- plyr影片串接 -->
         <div>
@@ -52,25 +52,25 @@
                 </label>
               </div>
             </form>
-            <form >
+            <form>
               <!-- 留言板 -->
-            <div class="form-group">
-              <div class="d-flex justify-content-start">
-                <span class="form-label">留言：</span>
+              <div class="form-group">
+                <div class="d-flex justify-content-start">
+                  <span class="form-label">留言：</span>
+                </div>
+                <input type="text" v-model="comment" class="form-control" />
+                <div class="d-flex justify-content-end mt-2">
+                  <!-- <button type="submit" class="" @click="postComment(videoComments.comment,videoComments.videoId)">送出</button> -->
+                  <button
+                    type="submit"
+                    @click.prevent="postComment()"
+                    class="btn btn-light"
+                  >
+                    <!-- <button type="submit" class="" @click="postComment(comment,videoId)"> -->
+                    送出
+                  </button>
+                </div>
               </div>
-              <input type="text" v-model="comment" class="form-control" />
-              <div class="d-flex justify-content-end mt-2">
-                <!-- <button type="submit" class="" @click="postComment(videoComments.comment,videoComments.videoId)">送出</button> -->
-                <button
-                  type="submit"
-                  @click.prevent="postComment()"
-                  class="btn btn-light"
-                >
-                  <!-- <button type="submit" class="" @click="postComment(comment,videoId)"> -->
-                  送出
-                </button>
-              </div>
-            </div>
             </form>
           </div>
           <br />
@@ -126,7 +126,7 @@ const RecoProducts = ref([]);
 const videoComments = ref([]);
 const videoLike = ref([]);
 const router = useRouter();
-
+const isLoaded = ref(false);
 
 // get
 const getVideo = async () => {
@@ -159,6 +159,7 @@ const getRecommenations = async () => {
     .then((response) => {
       RecoProducts.value = response.data;
       console.log(RecoProducts.value);
+      isLoaded.value = true;
     })
     .catch((error) => {
       console.log(error);
@@ -216,18 +217,21 @@ const postView = () => {
 
 // 送出留言
 const comment = ref("");
-const postComment = async (comment,videoId) => {
+const postComment = async (comment, videoId) => {
   // console.log(comment);
-  const data={comment: comment.value};
+  const data = { comment: comment.value };
   //const jsonString = JSON.stringify(data);
   await axios
     .post(
-      `https://localhost:7243/api/Video/Comment/${videoId}`, data,
-      { headers: {
-    'Content-Type': 'application/json'
-        }},
+      `https://localhost:7243/api/Video/Comment/${videoId}`,
+      data,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
 
-      {withCredentials: true,}
+      { withCredentials: true }
     )
     .then((response) => {
       console.log("Comment");
@@ -242,15 +246,15 @@ const postComment = async (comment,videoId) => {
     });
 };
 
-onMounted(() => {
-  getVideo();
-  getComments();
-  getRecommenations();
-  postView();
-  const player = new Plyr(this.$refs.player);
-  player.on("ready", () => {
-    console.log(player.duration);
-  });
+onMounted(async () => {
+  await getVideo();
+  await getComments();
+  await getRecommenations();
+  // postView();
+  // const player = new Plyr(this.$refs.player);
+  // player.on("ready", () => {
+  //   console.log(player.duration);
+  // });
 });
 </script>
 
