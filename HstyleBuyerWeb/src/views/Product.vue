@@ -81,7 +81,7 @@ import { eventBus } from "../mybus";
 //商品預覽
 const products = ref([]);
 const route = useRoute();
-console.log(route.params.tag);
+//console.log(route.params.tag);
 
 //商品收藏
 const likeProductsId = ref([]);
@@ -98,6 +98,7 @@ const likesProducts = async () => {
         likeProductsId.value = likes.value.map((p) => {
           return p.productId;
         });
+        loadProducts();
       }
     })
     .catch((error) => {
@@ -133,11 +134,12 @@ watch(
   }
 );
 
-eventBus.on("addProductLike");
+eventBus.on("addProductLike", () => {
+  likesProducts();
+});
 
 onMounted(() => {
   likesProducts();
-  loadProducts();
 });
 </script>
 <style scoped>
