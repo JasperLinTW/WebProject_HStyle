@@ -286,6 +286,26 @@ namespace HStyleApi.Controllers
 			return Ok();
 		}
 
+		//這個會員有按過哪些評論有幫助
+		[Authorize]
+		[HttpGet("helpfulComment")]
+		public ActionResult<HelpfulDTO> LoadHelpfulComment()
+		{
+			 IEnumerable<HelpfulDTO> data;
+
+			try
+			{
+				data = _Service.LoadHelpfulComment(_member_id);
+			}
+			catch (Exception ex)
+			{
+
+				return BadRequest(ex.Message);
+			}
+
+			return Ok(data);
+		}
+
 		//所有評論瀏覽
 		[HttpGet("comments/{product_id}")]
 		public ActionResult<PCommentDTO> LoadComments(int product_id)

@@ -32,8 +32,8 @@
                 <!-- 如果沒有照片 -->
             </div>
             <div class="col-md-1 text-end">
-                <i v-if="!isClicked" class="fa-regular fa-thumbs-up fz-icon" @click="helpfulComment(data.commentId)"></i>
-                <i v-else="isClicked" class="fa-solid fa-thumbs-up fz-icon" @click="helpfulComment(data.commentId)"></i>
+                <i v-if="!isClicked" class="fa-regular fa-thumbs-up fz-icon" @click="helpfulComment()"></i>
+                <i v-else="isClicked" class="fa-solid fa-thumbs-up fz-icon" @click="helpfulComment()"></i>
             </div>
         </div>
     </div>
@@ -52,7 +52,7 @@ const helpfulComment = async () => {
     await axios.post(`https://localhost:7243/api/Products/helpfulComment?comment_id=${props.data.commentId}`, {},
         { withCredentials: true })
         .then(response => {
-            isClicked.value = !isClicked.value;
+            console.log(response.data);
         })
         .catch(error => { console.log(error); });
 }
@@ -87,7 +87,6 @@ const onHide = () => {
 }
 
 onMounted(() => {
-    helpfulComment();
 });
 
 

@@ -40,15 +40,15 @@
           <router-link to="/account/MemberCollection" title="喜歡" class="text-dark"><i
               class="fa-regular fa-heart icon-hover fz-18"></i></router-link>
         </div>
-        <div class="btn-light mx-3">
+        <div class="mx-3">
           <a href="#" title="打卡" class="text-dark"><i class="fa-regular fa-circle-check  icon-hover fz-18"
               data-bs-toggle="modal" data-bs-target="#checkInModal"></i></a>
         </div>
-        <div class="btn-light mx-3">
+        <div class="mx-3">
           <router-link to="/account/memberprofile" class="text-dark"><i
               class="fa-regular fa-circle-user icon-hover"></i></router-link>
         </div>
-        <div class="btn-light mx-3">
+        <div class="mx-3">
           <a href="#" title="購物車" class="text-dark">
             <i class="fa-solid fa-cart-shopping icon-hover position-relative" data-bs-toggle="modal"
               data-bs-target="#cartModal"><span

@@ -250,5 +250,11 @@ namespace HStyleApi.Models.Services
 			var data = _repo.LoadProductsByCategory(pCategoryName);
 			return data;
 		}
+
+		public IEnumerable<HelpfulDTO> LoadHelpfulComment(int member_id)
+		{
+			var data = _repo.LoadHelpfulComment(member_id);
+			return data;
+		}
 	}
 }
