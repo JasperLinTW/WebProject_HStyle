@@ -1,45 +1,49 @@
 <!-- Product.vue -->
 <template>
-  <div class="m-5 container">
+  <!-- <div class="m-5 container">
     <div class="row">
       <div class="col-lg-5 border-bottom">
         <div class="d-flex justify-content-start">
           <div class="filter">
-            <div class="dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="dropdown-toggle" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
               排序
             </div>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <li><a class="dropdow n-item" href="#">Menu item</a></li>
+            <ul class="dropdown-menu" aria-labelledby="sortDropdown">
+              <li><a class="dropdown-item" href="#" v-for="(option, index) in sortOptions" :key="index"
+                  @click="setSortOption(option)">{{ option }}</a></li>
             </ul>
           </div>
           <div class="filter">
-            <div class="dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="dropdown-toggle" id="sizeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
               尺寸
             </div>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <li><a class="dropdown-item" href="#">Menu item</a></li>
+            <ul class="dropdown-menu" aria-labelledby="sizeDropdown">
+              <li><a class="dropdown-item" href="#" v-for="(option, index) in sizeOptions" :key="index"
+                  @click="setSizeOption(option)">{{ option }}</a></li>
             </ul>
           </div>
           <div class="filter">
-            <div class="dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="dropdown-toggle" id="categoryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
               類別
             </div>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <li><a class="dropdown-item" href="#">Menu item</a></li>
+            <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
+              <li><a class="dropdown-item" href="#" v-for="(option, index) in categoryOptions" :key="index"
+                  @click="setCategoryOption(option)">{{ option }}</a></li>
             </ul>
           </div>
           <div class="filter">
-            <div class="dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="dropdown-toggle" id="colorDropdown" data-bs-toggle="dropdown" aria-expanded="false">
               顏色
             </div>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <li><a class="dropdown-item" href="#">Menu item</a></li>
+            <ul class="dropdown-menu" aria-labelledby="colorDropdown">
+              <li><a class="dropdown-item" href="#" v-for="(option, index) in colorOptions" :key="index"
+                  @click="setColorOption(option)">{{ option }}</a></li>
             </ul>
           </div>
         </div>
       </div>
     </div>
-  </div>
+      </div> -->
 
   <div class="container">
     <div class="row">
@@ -96,7 +100,6 @@ const loadProducts = async () => {
       });
       if (route.params.tag == "new") {
         products.value = response.data.filter((p) => p.tags.includes("新品"));
-        //console.log(products.value);
       } else {
         products.value = response.data;
       }
