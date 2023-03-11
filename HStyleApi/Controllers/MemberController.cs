@@ -227,7 +227,7 @@ namespace HStyleApi.Controllers
             member.PhoneNumber = dto.PhoneNumber;//手機號碼
             member.Address = dto.Address;
             //member.Gender = dto.Gender;
-            //member.Birthday = dto.Birthday;  //不要讓他改  會有優惠問題
+            //member.Birthday = dto.Birthday;  //不要讓他改     會有優惠問題
 
             _context.SaveChanges();
             return "更新成功";
