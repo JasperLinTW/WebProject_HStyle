@@ -13,6 +13,7 @@ namespace HStyleApi.Models.DTOs
 
 	public static class Product_LikeEtxs
 	{
+		private static readonly object _basePath = "https://localhost:44313/Images";
 		public static Product_LikeDTO ToDto(this ProductLike source)
 		{
 			return new Product_LikeDTO
@@ -21,7 +22,7 @@ namespace HStyleApi.Models.DTOs
 				MemberId = source.MemberId,
 				ProductName = source.Product.ProductName,
 				UnitPrice = source.Product.UnitPrice,
-				Images = source.Product.Imgs.Select(x => x.Path).ToList()[0],
+				Images = source.Product.Imgs.Select(x => $"{_basePath}/ProductImages/{x.Path}").ToList()[0],
 			};
 		}
 	}

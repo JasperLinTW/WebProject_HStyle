@@ -42,7 +42,7 @@ namespace HStyleApi.Controllers
 			
 			if (locationName == null)
 			{
-				locationName = "臺北市";
+				locationName = "桃園市";
 			}
 
 			var url = $"{WeatherUrl}?Authorization={ApiKey}&locationName={locationName}&elementName=MinT,MaxT";

@@ -1,48 +1,28 @@
 <template>
-  <div
-    class="modal fade"
-    id="ProductCommentModal"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="myModalLabel"
-    aria-hidden="true"
-  >
+  <div class="modal fade" id="ProductCommentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
       <div class="modal-content px-5">
         <div class="modal-header">
           <h5 class="modal-title mt-1" id="myModalLabel">商品評論</h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form>
+        <form @submit.prevent="createComment" enctype="multipart/form-data" id="PCommentForm">
           <div class="modal-body text-start">
             <div class="form-group">
-              <label for="productName" class="mb-2"
-                >商品名稱:
-                <span class="ms-2">{{ modalData.productName }}</span></label
-              >
+              <label for="productName" class="mb-2">商品名稱:
+                <span class="ms-2">{{ modalData.productName }}</span></label>
             </div>
             <div class="form-group">
               <div class="star-rating">
                 <label for="productRating" class="mb-2 me-2">商品評分: </label>
-                <i
-                  v-for="(star, index) in 5"
-                  :key="index"
-                  :class="starClass(index)"
-                  @click="selectRating(index)"
-                ></i>
+                <i v-for="(star, index) in 5" :key="index" :class="starClass(index)" @click="selectRating(index)"></i>
               </div>
             </div>
             <div class="form-group">
-              <label for="productSize"
-                >尺寸:<span class="ms-2">{{
-                  modalData.productSpec
-                }}</span></label
-              >
+              <label for="productSize">尺寸:<span class="ms-2">{{
+                modalData.productSpec
+              }}</span></label>
             </div>
             <div class="form-group form-floating my-3">
               <textarea class="form-control h200px" id="v" name="CommentContent" v-model="CommentContent"
@@ -53,10 +33,12 @@
               <label for="productImage" class="mb-2">上傳照片</label>
               <input type="file" multiple class="form-control" accept=".png, .jpg" id="productImage" ref="files"
                 @change="handleFileUpload">
+              <div class="fs14">檔案大小需為小於4MB的圖檔(限.png, .jpg),限三張照片</div>
+              <div v-if="errorMessage">{{ errorMessage }}</div>
             </div>
           </div>
           <div class="modal-footer mt-0 border-0">
-            <button type="button" @click="createComment" class="btn savebtn">
+            <button type="submit" class="btn savebtn">
               送出
             </button>
           </div>
@@ -67,7 +49,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import Back2Top from "./Back2Top.vue";
 import axios from "axios";
 
@@ -98,34 +80,105 @@ const starClass = (index) => {
 
 //檔案上傳資料綁定
 const CommentContent = ref('');
-const selectedFiles = ref([]);
+const files = ref([]);
 const handleFileUpload = (event) => {
-  selectedFiles.value = event.target.files;
+  files.value = event.target.files;
+};
+
+// 檔案
+const errorMessage = ref(null);
+
+watch(files, (newFiles, oldFiles) => {
+  const errors = {};
+  if (newFiles.length === 0) { // 沒有新的檔案
+    createComment(); // 直接執行 createComment()
+  } else {
+    newFiles.forEach((newFile) => {
+      const formData = new FormData();
+      formData.append("file", newFile);
+      const fileSize = newFile.size / 1024 / 1024; // 轉換為 MB
+      if (fileSize > 2) {
+        // 限制檔案大小為 4 MB
+        errors[newFile.name] = "檔案大小超過限制";
+        file.value = null;
+        alert(errors.value);
+      }
+    });
+
+    if (Object.keys(errors).length > 0) {
+      // 顯示錯誤訊息
+      errorMessage.value = "有檔案大小超過限制";
+      files.value = null;
+      alert(errors.value);
+    } else {
+      // 沒有錯誤，執行上傳
+      errorMessage.value = null;
+      createComment();
+    }
+  }
+});
+const maxFileSize = 4 * 1024 * 1024; // 2MB
+const createComment = async () => {
+  if (files.value != null) {
+    for (let i = 0; i < files.value.length; i++) {
+      if (files.value[i].size > maxFileSize) {
+        alert(`檔案 ${files.value[i].name} 過大，請選擇小於 4MB 的檔案`);
+        return;
+      }
+      else if (files.value.length > 2) {
+        alert("超過照片張數限制");
+        return;
+      }
+    }
+    const form = document.forms.namedItem("PCommentForm");
+    const formData = new FormData(form);
+    formData.append("CommentId", 0);
+    formData.append("PcommentImgs", null);
+    formData.append("CreatedTime", new Date().toDateString());
+    formData.append('Score', selectedRating.value);
+    formData.append('CommentContent', CommentContent.value);
+    axios.post(`https://localhost:7243/api/Products/comment?orderId=${props.modalData.orderId}&productId=${props.modalData.productId}`, formData,
+      {
+        withCredentials: true,
+      })
+      .then((response) => {
+        alert("發表評論成功");
+        window.location = "http://localhost:5173/account/orders"
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+        if (error.response.status === 401) {
+          router.push("/login");
+        }
+      });
+  }
+  else {
+    const form = document.forms.namedItem("PCommentForm");
+    const formData = new FormData(form);
+    formData.append("CommentId", 0);
+    formData.append("PcommentImgs", null);
+    formData.append("CreatedTime", new Date().toDateString());
+    formData.append('Score', selectedRating.value);
+    formData.append('CommentContent', CommentContent.value);
+    formData.append('files', null);
+    axios.post(`https://localhost:7243/api/Products/comment?orderId=${props.modalData.orderId}&productId=${props.modalData.productId}`, formData,
+      {
+        withCredentials: true,
+      })
+      .then((response) => {
+        alert("發表評論成功");
+      })
+      .catch((error) => {
+        alert(error.response.data);
+        if (error.response.status === 401) {
+          router.push("/login");
+        }
+      });
+  }
 };
 
 
-//todo 檔案上傳
-// const createComment = async () => {
-//   const formData = new FormData();
-//   formData.append('Score', selectedRating.value);
-//   formData.append('CommentContent', CommentContent.value);
-//   for (let i = 0; i < selectedFiles.value.length; i++) {
-//     formData.append('files', selectedFiles.value[i]);
-//   }
 
-//   console.log(formData.value);
-// axios.post(`https://localhost:7243/api/Products/comment?orderId=${props.modalData.orderId}&productId=${props.modalData.productId}`, {
-//   headers: {
-//     'Content-Type': 'multipart/form-data'
-//   }
-// })
-//   .then((response) => {
-//     console.log(response.data);
-//   })
-//   .catch((error) => {
-//     console.log(error.response.data);
-//   });
-// };
 
 onMounted(() => {
   stars.value.splice(

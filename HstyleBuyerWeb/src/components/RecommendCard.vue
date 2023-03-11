@@ -22,7 +22,7 @@ const props = defineProps({
 })
 
 </script>
-<style>
+<style scoped>
 .card-img-top {
     border: none;
     border-radius: 0%;

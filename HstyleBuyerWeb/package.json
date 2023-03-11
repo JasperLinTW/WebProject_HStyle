@@ -16,6 +16,7 @@
     "plyr": "^3.7.3",
     "swiper": "^9.1.0",
     "vue": "^3.2.45",
+    "vue-easy-lightbox": "^1.14.0",
     "vue-google-signin": "^2.0.3",
     "vue-router": "^4.1.6"
   },

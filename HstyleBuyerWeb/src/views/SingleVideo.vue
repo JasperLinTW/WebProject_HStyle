@@ -52,25 +52,25 @@
                 </label>
               </div>
             </form>
-            <form >
+            <form>
               <!-- 留言板 -->
-            <div class="form-group">
-              <div class="d-flex justify-content-start">
-                <span class="form-label">留言：</span>
+              <div class="form-group">
+                <div class="d-flex justify-content-start">
+                  <span class="form-label">留言：</span>
+                </div>
+                <input type="text" v-model="comment" class="form-control" />
+                <div class="d-flex justify-content-end mt-2">
+                  <!-- <button type="submit" class="" @click="postComment(videoComments.comment,videoComments.videoId)">送出</button> -->
+                  <button
+                    type="submit"
+                    @click.prevent="postComment()"
+                    class="btn btn-light"
+                  >
+                    <!-- <button type="submit" class="" @click="postComment(comment,videoId)"> -->
+                    送出
+                  </button>
+                </div>
               </div>
-              <input type="text" v-model="comment" class="form-control" />
-              <div class="d-flex justify-content-end mt-2">
-                <!-- <button type="submit" class="" @click="postComment(videoComments.comment,videoComments.videoId)">送出</button> -->
-                <button
-                  type="submit"
-                  @click.prevent="postComment()"
-                  class="btn btn-light"
-                >
-                  <!-- <button type="submit" class="" @click="postComment(comment,videoId)"> -->
-                  送出
-                </button>
-              </div>
-            </div>
             </form>
           </div>
           <br />
@@ -126,7 +126,6 @@ const RecoProducts = ref([]);
 const videoComments = ref([]);
 const videoLike = ref([]);
 const router = useRouter();
-
 
 // get
 const getVideo = async () => {
@@ -216,18 +215,21 @@ const postView = () => {
 
 // 送出留言
 const comment = ref("");
-const postComment = async (comment,videoId) => {
+const postComment = async (comment, videoId) => {
   // console.log(comment);
-  const data={comment: comment.value};
+  const data = { comment: comment.value };
   //const jsonString = JSON.stringify(data);
   await axios
     .post(
-      `https://localhost:7243/api/Video/Comment/${videoId}`, data,
-      { headers: {
-    'Content-Type': 'application/json'
-        }},
+      `https://localhost:7243/api/Video/Comment/${videoId}`,
+      data,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
 
-      {withCredentials: true,}
+      { withCredentials: true }
     )
     .then((response) => {
       console.log("Comment");

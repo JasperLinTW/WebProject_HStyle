@@ -165,7 +165,7 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 		public IEnumerable<Product_LikeDTO> LoadLikeProducts(int member_id)
 		{
 			IEnumerable<ProductLike> data = _db.ProductLikes.Include(x => x.Product).ThenInclude(x => x.Imgs)
-															.Where(x => x.MemberId == member_id);
+															.Where(x => x.MemberId == member_id && x.Product.Discontinued == false);
 
 			var productsLike = data.Select(x => x.ToDto());
 

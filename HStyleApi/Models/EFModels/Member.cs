@@ -2,7 +2,6 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace HStyleApi.Models.EFModels
 {
@@ -28,11 +27,8 @@ namespace HStyleApi.Models.EFModels
         public string PhoneNumber { get; set; }
         public string Address { get; set; }
         public bool? Gender { get; set; }
-        [DisplayFormat(DataFormatString ="{0:yyyy-MM-dd HH:mm:ss}",ApplyFormatInEditMode =true)]
         public DateTime? Birthday { get; set; }
         public int? PermissionId { get; set; }
-
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
         public DateTime? Jointime { get; set; }
         public bool? MailVerify { get; set; }
         public string MailCode { get; set; }
