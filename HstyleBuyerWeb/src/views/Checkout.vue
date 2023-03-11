@@ -37,6 +37,7 @@
           </div>
         </div>
       </div>
+      <!-- <form @submit.prevent="checkout"> -->
       <div class="col-md-7 mt-5">
         <div class="fz-12 fw-bold text-start border-bottom pb-1 mb-2">
           收件與付款資訊
@@ -44,12 +45,15 @@
         <div class="my-4 d-flex justify-content-between">
           <label for="name" class="form-label fw-bold pe-3">姓名</label>
           <input v-model="shipName" type="text" class="textbox_ship flex-grow-1" id="name" placeholder="請輸入姓名" />
+          <div v-if="error.name" class="text-danger ">{{ error.name }}</div>
           <label for="phone" class="form-label fw-bold pe-3">電話</label>
           <input v-model="shipPhone" type="text" class="textbox_ship flex-grow-1" id="phone" placeholder="請輸入電話號碼" />
+          <div v-if="error.phone" class="text-danger ">{{ error.phone }}</div>
         </div>
         <div class="mb-4 d-flex justify-content-between">
           <label for="address" class="form-label fw-bold pe-3">地址</label>
           <input v-model="shipAddress" type="text" class="textbox_ship flex-grow-1" id="address" placeholder="請輸入地址" />
+          <div v-if="error.address" class="text-danger ">{{ error.address }}</div>
         </div>
         <div class="mb-3 d-flex justify-content-between">
           <label for="payment" class="form-label fw-bold pe-3">付款方式</label>
@@ -59,6 +63,7 @@
               <option value="信用卡">信用卡</option>
               <option value="Paypal">PayPal</option>
             </select>
+            <div v-if="error.payment" class="text-danger ">{{ error.payment }}</div>
           </div>
         </div>
       </div>
@@ -77,7 +82,9 @@
         </div>
         <div class="d-flex justify-content-between pb-2">
           <div class="fw-bold">使用H幣</div>
-          <input v-model="discount" type="text" class="textbox form-floating" name="" id="" placeholder="請輸入數量" />
+          <input v-model="discount" type="number" class="textbox form-floating no-spin" name="" id=""
+            placeholder="請輸入數量" />
+          <div v-if="error.discount" class="text-danger ">{{ error.discount }}</div>
         </div>
         <div class="fz-sm text-end pb-4">
           目前有{{ H_Coin }}枚，最高可使用{{ coinUseLimit }}枚
@@ -93,6 +100,7 @@
           <div id="result"></div>
         </div>
       </div>
+      <!-- </form> -->
     </div>
   </div>
   <div v-if="progressing" id="modal" class="modal">
@@ -178,6 +186,9 @@ const coinUseLimit = computed(() => {
   return H_Coin.value < twentyPercent ? H_Coin : twentyPercent;
 });
 const checkout = async () => {
+  if (!validateForm()) {
+    return;
+  };
   progressing.value = true;
   await axios
     .post(
@@ -216,6 +227,100 @@ const checkout = async () => {
     });
 
 };
+
+//todo...信用卡支付
+const payByCredic = () => {
+  axios
+    .post(
+      `https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5`,
+      {
+
+        ashKey: "pwFHCqoQZGmho4w6",//ECPay提供的Hash Key
+        HashIV: "EkRm7iFT261dpevs",//ECPay提供的Hash IV
+        MerchantID: "3002607",//ECPay提供的特店編號
+        send: {
+          ReturnURL: "http://example.com",//付款完成通知回傳的網址
+          ClientBackURL: "http://www.google.com./",//瀏覽器端返回的廠商網址
+          OrderResultURL: "https://www.youtube.com/",//瀏覽器端回傳付款結果網址
+          MerchantTradeNo: "ECPay" + new Random().Next(0, 99999).ToString(),//廠商的交易編號
+          MerchantTradeDate: DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"),//廠商的交易時間
+          TotalAmount: Decimal.Parse("3280"),//交易總金額
+          TradeDesc: "交易描述",//交易描述
+          ChoosePayment: PaymentMethod.Credit,//使用的付款方式
+          Remark: "",//備註欄位
+          ChooseSubPayment: PaymentMethodItem.None,//使用的付款子項目
+          NeedExtraPaidInfo: ExtraPaymentInfo.Yes,//是否需要額外的付款資訊
+          DeviceSource: DeviceType.PC,//來源裝置
+          IgnorePayment: "", //不顯示的付款方式
+          PlatformID: "",//特約合作平台商代號
+          CustomField1: "",
+          CustomField2: "",
+          CustomField3: "",
+          CustomField4: "",
+          EncryptType: 1,
+          Items:
+          {
+            Name: "HStyleStore",//商品名稱
+            Price: Decimal.Parse("3280"),//商品單價
+            Currency: "新台幣",//幣別單位
+            Quantity: Int32.Parse("1"),//購買數量
+            URL: "http://google.com",//商品的說明網址
+
+          }
+        }
+
+
+      },
+    )
+    .then((response) => {
+      console.log(response.data)
+    })
+    .catch((error) => {
+      console.log(error);
+      progressing.value = false;
+    });
+}
+
+const error = ref({});
+const validateForm = () => {
+  error.value = {};
+
+  if (!shipName.value) {
+    error.value.name = "收件姓名必填";
+  }
+  else if (shipName.value.length < 2) {
+    error.value.name = "姓名長度太短";
+  }
+  const phonePattern = /^09\d{8}$/;
+  if (!shipPhone.value) {
+    error.value.phone = "電話欄位必填";
+  }
+  else if (!phonePattern.test(shipPhone.value)) {
+    error.value.phone = "電話格式錯誤";
+  }
+
+  const addressPattern = /^(台灣省|台灣|臺灣省|臺灣)?([^\s]+?[市|縣|州])([^\s]+?[區|鄉|鎮])([^\s]+?(?:街|路|巷))([^\s]+?(?:號))?$/;
+  if (!shipAddress.value) {
+    error.value.address = "地址欄位必填";
+  }
+  else if (!addressPattern.test(shipAddress.value)) {
+    error.value.address = "地址格式錯誤";
+  }
+  if (discount.value < 0 || discount.value > coinUseLimit.value.value) {
+    error.value.discount = "輸入值超出範圍";
+  }
+  if (payment.value === "") {
+    error.value.payment = "必須選擇一種付款方式";
+  }
+  console.log(error.value)
+  // 如果有錯誤，顯示錯誤信息，並返回 false
+  if (Object.keys(error.value).length > 0) {
+    return false;
+  }
+
+  // 所有驗證都通過，返回 true
+  return true;
+}
 
 onMounted(() => {
   getCartInfo();
@@ -335,5 +440,11 @@ select:focus {
   /* 設置高度為 200px */
   margin: auto;
   /* 將margin設置為auto使其垂直和水平居中 */
+}
+
+.no-spin::-webkit-inner-spin-button,
+.no-spin::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 </style>
