@@ -87,10 +87,17 @@
       alertThanks
    </button>
 
+   <!-- 聊天室 -->
+   <div>
+      <!-- <button id="chat-btn" @click="toggleChat" class="btn btn-warning">聊天室</button> -->
+      <button class="btn btn-warning" @click="toggleChat">{{ showChat ? "關閉聊天室" : "聊天室" }}</button>
+      <component v-if="showChat" :is="chatComponent"><ChatRoom /></component>
+   </div>
+
    <CustmorQForm />
    <MemberQForm />
    <AlertModal />
-   <ChatRoom />
+   <!-- <ChatRoom /> -->
 </template>
 
 <script setup>
@@ -100,6 +107,7 @@ import CustmorQForm from "../components/CustomerQForm.vue";
 import MemberQForm from "../components/MemberQForm.vue";
 import AlertModal from "../components/AlertModal.vue";
 import ChatRoom from "../components/ChatRoom.vue";
+// import io from "socket.io-client";
 
 // 常見問題
 const categoryQ = ref([]);
@@ -189,6 +197,24 @@ const SatisfNo = async (id) => {
          console.log(error);
       });
 };
+
+// 聊天室
+const showChat = ref(false);
+const chatSocket = ref(null);
+function toggleChat() {
+   showChat.value = !showChat.value;
+   if (showChat.value) {
+      // 開啟聊天室時建立連線
+      chatSocket.value =  new WebSocket("wss://localhost:7243/ws");
+   } else {
+      // 關閉聊天室時中斷連線
+      chatSocket.value.close();
+      chatSocket.value = null;
+   }
+}
+const chatComponent = computed(() => {
+   return showChat.value ? "ChatRoom" : null;
+});
 
 onMounted(() => {
    getQCategoryInfo();

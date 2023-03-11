@@ -14,7 +14,6 @@
     "js-cookie": "^3.0.1",
     "mitt": "^3.0.0",
     "plyr": "^3.7.3",
-    "socket.io-client": "^4.6.1",
     "swiper": "^9.1.0",
     "vue": "^3.2.45",
     "vue-google-signin": "^2.0.3",

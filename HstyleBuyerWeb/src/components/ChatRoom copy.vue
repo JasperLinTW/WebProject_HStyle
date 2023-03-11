@@ -12,33 +12,29 @@
 </template>
 
 <script>
-import { ref, onUnmounted } from "vue";
+import { ref, onUnmounted  } from "vue";
 // 引入 socket.io-client 模組
-// import io from "socket.io-client";
+import io from "socket.io-client";
 
 export default {
    name: "ChatRoom",
    setup() {
       const message = ref("");
       const messages = ref([]);
-      const ws = new WebSocket("wss://localhost:7243/ws");
+      const chatSocket = io("https://localhost:7243/ws");
 
       function handleSubmit() {
-         const data = {
-            userName: "Alice",
-            message: message.value,
-         };
-         ws.send(JSON.stringify(data));
+         messages.value.push(message.value);
+         chatSocket.emit("message", message.value);
          message.value = "";
       }
 
-      ws.onmessage = (event) => {
-         const data = JSON.parse(event.data);
-         messages.value.push(`${data.userName}: ${data.message}`);
-      };
+      chatSocket.on("message", (message) => {
+         messages.value.push(message);
+      });
 
       onUnmounted(() => {
-         ws.close();
+         chatSocket.disconnect();
       });
 
       return {
