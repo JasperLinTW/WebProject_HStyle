@@ -9,19 +9,14 @@ using Microsoft.AspNetCore.Cors;
 namespace HStyleApi.Controllers
 {
 	[EnableCors("AllowAny")]
-	[Route("api/[controller]")]
+	[Route("ws")]
 	[ApiController]
 	public class WebSocketController : ControllerBase
 	{
 		static ConcurrentDictionary<int, WebSocket> WebSockets = new ConcurrentDictionary<int, WebSocket>();
 
-		//public IActionResult Index()
-		//{
-		//	return View();
-		//}
-
 		//這邊用route有錯，不符合rest
-		[HttpGet("")]
+		[HttpGet]
 		public async Task Get()
 		{
 			if (HttpContext.WebSockets.IsWebSocketRequest)

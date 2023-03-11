@@ -1,106 +1,80 @@
 <template>
-   <div style="text-align: center">
+   <div class="text-center">
       <h1 style="font-weight: bold; text-transform: uppercase">常見問題</h1>
    </div>
-   <div style="text-align: center">
-      <form class="border">
-         <input type="text" id="search-input" v-model="keyword" placeholder="搜尋" />
-         <button id="searchButtom" type="submit" style="" @click="searchClick">
+   <div class="text-center">
+      <form class="border" @submit.prevent="searchClick">
+         <label for="search-input" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden"> 搜尋： </label>
+         <input type="text" id="search-input" v-model="searchKeyword" placeholder="搜尋" />
+         <button id="searchButtom" type="submit">
             <i class="fa-solid fa-magnifying-glass"></i>
          </button>
       </form>
    </div>
+   <!-- 呈現問題 -->
    <div class="container-sm">
-      <div class="row">
-         <div class="d-flex align-items-start">
-            <div class="col-4">
-               <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                  <button
-                     class="nav-link active"
-                     id="v-pills-home-tab"
-                     data-bs-toggle="pill"
-                     data-bs-target="#v-pills-home"
-                     type="button"
-                     role="tab"
-                     aria-controls="v-pills-home"
-                     aria-selected="true"
-                     v-for="category in categoryQ"
-                     :key="category.qcategoryId"
-                     @click="selectCategory(category.qcategoryId)"
-                  >
-                     {{ category.categoryName }}
-                  </button>
+      <!-- 搜尋的結果 -->
+      <div v-if="searchResult !== null">
+         <div v-for="question in searchResult" :key="question.id">
+            <div class="card">
+               <div class="card-body">
+                  <h5 class="card-title">{{ question.question }}</h5>
+                  <p class="card-text">{{ question.answer }}</p>
+                  <button class="btn btn-light" @click="SatisfYes(question.commonQuestionId)">有幫助</button>
+                  <button class="btn btn-light" @click="SatisfNo(question.commonQuestionId)">無幫助</button>
                </div>
             </div>
-            <div class="col-8">
-               <div class="tab-content" id="v-pills-tabContent" v-if="showQuestions">
+         </div>
+      </div>
+      <!-- 所有問題 -->
+      <!-- <div v-else> -->
+      <div class="row">
+         <div class="col-3 text-center">
+            <div class="accordion accordion-flush" id="accordionExample">
+               <div v-for="(category, index) in categoryQ" :key="category.categoryId" class="accordion-item">
+                  <div class="accordion-header row" :id="'heading' + index">
+                     <button
+                        class="accordion-button collapsed"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        :data-bs-target="'#collapse' + index"
+                        aria-expanded="true"
+                        :aria-controls="'collapse' + index"
+                        @click="selectCategory(category.qcategoryId)"
+                     >
+                        {{ category.categoryName }}
+                     </button>
+                  </div>
                   <div
-                     class="tab-pane fade show active"
-                     id="v-pills-home"
-                     role="tabpanel"
-                     aria-labelledby="v-pills-home-tab"
-                     tabindex="0"
-                     v-for="question in filteredQuestions"
-                     :key="question.commonQuestionId"
-                     @click="showAnswer(question)"
+                     :id="'collapse' + index"
+                     class="accordion-collapse collapse"
+                     :aria-labelledby="'heading' + index"
+                     data-bs-parent="#accordionExample"
                   >
-                     {{ question.question }}
+                     <div class="accordion-body" v-for="question in filteredQuestions" :key="question.commonQuestionId" @click="showAnswer(question)">
+                        <p id="qTitle">{{ question.question }}</p>
+                     </div>
                   </div>
                </div>
             </div>
          </div>
-      </div>
-      <div class="row">
-          <div class="answer m-5" v-if="selectedQuestion">
-               <div>
-                  <h3>{{ selectedQuestion.question }}</h3>
-                  <div>{{ selectedQuestion.answer }}</div>
-               </div>
-               <div class="mt-5">
-                  <p>
-                     是否有回答你的問題?
-                     <button type="button" @click="SatisfYes(selectedQuestion.commonQuestionId)" class="btn btn-light ms-2">是</button>
-                     <button type="button" @click="SatisfNo(selectedQuestion.commonQuestionId)" class="btn btn-light ms-2">否</button>
-                  </p>
-               </div>
+         <!-- 單一問題 -->
+         <div class="col-7 answer m-5" v-if="selectedQuestion">
+            <div>
+               <h3 class="border-bottom">{{ selectedQuestion.question }}</h3>
+               <div class="mt-5">{{ selectedQuestion.answer }}</div>
             </div>
+            <div class="mt-5">
+               <p>
+                  是否有回答你的問題?
+                  <button type="button" @click="SatisfYes(selectedQuestion.commonQuestionId)" class="btn btn-light ms-2">是</button>
+                  <button type="button" @click="SatisfNo(selectedQuestion.commonQuestionId)" class="btn btn-light ms-2">否</button>
+               </p>
+            </div>
+         </div>
       </div>
+      <!-- </div> -->
    </div>
-
-   <!-- 常見問題 -->
-   <!-- <div class="container-sm">
-      <div class="row">
-         <div class="col-4">
-            <div class="category">
-               <h4>問題分類</h4>
-               <p class="clickable" v-for="category in categoryQ" :key="category.qcategoryId" @click="selectCategory(category.qcategoryId)">
-                  {{ category.categoryName }}
-               </p>
-            </div>
-            <div class="question-list border-top" v-if="showQuestions">
-               <h4>問題列表</h4>
-               <p class="clickable" v-for="question in filteredQuestions" :key="question.commonQuestionId" @click="showAnswer(question)">
-                  {{ question.question }}
-               </p>
-            </div>
-         </div>
-         <div class="col-8">
-            <div class="answer m-5" v-if="selectedQuestion">
-               <div>
-                  <h3>{{ selectedQuestion.question }}</h3>
-                  <div>{{ selectedQuestion.answer }}</div>
-               </div>
-               <div class="mt-5">
-                  <p>
-                     是否有回答你的問題?
-                     <button type="button" @click="SatisfYes(selectedQuestion.commonQuestionId)" class="btn btn-light ms-2">是</button>
-                     <button type="button" @click="SatisfNo(selectedQuestion.commonQuestionId)" class="btn btn-light ms-2">否</button>
-                  </p>
-               </div>
-            </div>
-         </div>
-      </div>
-   </div> -->
 
    <!-- Button trigger modal -->
    <button id="CustomerQForm" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#CustomerQModal" style="display: none">
@@ -113,10 +87,17 @@
       alertThanks
    </button>
 
+   <!-- 聊天室 -->
+   <div>
+      <!-- <button id="chat-btn" @click="toggleChat" class="btn btn-warning">聊天室</button> -->
+      <button class="btn btn-warning" @click="toggleChat">{{ showChat ? "關閉聊天室" : "聊天室" }}</button>
+      <component v-if="showChat" :is="chatComponent"><ChatRoom /></component>
+   </div>
+
    <CustmorQForm />
    <MemberQForm />
    <AlertModal />
-   <ChatRoom />
+   <!-- <ChatRoom /> -->
 </template>
 
 <script setup>
@@ -126,7 +107,9 @@ import CustmorQForm from "../components/CustomerQForm.vue";
 import MemberQForm from "../components/MemberQForm.vue";
 import AlertModal from "../components/AlertModal.vue";
 import ChatRoom from "../components/ChatRoom.vue";
+// import io from "socket.io-client";
 
+// 常見問題
 const categoryQ = ref([]);
 const getQCategoryInfo = async () => {
    await axios
@@ -150,34 +133,6 @@ const getCommonQInfo = async () => {
          console.log(error);
       });
 };
-
-// 搜尋問題
-// const keyword = ref("");
-const searchClick = async () => {
-   console.log(keyword);
-   await axios
-      .get(`https://localhost:7243/CommonQCategory?keyword=${keyword}`)
-      .then((response) => {
-         categoryQ.value = response.data;
-         console.log(response.data);
-      })
-      .catch((error) => {
-         console.log(error);
-      });
-};
-
-// 搜尋
-// document.getElementById("searchButtom").click(
-//    await axios
-//       .get(`https://localhost:7243/CommonQ?keyword=${keyword}`)
-//       .then((response) => {
-//          questions.value = response.data;
-//          console.log(response.data);
-//       })
-//       .catch((error) => {
-//          console.log(error);
-//       })
-// );
 
 // 呈現方式
 const selectedQuestion = ref(null);
@@ -205,6 +160,21 @@ const filteredQuestions = computed(() => {
    return questions.value.filter((question) => question.qcategoryId == selectedCategoryId.value);
 });
 
+// 搜尋問題
+const searchKeyword = ref("");
+const searchResult = ref([]);
+function searchClick() {
+   if (searchKeyword.value === "") {
+      searchResult.value = null;
+   } else {
+      searchResult.value = questions.value.filter((question) => {
+         return question.answer.toLowerCase().includes(searchKeyword.value.toLowerCase());
+      });
+   }
+   selectedQuestion.value = null;
+   selectedCategoryId.value = null;
+}
+
 // 詢問滿意度
 const SatisfYes = async (id) => {
    await axios
@@ -227,6 +197,24 @@ const SatisfNo = async (id) => {
          console.log(error);
       });
 };
+
+// 聊天室
+const showChat = ref(false);
+const chatSocket = ref(null);
+function toggleChat() {
+   showChat.value = !showChat.value;
+   if (showChat.value) {
+      // 開啟聊天室時建立連線
+      chatSocket.value =  new WebSocket("wss://localhost:7243/ws");
+   } else {
+      // 關閉聊天室時中斷連線
+      chatSocket.value.close();
+      chatSocket.value = null;
+   }
+}
+const chatComponent = computed(() => {
+   return showChat.value ? "ChatRoom" : null;
+});
 
 onMounted(() => {
    getQCategoryInfo();
@@ -255,43 +243,18 @@ hr {
    padding: 10px;
    background-color: #f2f2f2;
    border: none;
-   border-radius: 50%;
+   border-radius: 100%;
    outline: none;
 }
-
-.container {
-   display: flex;
-   flex-direction: row;
-   align-items: center;
-   text-align: center;
-   margin: 0 auto;
-   width: 80%;
-   max-width: 800px;
-   padding: 50px 0;
-   font-size: 20px;
-   line-height: 1.5;
+#v-pills-home-tab {
+   background-color: darkgray;
+   margin: 0px;
 }
-.container.column {
-   flex-direction: column;
+#qTitle {
+   margin: 0px;
 }
-.container hr {
-   display: none;
-   margin: 20px 0;
-   border-top: 2px solid black;
-}
-.container.column hr {
-   display: block;
-   margin: 20px auto;
-   width: 80%;
-   max-width: 600px;
-}
-.container p {
-   flex: 1;
-}
-.container .clickable {
+#qTitle:hover {
+   background-color: lightgray;
    cursor: pointer;
-}
-.container .clickable:hover {
-   font-weight: bold;
 }
 </style>
