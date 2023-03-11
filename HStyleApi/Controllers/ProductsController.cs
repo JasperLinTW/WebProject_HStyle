@@ -203,6 +203,7 @@ namespace HStyleApi.Controllers
 		}
 
 		//會員專屬推薦
+		[Authorize]
 		[HttpGet("MemberRec")]
 		public ActionResult<ProductDto> OrderRecommend()
 		{

@@ -65,7 +65,7 @@ const getWeatherRecommend = async () => {
 const orec = ref([]);
 //推薦商品
 const getOrderRecommend = async () => {
-  await axios.get(`https://localhost:7243/api/Products/MemberRec`)
+  await axios.get(`https://localhost:7243/api/Products/MemberRec`, { withCredentials: true })
     .then(response => {
       orec.value = response.data;
     })
