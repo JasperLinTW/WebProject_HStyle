@@ -19,8 +19,10 @@
 
           <!-- <span><i class="fa-regular fa-bookmark"></i></span> -->
           <div @click.stop class="card-text text-end">
-            <span v-if="!data.isClicked" @click.prevent @click="postEssayLike(data)"><i class="fa-regular fa-bookmark icon-hover fz-18"></i></span>
-            <span v-else @click.prevent @click="postEssayLike(data)"><i class="fa-solid fa-bookmark SolidHeart fz-18"></i></span>
+            <span v-if="!data.isClicked" @click.prevent @click="postEssayLike(data)"><i
+                class="fa-regular fa-bookmark icon-hover fz-18"></i></span>
+            <span v-else @click.prevent @click="postEssayLike(data)"><i
+                class="fa-solid fa-bookmark SolidHeart fz-18"></i></span>
           </div>
         </div>
       </div>
@@ -41,7 +43,7 @@ const Essays = ref([]);
 
 const likesEssay = async () => {
   await axios
-    .get("https://localhost:7243/api/Essay/Elike")
+    .get("https://localhost:7243/api/Essay/Elike", { withCredentials: true })
     .then((response) => {
       if (response.data.length > 0) {
         likes.value = response.data;

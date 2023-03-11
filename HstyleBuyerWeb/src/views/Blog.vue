@@ -1,13 +1,11 @@
 <!-- Blog.vue -->
 <template>
+  <router-link to="/Blog/EssaysBlog" class="nav-link targetAll">文章部落格</router-link>
+  <router-link to="/Blog/VideoBlog" class="nav-link text-dark">影片部落格</router-link>
   <div class="container">
     <div class="wrap">
-      <a class="slide-arrow" id="slidePrev"
-        ><i class="fa-solid fa-chevron-left"></i
-      ></a>
-      <a class="slide-arrow right" id="slideNext"
-        ><i class="fa-solid fa-chevron-right"></i
-      ></a>
+      <a class="slide-arrow" id="slidePrev"><i class="fa-solid fa-chevron-left"></i></a>
+      <a class="slide-arrow right" id="slideNext"><i class="fa-solid fa-chevron-right"></i></a>
       <ul class="slide-img" id="slideImg">
         <li><img src="../assets/image/chanel1.jpg" alt="" /></li>
         <li><img src="../assets/image/chanel2.jpg" alt="" /></li>
@@ -45,15 +43,15 @@
       <div class="row">
         <EssayCard v-for="item in essays.slice(0, 2)" :data="item"></EssayCard>
       </div>
-      <!-- <div class="row">
+    <!-- <div class="row">
           <VideoCard v-for="item in videos.slice(0,3)" :data="item"></VideoCard>
         </div>
-          <EssayCard v-for="item in newessays.slice(0, 2)" :data="item"></EssayCard> -->
+            <EssayCard v-for="item in newessays.slice(0, 2)" :data="item"></EssayCard> -->
     </div>
 
     <!-- 左右兩邊文章專區 -->
 
-    <!-- <div v-if="loaded" class="container-essay">
+  <!-- <div v-if="loaded" class="container-essay">
       <div class="column">
         <router-link :to="'/EssaysBlog/' + essays[1].essayId">
           <img :src="essays[0].imgs[0]" class="" alt="" />
@@ -75,7 +73,7 @@
         <img src="../assets/image/jisoo.jpg" alt="Image" />
         <img src="../assets/image/jisoo.jpg" alt="Image" />
       </div>
-    </div> -->
+      </div> -->
 
     <div class="container-essay" ref="container">
       <div class="col-4 column" ref="firstColumn">
@@ -86,11 +84,7 @@
           <div class="row mb-3">
             <div class="col mb-3">
               <div class="custom-card">
-                <img
-                  src="https://via.placeholder.com/150"
-                  class="card-img-top"
-                  alt="..."
-                />
+                <img src="https://via.placeholder.com/150" class="card-img-top" alt="..." />
                 <div class="card-body">
                   <h5 class="card-title1">Card title 1</h5>
                   <p class="card-text">
@@ -106,13 +100,9 @@
 
           <div class="row mt-3">
             <div class="col mb-3">
-              <div class="custom-card"  >
-                <img
-                  src="https://via.placeholder.com/150"
-                  class="card-img-top"
-                  alt="..."
-                />
-                <div class="card-body" >
+              <div class="custom-card">
+                <img src="https://via.placeholder.com/150" class="card-img-top" alt="..." />
+                <div class="card-body">
                   <h5 class="card-title1">Card title 2</h5>
                   <p class="card-text">
                     2222222222This is a wider card with supporting text below as
@@ -128,11 +118,7 @@
           <div class="row mt-3">
             <div class="col mb-3">
               <div class="custom-card">
-                <img
-                  src="https://via.placeholder.com/150"
-                  class="card-img-top"
-                  alt="..."
-                />
+                <img src="https://via.placeholder.com/150" class="card-img-top" alt="..." />
                 <div class="card-body">
                   <h5 class="card-title1">Card title 3</h5>
                   <p class="card-text">
@@ -167,10 +153,10 @@
       <div class="row">
         <EssayCard v-for="item in essays.slice(0, 2)" :data="item"></EssayCard>
       </div>
-      <!-- <div class="row">
+    <!-- <div class="row">
           <VideoCard v-for="item in videos.slice(0,3)" :data="item"></VideoCard>
         </div>
-          <EssayCard v-for="item in newessays.slice(0, 2)" :data="item"></EssayCard> -->
+            <EssayCard v-for="item in newessays.slice(0, 2)" :data="item"></EssayCard> -->
     </div>
   </div>
 </template>
@@ -382,6 +368,7 @@ const setup = () => {
 .slide-arrow:hover {
   opacity: 1;
 }
+
 /* card custom-card */
 
 .custom-card {
@@ -481,6 +468,7 @@ hr .lan {
   padding: 60px;
   height: 150px;
 }
+
 /* 
 .custom-card {
   width: 100%;
@@ -521,6 +509,7 @@ hr .lan {
 .column::-webkit-scrollbar-thumb {
   background-color: transparent;
 }
+
 /* 
 .column {
   flex: 1;
