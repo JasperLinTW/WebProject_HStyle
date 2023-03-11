@@ -5,13 +5,13 @@
         <div class="hero-text nav-btns">
             <h1 class="text-captialize">Welcome to H'style</h1>
             <p>Discover the latest collections and experience the unique world of H'style</p>
-            <a href="#" class="btn mt-3 text-uppercasre">shop now</a>
+            <a href="#" class="btn mt-3 text-uppercasre " >shop now</a>
         </div>
     </div>
 
     <div id="area2" class="area area2 ">
         <div id="section1" class="text-center ">
-            <div>
+            <div  style="z-index: 0">
                 <div class="box"></div>
                 <h1 class="text-captialize text-white">Welcome to H'style</h1>
                 <p class="text-white">Discover the latest collections and experience the unique world of H'style</p>
@@ -68,7 +68,7 @@ import Back2Top from '../components/Back2Top.vue';
     height: 100vh;
     background-size: cover;
     background-position: center center;
-    overflow: auto;
+    overflow-y: hidden;
 
 }
 
@@ -173,7 +173,7 @@ import Back2Top from '../components/Back2Top.vue';
 
 .box {
   width: 500px;
-  height: 700px;
+  height: 500px;
 }
 
 
@@ -182,7 +182,7 @@ import Back2Top from '../components/Back2Top.vue';
   height: 100vh;
   background-size: cover;
   background-position: center center;
-  overflow: auto;
+  overflow: hidden;
 
 }
 

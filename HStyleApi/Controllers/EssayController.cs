@@ -1,6 +1,8 @@
 ﻿using HStyleApi.Models.DTOs;
 using HStyleApi.Models.EFModels;
 using HStyleApi.Models.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -13,10 +15,16 @@ namespace HStyleApi.Controllers
 	public class EssayController : ControllerBase
 	{
 		private EssayService _service;
-
-		public EssayController(AppDbContext db)
+		private readonly int _memberId;
+		public EssayController(AppDbContext db, IHttpContextAccessor httpContextAccessor)
 		{
 			_service = new EssayService(db);
+			var claims = httpContextAccessor.HttpContext.User.Claims;
+			if (claims.Any())
+			{
+				var data = int.TryParse(claims.Where(x => x.Type == "MemberId").FirstOrDefault().Value, out int memberid);
+				_memberId = memberid;
+			}
 		}
 		// GET: api/<EssayController>
 		[HttpGet]
@@ -44,16 +52,20 @@ namespace HStyleApi.Controllers
 
 
 
-        // GET api/<EssayController>/EssayLike/5
-        [HttpGet("Elike/{memberId}")]
-		public async Task<IEnumerable<EssayLikeDTO>> GetlikeEssays(int memberId)
+		// GET api/<EssayController>/EssayLike/5
+		[Authorize]
+		[HttpGet("Elike")]
+		public async Task<IEnumerable<EssayLikeDTO>> GetlikeEssays()
 		{
+			var memberId = _memberId;
 			return await _service.GetlikeEssays(memberId);
 		}
 		// POST api/<EssayController>
+		[Authorize]
 		[HttpPost("Elike")]
-		public void PostELike(int memberId, int essayId)
+		public void PostELike( int essayId)
 		{
+			var memberId = _memberId;
 			_service.PostELike(memberId, essayId);
 		}
 
@@ -67,16 +79,20 @@ namespace HStyleApi.Controllers
 
 		//POST api/<VideoController>/Comment/5
 		//POST 評論
+		[Authorize]
 		[HttpPost("Comment")]
-		public void CreateComment([FromBody] string comment, int memberId, int essayId)
+		public void CreateComment([FromBody] string comment, int essayId)
 		{
+			var memberId = _memberId;
 			_service.CreateComment(comment, memberId,essayId);
 		}
 
 		//POST api/<VideoController>/CommentLike
+		[Authorize]
 		[HttpPost("CommentLike")]
-		public void PostCommentLike(int memberId, int essayId)
+		public void PostCommentLike(int essayId)
 		{
+			var memberId = _memberId;
 			_service.PostCommentLike(memberId, essayId);
 		}
 		//[HttpGet("Comments")]

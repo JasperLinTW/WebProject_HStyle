@@ -91,6 +91,7 @@ const likesProducts = async () => {
         likeProductsId.value = likes.value.map((p) => {
           return p.productId;
         });
+        loadProducts();
       }
       loadProducts();
     })
@@ -136,7 +137,6 @@ eventBus.on("addProductLike", () => {
 });
 onMounted(() => {
   likesProducts();
-
 });
 </script>
 <style scoped>
