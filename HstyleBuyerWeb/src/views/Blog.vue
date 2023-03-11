@@ -53,7 +53,7 @@
 
     <!-- 左右兩邊文章專區 -->
 
-    <div v-if="loaded" class="container-essay">
+    <!-- <div v-if="loaded" class="container-essay">
       <div class="column">
         <router-link :to="'/EssaysBlog/' + essays[1].essayId">
           <img :src="essays[0].imgs[0]" class="" alt="" />
@@ -71,6 +71,84 @@
         <img src="../assets/image/jisoo.jpg" alt="Image" />
       </div>
       <div class="column" style="z-index: 0">
+        <img src="../assets/image/jisoo.jpg" alt="Image" />
+        <img src="../assets/image/jisoo.jpg" alt="Image" />
+        <img src="../assets/image/jisoo.jpg" alt="Image" />
+      </div>
+    </div> -->
+
+    <div class="container-essay" ref="container">
+      <div class="col-4 column" ref="firstColumn">
+        <img src="../assets/image/jisoo.jpg" alt="Image" />
+      </div>
+      <div class="col-4 column" style="z-index: 0" ref="secondColumn">
+        <div class="container">
+          <!-- card1 -->
+          <div class="row mb-3">
+            <div class="col mb-3">
+              <div class="custom-card">
+                <img
+                  src="https://via.placeholder.com/150"
+                  class="card-img-top"
+                  alt="..."
+                />
+                <div class="card-body">
+                  <h5 class="card-title1">Card title 1</h5>
+                  <p class="card-text">
+                    11111111This is a wider card with supporting text below as a natural
+                    lead-in to additional content. This content is a little bit
+                    longer.
+                  </p>
+                  <small class="text-muted">Last updated 3 mins ago</small>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- card1 -->
+          <div class="row mt-3">
+            <div class="col mb-3">
+              <div class="custom-card">
+                <img
+                  src="https://via.placeholder.com/150"
+                  class="card-img-top"
+                  alt="..."
+                />
+                <div class="card-body">
+                  <h5 class="card-title1">Card title 2</h5>
+                  <p class="card-text" style="line-height: 90">
+                    2222222222This is a wider card with supporting text below as a natural
+                    lead-in to additional content. This content is a little bit
+                    longer.
+                  </p>
+                  <small class="text-muted">Last updated 3 mins ago</small>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- card1 -->
+          <div class="row mt-3">
+            <div class="col mb-3">
+              <div class="custom-card">
+                <img
+                  src="https://via.placeholder.com/150"
+                  class="card-img-top"
+                  alt="..."
+                />
+                <div class="card-body">
+                  <h5 class="card-title1">Card title 3</h5>
+                  <p class="card-text">
+                    333333333333This is a wider card with supporting text below as a natural
+                    lead-in to additional content. This content is a little bit
+                    longer.
+                  </p>
+                  <small class="text-muted">Last updated 3 mins ago</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-4 column" style="z-index: 0" ref="thirdColumn">
         <img src="../assets/image/jisoo.jpg" alt="Image" />
         <img src="../assets/image/jisoo.jpg" alt="Image" />
         <img src="../assets/image/jisoo.jpg" alt="Image" />
@@ -97,7 +175,7 @@
     </div>
   </div>
 </template>
-  
+
 <script setup>
 import EssayCard from "../components/EssayCard.vue";
 import VideoCard from "../components/VideoCard.vue";
@@ -189,6 +267,47 @@ $(function () {
     moveImg();
   }
 });
+
+const setup = () => {
+  const firstColumn = ref(null);
+  const container = ref(null);
+  const secondColumn = ref(null);
+  const thirdColumn = ref(null);
+
+  onMounted(() => {
+    const containerEl = container.value;
+    const firstColumnEl = firstColumn.value;
+    const secondColumnEl = secondColumn.value;
+    const thirdColumnEl = thirdColumn.value;
+
+    containerEl.addEventListener("scroll", () => {
+      const scrollTop = containerEl.scrollTop;
+      const secondColumnTop =
+        secondColumnEl.getBoundingClientRect().top + window.scrollY;
+      const thirdColumnTop =
+        thirdColumnEl.getBoundingClientRect().top + window.scrollY;
+      if (scrollTop < secondColumnTop || scrollTop > thirdColumnTop) {
+        firstColumnEl.classList.add("col-4");
+        secondColumnEl.classList.add("col-4");
+        thirdColumnEl.classList.add("col-4");
+        firstColumnEl.style.position = "fixed";
+        firstColumnEl.style.top = "0";
+        firstColumnEl.style.bottom = "0";
+      } else {
+        firstColumnEl.style.position = "relative";
+        firstColumnEl.style.top = "auto";
+        firstColumnEl.style.bottom = "auto";
+      }
+    });
+  });
+
+  return {
+    firstColumn,
+    container,
+    secondColumn,
+    thirdColumn,
+  };
+};
 </script>
 
 <style scoped>
@@ -264,7 +383,11 @@ $(function () {
 .slide-arrow:hover {
   opacity: 1;
 }
+/* card custom-card */
 
+.custom-card {
+  height: 500px;
+}
 .card-title {
   position: absolute;
   bottom: 0;
@@ -274,6 +397,22 @@ $(function () {
   margin-bottom: 15%;
   text-align: center;
   background-color: rgba(84, 88, 90, 0.5);
+}
+
+.card-body {
+  height: auto;
+}
+.card-title1 {
+  height: 100px;
+}
+
+.card-text {
+  height: 80px;
+  line-height: 1.5;
+}
+
+.text-muted {
+  height: -8px;
 }
 
 .card-img-overlay {
@@ -337,13 +476,21 @@ hr .lan {
   height: 150px;
 }
 
+.custom-card {
+  width: 100%;
+}
+
+.custom-card .card-img-top {
+  max-width: 500px;
+  max-height: 500px;
+}
+
 /* 文章專區 */
 .container-essay {
   display: flex;
   position: relative;
   overflow-x: hidden;
   height: 100vh;
-  /* scroll-snap-type: y mandatory; */
   overflow-x: scroll;
 }
 
@@ -368,7 +515,7 @@ hr .lan {
 .column::-webkit-scrollbar-thumb {
   background-color: transparent;
 }
-
+/* 
 .column {
   flex: 1;
   padding: 10px;
@@ -386,6 +533,41 @@ hr .lan {
   top: 0;
   height: 100%;
   overflow: hidden;
+  height: 100px;
+  overflow-y: scroll;
+}
+
+img {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+} */
+
+.column {
+  flex: 1;
+  padding: 10px;
+  margin-right: 10px;
+}
+
+.column:first-child {
+  flex: none;
+  width: 33.33%;
+  position: sticky;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+}
+
+.column:first-child img {
+  height: 100%;
+  object-fit: cover;
+}
+
+.column:not(:first-child) {
+  position: relative;
+  z-index: -1;
 }
 
 img {
