@@ -5,6 +5,7 @@ using HStyleApi.Models.InfraStructures.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using Newtonsoft.Json;
+using System.ComponentModel.Design;
 
 namespace HStyleApi.Models.Services
 {
@@ -44,7 +45,7 @@ namespace HStyleApi.Models.Services
 		public async Task<IEnumerable<VideoLikeDTO>> GetLikeVideos(int memberId)
 		{
 			var data = await _videoRepository.GetLikeVideos(memberId);
-			return  data;
+			return data;
 		}
 
 		public void PostLike(int memberId, int videoId)
@@ -71,6 +72,12 @@ namespace HStyleApi.Models.Services
 		public void PostCommentLike(int memberId, int commentId)
 		{
 			_videoRepository.PostCommentLike(memberId, commentId);
+		}
+
+		public async Task<IEnumerable<VCommentLikeDTO>> GetCommentLikes(int memberId)
+		{
+			var data = await _videoRepository.GetCommentLikes(memberId);
+			return data;
 		}
 	}
 }

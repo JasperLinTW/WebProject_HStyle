@@ -132,6 +132,7 @@ watch(
 );
 eventBus.on("addProductLike", () => {
   likesProducts();
+  
 });
 onMounted(() => {
   likesProducts();

@@ -36,13 +36,13 @@ namespace HStyleApi.Controllers
 		[HttpGet]
 		public async Task<ActionResult<IEnumerable<VideoDTO>>> GetVideos([FromQuery] string? keyword)
 		{
-			
+
 			try
 			{
 				IEnumerable<VideoDTO> data = await _service.GetVideos(keyword);
 				return Ok(data);
 			}
-			catch(Exception ex)
+			catch (Exception ex)
 			{
 				return BadRequest(ex.Message);
 			}
@@ -57,17 +57,17 @@ namespace HStyleApi.Controllers
 				VideoDTO data = await _service.GetVideo(videoId);
 				return Ok(data);
 			}
-			catch(Exception ex)
+			catch (Exception ex)
 			{
-				return BadRequest(ex.Message); 
+				return BadRequest(ex.Message);
 			}
 		}
 
 		// GET api/<VideoController>/5  
 		[HttpGet("Recommenations/{videoId}")]
 		public async Task<ActionResult<IEnumerable<ProductDto>>> GetRecommendationProduct(int videoId)
-		 {
-			IEnumerable < ProductDto > products =await _service.GetRecommendationProduct(videoId);
+		{
+			IEnumerable<ProductDto> products = await _service.GetRecommendationProduct(videoId);
 			return Ok(products);
 		}
 
@@ -77,10 +77,10 @@ namespace HStyleApi.Controllers
 		{
 			try
 			{
-				IEnumerable<VideoDTO> data= await _service.GetNews();
+				IEnumerable<VideoDTO> data = await _service.GetNews();
 				return Ok(data);
 			}
-			catch(Exception ex)
+			catch (Exception ex)
 			{
 				return BadRequest(ex.Message);
 			}
@@ -88,14 +88,15 @@ namespace HStyleApi.Controllers
 
 		//GET api/<VideoController>/MyLike/5  
 		[Authorize]
-		[HttpGet("MyLike/{memberId}")]
+		[HttpGet("MyLike")]
 		public async Task<IEnumerable<VideoLikeDTO>> GetLikeVideos()
 		{
 			var memberId = _memberId;
 			if (memberId == null)
 			{
 				throw new Exception("請先登入會員");
-			}else
+			}
+			else
 			{
 				return await _service.GetLikeVideos(memberId);
 			}
@@ -110,7 +111,8 @@ namespace HStyleApi.Controllers
 			if (memberId == null)
 			{
 				throw new Exception("請先登入會員");
-			}else
+			}
+			else
 			{
 				_service.PostLike(memberId, videoId);
 			}
@@ -126,7 +128,7 @@ namespace HStyleApi.Controllers
 		//GET api/<VideoController>/5 
 		//GET 所有評論
 		[HttpGet("Comments/{videoId}")]
-		public async Task<IEnumerable<VideoCommentDTO>> GetComments( int videoId)
+		public async Task<IEnumerable<VideoCommentDTO>> GetComments(int videoId)
 		{
 			return await _service.GetComments(videoId);
 		}
@@ -135,23 +137,40 @@ namespace HStyleApi.Controllers
 		//POST 評論
 		[Authorize]
 		[HttpPost("Comment/{videoId}")]
-		public void CreateComment([FromBody]JObject comment, int videoId)
+		public void CreateComment([FromBody] CommentDTO comment, int videoId)
 		{
 			var memberId = _memberId;
-			if (memberId <=0)
+			if (memberId <= 0)
 			{
 				throw new Exception("請先登入會員");
 			}
 			else
 			{
-				_service.CreateComment(comment.ToString(), memberId, videoId);
+				_service.CreateComment(comment.comment, memberId, videoId);
+			}
+		}
+
+		//TODO 抓到使用者按讚的留言
+		//GET api/<VideoController>/Comment/Likes
+		[HttpGet("comment/Likes")]
+		public async Task<IEnumerable<VCommentLikeDTO>> GetCommentLikes()
+		{
+			var memberId = _memberId;
+			if (memberId <= 0)
+			{
+				throw new Exception("請先登入會員");
+			}
+			else
+			{
+				return await _service.GetCommentLikes(memberId);
+				
 			}
 		}
 
 		//POST api/<VideoController>/CommentLike
 		[Authorize]
-		[HttpPost("CommentLike/{CommentId}")]
-		public void PostCommentLike(int CommentId)
+		[HttpPost("CommentLike/{commentId}")]
+		public void PostCommentLike(int commentId)
 		{
 			var memberId = _memberId;
 			if (memberId == null)
@@ -160,8 +179,12 @@ namespace HStyleApi.Controllers
 			}
 			else
 			{
-				_service.PostCommentLike(memberId, CommentId);
+				_service.PostCommentLike(memberId, commentId);
 			}
 		}
+	}
+	public class CommentDTO
+	{
+		public string comment { get; set; }
 	}
 }

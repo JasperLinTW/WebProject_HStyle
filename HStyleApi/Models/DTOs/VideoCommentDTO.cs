@@ -7,6 +7,7 @@ namespace HStyleApi.Models.DTOs
 		public int Id { get; set; }
 		public int VideoId { get; set; }
 		public int MemberId { get; set; }
+		public string MemberName{ get; set; }
 		public string Comment { get; set; }
 		public DateTime CreatedTime { get; set; }
 		public int Like { get; set; }
@@ -27,6 +28,7 @@ namespace HStyleApi.Models.DTOs
 				Comment= source.Comment,
 				CreatedTime= source.CreatedTime,
 				Like= source.Like,
+				MemberName=source.Member.Name
 			};
 		}
 
