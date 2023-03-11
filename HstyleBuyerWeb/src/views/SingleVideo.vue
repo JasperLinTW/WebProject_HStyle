@@ -16,7 +16,8 @@
                <div class="videoLike">
                   <label>
                      <span>影片收藏 </span>
-                     <span v-if="!isClicked" @click="postVideoLike(video.id)"><i class="fa-regular fa-heart icon-hover fz-18"></i></span>
+                     <span v-if="!isClicked" @click="postVideoLike(video.id)"><i
+                           class="fa-regular fa-heart icon-hover fz-18"></i></span>
                      <span v-else @click="postVideoLike(video.id)"><i class="fa-solid fa-heart fz-18"></i></span>
                   </label>
                </div>
@@ -38,10 +39,10 @@
                         <div class="videoCommentLike">
                            <label>
                               <span>留言按讚 </span>
-                              <span v-if="!commentIsClicked" @click="postCommentLike(comment.id)"
-                                 ><i class="fa-regular fa-heart icon-hover fz-18"></i
-                              ></span>
-                              <span v-else @click="postCommentLike(comment.id)"><i class="fa-solid fa-heart fz-18"></i></span>
+                              <span v-if="!commentIsClicked" @click="postCommentLike(comment.id)"><i
+                                    class="fa-regular fa-heart icon-hover fz-18"></i></span>
+                              <span v-else @click="postCommentLike(comment.id)"><i
+                                    class="fa-solid fa-heart fz-18"></i></span>
                            </label>
                         </div>
                         <div class="d-flex justify-content-end">
@@ -153,14 +154,14 @@ const getRecommenations = async () => {
 // 喜歡的評論
 const getCommentLikes = async () => {
    await axios.get(`https://localhost:7243/api/Video/comment/Likes`, { withCredentials: true })
-   .then((response) => {
-      if (response.data.length > 0) {
-         likesComments.value = response.data;
-         likeCommentId.value = likesComments.value.map((likes) => {
-            return likes.commentId;
-         });
-      }
-   }).catch(error=>{console.log(error)});
+      .then((response) => {
+         if (response.data.length > 0) {
+            likesComments.value = response.data;
+            likeCommentId.value = likesComments.value.map((likes) => {
+               return likes.commentId;
+            });
+         }
+      }).catch(error => { console.log(error) });
 };
 
 // 喜歡的video
@@ -239,8 +240,8 @@ const postComment = async () => {
 };
 
 const onReady = () => {
-    console.log(player.value.duration);
-  }
+   console.log(player.value.duration);
+}
 
 onMounted(async () => {
    await getVideo();
@@ -250,7 +251,7 @@ onMounted(async () => {
    await getRecommenations();
    await postView();
    const plyrPlayer = new Plyr(player.value);
-    plyrPlayer.on('ready', onReady);
+   plyrPlayer.on('ready', onReady);
 });
 
 eventBus.on("postVideoLike", () => {
@@ -261,7 +262,8 @@ eventBus.on("postVideoLike", () => {
 
 <style scoped>
 @import "plyr/dist/plyr.css";
-@import '~plyr/dist/plyr.css';
+/* @import '~plyr/dist/plyr.css'; */
+
 .video {
    width: 800px;
 }
