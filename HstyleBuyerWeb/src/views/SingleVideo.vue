@@ -4,7 +4,7 @@
          <div class="col-lg-8">
             <!-- plyr影片串接 -->
             <div>
-               <video ref="player" class="plyr__video-embed" playsinline controls autoplay>
+               <video ref="player" id="player" class="plyr__video-embed" playsinline controls autoplay>
                   <source :src="video.filePath" type="video/mp4" autoplay />
                </video>
             </div>
@@ -35,7 +35,7 @@
                               <label>{{ comment.comment }}</label>
                            </div>
                         </div>
-                        <div class="videoLike">
+                        <div class="videoCommentLike">
                            <label>
                               <span>留言按讚 </span>
                               <span v-if="!commentIsClicked" @click="postCommentLike(comment.id)"
@@ -96,17 +96,7 @@ import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
 import Plyr from "plyr";
 import { slotFlagsText } from "@vue/shared";
-
-// export default {
-//   data() {
-//     return {
-//       videoUrl: 'path/to/video.mp4'
-//     };
-//   },
-//   mounted() {
-//     const player = new Plyr(this.$refs.player);
-//   }
-// };
+import { eventBus } from "../mybus";
 
 const video = ref([]);
 const route = useRoute();
@@ -116,17 +106,17 @@ const videoComments = ref([]);
 const router = useRouter();
 const isLoaded = ref(false);
 const isClicked = ref(false);
-// likeCommentId會員所有喜歡的評論
+
 let likesComments = ref([]);
 const likeCommentId = ref([]);
 
 // get
+//得到影片
 const getVideo = async () => {
    await axios
       .get(`https://localhost:7243/api/Video/${route.params.id}`)
       .then((response) => {
          video.value = response.data;
-         console.log(video.value);
          isClicked.value = likevideoId.value.includes(parseInt(route.params.id));
       })
       .catch((error) => {
@@ -134,24 +124,25 @@ const getVideo = async () => {
       });
 };
 
-const getComments = async () => {
+//得到評論
+const getComments = async (commentId) => {
    await axios
       .get(`https://localhost:7243/api/Video/Comments/${route.params.id}`)
       .then((response) => {
          videoComments.value = response.data;
-         console.log("commentGet");
+         commentIsClicked.value = likeCommentId.value.includes(parseInt(commentId));
       })
       .catch((error) => {
          console.log(error);
       });
 };
 
+//商品推薦
 const getRecommenations = async () => {
    await axios
       .get(`https://localhost:7243/api/Video/Recommenations/${route.params.id}`)
       .then((response) => {
          RecoProducts.value = response.data;
-         console.log(RecoProducts.value);
          isLoaded.value = true;
       })
       .catch((error) => {
@@ -161,14 +152,15 @@ const getRecommenations = async () => {
 
 // 喜歡的評論
 const getCommentLikes = async () => {
-   await axios.get(`https://localhost:7243/api/Video/comment/Likes`, { withCredentials: true }).then((response) => {
+   await axios.get(`https://localhost:7243/api/Video/comment/Likes`, { withCredentials: true })
+   .then((response) => {
       if (response.data.length > 0) {
          likesComments.value = response.data;
          likeCommentId.value = likesComments.value.map((likes) => {
             return likes.commentId;
          });
       }
-   });
+   }).catch(error=>{console.log(error)});
 };
 
 // 喜歡的video
@@ -181,19 +173,17 @@ const getLikesVideos = async () => {
          likevideoId.value = likes.value.map((v) => {
             return v.videoId;
          });
-         console.log("likes");
       }
    });
 };
 
 // post
+//點擊喜歡的影片
 const postVideoLike = (videoId) => {
-   // console.log(videoId);
    axios
       .post(`https://localhost:7243/api/Video/Like/${videoId}`, {}, { withCredentials: true })
       .then((response) => {
          isClicked.value = !isClicked.value;
-         console.log(isClicked.value);
       })
       .catch((error) => {
          console.log(error.response.status);
@@ -204,16 +194,16 @@ const postVideoLike = (videoId) => {
 };
 
 // 點擊喜歡的留言
-const commentIsClicked = ref(false);
+const commentId = ref(false);
 const postCommentLike = (commentId) => {
+   console.log(commentId);
    axios
       .post(`https://localhost:7243/api/Video/CommentLike/${commentId}`, {}, { withCredentials: true })
       .then((response) => {
          commentIsClicked.value = !commentIsClicked.value;
-         console.log("commentLike");
       })
       .catch((error) => {
-         console.log(error.response.status);
+         console.log(error);
          if (error.response.status === 401) {
             window.location = "http://localhost:5173/login";
          }
@@ -234,41 +224,44 @@ const postView = () => {
 // 送出留言
 const comment = ref("");
 const postComment = async () => {
-   //console.log(comment);
-   //const data = { comment: comment.value };
-   //const jsonString = JSON.stringify(data);
    await axios
       .post(`https://localhost:7243/api/Video/Comment/${route.params.id}`, { comment: comment.value }, { withCredentials: true })
       .then((response) => {
-         console.log("Comment");
-         console.log(response.data);
          getComments();
          comment.value = "";
       })
       .catch((error) => {
-         console.log(error.response.status);
+         console.log(error);
          if (error.response.status === 401) {
             window.location = "http://localhost:5173/login";
          }
       });
 };
 
+const onReady = () => {
+    console.log(player.value.duration);
+  }
+
 onMounted(async () => {
-   await getLikesVideos();
    await getVideo();
+   await getLikesVideos();
+   await getCommentLikes();
    await getComments();
    await getRecommenations();
-   // postView();
-   // const player = new Plyr(this.$refs.player);
-   // player.on("ready", () => {
-   //   console.log(player.duration);
-   // });
+   await postView();
+   const plyrPlayer = new Plyr(player.value);
+    plyrPlayer.on('ready', onReady);
 });
+
+eventBus.on("postVideoLike", () => {
+   getLikesVideos();
+});
+
 </script>
 
 <style scoped>
 @import "plyr/dist/plyr.css";
-/* @import '~plyr/dist/plyr.css'; */
+@import '~plyr/dist/plyr.css';
 .video {
    width: 800px;
 }

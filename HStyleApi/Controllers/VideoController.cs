@@ -169,7 +169,7 @@ namespace HStyleApi.Controllers
 
 		//POST api/<VideoController>/CommentLike
 		[Authorize]
-		[HttpPost("CommentLike/{CommentId}")]
+		[HttpPost("CommentLike/{commentId}")]
 		public void PostCommentLike(int commentId)
 		{
 			var memberId = _memberId;
