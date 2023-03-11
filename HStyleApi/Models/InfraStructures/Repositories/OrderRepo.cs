@@ -53,14 +53,35 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 			_db.OrderLogs.Add(dataLog);
 			_db.SaveChanges();
         }
+		public void UpdateOrder(int orderId)
+		{
+			var order = _db.Orders.Where(o => o.OrderId == orderId).SingleOrDefault();
+			order.StatusId = 7;
+			order.StatusDescriptionId = 6;
+			var dataLog = new OrderLog
+			{
+				OrderId = order.OrderId,
+				StatusChangedTime = DateTime.Now,
+				Status = "待處理",
+			};
+			_db.OrderLogs.Add(dataLog);
+			_db.SaveChanges();
+		}
 
-        public void returnGoods(int orderId)
+		public void returnGoods(int orderId)
         {
             var order = _db.Orders.Where(x => x.OrderId == orderId).SingleOrDefault();
 			order.RequestRefundTime = DateTime.Now;
 			order.RequestRefund = true;
 			order.StatusId = 7;
 			order.StatusDescriptionId = 6;
+			var dataLog = new OrderLog
+			{
+				OrderId = order.OrderId,
+				StatusChangedTime = DateTime.Now,
+				Status = "退貨處理中",
+			};
+			_db.OrderLogs.Add(dataLog);
 			_db.SaveChanges();
         }
 
