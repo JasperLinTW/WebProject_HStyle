@@ -81,9 +81,8 @@
       <div class="col-4 column" ref="firstColumn">
         <img src="../assets/image/jisoo.jpg" alt="Image" />
       </div>
-      <div class="col-4 column" style="z-index: 0" ref="secondColumn">
+      <div class="col-4 column" ref="secondColumn">
         <div class="container">
-          <!-- card1 -->
           <div class="row mb-3">
             <div class="col mb-3">
               <div class="custom-card">
@@ -95,37 +94,37 @@
                 <div class="card-body">
                   <h5 class="card-title1">Card title 1</h5>
                   <p class="card-text">
-                    11111111This is a wider card with supporting text below as a natural
-                    lead-in to additional content. This content is a little bit
-                    longer.
+                    11111111This is a wider card with supporting text below as a
+                    natural lead-in to additional content. This content is a
+                    little bit longer.
                   </p>
                   <small class="text-muted">Last updated 3 mins ago</small>
                 </div>
               </div>
             </div>
           </div>
-          <!-- card1 -->
+
           <div class="row mt-3">
             <div class="col mb-3">
-              <div class="custom-card">
+              <div class="custom-card"  >
                 <img
                   src="https://via.placeholder.com/150"
                   class="card-img-top"
                   alt="..."
                 />
-                <div class="card-body">
+                <div class="card-body" >
                   <h5 class="card-title1">Card title 2</h5>
-                  <p class="card-text" style="line-height: 90">
-                    2222222222This is a wider card with supporting text below as a natural
-                    lead-in to additional content. This content is a little bit
-                    longer.
+                  <p class="card-text">
+                    2222222222This is a wider card with supporting text below as
+                    a natural lead-in to additional content. This content is a
+                    little bit longer.
                   </p>
                   <small class="text-muted">Last updated 3 mins ago</small>
                 </div>
               </div>
             </div>
           </div>
-          <!-- card1 -->
+
           <div class="row mt-3">
             <div class="col mb-3">
               <div class="custom-card">
@@ -137,9 +136,9 @@
                 <div class="card-body">
                   <h5 class="card-title1">Card title 3</h5>
                   <p class="card-text">
-                    333333333333This is a wider card with supporting text below as a natural
-                    lead-in to additional content. This content is a little bit
-                    longer.
+                    333333333333This is a wider card with supporting text below
+                    as a natural lead-in to additional content. This content is
+                    a little bit longer.
                   </p>
                   <small class="text-muted">Last updated 3 mins ago</small>
                 </div>
@@ -148,7 +147,7 @@
           </div>
         </div>
       </div>
-      <div class="col-4 column" style="z-index: 0" ref="thirdColumn">
+      <div class="col-4 column" ref="thirdColumn">
         <img src="../assets/image/jisoo.jpg" alt="Image" />
         <img src="../assets/image/jisoo.jpg" alt="Image" />
         <img src="../assets/image/jisoo.jpg" alt="Image" />
@@ -178,7 +177,7 @@
 
 <script setup>
 import EssayCard from "../components/EssayCard.vue";
-import VideoCard from "../components/VideoCard.vue";
+// import VideoCard from "../components/VideoCard.vue";
 import { ref, onMounted } from "vue";
 import axios from "axios";
 
@@ -386,8 +385,14 @@ const setup = () => {
 /* card custom-card */
 
 .custom-card {
-  height: 500px;
+  position: relative;
+  top: 50px;
 }
+
+/* .custom-card:nth-child(2) {
+  
+} */
+
 .card-title {
   position: absolute;
   bottom: 0;
@@ -399,6 +404,7 @@ const setup = () => {
   background-color: rgba(84, 88, 90, 0.5);
 }
 
+/* 
 .card-body {
   height: auto;
 }
@@ -409,11 +415,11 @@ const setup = () => {
 .card-text {
   height: 80px;
   line-height: 1.5;
-}
+} 
 
 .text-muted {
   height: -8px;
-}
+}*/
 
 .card-img-overlay {
   height: 500px;
@@ -475,10 +481,10 @@ hr .lan {
   padding: 60px;
   height: 150px;
 }
-
+/* 
 .custom-card {
   width: 100%;
-}
+} */
 
 .custom-card .card-img-top {
   max-width: 500px;
@@ -491,7 +497,7 @@ hr .lan {
   position: relative;
   overflow-x: hidden;
   height: 100vh;
-  overflow-x: scroll;
+  /* overflow-x: scroll; */
 }
 
 .card-img-top {
