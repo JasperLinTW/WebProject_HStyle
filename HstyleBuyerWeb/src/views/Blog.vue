@@ -1,7 +1,15 @@
 <!-- Blog.vue -->
 <template>
-  <router-link to="/Blog/EssaysBlog" class="nav-link targetAll">文章部落格</router-link>
-  <router-link to="/Blog/VideoBlog" class="nav-link text-dark">影片部落格</router-link>
+  <div class="container">
+    <div class="row border-bottom mb-5 mt-4 pb-2 d-flex justify-content-evenly">
+      <div class="col-md-1"><router-link to="/Blog/EssaysBlog" class="nav-link targetAll btn-underline">文章</router-link>
+      </div>
+      <div class="col-md-1"> <router-link to="/Blog/VideoBlog" class="nav-link targetAll btn-underline">影音</router-link>
+      </div>
+    </div>
+  </div>
+
+
   <div class="container">
     <div class="wrap">
       <a class="slide-arrow" id="slidePrev"><i class="fa-solid fa-chevron-left"></i></a>
@@ -46,7 +54,7 @@
     <!-- <div class="row">
           <VideoCard v-for="item in videos.slice(0,3)" :data="item"></VideoCard>
         </div>
-            <EssayCard v-for="item in newessays.slice(0, 2)" :data="item"></EssayCard> -->
+                                          <EssayCard v-for="item in newessays.slice(0, 2)" :data="item"></EssayCard> -->
     </div>
 
     <!-- 左右兩邊文章專區 -->
@@ -73,7 +81,7 @@
         <img src="../assets/image/jisoo.jpg" alt="Image" />
         <img src="../assets/image/jisoo.jpg" alt="Image" />
       </div>
-      </div> -->
+                                    </div> -->
 
     <div class="container-essay" ref="container">
       <div class="col-4 column" ref="firstColumn">
@@ -156,7 +164,7 @@
     <!-- <div class="row">
           <VideoCard v-for="item in videos.slice(0,3)" :data="item"></VideoCard>
         </div>
-            <EssayCard v-for="item in newessays.slice(0, 2)" :data="item"></EssayCard> -->
+                                          <EssayCard v-for="item in newessays.slice(0, 2)" :data="item"></EssayCard> -->
     </div>
   </div>
 </template>
@@ -573,5 +581,36 @@ img {
 
 a {
   text-decoration: none;
+}
+
+.btn-underline::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #000000;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.btn-underline:hover::after {
+  transform: scaleX(1);
+}
+
+.btn-underline {
+  position: relative;
+  padding: 0;
+  border: none;
+  background: none;
+  text-decoration: none;
+  font-size: 12pt;
+  color: #333;
+  cursor: pointer;
+}
+
+.btn-underline:hover {
+  color: #000000;
 }
 </style>

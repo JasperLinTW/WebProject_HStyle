@@ -277,6 +277,7 @@ namespace HStyleApi.Controllers
 		}
 
 		//評論是否有幫助
+		[Authorize]
 		[HttpPost("helpfulComment")]
 		public ActionResult HelpfulComment(int comment_id)
 		{

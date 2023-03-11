@@ -114,7 +114,7 @@ const loadProducts = async () => {
       //把篩選的先列出
       categoryOptions.value = [...new Set(response.data.map((p) => p.pCategoryName))];
       colorOptions.value = Array.from(new Set(response.data.flatMap((p) => p.specs.map((s) => s.color))));
-      console.log(colorOptions.value);
+      //console.log(colorOptions.value);
       if (route.params.tag == "new") {
         products.value = response.data.filter((p) => p.tags.includes("新品"));
       } else {
@@ -133,7 +133,7 @@ watch(
 );
 eventBus.on("addProductLike", () => {
   likesProducts();
-  
+
 });
 onMounted(() => {
   likesProducts();

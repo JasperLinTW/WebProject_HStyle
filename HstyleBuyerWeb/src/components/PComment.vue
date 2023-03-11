@@ -48,8 +48,9 @@ import 'vue-easy-lightbox/external-css/vue-easy-lightbox.css'
 
 const isClicked = ref(false);
 
-const helpfulComment = async (commentId) => {
-    await axios.post(`https://localhost:7243/api/Products/helpfulComment?comment_id=${commentId}`)
+const helpfulComment = async () => {
+    await axios.post(`https://localhost:7243/api/Products/helpfulComment?comment_id=${props.data.commentId}`, {},
+        { withCredentials: true })
         .then(response => {
             isClicked.value = !isClicked.value;
         })
