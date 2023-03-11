@@ -40,7 +40,7 @@
     <div v-else class="m-0 p-0">
       <div class="col-md-12 mt-3  h-100">
         <div class="form-floating mb-3">
-            <input  type="text" class="form-control" id="floatingInput" v-model="Rname" required />
+            <input type="text" class="form-control" id="floatingInput" v-model="Rname" required />
             <label for="floatingInput">姓名</label>
           </div>
         <div class="form-floating mb-3">
