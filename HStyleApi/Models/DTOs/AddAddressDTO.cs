@@ -4,7 +4,7 @@ namespace HStyleApi.Models.DTOs
 {
     public class AddAddressDTO
     {
-        //public bool Gender { get; set; }
+        public bool Gender { get; set; }
         public int AddressId { get; set; }
         public int MemberId { get; set; }
 
