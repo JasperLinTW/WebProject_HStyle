@@ -216,7 +216,7 @@ const getRecommend = async () => {
   await axios
     .get(`https://localhost:7243/api/Products/ProdRec/${route.params.id}`)
     .then((response) => {
-      rec.value = response.data;
+      rec.value = response.data.splice(0, 3);
       //console.log(rec.value);
     })
     .catch((error) => {
