@@ -21,7 +21,7 @@
       <div class="col-lg-5">
         <div class="row">
           <div class="col-lg-8 d-flex justify-content-start">
-            <div v-for="(image, index) in product.imgs" :key="index" class="thumb" @click="showMultiple">
+            <div v-for="(image, index) in product.imgs" :key="index" class="thumb" @click="showMultiple(index)">
               <img :src="image" class="pe-3">
             </div>
             <vue-easy-lightbox :visible="visibleRef" :imgs="imgsRef" :index="indexRef" @hide="onHide"></vue-easy-lightbox>
@@ -141,11 +141,10 @@ const imgsRef = ref([]);
 const onShow = () => {
   visibleRef.value = true
 }
-const showMultiple = () => {
+const showMultiple = (index) => {
   // 提取圖像 URL 並賦值給 imgsRef
   imgsRef.value = product.value.imgs.map(imgs => imgs);
-  console.log(imgsRef.value);
-  indexRef.value = 0 // 图片顺序索引
+  indexRef.value = index // 图片顺序索引
   onShow();
 }
 
@@ -307,6 +306,7 @@ onMounted(() => {
   width: 100px;
   height: 100px;
   margin-bottom: 10px;
+  cursor: pointer;
 }
 
 .thumb img {

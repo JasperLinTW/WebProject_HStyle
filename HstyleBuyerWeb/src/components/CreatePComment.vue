@@ -33,7 +33,7 @@
               <label for="productImage" class="mb-2">上傳照片</label>
               <input type="file" multiple class="form-control" accept=".png, .jpg" id="productImage" ref="files"
                 @change="handleFileUpload">
-              <div class="fs14">檔案大小需為小於2MB的圖檔(限.png, .jpg)</div>
+              <div class="fs14">檔案大小需為小於4MB的圖檔(限.png, .jpg),限三張照片</div>
               <div v-if="errorMessage">{{ errorMessage }}</div>
             </div>
           </div>
@@ -90,78 +90,92 @@ const errorMessage = ref(null);
 
 watch(files, (newFiles, oldFiles) => {
   const errors = {};
-
-  newFiles.forEach((newFile) => {
-    const formData = new FormData();
-    formData.append("file", newFile);
-    const fileSize = newFile.size / 1024 / 1024; // 轉換為 MB
-    if (fileSize > 2) {
-      // 限制檔案大小為 4 MB
-      errors[newFile.name] = "檔案大小超過限制";
-    }
-  });
-
-  if (Object.keys(errors).length > 0) {
-    // 顯示錯誤訊息
-    errorMessage.value = "有檔案大小超過限制";
-    files.value = null;
+  if (newFiles.length === 0) { // 沒有新的檔案
+    createComment(); // 直接執行 createComment()
   } else {
-    // 沒有錯誤，執行上傳
-    errorMessage.value = null;
-    const createComment = async () => {
-      if (files.value) {
-        const form = document.forms.namedItem("PCommentForm");
-        const formData = new FormData(form);
-        formData.append("CommentId", 0);
-        formData.append("PcommentImgs", null);
-        formData.append("CreatedTime", new Date().toDateString());
-        formData.append('Score', selectedRating.value);
-        formData.append('CommentContent', CommentContent.value);
-        for (let i = 0; i < files.value.length; i++) {
-          formData.append('files', files.value[i]);
-        }
-        axios.post(`https://localhost:7243/api/Products/comment?orderId=${props.modalData.orderId}&productId=${props.modalData.productId}`, formData,
-          {
-            withCredentials: true,
-          })
-          .then((response) => {
-            alert("發表評論成功");
-            window.location = "http://localhost:5173/account/orders"
-          })
-          .catch((error) => {
-            console.log(error.response.data);
-            if (error.response.status === 401) {
-              router.push("/login");
-            }
-          });
+    newFiles.forEach((newFile) => {
+      const formData = new FormData();
+      formData.append("file", newFile);
+      const fileSize = newFile.size / 1024 / 1024; // 轉換為 MB
+      if (fileSize > 2) {
+        // 限制檔案大小為 4 MB
+        errors[newFile.name] = "檔案大小超過限制";
+        file.value = null;
+        alert(errors.value);
       }
-      else {
-        const form = document.forms.namedItem("PCommentForm");
-        const formData = new FormData(form);
-        formData.append("CommentId", 0);
-        formData.append("PcommentImgs", null);
-        formData.append("CreatedTime", new Date().toDateString());
-        formData.append('Score', selectedRating.value);
-        formData.append('CommentContent', CommentContent.value);
-        formData.append('files', null);
-        axios.post(`https://localhost:7243/api/Products/comment?orderId=${props.modalData.orderId}&productId=${props.modalData.productId}`, formData,
-          {
-            withCredentials: true,
-          })
-          .then((response) => {
-            alert("發表評論成功");
-          })
-          .catch((error) => {
-            alert(error.response.data);
-            if (error.response.status === 401) {
-              router.push("/login");
-            }
-          });
-      }
-    };
+    });
+
+    if (Object.keys(errors).length > 0) {
+      // 顯示錯誤訊息
+      errorMessage.value = "有檔案大小超過限制";
+      files.value = null;
+      alert(errors.value);
+    } else {
+      // 沒有錯誤，執行上傳
+      errorMessage.value = null;
+      createComment();
+    }
   }
 });
-
+const maxFileSize = 4 * 1024 * 1024; // 2MB
+const createComment = async () => {
+  if (files.value != null) {
+    for (let i = 0; i < files.value.length; i++) {
+      if (files.value[i].size > maxFileSize) {
+        alert(`檔案 ${files.value[i].name} 過大，請選擇小於 4MB 的檔案`);
+        return;
+      }
+      else if (files.value.length > 2) {
+        alert("超過照片張數限制");
+        return;
+      }
+    }
+    const form = document.forms.namedItem("PCommentForm");
+    const formData = new FormData(form);
+    formData.append("CommentId", 0);
+    formData.append("PcommentImgs", null);
+    formData.append("CreatedTime", new Date().toDateString());
+    formData.append('Score', selectedRating.value);
+    formData.append('CommentContent', CommentContent.value);
+    axios.post(`https://localhost:7243/api/Products/comment?orderId=${props.modalData.orderId}&productId=${props.modalData.productId}`, formData,
+      {
+        withCredentials: true,
+      })
+      .then((response) => {
+        alert("發表評論成功");
+        window.location = "http://localhost:5173/account/orders"
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+        if (error.response.status === 401) {
+          router.push("/login");
+        }
+      });
+  }
+  else {
+    const form = document.forms.namedItem("PCommentForm");
+    const formData = new FormData(form);
+    formData.append("CommentId", 0);
+    formData.append("PcommentImgs", null);
+    formData.append("CreatedTime", new Date().toDateString());
+    formData.append('Score', selectedRating.value);
+    formData.append('CommentContent', CommentContent.value);
+    formData.append('files', null);
+    axios.post(`https://localhost:7243/api/Products/comment?orderId=${props.modalData.orderId}&productId=${props.modalData.productId}`, formData,
+      {
+        withCredentials: true,
+      })
+      .then((response) => {
+        alert("發表評論成功");
+      })
+      .catch((error) => {
+        alert(error.response.data);
+        if (error.response.status === 401) {
+          router.push("/login");
+        }
+      });
+  }
+};
 
 
 

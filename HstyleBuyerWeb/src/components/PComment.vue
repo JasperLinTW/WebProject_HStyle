@@ -14,27 +14,18 @@
                 </div>
             </div>
             <div class="col-md-2"></div>
-            <div class="col-md-3 img-comment" v-if="data.pcommentImgs && data.pcommentImgs.length === 1">
-                <img :src="data.pcommentImgs[0]" alt="...">
+            <div class="col-md-3 img-comment mx-2" v-if="data.pcommentImgs && data.pcommentImgs.length === 1">
+                <img :src="data.pcommentImgs[0]" alt="..." @click.prevent="showSingle()">
+                <vue-easy-lightbox :visible="visibleRef" :imgs="imgsRef" :index="indexRef"
+                    @hide="onHide"></vue-easy-lightbox>
             </div>
-            <div class="col-md-3 ps-6" v-else-if="data.pcommentImgs && data.pcommentImgs.length > 1">
-                <div id="carouselExampleFade" class="carousel slide carousel-fade img-comment" data-bs-ride="carousel">
-                    <div class="carousel-inner ">
-                        <div class="carousel-item" v-for="(item, index) in data.pcommentImgs" :key="index"
-                            :class="{ 'active': index === 0 }">
-                            <img :src="item" alt="...">
-                        </div>
+            <div class="col-md-4 ms-5 ps-5" v-else-if="data.pcommentImgs && data.pcommentImgs.length > 1">
+                <div class="d-flex justify-content-center">
+                    <div class="imgs-comment mx-2" v-for="(item, index) in data.pcommentImgs" :key="index">
+                        <img :src="item" alt="..." @click.prevent="showMultiple(index)">
+                        <vue-easy-lightbox :visible="visibleRef" :imgs="imgsRef" :index="indexRef"
+                            @hide="onHide"></vue-easy-lightbox>
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade"
-                        data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade"
-                        data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
                 </div>
             </div>
             <div class="col-md-3 text-end" v-else>
@@ -51,6 +42,10 @@
 import { onMounted, ref } from 'vue';
 import axios from 'axios';
 
+//照片放大套件
+import VueEasyLightbox from 'vue-easy-lightbox'
+import 'vue-easy-lightbox/external-css/vue-easy-lightbox.css'
+
 const isClicked = ref(false);
 
 const helpfulComment = async (commentId) => {
@@ -62,10 +57,33 @@ const helpfulComment = async (commentId) => {
 }
 
 
-//跳createCModal的 data-bs-toggle="modal" data-bs-target="#ProductCommentModal"
 const props = defineProps({
     data: Object
 })
+
+//點照片放大
+//點照片放大
+const visibleRef = ref(false)
+const indexRef = ref(0)
+const imgsRef = ref([]);
+const onShow = () => {
+    visibleRef.value = true
+}
+const showSingle = () => {
+    imgsRef.value = props.data.pcommentImgs[0];
+    onShow()
+}
+const showMultiple = (index) => {
+    // 提取圖像 URL 並賦值給 imgsRef
+    imgsRef.value = props.data.pcommentImgs.map(imgs => imgs);
+    console.log(imgsRef.value);
+    indexRef.value = index // 图片顺序索引
+    onShow();
+}
+
+const onHide = () => {
+    visibleRef.value = false;
+}
 
 onMounted(() => {
     helpfulComment();
@@ -109,11 +127,26 @@ onMounted(() => {
 .img-comment {
     width: 150px;
     height: 150px;
-    overflow: hidden;
     padding: 0;
+    cursor: pointer;
 }
 
+
 .img-comment img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.imgs-comment {
+    width: 125px;
+    height: 125px;
+    padding: 0;
+    cursor: pointer;
+}
+
+
+.imgs-comment img {
     width: 100%;
     height: 100%;
     object-fit: cover;
