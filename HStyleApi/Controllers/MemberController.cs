@@ -82,7 +82,7 @@ namespace HStyleApi.Controllers
             //.FirstOrDefault(x => x.MemberId == _memberId).ToDTO();
 
             IEnumerable<AddAddressDTO> address = _context.Addresses.Include(x => x.Member).Where(x => x.MemberId == _memberId).Select(x => x.ToDTO());
-
+            
 
             return Ok(address);
 
@@ -226,8 +226,8 @@ namespace HStyleApi.Controllers
             //member.Account = dto.Account;
             member.PhoneNumber = dto.PhoneNumber;//手機號碼
             member.Address = dto.Address;
-            member.Gender = dto.Gender;
-            member.Birthday = dto.Birthday;
+            //member.Gender = dto.Gender;
+            //member.Birthday = dto.Birthday;  //不要讓他改     會有優惠問題
 
             _context.SaveChanges();
             return "更新成功";
@@ -243,15 +243,19 @@ namespace HStyleApi.Controllers
                 DestinationName = dto.DestinationName,                       
                 Destination = dto.Destination,
                 DestinationThe = dto.DestinationThe,
-                //DestinationCategory = dto.DestinationCategory,
-                MemberId= member.Id,
+                DestinationCategory = "7-11",  //改了這個 保護資料庫不會錯
+                MemberId = member.Id,
+                Preset=true, //改了這個 保護資料庫不會錯
+                Gender =true,  //改了這個 保護資料庫不會錯
+
+
             };            
             _context.Addresses.Add(address);
             _context.SaveChanges();
             return "新增地址成功";
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPost("Register")]
         public async Task<string> Register(RegisterDTO register)
         {
@@ -266,17 +270,6 @@ namespace HStyleApi.Controllers
 
             Member member = new Member
             {
-                //Account = register.Account,
-                //Name = register.Name,
-                //EncryptedPassword = register.EncryptedPassword,
-                //PhoneNumber = register.Phone_Number,
-                //Email = register.Email,
-                //Birthday = register.Birthday,
-                //Gender=register.Gender,
-                //Address = register.Address,
-                //IsConfirmed = false,
-                //ConfirmCode = Guid.NewGuid().ToString("N"),
-
                 Name = register.Name,                         //試抓出   MemberRepository
                 Email = register.Email,   //Email 必須輸入正確的 要改驗證
                 Account = register.Account,
@@ -291,11 +284,22 @@ namespace HStyleApi.Controllers
                 EncryptedPassword = register.EncryptedPassword, //加密密碼 
                 TotalH = 0,
 
+                //Account = register.Account,
+                //Name = register.Name,
+                //EncryptedPassword = register.EncryptedPassword,
+                //PhoneNumber = register.Phone_Number,
+                //Email = register.Email,
+                //Birthday = register.Birthday,
+                //Gender=register.Gender,
+                //Address = register.Address,
+                //IsConfirmed = false,
+                //ConfirmCode = Guid.NewGuid().ToString("N"),
+
             };
             _context.Members.Add(member);
             _context.SaveChanges();
             SendEmail(member);  //確認寄信用  
-            return "註冊成功";
+            return "註冊成功請去信箱驗證";
         }
 
         [HttpPost("SendEmail")]
