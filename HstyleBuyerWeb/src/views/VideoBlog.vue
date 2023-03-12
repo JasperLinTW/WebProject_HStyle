@@ -1,93 +1,102 @@
 <template>
-<div >
     <div class="container">
-        <div class="row">
-            <div class="col-lg-4 d-flex">
-                    <input type="text" class="form-control "  v-model="keyword" placeholder="請輸入影片關鍵字">
-                    <button type="submit" class="btn btn-light" @click="searchVideosByIndex(keyword)">搜尋</button>
+        <div class="row border-bottom mb-5 mt-4 pb-2 d-flex justify-content-evenly">
+            <div class="col-md-1"><router-link to="/Blog/EssaysBlog"
+                    class="nav-link targetAll btn-underline">文章</router-link>
+            </div>
+            <div class="col-md-1"> <router-link to="/Blog/VideoBlog"
+                    class="nav-link targetAll btn-underline">影音</router-link>
             </div>
         </div>
     </div>
-    <div class="container" >
-        <div class="row">
-            <VideoCard v-for="video in videos" :data="video"/>
+    <div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 d-flex">
+                    <input type="text" class="form-control " v-model="keyword" placeholder="請輸入影片關鍵字">
+                    <button type="submit" class="btn btn-light" @click="searchVideosByIndex(keyword)">搜尋</button>
+                </div>
+            </div>
         </div>
-    </div>    
-</div>
-    
+        <div class="container">
+            <div class="row">
+                <VideoCard v-for="video in videos" :data="video" />
+            </div>
+        </div>
+    </div>
 </template>
 
 <script setup>
 import VideoCard from '../components/VideoCard.vue';
 import axios from 'axios';
-import {ref,onMounted} from 'vue';
+import { ref, onMounted } from 'vue';
 import { eventBus } from "../mybus";
 
 //const isLoaded=ref(false);
-const videos=ref([])
-const Likesvideos=ref([])
+const videos = ref([])
+const Likesvideos = ref([])
 //const likeVideosId=ref([]);
 //影片收藏
 let likes = ref([]);
 const likevideoId = ref([]);
 const getLikesVideos = async () => {
-   await axios.get(`https://localhost:7243/api/Video/MyLike`, { withCredentials: true })
-   .then((response) => {
-      if (response.data.length > 0) {
-         likes.value = response.data;
-         likevideoId.value = likes.value.map((v) => {
-            return v.videoId;
-         });
-         getVideos();
-        }
-   })
-   .catch((error) => {
-      console.log(error);
-    });
+    await axios.get(`https://localhost:7243/api/Video/MyLike`, { withCredentials: true })
+        .then((response) => {
+            if (response.data.length > 0) {
+                likes.value = response.data;
+                likevideoId.value = likes.value.map((v) => {
+                    return v.videoId;
+                });
+                getVideos();
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        });
 };
 
-const getVideos=async()=>{
+const getVideos = async () => {
     await axios.get(`https://localhost:7243/api/Video`, {
-      withCredentials: true,
+        withCredentials: true,
     })//為什麼需要身分驗證?
-    .then(response=>{
-        response.data.map((v)=>{
-            v.isClicked=likevideoId.value.includes(v.id);
+        .then(response => {
+            response.data.map((v) => {
+                v.isClicked = likevideoId.value.includes(v.id);
+            })
+            console.log(response.data);
+            videos.value = response.data;
+            //isLoaded.value=true;
         })
-        console.log(response.data);
-        videos.value=response.data;
-        //isLoaded.value=true;
-    })
-    .catch(error=>{console.log(error);});
+        .catch(error => { console.log(error); });
 }
 
 // 搜尋
 const keyword = ref('');
-const updateSelectVideos=ref([]);
-const selectedVideos=ref({});
-const searchVideosByIndex=(keyword)=>{
-    if(keyword===""){
+const updateSelectVideos = ref([]);
+const selectedVideos = ref({});
+const searchVideosByIndex = (keyword) => {
+    if (keyword === "") {
         getVideos();
-    }else{
-        selectedVideos.value=videos.value.filter(v=>v.title.includes(keyword)||v.tags.includes(keyword));
-        videos.value=selectedVideos.value;
+    } else {
+        selectedVideos.value = videos.value.filter(v => v.title.includes(keyword) || v.tags.includes(keyword));
+        videos.value = selectedVideos.value;
     }
 };
 
 const postVideoLike = (data) => {
-   axios
-      .post(`https://localhost:7243/api/Video/Like/${props.data.id}`, {}, { withCredentials: true })
-      .then((response) => {
-         data.isClicked= !data.isClicked;
-         eventBus.emit("postVideoLike");
-         getVideos();
-      })
-      .catch((error) => {
-         console.log(error);
-         if (error.response.status === 401) {
-            router.push("/login");
-         }
-      });
+    axios
+        .post(`https://localhost:7243/api/Video/Like/${props.data.id}`, {}, { withCredentials: true })
+        .then((response) => {
+            data.isClicked = !data.isClicked;
+            eventBus.emit("postVideoLike");
+            getVideos();
+        })
+        .catch((error) => {
+            console.log(error);
+            if (error.response.status === 401) {
+                router.push("/login");
+            }
+        });
 };
 
 onMounted(() => {
@@ -101,6 +110,4 @@ eventBus.on("postVideoLike", () => {
 });
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

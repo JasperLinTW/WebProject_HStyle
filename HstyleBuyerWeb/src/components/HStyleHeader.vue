@@ -29,8 +29,23 @@
           </li>
 
           <li class="nav-item dropdown">
-            <router-link to="/Blog" class="nav-link targetAll">部落格</router-link>
+            <a class="nav-link text-dark px-4" href="/Blog">部落格</a>
+            <div class="dropdown-menu border-0 menu">
+              <div class="container ">
+                <div class="row">
+                  <!-- 文章部落格 -->
+                  <div class="col-lg-12">
+                    <router-link to="/Blog/EssaysBlog" class="dropdown-item">文章部落格</router-link>
+                  </div>
+                  <!-- 影片部落格 -->
+                  <div class="col-lg-12">
+                    <router-link to="/Blog/VideoBlog" class="dropdown-item">影片部落格</router-link>
+                  </div>
+                </div>
+              </div>
+            </div>
           </li>
+
 
         </ul>
       </div>
@@ -176,5 +191,60 @@ header.sticky {
 
 header .sticky ul li a {
   color: #000;
+}
+
+/* 懸停選單的樣式 */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  display: none;
+  min-width: 100%;
+  padding: 0.5rem 0;
+  margin: 0.125rem 0 0;
+  font-size: 1rem;
+  color: #212529;
+  text-align: left;
+  list-style: none;
+  background-color: #fff;
+  opacity: 0.85;
+}
+
+.dropdown-menu.show {
+  display: block;
+}
+
+.dropdown-item {
+  display: block;
+  width: 100%;
+  clear: both;
+  font-weight: 400;
+  color: #212529;
+  white-space: nowrap;
+  background-color: transparent;
+  border: 0;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+  color: #46a3ff;
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+  color: #46a3ff;
+}
+
+.nav-item:hover .dropdown-menu {
+  display: block;
+}
+
+.menu {
+  min-width: 100%;
+  min-height: 21%;
+  border: none;
+  background-color: #ffffff;
+  border-radius: 0%;
 }
 </style>

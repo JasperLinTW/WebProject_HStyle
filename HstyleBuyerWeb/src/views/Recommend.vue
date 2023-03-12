@@ -8,21 +8,21 @@
     </div>
   </div>
   <div class="container d-flex justify-content-center mb-6">
-    <div v-if="isLoadEnd" class="row  justify-content-center">
+    <div class="row  justify-content-center">
       <div class="col-md-6 img-container-lg">
-        <img :src="rec[[0]].imgs[0]" alt="Large Image">
+        <img :src="recImg.length > 0 ? recImg[0] : ''" alt="Large Image">
       </div>
       <div class="col-md-3 mt-5">
         <div class="row">
           <div class="col-md-6 img-container-sm1">
-            <img :src="rec[[1]].imgs[0]" alt="Small Image 1">
+            <img :src="recImg.length > 0 ? recImg[1] : ''" alt="Small Image 1">
           </div>
         </div>
       </div>
       <div class="col-md-3 d-flex align-items-end">
         <div class="row">
           <div class="col-md-12 img-container-sm2">
-            <img :src="rec[[2]].imgs[0]" alt="Small Image 2">
+            <img :src="recImg.length > 0 ? recImg[2] : ''" alt="Small Image 2">
           </div>
         </div>
       </div>
@@ -50,13 +50,17 @@ import axios from "axios";
 import RecommendCard from '../components/RecommendCard.vue';
 
 const rec = ref([]);
+const recImg = ref([])
 const isLoadEnd = ref(false);
 //推薦商品
 const getWeatherRecommend = async () => {
   await axios.get(`https://localhost:7243/api/Weather/weatherRec`)
     .then(response => {
       rec.value = response.data;
-      isLoadEnd.value = true;
+      recImg.value = response.data.map((p) => {
+        return p.imgs[0];
+      })
+      //isLoadEnd.value = true;
       console.log(rec.value);
     })
     .catch(error => { console.log(error); });
