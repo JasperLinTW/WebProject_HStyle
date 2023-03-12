@@ -148,6 +148,7 @@ const getRecommenations = async () => {
       })
       .catch((error) => {
          console.log(error);
+
       });
 };
 
@@ -276,7 +277,7 @@ video {
    width: 800px;
 }
 
-.comment{
+.comment {
    overflow: auto;
    width: 400px;
    height: 700px;
