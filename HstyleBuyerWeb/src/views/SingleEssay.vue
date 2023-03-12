@@ -1,4 +1,15 @@
 <template>
+ <div class="container">
+    <div class="row border-bottom mb-5 mt-4 pb-2 d-flex justify-content-evenly">
+      <div class="col-md-1"><router-link to="/Blog/EssaysBlog" class="nav-link targetAll btn-underline">文章</router-link>
+      </div>
+      <div class="col-md-1"> <router-link to="/Blog/VideoBlog" class="nav-link targetAll btn-underline">影音</router-link>
+      </div>
+    </div>
+  </div>
+
+
+
   <div class="container mb-5">
     <div class="column">
       <img :src="essays.imgs === undefined ? '' : essays.imgs[0]" alt="Image" />
@@ -313,5 +324,40 @@ img {
   background-color: grey;
   padding: 5px;
   border-radius: 50%;
+}
+
+
+.btn-underline::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #000000;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.btn-underline:hover::after {
+  transform: scaleX(1);
+}
+
+.btn-underline {
+  position: relative;
+  padding: 0;
+  border: none;
+  background: none;
+  text-decoration: none;
+  font-size: 12pt;
+  color: #333;
+  cursor: pointer;
+}
+
+.btn-underline:hover {
+  color: #000000;
+}
+a {
+  text-decoration: none;
 }
 </style>

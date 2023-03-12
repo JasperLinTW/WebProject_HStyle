@@ -2,6 +2,7 @@
 using HStyleApi.Models.EFModels;
 using HStyleApi.Models.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using static HStyleApi.Models.DTOs.ECommentLikesDTO;
@@ -10,7 +11,7 @@ using static HStyleApi.Models.DTOs.ECommentLikesDTO;
 
 namespace HStyleApi.Controllers
 {
-
+	[EnableCors("AllowAny")]
 	[Route("api/[controller]")]
 	[ApiController]
 	public class EssayController : ControllerBase
@@ -30,26 +31,59 @@ namespace HStyleApi.Controllers
 		// GET: api/<EssayController>
 		[HttpGet]
 		//FromQuery  =傳value篩選 代 service rpst
-		public async Task<IEnumerable<EssayDTO>> GetEssays([FromQuery] string? keyword)
+		public async Task<ActionResult< IEnumerable<EssayDTO>>> GetEssays([FromQuery] string? keyword)
 		{
-			IEnumerable<EssayDTO> data = await _service.GetEssays(keyword);
-			return data;
+			try
+			{
+				IEnumerable<EssayDTO> data = await _service.GetEssays(keyword);
+				return Ok(data);
+			}
+			catch (Exception ex)
+			{
+				return BadRequest(ex.Message);
+			}
+			//return data;
 		}
 
 		// GET api/<EssayController>/5
 		[HttpGet("{id}")]
-		public async Task<EssayDTO> GetEssay(int id)
+		public async Task<ActionResult<EssayDTO>> GetEssay(int id)
 		{
 
-			return await _service.GetEssays(id);
+			try
+			{
+				EssayDTO data = await _service.GetEssays(id);
+				return Ok(data);
+			}
+			catch (Exception ex)
+			{
+				return BadRequest(ex.Message);
+			}
+		}
+		// GET api/<VideoController>/5  
+		// 推薦商品?????????????????????????
+		[HttpGet("Recommenations/{id}")]
+		public async Task<ActionResult<IEnumerable<ProductDto>>> GetRecommendationProduct(int id)
+		{
+			IEnumerable<ProductDto> products = await _service.GetRecommendationProduct(id);
+			return Ok(products);
 		}
 
-        //[HttpGet("News")] 
-        [HttpGet("News")]
-        public async Task<IEnumerable<EssayDTO>> GetNews()
+
+		//[HttpGet("News")] 
+		[HttpGet("News")]
+        public async Task<ActionResult<IEnumerable<EssayDTO>>> GetNews()
         {
-            return await _service.GetNews();
-        }
+			try
+			{
+				IEnumerable<EssayDTO> data = await _service.GetNews();
+				return Ok(data);
+			}
+			catch (Exception ex)
+			{
+				return BadRequest(ex.Message);
+			}
+		}
 
 
 
@@ -59,7 +93,14 @@ namespace HStyleApi.Controllers
 		public async Task<IEnumerable<EssayLikeDTO>> GetlikeEssays()
 		{
 			var memberId = _memberId;
-			return await _service.GetlikeEssays(memberId);
+			if (memberId == null)
+			{
+				throw new Exception("請先登入會員");
+			}
+			else
+			{
+				return await _service.GetlikeEssays(memberId);
+			}
 		}
 		// POST api/<EssayController>
 		[Authorize]
@@ -67,7 +108,14 @@ namespace HStyleApi.Controllers
 		public void PostELike( int essayId)
 		{
 			var memberId = _memberId;
-			_service.PostELike(memberId, essayId);
+			if (memberId == null)
+			{
+				throw new Exception("請先登入會員");
+			}
+			else
+			{
+				_service.PostELike(memberId, essayId);
+			}
 		}
 
 		//GET api/<EssayController>/5 
@@ -81,11 +129,19 @@ namespace HStyleApi.Controllers
 		//POST api/<VideoController>/Comment/5
 		//POST 評論
 		[Authorize]
-		[HttpPost("Comment")]
-		public void CreateComment([FromBody] string comment, int essayId)
+		[HttpPost("Comment/{id}")]
+		public void CreateComment([FromBody] CommentDTO comment, int essayId)
 		{
 			var memberId = _memberId;
-			_service.CreateComment(comment, memberId,essayId);
+			if(memberId <= 0)
+			{
+				throw new Exception("請先登入會員");
+			}
+			else
+			{
+             _service.CreateComment(comment.comment, memberId,essayId);
+			}
+			
 		}
 
 		//POST api/<VideoController>/CommentLike

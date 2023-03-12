@@ -30,7 +30,17 @@ namespace HStyleApi.Models.Services
 			return await data;
 		}
 
-
+		public async Task<IEnumerable<ProductDto>> GetRecommendationProduct(int id)
+		{
+			var data = _essayReposity.GetRecommendationProduct(id);
+			return await data;
+		} 
+		
+		public async Task<IEnumerable<EssayDTO>> GetNews()
+        {
+            var data = _essayReposity.GetNews();
+            return await data;
+        }
 		public async Task<IEnumerable<EssayLikeDTO>> GetlikeEssays(int MemberId)
 		{
 			var data = _essayReposity.GetlikeEssays(MemberId);
@@ -43,11 +53,7 @@ namespace HStyleApi.Models.Services
 
 		}
 
-        public async Task<IEnumerable<EssayDTO>> GetNews()
-        {
-            var data = _essayReposity.GetNews();
-            return await data;
-        }
+      
 
         public async Task<IEnumerable<EssayCommentDTO>> GetComments(int essayId)
 		{
