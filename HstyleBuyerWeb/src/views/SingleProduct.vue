@@ -225,24 +225,43 @@ const getRecommend = async () => {
 };
 
 const comment = ref([]);
-//評論
+//評論呈現
 const getComment = async () => {
   await axios
     .get(`https://localhost:7243/api/Products/comments/${route.params.id}`)
     .then((response) => {
       comment.value = response.data;
-      //console.log(comment.value);
+      response.data.map((p) => {
+        p.isClicked = helpfulCommentsId.value.includes(p.commentId);
+      });
     })
     .catch((error) => {
       console.log(error);
     });
 };
+//評論點讚
+let helpfulComments = ref([]);
+let helpfulCommentsId = ref([]);
+const loadHelpfulComments = async () => {
+  await axios.get(`https://localhost:7243/api/Products/helpfulComment/member`,
+    { withCredentials: true })
+    .then(response => {
+      helpfulComments.value = response.data;
+      helpfulCommentsId.value = helpfulComments.value.map((c) => { return c.commentId })
+    })
+    .catch(error => { console.log(error); });
+}
+
+eventBus.on("addhelpfulComments", () => {
+  loadHelpfulComments();
+});
 
 onMounted(() => {
   likesProducts();
   getProduct();
   getRecommend();
   getComment();
+  loadHelpfulComments();
 });
 </script>
 

@@ -288,7 +288,7 @@ namespace HStyleApi.Controllers
 
 		//這個會員有按過哪些評論有幫助
 		[Authorize]
-		[HttpGet("helpfulComment")]
+		[HttpGet("helpfulComment/member")]
 		public ActionResult<HelpfulDTO> LoadHelpfulComment()
 		{
 			 IEnumerable<HelpfulDTO> data;

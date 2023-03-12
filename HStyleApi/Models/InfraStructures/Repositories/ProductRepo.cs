@@ -351,7 +351,10 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 		public IEnumerable<HelpfulDTO> LoadHelpfulComment(int member_id)
 		{
 			IEnumerable<PcommentsHelpful> data = _db.PcommentsHelpfuls.Where(x => x.MemberId == member_id);
+
 			var result = data.Select(x => x.ToDto());
+
+
 			return result;
 		}
 	}
