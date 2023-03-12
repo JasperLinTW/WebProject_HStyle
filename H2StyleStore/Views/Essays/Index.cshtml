@@ -161,7 +161,8 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
     <script>
         $(".econtent").each(function () {
 
-            $(this).html(decodeURI($(this).html()));
+            $(this).html(decodeURI($(this).html()).replace(/<\/?[^>]+(>|$)/g, "")
+                .slice(0, 170));
             console.log(decodeURI($(this)));
            
         });
