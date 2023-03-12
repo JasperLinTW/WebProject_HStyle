@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore.Query.Internal;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
+using static HStyleApi.Models.DTOs.ECommentLikesDTO;
 
 namespace HStyleApi.Models.Services
 {
@@ -62,6 +63,12 @@ namespace HStyleApi.Models.Services
 		public void PostCommentLike(int memberId, int essayId)
 		{
 			_essayReposity.PostCommentLike(memberId, essayId);
+		}
+
+		public async Task<IEnumerable<ECommentLikesDTO>> GetECommentLikes(int memberId)
+		{
+			var data = await _essayReposity.GetECommentLikes(memberId);
+			return data;
 		}
 	}
 }

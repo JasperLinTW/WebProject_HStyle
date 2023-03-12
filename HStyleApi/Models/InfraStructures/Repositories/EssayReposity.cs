@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System;
 using System.ComponentModel.Design;
 using System.Xml.Linq;
+using static HStyleApi.Models.DTOs.ECommentLikesDTO;
 
 namespace HStyleApi.Models.InfraStructures.Repositories
 {
@@ -115,8 +116,8 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 		//Get 評論
 		public async Task<IEnumerable<EssayCommentDTO>> GetComments(int essayId)
 		{
-			IEnumerable<EssayCommentDTO> data = await _db.EssaysComments
-										   .Where(e => e.Equals(essayId))
+			IEnumerable<EssayCommentDTO> data = await _db.EssaysComments.Include(e => e.Member)
+										   .Where(e => e.EssayId==essayId)
 										   .Select(e => e.ToCommentDTO()).ToListAsync();
 			return data;
 		}
@@ -142,9 +143,9 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 			var data = _db.EssaysComments.SingleOrDefault(e => e.MemberId == memberId);
 			if (data == null)
 			{
-				Ecommentlike ecommentlike = new Ecommentlike()
+				EssaysComment ecommentlike = new EssaysComment()
 				{
-					EssayId = memberId,
+					MemberId = memberId,
 					CommentId = commentId
 				};
 				_db.Add(ecommentlike);
@@ -152,6 +153,15 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 				//TestTest
 			}
 			_db.SaveChanges();
+		}
+
+		public async Task<IEnumerable<ECommentLikesDTO>> GetECommentLikes(int memberId)
+		{
+			IEnumerable<ECommentLikesDTO> data = await _db.EcommentsLikes
+													.Where(e => e.MemberId == memberId)
+													.Select(e => e.ToECommentLikesDTO()).ToListAsync();
+
+			return data;
 		}
 	}
 }

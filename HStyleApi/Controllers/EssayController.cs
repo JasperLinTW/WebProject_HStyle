@@ -4,6 +4,7 @@ using HStyleApi.Models.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using static HStyleApi.Models.DTOs.ECommentLikesDTO;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -71,7 +72,7 @@ namespace HStyleApi.Controllers
 
 		//GET api/<EssayController>/5 
 		//GET 所有評論
-		[HttpGet("Comments")]
+		[HttpGet("Comments/{essayId}")]
 		public async Task<IEnumerable<EssayCommentDTO>> GetComments(int essayId)
 		{
 			return await _service.GetComments(essayId);
@@ -95,19 +96,22 @@ namespace HStyleApi.Controllers
 			var memberId = _memberId;
 			_service.PostCommentLike(memberId, essayId);
 		}
-		//[HttpGet("Comments")]
-		//public async Task<IEnumerable<EssayLikeDTO>> GetComments(int memberId)
 
-		// PUT api/<EssayController>/5
-		//[HttpPut("{id}")]
-		//public void Put(int id, [FromBody] string value)
-		//{
-		//}
+		//TODO 抓到使用者按讚的留言
+		//GET api/<VideoController>/Comment/Likes
+		[HttpGet("comment/Likes")]
+		public async Task<IEnumerable<ECommentLikesDTO>> GetCommentLikes()
+		{
+			var memberId = _memberId;
+			if (memberId <= 0)
+			{
+				throw new Exception("請先登入會員");
+			}
+			else
+			{
+				return await _service.GetECommentLikes(memberId);
 
-		//// DELETE api/<EssayController>/5
-		//[HttpDelete("{id}")]
-		//public void Delete(int id)
-		//{
-		//}
+			}
+		}
 	}
 }
