@@ -32,8 +32,9 @@
                 <!-- 如果沒有照片 -->
             </div>
             <div class="col-md-1 text-end">
-                <i v-if="!isClicked" class="fa-regular fa-thumbs-up fz-icon" @click="helpfulComment()"></i>
-                <i v-else="isClicked" class="fa-solid fa-thumbs-up fz-icon" @click="helpfulComment()"></i>
+                <i v-if="!data.isClicked" class="fa-regular fa-thumbs-up fz-icon" @click="helpfulComment()"></i>
+                <i v-else="data.isClicked" class="fa-solid fa-thumbs-up fz-icon" @click="helpfulComment()"></i>
+                <span class="ps-1"></span>
             </div>
         </div>
     </div>
@@ -52,7 +53,8 @@ const helpfulComment = async () => {
     await axios.post(`https://localhost:7243/api/Products/helpfulComment?comment_id=${props.data.commentId}`, {},
         { withCredentials: true })
         .then(response => {
-            console.log(response.data);
+            props.data.isClicked = !props.data.isClicked;
+            eventBus.emit("addhelpfulComments");
         })
         .catch(error => { console.log(error); });
 }
@@ -62,7 +64,6 @@ const props = defineProps({
     data: Object
 })
 
-//點照片放大
 //點照片放大
 const visibleRef = ref(false)
 const indexRef = ref(0)
@@ -86,7 +87,10 @@ const onHide = () => {
     visibleRef.value = false;
 }
 
+
+
 onMounted(() => {
+
 });
 
 
