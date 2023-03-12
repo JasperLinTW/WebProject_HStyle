@@ -1,7 +1,7 @@
 <template>
     <div class="col-lg-3">
         <div class="card-card-deck">
-            <router-link :to="'/VideoBlog/' + data.videoId" class="text-dark text-decoration-none">
+            <router-link :to="'/VideoBlog/' + data.id" class="text-dark text-decoration-none">
                 <div class="card border-0 card1">
                     <div class="card-img w-100 h200px rounded overflow-hidden">
                         <img class="card-img-top" :src="data.image" alt="VideoImage">
