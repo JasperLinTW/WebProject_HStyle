@@ -21,12 +21,14 @@
     <div v-if="currentTab === 'Essay'">
     </div>
     <div v-if="currentTab === 'Video'">
+        <VideoCollection v-for="item in vlikes" :data="item" />
     </div>
     <Back2Top />
 </template>
     
 <script setup>
 import ProductCollection from "./ProductCollection.vue";
+import VideoCollection from "./VideoCollection.vue";
 import Back2Top from "./Back2Top.vue";
 import axios from "axios";
 import { ref, onMounted, watch } from "vue";
@@ -42,6 +44,23 @@ const likesProducts = async () => {
         })
         .then((response) => {
             likes.value = response.data;
+            console.log(response.data)
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+};
+
+// 影片
+let vlikes = ref([]);
+const likesVideos = async () => {
+    await axios
+        .get("https://localhost:7243/api/Video/MyLike", {
+            withCredentials: true,
+        })
+        .then((response) => {
+            vlikes.value = response.data;
+            console.log(response.data)
         })
         .catch((error) => {
             console.log(error);
@@ -51,6 +70,7 @@ const likesProducts = async () => {
 
 onMounted(() => {
     likesProducts();
+    likesVideos();
 });
 
 </script>

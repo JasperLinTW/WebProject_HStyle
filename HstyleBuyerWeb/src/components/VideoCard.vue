@@ -1,24 +1,33 @@
 <template>
     <div class="col-lg-3">
-        <div class="card ">
-            <router-link :to="'/VideoBlog/' + data.id">
-                <div class="card-body">
-                    <img class="img img-fluid" :src="data.image" alt="VideoImage">
-                    <p class="card-title title">{{ data.title }}</p>
-                    <div class="me-auto">
-                        <div class="tags" v-for="tag in data.tags">
-                            <span class="tag">#{{ tag }}</span>
+        <div class="card-card-deck">
+            <router-link :to="'/VideoBlog/' + data.videoId" class="text-dark text-decoration-none">
+                <div class="card border-0 card1">
+                    <div class="card-img w-100 h200px rounded overflow-hidden">
+                        <img class="card-img-top" :src="data.image" alt="VideoImage">
+                    </div>
+                    <div class="card-header d-flex bg-white border-bottom-0">
+                        <div class="">
+                            <div class="badge bg-secondary opacity-50 me-1" v-for="tag in data.tags">
+                                <span class="tag">#{{ tag }}</span>
+                            </div>
+                            <p class="card-title title">{{ data.title }}</p>
                         </div>
-                        <div @click.stop="" class="likeIcon d-flex flex-row-reverse">
-                            <!-- 愛心 -->
-                            <span v-if="!data.isClicked" @click.prevent @click="postVideoLike(data)"><i
-                                    class="fa-regular fa-heart fz-18"></i></span>
-                            <span v-else @click.prevent @click="postVideoLike(data)"><i
-                                    class="fa-solid fa-heart fz-18"></i></span>
-                            <!-- 宣傳 -->
-                            <div class="influence">
-                                <label><i class="fa-solid fa-eye"></i>{{ data.views }}</label>
-                                <label><i class="fa-solid fa-heart fz-18"></i>{{ data.likes }}</label>
+                    </div>
+                    <div class="container">
+                        <div class="influence">
+                            <div>
+                                <!-- 宣傳 -->
+                                <label><i class="fa-solid fa-eye fz-16"></i> {{ data.views }}</label>
+                                <label class="ms-1"><i class="fa-solid fa-heart fz-16"></i> {{ data.likes }}</label>
+                            </div>
+                            <div>
+                                <!-- 愛心 -->
+                                <span v-if="!data.isClicked" @click.prevent @click="postVideoLike(data)"><i
+                                        class="fa-regular fa-heart fz-18"></i></span>
+                                <span v-else @click.prevent @click="postVideoLike(data)"><i
+                                        class="fa-solid fa-heart fz-18"></i></span>
+                                <!-- <div @click.stop="" class="likeIcon d-flex flex-row-reverse"> -->
                             </div>
                         </div>
                     </div>
@@ -79,10 +88,14 @@ eventBus.on("postVideoLike", () => {
 </script>
 
 <style scoped>
+.card{
+    height: 300px;
+}
+
 .likeIcon {
     color: darkgrey;
     /* border: 1px; */
-    font-size: 150%;
+    /* font-size: 150%; */
 }
 
 .img {
@@ -112,5 +125,32 @@ a {
     font-size: 70%;
     text-decoration: none;
     text-align: left;
+    display: flex; /* 使用flexbox布局 */
+  justify-content: space-between; /* 内部两个<div>元素水平分布 */
+}
+
+.h200px {
+    height: 200px;
+}
+
+.object-fit-cover {
+    object-fit: cover;
+}
+
+.card1 img {
+    transition: all 0.2s;
+}
+
+.card1:hover img {
+    transform: scale(1.1);
+}
+
+.SolidHeart {
+    color: #46a3ff;
+}
+
+.fz-18 {
+    font-size: 20px;
+    cursor: pointer;
 }
 </style>
