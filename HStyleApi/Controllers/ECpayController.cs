@@ -4,11 +4,29 @@ using ECPay.Payment.Integration;
 using HttpMethod = ECPay.Payment.Integration.HttpMethod;
 using PaymentMethod = ECPay.Payment.Integration.PaymentMethod;
 using Item = ECPay.Payment.Integration.Item;
+using Microsoft.AspNetCore.Cors;
+using HStyleApi.Models.DTOs;
 
 namespace HStyleApi.Controllers
 {
+	[EnableCors("AllowAny")]
+	[Route("api/[controller]")]
+	[ApiController]
 	public class ECpayController : Controller
 	{
+		[HttpPost("return")]
+		public async Task<IActionResult> HandlePaymentResult()
+		{
+			string paymentResult;
+			using (var reader = new StreamReader(Request.Body))
+			{
+				paymentResult = await reader.ReadToEndAsync();
+			}
+
+			// 在這裡處理支付結果
+			return Ok();
+		}
+		[HttpPost]
 		public void ChekoutByECpay()
 		{
 			List<string> enErrors = new List<string>();

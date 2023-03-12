@@ -108,6 +108,22 @@
       <img class="loading" src="../assets/progressGif/loading.gif" alt="Loading..." />
     </div>
   </div>
+  <!-- 用表單送給藍新 -->
+  <form name='Newebpay' method='post' action='https://ccore.newebpay.com/MPG/mpg_gateway'>
+    <!-- 設定 hidden 可以隱藏不用給使用者看的資訊 -->
+    <!-- 藍新金流商店代號 -->
+    <input type='hidden' id='MerchantID' name='MerchantID' value='MS148335860'>
+    <!-- 交易資料透過 Key 及 IV 進行 AES 加密 -->
+    <input type='hidden' id='TradeInfo' name='TradeInfo'
+      value='5b7c2d1eed7e527931ad7ca846c28f06e8ea19aa7a059c61993cff60a8208ee86fd411d603ed6735805efd8abf9deb039c92241fe3eb00e8168c4c7d04faf7966925631087933e10f3b7c98618f66f93f196c3842ecb4a3d537b88877ca49be7235e916e9660b66842e759f141c18f4b0086c8c9375ad1526ff20bff34041a66abff65bc8d4574be69e160c7f384f820a535b0fdadf07d8a9ec5dc5479ff387de922be749bd88eb30a5e7d4d613ba255d51b144debeb4a86bfb5ed2e4974cb54a8eaa62dc609e35b6d543ed064f8cac9ab827a0650d3ff1fed30d9c848b306a63b9cc5680a125d1e9e469461c97e5bc6b783cc693fbae708f09d485cb47b1ea56d675e5f4be2b06570c556670349ff0a31e4b42f98fda6ec28ff8d5cf675855a2e354e511fb7c2517751a3a8d7dce848'>
+    <!-- 經過上述 AES 加密過的字串，透過商店 Key 及 IV 進行 SHA256 加密 -->
+    <input type='hidden' id='TradeSha' name='TradeSha'
+      value='3E7A356A3852638C4A2573AD5D2F1CF709720F40165CF90AAEB82E4AA8FCBE66'>
+    <!-- 串接程式版本 -->
+    <input type='hidden' id='Version' name='Version' value='2.0'>
+    <!-- 直接執行送出 -->
+    <input type='submit' value='前往付款'>
+  </form>
 </template>
   
 <script setup>
@@ -234,7 +250,6 @@ const payByCredic = () => {
     .post(
       `https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5`,
       {
-
         ashKey: "pwFHCqoQZGmho4w6",//ECPay提供的Hash Key
         HashIV: "EkRm7iFT261dpevs",//ECPay提供的Hash IV
         MerchantID: "3002607",//ECPay提供的特店編號
