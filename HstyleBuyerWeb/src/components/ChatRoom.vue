@@ -38,6 +38,7 @@ export default {
          // console.log(messages.messageLength.value);
          ws.send(JSON.stringify(data));
          message.value = "";
+         console.log(message.value);
       }
 
       ws.onopen = () => {
