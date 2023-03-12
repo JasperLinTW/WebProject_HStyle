@@ -25,7 +25,7 @@
                <p class="description">{{ video.description }}</p>
             </div>
          </div>
-         <div class="col-lg-4">
+         <div class="comment col-lg-4">
             <div class="row">
                <div class="col-lg-12">
                   <form action="">
@@ -239,9 +239,9 @@ const postComment = async () => {
       });
 };
 
-const onReady = () => {
-   console.log(player.value.duration);
-}
+// const onReady = () => {
+//    console.log(player.value.duration);
+// }
 
 onMounted(async () => {
    await getVideo();
@@ -250,8 +250,8 @@ onMounted(async () => {
    await getComments();
    await getRecommenations();
    await postView();
-   const plyrPlayer = new Plyr(player.value);
-   plyrPlayer.on('ready', onReady);
+   // const plyrPlayer = new Plyr(player.value);
+   // plyrPlayer.on('ready', onReady);
 });
 
 eventBus.on("postVideoLike", () => {
@@ -261,7 +261,7 @@ eventBus.on("postVideoLike", () => {
 </script>
 
 <style scoped>
-@import "plyr/dist/plyr.css";
+/* @import "plyr/dist/plyr.css"; */
 /* @import '~plyr/dist/plyr.css'; */
 
 .video {
@@ -274,5 +274,12 @@ img {
 
 video {
    width: 800px;
+}
+
+.comment{
+   overflow: auto;
+   width: 400px;
+   height: 700px;
+
 }
 </style>

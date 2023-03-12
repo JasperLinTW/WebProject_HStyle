@@ -9,8 +9,8 @@
     </div>
   </div>
 
-
   <div class="container">
+    <!-- 圖片倫播 -->
     <div class="wrap">
       <a class="slide-arrow" id="slidePrev"><i class="fa-solid fa-chevron-left"></i></a>
       <a class="slide-arrow right" id="slideNext"><i class="fa-solid fa-chevron-right"></i></a>
@@ -37,6 +37,7 @@
         <li></li>
       </ul>
     </div>
+    <!-- 圖片倫播 end -->
 
     <div class="">
       <div class="vegas-slide-container">
@@ -50,11 +51,11 @@
     <div class="container">
       <div class="row">
         <EssayCard v-for="item in essays.slice(0, 2)" :data="item"></EssayCard>
+      <!-- </div>
+      <div class="row"> -->
+        <VideoCard v-for="items in videos.slice(0, 2)" :data="items"></VideoCard>
       </div>
-    <!-- <div class="row">
-          <VideoCard v-for="item in videos.slice(0,3)" :data="item"></VideoCard>
-        </div>
-                                          <EssayCard v-for="item in newessays.slice(0, 2)" :data="item"></EssayCard> -->
+      <!-- <EssayCard v-for="item in newessays.slice(0, 2)" :data="item"></EssayCard> -->
     </div>
 
     <!-- 左右兩邊文章專區 -->
@@ -81,7 +82,7 @@
         <img src="../assets/image/jisoo.jpg" alt="Image" />
         <img src="../assets/image/jisoo.jpg" alt="Image" />
       </div>
-                                    </div> -->
+                                      </div> -->
 
     <div class="container-essay" ref="container">
       <div class="col-4 column" ref="firstColumn">
@@ -164,36 +165,47 @@
     <!-- <div class="row">
           <VideoCard v-for="item in videos.slice(0,3)" :data="item"></VideoCard>
         </div>
-                                          <EssayCard v-for="item in newessays.slice(0, 2)" :data="item"></EssayCard> -->
+                                            <EssayCard v-for="item in newessays.slice(0, 2)" :data="item"></EssayCard> -->
     </div>
   </div>
 </template>
 
 <script setup>
 import EssayCard from "../components/EssayCard.vue";
-// import VideoCard from "../components/VideoCard.vue";
+import VideoCard from "../components/VideoCard.vue";
 import { ref, onMounted } from "vue";
 import axios from "axios";
-
 const loaded = ref(false);
 const essays = ref([]);
-
 const getEssayInfo = async () => {
   await axios
     .get("https://localhost:7243/api/Essay")
     .then((response) => {
       essays.value = response.data;
-      console.log(essays.value);
+      // console.log(essays.value);
       loaded.value = true;
     })
     .catch((error) => {
       console.log(error);
     });
 };
+
+// 影片
+const videos = ref([])
+const getVideos = async () => {
+  await axios.get(`https://localhost:7243/api/Video`)
+    .then(response => {
+      videos.value = response.data;
+      // console.log(videos.value);
+      loaded.value = true;
+    })
+    .catch(error => { console.log(error); });
+}
+
 onMounted(() => {
   getEssayInfo();
+  getVideos();
 });
-
 // const videos=ref([])
 // const getVideos=async()=>{
 //     await axios.get(`https://localhost:7243/api/Video`)
@@ -208,7 +220,6 @@ onMounted(() => {
 //     //getLikesVideos();
 //     //postLike();
 // });
-
 const formatDate = (dateString) => {
   const date = new Date(dateString);
   const year = date.getFullYear();
@@ -216,7 +227,6 @@ const formatDate = (dateString) => {
   const day = date.getDate();
   return `${year}年${month}月${day}日`;
 };
-
 $(function () {
   let index = 0;
   let slideMove = 0;
@@ -260,19 +270,16 @@ $(function () {
     moveImg();
   }
 });
-
 const setup = () => {
   const firstColumn = ref(null);
   const container = ref(null);
   const secondColumn = ref(null);
   const thirdColumn = ref(null);
-
   onMounted(() => {
     const containerEl = container.value;
     const firstColumnEl = firstColumn.value;
     const secondColumnEl = secondColumn.value;
     const thirdColumnEl = thirdColumn.value;
-
     containerEl.addEventListener("scroll", () => {
       const scrollTop = containerEl.scrollTop;
       const secondColumnTop =
@@ -293,7 +300,6 @@ const setup = () => {
       }
     });
   });
-
   return {
     firstColumn,
     container,
@@ -378,7 +384,6 @@ const setup = () => {
 }
 
 /* card custom-card */
-
 .custom-card {
   position: relative;
   top: 50px;
@@ -387,7 +392,6 @@ const setup = () => {
 /* .custom-card:nth-child(2) {
   
 } */
-
 .card-title {
   position: absolute;
   bottom: 0;
@@ -406,16 +410,13 @@ const setup = () => {
 .card-title1 {
   height: 100px;
 }
-
 .card-text {
   height: 80px;
   line-height: 1.5;
 } 
-
 .text-muted {
   height: -8px;
 }*/
-
 .card-img-overlay {
   height: 500px;
 }
@@ -481,7 +482,6 @@ hr .lan {
 .custom-card {
   width: 100%;
 } */
-
 .custom-card .card-img-top {
   max-width: 500px;
   max-height: 500px;
@@ -523,12 +523,10 @@ hr .lan {
   flex: 1;
   padding: 10px;
 }
-
 .column:not(:first-child) {
   position: relative;
   z-index: 1;
 }
-
 .column:first-child {
   flex: none;
   width: 33.33%;
@@ -539,13 +537,11 @@ hr .lan {
   height: 100px;
   overflow-y: scroll;
 }
-
 img {
   display: block;
   width: 100%;
   margin-bottom: 10px;
 } */
-
 .column {
   flex: 1;
   padding: 10px;
@@ -612,5 +608,4 @@ a {
 
 .btn-underline:hover {
   color: #000000;
-}
-</style>
+}</style>

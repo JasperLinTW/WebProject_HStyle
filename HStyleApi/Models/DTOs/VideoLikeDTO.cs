@@ -24,6 +24,7 @@ namespace HStyleApi.Models.DTOs
 	}
 	public static class VideoLikeExts
 	{
+		private static readonly object _basePath = "https://localhost:44313";
 		public static VideoLike ToVideoLike(this VideoLikeDTO source)
 		{
 			return new VideoLike()
@@ -39,7 +40,8 @@ namespace HStyleApi.Models.DTOs
 			{
 				VideoId = source.VideoId,
 				MemberId = source.MemberId,
-				Image=source.Video.Image.ToString(),
+				Image = $"{_basePath}/Images/VideoImages/{source.Video.Image.Path}",
+				//Image =source.Video.Image,
 				Views=source.Video.VideoView.Views,
 				Likes=source.Video.VideoLikes.GroupBy(v=>v.VideoId).Count(),
 				CategoryName = source.Video.Category.CategoryName,

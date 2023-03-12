@@ -54,6 +54,7 @@ const getVideos=async()=>{
         response.data.map((v)=>{
             v.isClicked=likevideoId.value.includes(v.id);
         })
+        console.log(response.data);
         videos.value=response.data;
         //isLoaded.value=true;
     })
