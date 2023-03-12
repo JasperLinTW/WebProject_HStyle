@@ -106,6 +106,17 @@
    <!-- 客服聊天室 -->
    <router-link to="/ServerChatRoom" class="text-decoration-none text-dark" style="display: none">客服回覆</router-link>
 
+   <!-- <div style="position: fixed; top: 80%; left: 92%">
+      <div class="row">
+         <div class="border">
+            <component v-if="showChat" :is="chatComponent" style="position: fixed; top: 70%; left: 70%"><ChatRoom /></component>
+         </div>
+         <button class="btn btn-warning" @click="toggleChat">{{ showChat ? "關閉聊天室" : "聊天室" }}</button>
+      </div>
+   </div> -->
+   <!-- 客服聊天室 -->
+   <router-link to="/ServerChatRoom" class="text-decoration-none text-dark" style="display: none">客服回覆</router-link>
+
    <CustmorQForm />
    <MemberQForm />
    <AlertModal />
