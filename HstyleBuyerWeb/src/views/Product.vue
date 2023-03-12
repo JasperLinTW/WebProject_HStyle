@@ -28,24 +28,23 @@
             </div>
             <ul class="dropdown-menu menu border-0 mt-1 " aria-labelledby="colorDropdown">
               <div class="row">
-                <li class="col-md-1">
+                <li class="col-md-3">
                   <a class="dropdown-item item " href="#"
                     v-for="(option, index) in colorOptions.slice(0, Math.ceil(colorOptions.length / 2))" :key="index"
-                    @click="setColorOption(option)">
-                    {{ option }}
+                    @click="setColorOption(option)">{{ option }}
                   </a>
                 </li>
-                <li class="col-md-1">
+                <li class="col-md-3">
                   <a class="dropdown-item item" href="#"
                     v-for="(option, index) in colorOptions.slice(Math.ceil(colorOptions.length / 2),)" :key="index"
-                    @click="setColorOption(option)">
-                    {{ option }}
+                    @click="setColorOption(option)">{{ option }}
                   </a>
                 </li>
               </div>
 
             </ul>
           </div>
+          <div class="clear" @click="setOriginalOption()">清除篩選</div>
         </div>
       </div>
     </div>
@@ -53,7 +52,8 @@
 
   <div class="container">
     <div class="row">
-      <ProductCard v-for="item in products" :data="item" />
+      <ProductCard v-if="filteredProducts.length > 0" v-for="item in filteredProducts" :data="item" />
+      <div v-else class="h-1000 col-md-12"> - 無此篩選項目的商品 -</div>
     </div>
   </div>
 
@@ -65,7 +65,7 @@ import Back2Top from "../components/Back2Top.vue";
 import ProductCard from "../components/ProductCard.vue";
 import { useRoute } from "vue-router";
 import axios from "axios";
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch, computed } from "vue";
 import { eventBus } from "../mybus";
 //商品預覽
 const products = ref([]);
@@ -73,6 +73,7 @@ const route = useRoute();
 //console.log(route.params.tag);
 
 //商品篩選排序
+const selectedOption = ref();
 const categoryOptions = ref([]);
 const colorOptions = ref([]);
 const sortOptions = ref(['新到舊', '舊到新', '價格高到低', '價格低到高']);
@@ -125,6 +126,62 @@ const loadProducts = async () => {
       console.log(error);
     });
 };
+
+const priceFilter = ref(null);
+const categoryFilter = ref(null);
+const colorFilter = ref(null);
+const filteredProducts = computed(() => {
+  let filtered = products.value;
+
+  if (priceFilter.value !== null) {
+    filtered = filtered.filter((p) => p.unitPrice <= priceFilter.value);
+  }
+
+  if (categoryFilter.value !== null) {
+    filtered = filtered.filter((p) => p.pCategoryName === categoryFilter.value);
+  }
+
+  if (colorFilter.value !== null) {
+    filtered = filtered.filter((p) => p.specs.some(spec => spec.color === colorFilter.value));
+  }
+
+  return filtered;
+});
+
+
+//還原
+const setOriginalOption = () => {
+  priceFilter.value = null;
+  categoryFilter.value = null;
+  colorFilter.value = null;
+}
+
+
+//種類
+const setCategoryOption = (option) => {
+  categoryFilter.value = option;
+};
+
+//顏色
+const setColorOption = (option) => {
+  colorFilter.value = option;
+};
+
+//排序
+const setSortOption = (option) => {
+  // sort the products based on the selected option
+  if (option === '新到舊') {
+    filteredProducts.value.sort((a, b) => b.displayOrder - a.displayOrder);
+  } else if (option === '舊到新') {
+    filteredProducts.value.sort((a, b) => a.displayOrder - b.displayOrder);
+  } else if (option === '價格高到低') {
+    filteredProducts.value.sort((a, b) => b.unitPrice - a.unitPrice);
+  } else if (option === '價格低到高') {
+    filteredProducts.value.sort((a, b) => a.unitPrice - b.unitPrice);
+  }
+};
+
+
 watch(
   () => route.params.tag,
   (newTag, oldTag) => {
@@ -148,11 +205,8 @@ onMounted(() => {
 }
 
 .menu {
-  min-width: 100%;
-  min-height: 21%;
   border: none;
   background-color: #ffffff;
-  padding-left: 2%;
 }
 
 .dropdown-menu a:hover {
@@ -161,6 +215,18 @@ onMounted(() => {
 }
 
 .dropdown-toggle {
+  cursor: pointer;
+}
+
+.item {
+  margin-right: 10%;
+}
+
+.h-1000 {
+  height: 658px;
+}
+
+.clear {
   cursor: pointer;
 }
 </style>

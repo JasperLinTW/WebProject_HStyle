@@ -1,7 +1,7 @@
 <template>
-  <div class="container-fluid  m-5">
+  <div class="container-fluid m-5">
     <div class="row">
-      <div class="col-lg-12 ps-5 mb-5">
+      <div class="col-md-12 ps-5 mb-5">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="http://localhost:5173/">Home</a></li>
@@ -10,26 +10,26 @@
           </ol>
         </nav>
       </div>
-      <div class="col-lg-2"></div>
-      <div class="col-lg-5">
+      <div class="col-md-2"></div>
+      <div class="col-md-5">
         <swiper :direction="'vertical'" :pagination="{
           clickable: true,
         }" :modules="modules" class="MySwiper">
           <swiper-slide v-for="(image, index) in product.imgs" :key="index"><img :src="image"></swiper-slide>
         </swiper>
       </div>
-      <div class="col-lg-5">
-        <div class="row">
-          <div class="col-lg-8 d-flex justify-content-start">
+      <div class="col-md-4">
+        <div class="row m-0">
+          <div class="col-md-8 d-flex justify-content-start">
             <div v-for="(image, index) in product.imgs" :key="index" class="thumb" @click="showMultiple(index)">
               <img :src="image" class="pe-3">
             </div>
             <vue-easy-lightbox :visible="visibleRef" :imgs="imgsRef" :index="indexRef" @hide="onHide"></vue-easy-lightbox>
           </div>
-          <div class="col-lg-12 text-start">
+          <div class="col-md-12 text-start">
             <h5 class="py-5">{{ product.product_Name }}</h5>
           </div>
-          <div class="col-lg-12 mb-5 text-start">
+          <div class="col-md-12 mb-5 text-start">
             <div>
               <div class="product-options">
                 <label>規格:</label>
@@ -41,8 +41,8 @@
               </div>
             </div>
           </div>
-          <div class="col-lg-12"></div>
-          <div class="col-lg-12  mt-5 text-start">
+          <div class="col-md-12"></div>
+          <div class="col-md-12  mt-5 text-start">
             <button @click="addItem()" class="add-to-cart"> NT$ {{ product.unitPrice }}<span class="border-start  ms-2"
                 data-bs-target="#exampleModal"><span class="ps-2">加入購物車</span></span></button>
             <span class="m-3" v-if="!isClicked" @click="likesProduct()"><i
@@ -324,6 +324,10 @@ onMounted(() => {
 
 .btn-underline:hover::after {
   transform: scaleX(1);
+}
+
+.container-fluid {
+  overflow-x: hidden;
 }
 
 .thumb {
