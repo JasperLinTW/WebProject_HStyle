@@ -35,10 +35,6 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[ECommentlikes]",
-         "ObjectType": 0
-      },
-      {
          "Name": "[dbo].[EComments_Likes]",
          "ObjectType": 0
       },

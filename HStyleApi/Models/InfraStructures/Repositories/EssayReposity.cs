@@ -7,16 +7,20 @@ using System.Threading.Tasks;
 using System;
 using System.ComponentModel.Design;
 using System.Xml.Linq;
+using static HStyleApi.Models.DTOs.ECommentLikesDTO;
 
 namespace HStyleApi.Models.InfraStructures.Repositories
 {
+
 	public class EssayReposity
 	{
+		private readonly ProductRepo _PRepo;
 		public AppDbContext _db;
 
 		public EssayReposity(AppDbContext db)
 		{
 			_db = db;
+			_PRepo = new ProductRepo(db);
 		}
 
 		//文章列表
@@ -70,7 +74,9 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 
             IEnumerable<Essay> dataE = await _db.Essays
                                                         .Include(e => e.Imgs)
+														.Include(e => e.Category)
                                                         .Include(e => e.Tags)
+														.ThenInclude(e => e.Videos)
                                                         .ToListAsync();
 
             IEnumerable<EssayDTO> newsE = dataE.OrderByDescending(e => e.Tags.GroupBy(e => e.TagName).Count())
@@ -79,8 +85,34 @@ namespace HStyleApi.Models.InfraStructures.Repositories
             return newsE;
         }
 
-        //使用者收藏影片
-        public async Task<IEnumerable<EssayLikeDTO>> GetlikeEssays(int memberId)
+		//根據影片推薦相關商品
+		public async Task<IEnumerable<ProductDto>> GetRecommendationProduct(int id)
+		{
+			var essayTags = _db.Essays
+				.SingleOrDefault(v => v.EssayId == id).ToEssayDTO();
+			//.Select(v => v.tags).ToList();
+			var product = await _db.Products.Include(v => v.ProductLikes).ToListAsync();
+
+			List<string> tags = new List<string>();
+			foreach (var tag in essayTags.Tags)
+			{
+				tags.Add(tag);
+			}
+			var productId = _PRepo.GetProductsByTagsName(tags);
+			List<Product> recoProduct = new List<Product>();
+			foreach (int Id in productId)
+			{
+				var recoProductItem = product
+					.FirstOrDefault(p => p.ProductId == Id);
+				recoProduct.Add(recoProductItem);
+			}
+
+			return recoProduct.OrderByDescending(p => p.ProductLikes.Count())
+				.Take(3).Select(p => p.ToDto()).ToList();
+		}
+
+		//使用者收藏影片
+		public async Task<IEnumerable<EssayLikeDTO>> GetlikeEssays(int memberId)
 		{
 			IEnumerable<Elike> data = await _db.Elikes
 				.Include(e => e.Essay)
@@ -115,8 +147,8 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 		//Get 評論
 		public async Task<IEnumerable<EssayCommentDTO>> GetComments(int essayId)
 		{
-			IEnumerable<EssayCommentDTO> data = await _db.EssaysComments
-										   .Where(e => e.Equals(essayId))
+			IEnumerable<EssayCommentDTO> data = await _db.EssaysComments.Include(e => e.Member)
+										   .Where(e => e.EssayId==essayId)
 										   .Select(e => e.ToCommentDTO()).ToListAsync();
 			return data;
 		}
@@ -142,9 +174,9 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 			var data = _db.EssaysComments.SingleOrDefault(e => e.MemberId == memberId);
 			if (data == null)
 			{
-				Ecommentlike ecommentlike = new Ecommentlike()
+				EssaysComment ecommentlike = new EssaysComment()
 				{
-					EssayId = memberId,
+					MemberId = memberId,
 					CommentId = commentId
 				};
 				_db.Add(ecommentlike);
@@ -152,6 +184,16 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 				//TestTest
 			}
 			_db.SaveChanges();
+		}
+
+		//Get會員喜歡的評論
+		public async Task<IEnumerable<ECommentLikesDTO>> GetECommentLikes(int memberId)
+		{
+			IEnumerable<ECommentLikesDTO> data = await _db.EcommentsLikes
+													.Where(e => e.MemberId == memberId)
+													.Select(e => e.ToECommentLikesDTO()).ToListAsync();
+
+			return data;
 		}
 	}
 }

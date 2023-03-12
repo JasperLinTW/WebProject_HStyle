@@ -9,8 +9,7 @@ namespace HStyleApi.Models.EFModels
     {
         public EssaysComment()
         {
-            Ecommentlikes = new HashSet<Ecommentlike>();
-            Members = new HashSet<Member>();
+            EcommentsLikes = new HashSet<EcommentsLike>();
         }
 
         public int CommentId { get; set; }
@@ -22,8 +21,6 @@ namespace HStyleApi.Models.EFModels
 
         public virtual Essay Essay { get; set; }
         public virtual Member Member { get; set; }
-        public virtual ICollection<Ecommentlike> Ecommentlikes { get; set; }
-
-        public virtual ICollection<Member> Members { get; set; }
+        public virtual ICollection<EcommentsLike> EcommentsLikes { get; set; }
     }
 }

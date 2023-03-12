@@ -5,10 +5,10 @@ using System.Collections.Generic;
 
 namespace HStyleApi.Models.EFModels
 {
-    public partial class Ecommentlike
+    public partial class EcommentsLike
     {
-        public int EssayId { get; set; }
         public int CommentId { get; set; }
+        public int MemberId { get; set; }
 
         public virtual EssaysComment Comment { get; set; }
     }

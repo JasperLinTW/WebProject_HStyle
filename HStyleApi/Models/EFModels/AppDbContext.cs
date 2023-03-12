@@ -23,7 +23,7 @@ namespace HStyleApi.Models.EFModels
         public virtual DbSet<CommonQuestion> CommonQuestions { get; set; }
         public virtual DbSet<CustomerQuestion> CustomerQuestions { get; set; }
         public virtual DbSet<EassyFollow> EassyFollows { get; set; }
-        public virtual DbSet<Ecommentlike> Ecommentlikes { get; set; }
+        public virtual DbSet<EcommentsLike> EcommentsLikes { get; set; }
         public virtual DbSet<Elike> Elikes { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<Essay> Essays { get; set; }
@@ -73,7 +73,8 @@ namespace HStyleApi.Models.EFModels
 
                 entity.Property(e => e.DestinationCategory)
                     .HasMaxLength(50)
-                    .HasColumnName("destination_category");
+                    .HasColumnName("destination_category")
+                    .HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.DestinationName)
                     .IsRequired()
@@ -86,9 +87,13 @@ namespace HStyleApi.Models.EFModels
                     .IsUnicode(false)
                     .HasColumnName("destination_THE");
 
+                entity.Property(e => e.Gender).HasDefaultValueSql("((1))");
+
                 entity.Property(e => e.MemberId).HasColumnName("Member_id");
 
-                entity.Property(e => e.Preset).HasColumnName("preset");
+                entity.Property(e => e.Preset)
+                    .HasColumnName("preset")
+                    .HasDefaultValueSql("((1))");
 
                 entity.HasOne(d => d.Member)
                     .WithMany(p => p.Addresses)
@@ -220,24 +225,25 @@ namespace HStyleApi.Models.EFModels
                     .HasConstraintName("FK_dbo.Eassy_Follows_dbo.Members_Member_Id");
             });
 
-            modelBuilder.Entity<Ecommentlike>(entity =>
+            modelBuilder.Entity<EcommentsLike>(entity =>
             {
-                entity.HasKey(e => new { e.EssayId, e.CommentId })
-                    .HasName("PK_dbo.ECommentlikes");
+                entity.HasKey(e => new { e.CommentId, e.MemberId })
+                    .HasName("PK_dbo.EComments_Likes");
 
-                entity.ToTable("ECommentlikes");
+                entity.ToTable("EComments_Likes");
 
                 entity.HasIndex(e => e.CommentId, "IX_Comment_Id");
 
-                entity.Property(e => e.EssayId).HasColumnName("Essay_Id");
+                entity.HasIndex(e => e.MemberId, "IX_Member_Id");
 
                 entity.Property(e => e.CommentId).HasColumnName("Comment_Id");
 
+                entity.Property(e => e.MemberId).HasColumnName("Member_Id");
+
                 entity.HasOne(d => d.Comment)
-                    .WithMany(p => p.Ecommentlikes)
+                    .WithMany(p => p.EcommentsLikes)
                     .HasForeignKey(d => d.CommentId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_dbo.ECommentlikes_dbo.Essays_Comments_Comment_Id");
+                    .HasConstraintName("FK_dbo.EComments_Likes_dbo.Essays_Comments_Comment_Id");
             });
 
             modelBuilder.Entity<Elike>(entity =>
@@ -398,27 +404,6 @@ namespace HStyleApi.Models.EFModels
                     .HasForeignKey(d => d.MemberId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_dbo.Essays_Comments_dbo.Members_Member_Id");
-
-                entity.HasMany(d => d.Members)
-                    .WithMany(p => p.Comments)
-                    .UsingEntity<Dictionary<string, object>>(
-                        "EcommentsLike",
-                        l => l.HasOne<Member>().WithMany().HasForeignKey("MemberId").HasConstraintName("FK_dbo.EComments_Likes_dbo.Members_Member_Id"),
-                        r => r.HasOne<EssaysComment>().WithMany().HasForeignKey("CommentId").HasConstraintName("FK_dbo.EComments_Likes_dbo.Essays_Comments_Comment_Id"),
-                        j =>
-                        {
-                            j.HasKey("CommentId", "MemberId").HasName("PK_dbo.EComments_Likes");
-
-                            j.ToTable("EComments_Likes");
-
-                            j.HasIndex(new[] { "CommentId" }, "IX_Comment_Id");
-
-                            j.HasIndex(new[] { "MemberId" }, "IX_Member_Id");
-
-                            j.IndexerProperty<int>("CommentId").HasColumnName("Comment_Id");
-
-                            j.IndexerProperty<int>("MemberId").HasColumnName("Member_Id");
-                        });
             });
 
             modelBuilder.Entity<HActivity>(entity =>

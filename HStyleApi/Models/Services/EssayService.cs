@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore.Query.Internal;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
+using static HStyleApi.Models.DTOs.ECommentLikesDTO;
 
 namespace HStyleApi.Models.Services
 {
@@ -29,7 +30,17 @@ namespace HStyleApi.Models.Services
 			return await data;
 		}
 
-
+		public async Task<IEnumerable<ProductDto>> GetRecommendationProduct(int id)
+		{
+			var data = _essayReposity.GetRecommendationProduct(id);
+			return await data;
+		} 
+		
+		public async Task<IEnumerable<EssayDTO>> GetNews()
+        {
+            var data = _essayReposity.GetNews();
+            return await data;
+        }
 		public async Task<IEnumerable<EssayLikeDTO>> GetlikeEssays(int MemberId)
 		{
 			var data = _essayReposity.GetlikeEssays(MemberId);
@@ -42,11 +53,7 @@ namespace HStyleApi.Models.Services
 
 		}
 
-        public async Task<IEnumerable<EssayDTO>> GetNews()
-        {
-            var data = _essayReposity.GetNews();
-            return await data;
-        }
+      
 
         public async Task<IEnumerable<EssayCommentDTO>> GetComments(int essayId)
 		{
@@ -62,6 +69,12 @@ namespace HStyleApi.Models.Services
 		public void PostCommentLike(int memberId, int essayId)
 		{
 			_essayReposity.PostCommentLike(memberId, essayId);
+		}
+
+		public async Task<IEnumerable<ECommentLikesDTO>> GetECommentLikes(int memberId)
+		{
+			var data = await _essayReposity.GetECommentLikes(memberId);
+			return data;
 		}
 	}
 }

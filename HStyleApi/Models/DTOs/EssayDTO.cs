@@ -1,4 +1,5 @@
 ﻿using HStyleApi.Models.EFModels;
+using System.Drawing;
 
 namespace HStyleApi.Models.DTOs
 {
@@ -13,6 +14,8 @@ namespace HStyleApi.Models.DTOs
 		public DateTime? UpLoad { get; set; }
 		public DateTime? Removed { get; set; }
 		public int CategoryId { get; set; }
+		
+		public DateTime? Pon { get; set; }
 
 		public string CategoryName { get; set; }
 		public IEnumerable<string> Imgs { get; set; }
@@ -54,7 +57,8 @@ namespace HStyleApi.Models.DTOs
 				Tags = source.Tags.Select(x => x.TagName),
 				Like = source.Elikes.GroupBy(x => x.EssayId).Count(),
 				CategoryName = source.Category.CategoryName,
-				MemberId = source.Elikes.Select(x => x.MemberId)
+				MemberId = source.Elikes.Select(x => x.MemberId),
+			
 			};
 		}
 	}

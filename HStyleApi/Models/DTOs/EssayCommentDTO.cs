@@ -7,6 +7,7 @@ namespace HStyleApi.Models.DTOs
 	{
 		public int CommentId { get; set; }
 		public int MemberId { get; set; }
+		public string MemberName { get; set; }
 		public int EssayId { get; set; }
 		public string Ecomment { get; set; }
 		public DateTime Etime { get; set; }
@@ -14,7 +15,7 @@ namespace HStyleApi.Models.DTOs
 
 		public virtual Essay Essay { get; set; }
 		public virtual Member Member { get; set; }
-		public virtual ICollection<Ecommentlike> Ecommentlikes { get; set; }
+		//public virtual ICollection<Ecommentlike> Ecommentlikes { get; set; }
 
 		public virtual ICollection<Member> Members { get; set; }
 	}
@@ -30,6 +31,7 @@ namespace HStyleApi.Models.DTOs
 				Ecomment = source.Ecomment,
 				Etime = source.Etime,
 				Elike = source.Elike,
+				MemberName = source.Member.Name,
 
 			};
 		}

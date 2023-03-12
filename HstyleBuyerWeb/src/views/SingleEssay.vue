@@ -1,4 +1,15 @@
 <template>
+ <div class="container">
+    <div class="row border-bottom mb-5 mt-4 pb-2 d-flex justify-content-evenly">
+      <div class="col-md-1"><router-link to="/Blog/EssaysBlog" class="nav-link targetAll btn-underline">文章</router-link>
+      </div>
+      <div class="col-md-1"> <router-link to="/Blog/VideoBlog" class="nav-link targetAll btn-underline">影音</router-link>
+      </div>
+    </div>
+  </div>
+
+
+
   <div class="container mb-5">
     <div class="column">
       <img :src="essays.imgs === undefined ? '' : essays.imgs[0]" alt="Image" />
@@ -11,7 +22,7 @@
     <div class="Who">By {{ essays.influencerName }}</div>
     <div class="Time">{{ formatDate(essays.uplodTime) }}</div>
     <hr />
-    <div>
+    <!-- <div>
       <div class="container-text mx-auto h-100">
         {{
           decodeURI(essays.econtent)
@@ -19,8 +30,85 @@
             .slice(0, 170)
         }}
       </div>
+    </div> -->
+    <div>
+      <div
+        v-html="decodeURI(essays.econtent)"
+        class="container-text mx-auto h-100"
+      ></div>
     </div>
   </div>
+
+  <!-- <div v-if="showComment" class="col-md-12 border-top pt-3 mb-big">
+        <PComment v-if="comment.length > 0" v-for="item in comment" :data="item"></PComment>
+        <div v-else class="pt-4">- 此無評論 -</div>
+      </div>
+      <div v-else class="col-md-12 border-top pt-5 px-6  mb-big">
+        {{ product.description }}
+      </div> -->
+
+  <form action="">
+    <div class="h500px">
+      <!-- <div ciass="allComment">
+        <div v-for="comment in essayComments" :key="comment.commentId">
+          <label>{{ comment.memberName }}　說：</label>
+          <div>
+            <label>{{ comment.ecomment }}</label>
+          </div>
+        </div>
+      </div> -->
+      <div class="col-md-12 line">
+        <span class="px-5">留言:</span>
+        <input type="text" v-model="comment" />
+        <button @click.prevent="postComment()" type="submit">送出</button>
+      </div>
+      <!-- 所有評論 -->
+      <form action="">
+        <div v-for="comment in essayComments" :key="comment.commentId">
+          <div class="d-flex justify-content-start">
+            <label>{{ comment.memberName }}　說：</label>
+            <div>
+              <label>{{ comment.ecomment }}</label>
+            </div>
+          </div>
+          <div class="">
+            <label>
+              <span>留言按讚 </span>
+              <span
+                v-if="!commentIsClicked"
+                @click="postCommentLike(comment.id)"
+                ><i class="fa-regular fa-heart icon-hover fz-18"></i
+              ></span>
+              <span v-else @click="postCommentLike(comment.id)"
+                ><i class="fa-solid fa-heart fz-18"></i
+              ></span>
+            </label>
+          </div>
+          <div class="d-flex justify-content-end">
+            <!-- <label>{{ comment.createdTime.slice(0, 10) }}</label> -->
+            <!-- 按讚留言 -->
+          </div>
+        </div>
+      </form>
+
+      <div class="col-md-12">
+        <div class="row">
+          <RecommendCard v-for="item in rec" :data="item"></RecommendCard>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <!-- <div class="h500px">
+        <div class="col-md-12 line">
+          <span class="px-5">猜你喜歡</span>
+        </div>
+        <div class="col-md-12">
+          <div class="row">
+            <RecommendCard v-for="item in rec" :data="item"></RecommendCard>
+          </div>
+        </div> 
+      </div> -->
 </template>
 
 <script setup>
@@ -45,8 +133,26 @@ const getEssayInfo = async () => {
       console.log(error);
     });
 };
-onMounted(() => {
-  getEssayInfo();
+
+const essayComments = ref([]);
+//得到評論
+const getComments = async () => {
+  await axios
+    .get(`https://localhost:7243/api/Essay/Comments/${route.params.id}`)
+    .then((response) => {
+      essayComments.value = response.data;
+      console.log("comment");
+      console.log(essayComments.value);
+      //commentIsClicked.value = likeCommentId.value.includes(parseInt(commentId));
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+onMounted(async () => {
+  await getEssayInfo();
+  await getComments();
 });
 
 //收藏
@@ -79,6 +185,44 @@ const formatDate = (dateString) => {
 </script>
 
 <style scoped>
+.h500px {
+  height: 500px;
+  margin-top: 50px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+
+.line {
+  /* 一條直綫 */
+  /* border-top: 1px solid black; */
+  margin-bottom: 20px solid black;
+  padding-top: 10px;
+}
+
+.line span {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.line {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.line:before,
+.line:after {
+  content: "";
+  flex: 1;
+  border-top: 1px solid black;
+  margin: 0 20px;
+}
+
+.allComment {
+  z-index: 99; /* 將z-index設為1 */
+  position: absolute;
+}
+
 .container {
   align-items: center;
   display: flex;
@@ -180,5 +324,40 @@ img {
   background-color: grey;
   padding: 5px;
   border-radius: 50%;
+}
+
+
+.btn-underline::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #000000;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.btn-underline:hover::after {
+  transform: scaleX(1);
+}
+
+.btn-underline {
+  position: relative;
+  padding: 0;
+  border: none;
+  background: none;
+  text-decoration: none;
+  font-size: 12pt;
+  color: #333;
+  cursor: pointer;
+}
+
+.btn-underline:hover {
+  color: #000000;
+}
+a {
+  text-decoration: none;
 }
 </style>
