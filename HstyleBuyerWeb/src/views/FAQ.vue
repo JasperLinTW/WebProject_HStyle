@@ -12,7 +12,7 @@
       </form>
    </div>
    <!-- 呈現問題 -->
-   <div class="container-sm">
+   <div class="container-sm" style="min-height: 800px">
       <!-- 搜尋的結果 -->
       <div v-if="searchResult !== null">
          <div v-for="question in searchResult" :key="question.id">
@@ -89,10 +89,22 @@
 
    <!-- 聊天室 -->
    <div>
-      <!-- <button id="chat-btn" @click="toggleChat" class="btn btn-warning">聊天室</button> -->
-      <button class="btn btn-warning" @click="toggleChat">{{ showChat ? "關閉聊天室" : "聊天室" }}</button>
-      <component v-if="showChat" :is="chatComponent"><ChatRoom /></component>
+      <div class="chat-button" @click="toggleChat">
+         <span>{{ showChat ? "關閉聊天室" : "聊天室" }}</span>
+      </div>
+      <div class="chat-window" :class="{ show: showChat }">
+         <div class="chat-header">
+            <h6>聊天室</h6>
+            <button class="close-button" @click="toggleChat">x</button>
+         </div>
+         <div class="chat-content">
+            <ChatRoom v-if="showChat" />
+         </div>
+      </div>
    </div>
+   
+   <!-- 客服聊天室 -->
+   <router-link to="/ServerChatRoom" class="text-decoration-none text-dark" style="display: none">客服回覆</router-link>
 
    <CustmorQForm />
    <MemberQForm />
@@ -205,7 +217,7 @@ function toggleChat() {
    showChat.value = !showChat.value;
    if (showChat.value) {
       // 開啟聊天室時建立連線
-      chatSocket.value =  new WebSocket("wss://localhost:7243/ws");
+      chatSocket.value = new WebSocket("wss://localhost:7243/ws");
    } else {
       // 關閉聊天室時中斷連線
       chatSocket.value.close();
@@ -256,5 +268,62 @@ hr {
 #qTitle:hover {
    background-color: lightgray;
    cursor: pointer;
+}
+/* 聊天室的樣式 */
+.chat-button {
+   position: fixed;
+   bottom: 20px;
+   right: 20px;
+   z-index: 9999;
+   background-color: #46a3ff;
+   color: #fff;
+   padding: 10px;
+   border-radius: 5px 0 0 5px;
+   cursor: pointer;
+}
+.chat-window {
+   position: fixed;
+   bottom: 0;
+   right: 0;
+   z-index: 9998;
+   width: 300px;
+   height: 400px;
+   border-radius: 5px 0 0 0;
+   background-color: #fff;
+   border: 1px solid #ccc;
+   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+   transition: transform 0.3s ease;
+   overflow: hidden;
+   display: none;
+}
+.chat-window.show {
+   display: block;
+}
+.chat-header {
+   background-color: #46a3ff;
+   color: #fff;
+   padding: 10px;
+   border-radius: 5px 0 0 0;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+}
+.close-button {
+   background-color: transparent;
+   color: #fff;
+   border: none;
+   font-size: 20px;
+   cursor: pointer;
+}
+.chat-content {
+   height: calc(100% - 50px);
+   overflow-y: auto;
+   padding: 10px;
+}
+.chat-input {
+   position: absolute;
+   bottom: 0;
+   width: 100%;
+   padding: 10px;
 }
 </style>
