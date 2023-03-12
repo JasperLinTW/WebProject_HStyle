@@ -34,7 +34,7 @@
             <div class="col-md-1 text-end">
                 <i v-if="!data.isClicked" class="fa-regular fa-thumbs-up fz-icon" @click="helpfulComment()"></i>
                 <i v-else="data.isClicked" class="fa-solid fa-thumbs-up fz-icon" @click="helpfulComment()"></i>
-                <span class="ps-1"></span>
+                <span class="ps-1">{{ num }}</span>
             </div>
         </div>
     </div>
@@ -42,6 +42,8 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import axios from 'axios';
+import { eventBus } from "../mybus";
+
 
 //照片放大套件
 import VueEasyLightbox from 'vue-easy-lightbox'
@@ -56,7 +58,13 @@ const helpfulComment = async () => {
             props.data.isClicked = !props.data.isClicked;
             eventBus.emit("addhelpfulComments");
         })
-        .catch(error => { console.log(error); });
+        .catch(
+            error => {
+                console.log(error);
+                if (error.response.status === 401) {
+                    window.location.href = "http://localhost:5173/login";
+                }
+            });
 }
 
 
@@ -87,10 +95,22 @@ const onHide = () => {
     visibleRef.value = false;
 }
 
+const num = ref();
+const allHelpfulComment = async () => {
+    await axios.get(`https://localhost:7243/api/Products/AllhelpfulComments?commentId=${props.data.commentId}`, {},
+        { withCredentials: true })
+        .then(response => {
+            num.value = response.data.length;
+        })
+        .catch(error => { console.log(error); });
+}
 
+eventBus.on("addhelpfulComments", () => {
+    allHelpfulComment();
+});
 
 onMounted(() => {
-
+    allHelpfulComment();
 });
 
 

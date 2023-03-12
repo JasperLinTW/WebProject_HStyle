@@ -357,5 +357,15 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 
 			return result;
 		}
+
+		public IEnumerable<HelpfulDTO> AllhelpfulComments(int commentId)
+		{
+			IEnumerable<PcommentsHelpful> data = _db.PcommentsHelpfuls.Where(x => x.CommentId == commentId);
+
+			var result = data.Select(x => x.ToDto());
+
+
+			return result;
+		}
 	}
 }

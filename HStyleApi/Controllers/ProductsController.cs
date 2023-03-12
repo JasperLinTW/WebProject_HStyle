@@ -306,6 +306,25 @@ namespace HStyleApi.Controllers
 			return Ok(data);
 		}
 
+		[HttpGet("AllhelpfulComments")]
+		public ActionResult<HelpfulDTO> AllhelpfulComments(int commentId)
+		{
+			IEnumerable<HelpfulDTO> data;
+
+			try
+			{
+				data = _Service.AllhelpfulComments(commentId);
+			}
+			catch (Exception ex)
+			{
+
+				return BadRequest(ex.Message);
+			}
+
+			return Ok(data);
+		}
+
+
 		//所有評論瀏覽
 		[HttpGet("comments/{product_id}")]
 		public ActionResult<PCommentDTO> LoadComments(int product_id)

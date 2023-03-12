@@ -207,6 +207,9 @@ const likesProduct = async () => {
     })
     .catch((error) => {
       console.log(error);
+      if (error.response.status === 401) {
+        router.push("/login");
+      }
     });
 };
 
@@ -255,6 +258,8 @@ const loadHelpfulComments = async () => {
 eventBus.on("addhelpfulComments", () => {
   loadHelpfulComments();
 });
+
+
 
 onMounted(() => {
   likesProducts();

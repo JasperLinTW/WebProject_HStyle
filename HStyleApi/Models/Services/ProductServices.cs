@@ -256,5 +256,11 @@ namespace HStyleApi.Models.Services
 			var data = _repo.LoadHelpfulComment(member_id);
 			return data;
 		}
+
+		public IEnumerable<HelpfulDTO> AllhelpfulComments(int commentId)
+		{
+			var data = _repo.AllhelpfulComments(commentId);
+			return data;
+		}
 	}
 }
