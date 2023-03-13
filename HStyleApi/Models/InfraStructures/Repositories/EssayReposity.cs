@@ -171,8 +171,8 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 		}
 		public void PostCommentLike(int memberId, int commentId)
 		{
-			var data = _db.EssaysComments.SingleOrDefault(e => e.MemberId == memberId);
-			if (data == null)
+			var data = _db.EssaysComments.SingleOrDefault(e => e.CommentId == commentId);
+			if (data != null)
 			{
 				EssaysComment ecommentlike = new EssaysComment()
 				{
@@ -181,7 +181,6 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 				};
 				_db.Add(ecommentlike);
 				data.Elike +=1;
-				//TestTest
 			}
 			_db.SaveChanges();
 		}

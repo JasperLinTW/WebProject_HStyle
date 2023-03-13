@@ -129,7 +129,7 @@ namespace HStyleApi.Controllers
 		//POST api/<VideoController>/Comment/5
 		//POST 評論
 		[Authorize]
-		[HttpPost("Comment/{id}")]
+		[HttpPost("Comment/{essayId}")]
 		public void CreateComment([FromBody] CommentDTO comment, int essayId)
 		{
 			var memberId = _memberId;
