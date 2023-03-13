@@ -151,10 +151,10 @@ const getComments = async () => {
       .get(`https://localhost:7243/api/Video/Comments/${route.params.id}`)
       .then((response) => {
          videoComments.value = response.data;
-         response.data.map((v)=>{
-            v.commentIsClicked=likeCommentId.value.includes(v.commentId);
+         commentIsClicked.value=response.data.map((v)=>{
+            v.commentIsClicked=likeCommentId.value.includes(parseInt(v.commentId));
          });
-         console.log(v.commentIsClicked);
+         console.log(commentIsClicked.value);
       })
       .catch((error) => {
          console.log(error);

@@ -84,67 +84,89 @@
                                       </div> -->
 
     <div class="container-essay" ref="container">
-      <div class="col-4 column" ref="firstColumn">
-        <img src="../assets/image/jisoo.jpg" alt="Image" />
+      <div class="col-4 column card" ref="firstColumn">
+        <a :href="`http://localhost:5173/EssaysBlog/${essays.essayId}`">
+          <img :src="essays[0].imgs" alt="Image" />
+          <div class="card-overlay">
+            <h5>{{essays[0].etitle}}</h5>
+          </div>
+        </a>
       </div>
       <div class="col-4 column" ref="secondColumn">
         <div class="container">
           <div class="row mb-3">
             <div class="col mb-3">
-              <div class="custom-card">
-                <img src="https://via.placeholder.com/150" class="card-img-top" alt="..." />
-                <div class="card-body">
-                  <h5 class="card-title1">Card title 1</h5>
-                  <p class="card-text">
-                    11111111This is a wider card with supporting text below as a
-                    natural lead-in to additional content. This content is a
-                    little bit longer.
-                  </p>
-                  <small class="text-muted">Last updated 3 mins ago</small>
+                <div class="custom-card">
+                  <a :href="`http://localhost:5173/EssaysBlog/${essays.essayId}`">
+                  <img :src="essays[3].imgs" class="card-img-top" alt="..." />
+                  <div class="card-body">
+                    <h5 class="card-title1">{{essays[3].etitle}}</h5>
+                    <p class="card-text">
+                      <!-- v-html="decodeURI(essays.econtent)"
+                      11111111This is a wider card with supporting text below as a
+                      natural lead-in to additional content. This content is a
+                      little bit longer. -->
+                    </p>
+                    <!-- <small class="text-muted">Last updated 3 mins ago</small> -->
+                  </div>
+                  </a>
                 </div>
-              </div>
             </div>
           </div>
 
           <div class="row mt-3">
             <div class="col mb-3">
               <div class="custom-card">
-                <img src="https://via.placeholder.com/150" class="card-img-top" alt="..." />
+                <a :href="`http://localhost:5173/VideoBlog/${videos.id}`">
+                <img src="../assets/image/gigi.webp" class="card-img-top" alt="..." />
                 <div class="card-body">
-                  <h5 class="card-title1">Card title 2</h5>
+                  <h5 class="card-title1">{{videos[3].title}}</h5>
                   <p class="card-text">
-                    2222222222This is a wider card with supporting text below as
+                    <!-- 2222222222This is a wider card with supporting text below as
                     a natural lead-in to additional content. This content is a
-                    little bit longer.
+                    little bit longer. -->
                   </p>
-                  <small class="text-muted">Last updated 3 mins ago</small>
+                  <!-- <small class="text-muted">Last updated 3 mins ago</small> -->
                 </div>
+              </a>
               </div>
             </div>
           </div>
 
           <div class="row mt-3">
             <div class="col mb-3">
+              <a :href="`http://localhost:5173/EssaysBlog/${essays.essayId}`">
               <div class="custom-card">
-                <img src="https://via.placeholder.com/150" class="card-img-top" alt="..." />
+                <img :src="essays[4].imgs" class="card-img-top" alt="..." />
                 <div class="card-body">
-                  <h5 class="card-title1">Card title 3</h5>
+                  <h5 class="card-title1">{{essays[4].etitle}}</h5>
                   <p class="card-text">
-                    333333333333This is a wider card with supporting text below
+                    <!-- 333333333333This is a wider card with supporting text below
                     as a natural lead-in to additional content. This content is
-                    a little bit longer.
+                    a little bit longer. -->
                   </p>
-                  <small class="text-muted">Last updated 3 mins ago</small>
+                  <!-- <small class="text-muted">Last updated 3 mins ago</small> -->
                 </div>
               </div>
+            </a>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-4 column" ref="thirdColumn">
-        <img src="../assets/image/jisoo.jpg" alt="Image" />
-        <img src="../assets/image/jisoo.jpg" alt="Image" />
-        <img src="../assets/image/jisoo.jpg" alt="Image" />
+      <!-- 原本class有加column card 但會影響link所以拿掉 -->
+      <div class="col-4 column card" ref="thirdColumn">
+        <a class="" :href="`http://localhost:5173/EssaysBlog/${essays[5].essayId}`"> 
+          <img :src="essays[5].imgs" alt="Image" />
+        </a>
+        <a :href="`http://localhost:5173/VideoBlog/${videos[4].id}`">
+          <img :src="videos[4].image" alt="Image" />
+        </a>
+        <a :href="`http://localhost:5173/EssaysBlog/${essays[6].essayId}`">
+          <img :src="essays[6].imgs" alt="Image" />
+        </a>
+        <a :href="`http://localhost:5173/VideoBlog/${videos[5].id}`">
+          <img :src="videos[5].image" alt="Image" />
+        </a>
       </div>
     </div>
 
@@ -159,8 +181,8 @@
     </div>
     <div class="container">
       <div class="row">
-        <EssayCard v-for="item in essays.slice(3,5)" :data="item"></EssayCard>
-        <VideoCard v-for="item in videos.slice(3,5)" :data="item"></VideoCard>
+        <EssayCard v-for="item in essays.slice(7,9)" :data="item"></EssayCard>
+        <VideoCard v-for="item in videos.slice(6,8)" :data="item"></VideoCard>
       </div>
         <!-- <EssayCard v-for="item in newessays.slice(0, 2)" :data="item"></EssayCard> -->
     </div>
@@ -171,7 +193,10 @@
 import EssayCard from "../components/EssayCard.vue";
 import VideoCard from "../components/VideoCard.vue";
 import { ref, onMounted } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
+const router = useRouter();
+const route = useRoute();
 const loaded = ref(false);
 const essays = ref([]);
 const isLoaded=ref(false);
@@ -308,6 +333,51 @@ const setup = () => {
 </script>
 
 <style scoped>
+.card {
+    position: relative;
+    width: 350px;
+    height: 700px;
+    overflow: hidden;
+    border: none;
+    padding-bottom: 2%;
+}
+
+.card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.3s ease;
+}
+
+.card:hover img {
+    filter: brightness(70%);
+}
+
+.card-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #fff;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.card:hover .card-overlay {
+    opacity: 1;
+}
+
+.card-overlay h5 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.card-overlay p {
+    font-size: 1rem;
+    margin: 0;
+}
+
 .wrap {
   width: 1300px;
   height: 400px;
