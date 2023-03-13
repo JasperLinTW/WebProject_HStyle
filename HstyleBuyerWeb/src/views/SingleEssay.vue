@@ -8,8 +8,6 @@
     </div>
   </div>
 
-
-
   <div class="container mb-5">
     <div class="column">
       <img :src="essays.imgs === undefined ? '' : essays.imgs[0]" alt="Image" />

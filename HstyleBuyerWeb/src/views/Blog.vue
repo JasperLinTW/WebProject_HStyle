@@ -9,26 +9,26 @@
     </div>
   </div>
 
-  <div class="container">
+  <div class="container"  v-if="isLoaded">
     <!-- 圖片倫播 -->
     <div class="wrap">
       <a class="slide-arrow" id="slidePrev"><i class="fa-solid fa-chevron-left"></i></a>
       <a class="slide-arrow right" id="slideNext"><i class="fa-solid fa-chevron-right"></i></a>
       <ul class="slide-img" id="slideImg">
-        <li><img src="../assets/image/chanel1.jpg" alt="" /></li>
-        <li><img src="../assets/image/chanel2.jpg" alt="" /></li>
-        <li><img src="../assets/image/chanel3.jpg" alt="" /></li>
-        <li><img src="../assets/image/chanel4.jpg" alt="" /></li>
-        <li><img src="../assets/image/chanel5.jpg" alt="" /></li>
+        <li><img src="../assets/image/chanel1.jpg" alt="" /><figcaption>1111</figcaption></li>
+        <li><img src="../assets/image/chanel2.jpg" alt="" /><figcaption>2222</figcaption></li>
+        <li><img src="../assets/image/chanel3.jpg" alt="" /><figcaption>3333</figcaption></li>
+        <li><img src="../assets/image/chanel4.jpg" alt="" /><figcaption>1111</figcaption></li>
+        <li><img src="../assets/image/chanel5.jpg" alt="" /><figcaption>1111</figcaption></li>
       </ul>
-      <div class="card-img-overlay">
+      <!-- <div class="card-img-overlay">
         <div class="card-title">
           <h5 class="">
             This is a wider card with supporting text below as a natural lead-in
             to additional content. This content is a little bit longer.
           </h5>
         </div>
-      </div>
+      </div> -->
       <ul class="pages">
         <li></li>
         <li></li>
@@ -38,17 +38,16 @@
       </ul>
     </div>
     <!-- 圖片倫播 end -->
-
-    <div class="">
+    <div class="" >
       <div class="vegas-slide-container">
         <div id="example"></div>
       </div>
 
       <hr />
-      <p class="lan">最新消息</p>
+      <p class="lan">熱門推薦</p>
       <hr />
     </div>
-    <div class="container">
+    <div  class="container">
       <div class="row">
         <EssayCard v-for="item in essays.slice(0, 2)" :data="item"></EssayCard>
       <!-- </div>
@@ -160,12 +159,10 @@
     </div>
     <div class="container">
       <div class="row">
-        <EssayCard v-for="item in essays.slice(0, 2)" :data="item"></EssayCard>
+        <EssayCard v-for="item in essays.slice(3,5)" :data="item"></EssayCard>
+        <VideoCard v-for="item in videos.slice(3,5)" :data="item"></VideoCard>
       </div>
-    <!-- <div class="row">
-          <VideoCard v-for="item in videos.slice(0,3)" :data="item"></VideoCard>
-        </div>
-                                            <EssayCard v-for="item in newessays.slice(0, 2)" :data="item"></EssayCard> -->
+        <!-- <EssayCard v-for="item in newessays.slice(0, 2)" :data="item"></EssayCard> -->
     </div>
   </div>
 </template>
@@ -177,13 +174,14 @@ import { ref, onMounted } from "vue";
 import axios from "axios";
 const loaded = ref(false);
 const essays = ref([]);
+const isLoaded=ref(false);
 const getEssayInfo = async () => {
   await axios
     .get("https://localhost:7243/api/Essay")
     .then((response) => {
       essays.value = response.data;
+      isLoaded.value = true;
       // console.log(essays.value);
-      loaded.value = true;
     })
     .catch((error) => {
       console.log(error);
@@ -197,7 +195,7 @@ const getVideos = async () => {
     .then(response => {
       videos.value = response.data;
       // console.log(videos.value);
-      loaded.value = true;
+     
     })
     .catch(error => { console.log(error); });
 }
@@ -608,4 +606,10 @@ a {
 
 .btn-underline:hover {
   color: #000000;
-}</style>
+}
+
+figcaption{
+  z-index: 99;
+  
+}
+</style>

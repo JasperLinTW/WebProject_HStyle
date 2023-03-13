@@ -1,33 +1,35 @@
 <template>
     <div class="col-lg-3">
-        <div class="card-card-deck">
+        <div class="card card-deck">
             <router-link :to="'/VideoBlog/' + data.id" class="text-dark text-decoration-none">
                 <div class="card border-0 card1">
-                    <div class="card-img w-100 h200px rounded overflow-hidden">
+                    <div class="img-sz w-100 h200px rounded overflow-hidden">
                         <img class="card-img-top" :src="data.image" alt="VideoImage">
                     </div>
-                    <div class="card-header d-flex bg-white border-bottom-0">
-                        <div class="">
-                            <div class="badge bg-secondary opacity-50 me-1" v-for="tag in data.tags">
-                                <span class="tag">#{{ tag }}</span>
+                    <div class="card-body">
+                        <div class="d-flex bg-white border-bottom-0">
+                            <div class="">
+                                <div class="badge bg-secondary opacity-50 me-1" v-for="tag in data.tags">
+                                    <span class="tag">#{{ tag }}</span>
+                                </div>
+                                <p class="card-title title">{{ data.title }}</p>
                             </div>
-                            <p class="card-title title">{{ data.title }}</p>
                         </div>
-                    </div>
-                    <div class="container">
-                        <div class="influence">
-                            <div>
-                                <!-- 宣傳 -->
-                                <label><i class="fa-solid fa-eye fz-16"></i> {{ data.views }}</label>
-                                <label class="ms-1"><i class="fa-solid fa-heart fz-16"></i> {{ data.likes }}</label>
-                            </div>
-                            <div>
-                                <!-- 愛心 -->
-                                <span v-if="!data.isClicked" @click.prevent @click="postVideoLike(data)"><i
-                                        class="fa-regular fa-heart fz-18"></i></span>
-                                <span v-else @click.prevent @click="postVideoLike(data)"><i
-                                        class="fa-solid fa-heart fz-18"></i></span>
-                                <!-- <div @click.stop="" class="likeIcon d-flex flex-row-reverse"> -->
+                        <div class="container">
+                            <div class="influence d-flex align-items-end">
+                                <div>
+                                    <!-- 宣傳 -->
+                                    <label><i class="fa-solid fa-eye fz-16"></i> {{ data.views }}</label>
+                                    <label class="ms-1"><i class="fa-solid fa-heart fz-16"></i> {{ data.likes }}</label>
+                                </div>
+                                <div>
+                                    <!-- 愛心 -->
+                                    <span v-if="!data.isClicked" @click.prevent @click="postVideoLike(data)"><i
+                                            class="fa-regular fa-heart fz-18"></i></span>
+                                    <span v-else @click.prevent @click="postVideoLike(data)"><i
+                                            class="fa-solid fa-heart fz-18"></i></span>
+                                    <!-- <div @click.stop="" class="likeIcon d-flex flex-row-reverse"> -->
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -62,7 +64,6 @@ const getLikesVideos = async () => {
         }
     });
 };
-
 const postVideoLike = async (data) => {
     console.log(props.data.id);
     await axios
@@ -89,7 +90,8 @@ eventBus.on("postVideoLike", () => {
 
 <style scoped>
 .card{
-    height: 300px;
+    height: 350px;
+    border: none;
 }
 
 .likeIcon {
@@ -99,9 +101,22 @@ eventBus.on("postVideoLike", () => {
 }
 
 .img {
-    width: 100%;
-    height: 100%;
+    width: 90%;
+    /* height: 100%; */
 }
+
+.img-sz {
+  width: 450px;
+  height: 300px;
+  overflow: hidden;
+}
+
+.img-sz img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 
 .title {
     color: black;
@@ -152,5 +167,9 @@ a {
 .fz-18 {
     font-size: 20px;
     cursor: pointer;
+}
+
+.card-body{
+    height: 150px;
 }
 </style>
