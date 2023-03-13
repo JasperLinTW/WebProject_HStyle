@@ -26,6 +26,7 @@
   
 <script setup>
 import axios from 'axios';
+import { eventBus } from "../mybus";
 
 const logout = () => {
     axios.post('https://localhost:7243/api/Member/LogOut', {}, {
@@ -39,6 +40,11 @@ const logout = () => {
             console.error(error);
         });
 };
+
+eventBus.on("ResetPassword", () => {
+    logout();
+
+});
 </script>
   
 <style scoped>

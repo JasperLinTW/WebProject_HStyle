@@ -3,10 +3,10 @@
     <div class="row justify-content-center">
       <div class="col-md-6">
         <div class="card mt-6">
-          <div class="card-header text-center fw-bold">修改密碼成功</div>
-          <div class="card-body text-center mb-4">已發送新密碼，請至修改密碼修改</div>
+          <div class="card-header text-center fw-bold">信箱驗證成功</div>
+          <div class="card-body text-center mb-4"></div>
           <div class="text-center mx-5">
-            <router-link class="returnbtn" to="/products/all">點此繼續購物</router-link>
+            <router-link class="returnbtn" to="/login">點此繼續使用登入</router-link>
           </div>
         </div>
       </div>
@@ -14,7 +14,33 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import axios from "axios";
+import { onMounted } from "vue";
+
+const vaildate=()=>{
+  var url=window.location.href 
+  var lastSlashIndex=url.lastIndexOf('/')
+  const confirmCode= url.substring(lastSlashIndex + 1)
+  console.log(confirmCode);
+  url = url.slice(0, lastSlashIndex);
+  lastSlashIndex = url.lastIndexOf('/')
+  const account=url.substring(lastSlashIndex + 1)
+  console.log(account);
+ axios.get(`https://localhost:7243/api/Member/EmailConfirm?account=${account}&confirmCode=${confirmCode}`, { withCredentials: true, })
+ .then(response => {
+  // if(response.data==="驗證成功"){
+  //       eventBus.emit("ResetPassword"); 
+  //       window.location="http://localhost:5173/"}
+  alert(response.data)
+        })
+        .catch(error => { console.log(error); });
+
+}
+
+onMounted(()=>{
+  vaildate();
+});
 </script>
 
 <style scoped>

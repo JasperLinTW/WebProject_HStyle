@@ -88,34 +88,6 @@ namespace HStyleApi.Controllers
 
         }
 
-        //[HttpPut("{id}")] //edit
-        //public async Task<IActionResult> PutMember(int id, Member member)
-        //{
-        //    if (id != member.Id)
-        //    {
-        //        return BadRequest();
-        //    }
-
-        //    _context.Entry(member).State = EntityState.Modified;
-
-        //    try
-        //    {
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!MemberExists(id))  //這條改下
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-
-        //    return NoContent();
-        //}
 
         [HttpPost("LogIn")]
         [AllowAnonymous]
@@ -309,7 +281,7 @@ namespace HStyleApi.Controllers
             var message = new MimeMessage();
 
             // 添加寄件者
-            message.From.Add(new MailboxAddress("PawPaw", "pawpawpetSite@gmail.com"));
+            message.From.Add(new MailboxAddress("H2StyleStore", "pawpawpetSite@gmail.com"));
 
             // 添加收件者
             message.To.Add(new MailboxAddress("New Member", $"{member.Email}"));
@@ -320,14 +292,18 @@ namespace HStyleApi.Controllers
             // 使用 BodyBuilder 建立郵件內容
             var bodyBuilder = new BodyBuilder();
 
-            string result = Request.Scheme + "://" + Request.Host + $"/api/Member/EmailConfirm/?account={member.Account}&confirmCode={member.MailCode}";
+            string result = $"http://localhost:5173/MemberForgetPasswordEmail/{member.Account}/{member.MailCode}";
+
+            //string result = Request.Scheme + "://" + Request.Host + $"/api/Member/EmailConfirm/?account={member.Account}&confirmCode={member.MailCode}";
+
+            //string result = "https://localhost:44313/Images/MemberImage/456.jpg";
 
             // 設定 HTML 內容
             bodyBuilder.HtmlBody = $"<a href=\"{result}\">點此連結驗證</a>";
 
             // 設定郵件內容
             message.Body = bodyBuilder.ToMessageBody();
-
+            
             using (var client = new SmtpClient())
             {
                 client.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
@@ -337,6 +313,7 @@ namespace HStyleApi.Controllers
             }
             return "成功";
         }
+
         [HttpGet("EmailConfirm")]
         public string EmailConfirm(string account, string confirmCode)
         {
@@ -346,11 +323,10 @@ namespace HStyleApi.Controllers
             {
                 return "認證失敗";
             }
-            else if (string.Compare(confirmCode, emailmember.MailCode) != 0) { return "認證失敗"; }
+            else if (string.Compare(confirmCode, emailmember.MailCode) != 0) { return "認證失敗!"; }
             else
             {
                 emailmember.MailVerify = true;
-
                 emailmember.MailCode = null;
                 _context.SaveChanges();
                 return "驗證成功";
@@ -380,20 +356,32 @@ namespace HStyleApi.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost("ResetPassword")]
-        public string ResetPassword(string account, string oldPassword, string newPassword)
+        //public string ResetPassword([FromBody] string account, [FromBody] string oldPassword, [FromBody] string newPassword, [FromBody] string newPassword2)
+        public string ResetPassword(string oldPassword,  string newPassword,  string newPassword2)
         {
+       
+            var member = _context.Members.SingleOrDefault(x => x.Id == _memberId);
 
-            var member = _context.Members.SingleOrDefault(x => x.Account == account);
             var encryptedPassword = HashUtility.ToSHA256(oldPassword, RegisterDTO.SALT);
             if (member == null)
             {
                 return "帳號或密碼輸入錯誤";
             }
+            else if (newPassword != newPassword2)
+            {
+                return "密碼確認有誤";
+            }
+            else if (newPassword == null|| newPassword==null|| oldPassword==null)
+            {
+                return "數值不能為空";
+            }
             else if (string.Compare(member.EncryptedPassword, encryptedPassword) == 0)
             {
                 member.EncryptedPassword = HashUtility.ToSHA256(newPassword, RegisterDTO.SALT);
                 _context.SaveChanges();
+                 
                 return "修改成功";
             }
             else
@@ -408,7 +396,7 @@ namespace HStyleApi.Controllers
             var message = new MimeMessage();
 
             // 添加寄件者
-            message.From.Add(new MailboxAddress("PawPaw", "pawpawpetSite@gmail.com"));
+            message.From.Add(new MailboxAddress("H2StyleStore", "pawpawpetSite@gmail.com"));
 
             // 添加收件者
             message.To.Add(new MailboxAddress("New Member", $"{member.Email}"));
@@ -421,7 +409,7 @@ namespace HStyleApi.Controllers
 
             //string result = Request.Scheme + "://" + Request.Host + $"/api/Members/LogIn";  //前端驗證完成頁面  給他個驗證完成  改這邊
 
-            string result = "https://localhost:44313/Images/MemberImage/123.jpg";  //前端驗證完成頁面  給他個驗證完成  改這邊
+            string result = "http://localhost:5173/ForgetPasswordEmail";  //前端驗證完成頁面  給他個驗證完成  改這邊
 
             // 設定 HTML 內容
             bodyBuilder.HtmlBody = $"<p>新密碼:{newPassword}</p>" +
