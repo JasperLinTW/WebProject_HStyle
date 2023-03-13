@@ -5,43 +5,96 @@
       <div class="col-lg-5 border-bottom">
         <div class="d-flex justify-content-start">
           <div class="filter">
-            <div class="dropdown-toggle" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <div
+              class="dropdown-toggle"
+              id="sortDropdown"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
               排序
             </div>
-            <ul class="dropdown-menu menu border-0 mt-1" aria-labelledby="sortDropdown">
-              <li><a class="dropdown-item" href="#" v-for="(option, index) in sortOptions" :key="index"
-                  @click="setSortOption(option)">{{ option }}</a></li>
+            <ul
+              class="dropdown-menu menu border-0 mt-1"
+              aria-labelledby="sortDropdown"
+            >
+              <li>
+                <a
+                  class="dropdown-item"
+                  href="#"
+                  v-for="(option, index) in sortOptions"
+                  :key="index"
+                  @click="setSortOption(option)"
+                  >{{ option }}</a
+                >
+              </li>
             </ul>
           </div>
           <div class="filter">
-            <div class="dropdown-toggle" id="categoryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <div
+              class="dropdown-toggle"
+              id="categoryDropdown"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
               類別
             </div>
-            <ul class="dropdown-menu menu border-0 mt-1" aria-labelledby="categoryDropdown">
-              <li><a class="dropdown-item" href="#" v-for="(option, index) in categoryOptions" :key="index"
-                  @click="setCategoryOption(option)">{{ option }}</a></li>
+            <ul
+              class="dropdown-menu menu border-0 mt-1"
+              aria-labelledby="categoryDropdown"
+            >
+              <li>
+                <router-link
+                  v-for="(option, index) in categoryOptions"
+                  :key="index"
+                  :to="
+                    option === '全部' ? '/products/all' : `/products/${option}`
+                  "
+                  class="dropdown-item"
+                  >{{ option }}</router-link
+                >
+              </li>
             </ul>
           </div>
           <div class="filter">
-            <div class="dropdown-toggle" id="colorDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <div
+              class="dropdown-toggle"
+              id="colorDropdown"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
               顏色
             </div>
-            <ul class="dropdown-menu menu border-0 mt-1 " aria-labelledby="colorDropdown">
+            <ul
+              class="dropdown-menu menu border-0 mt-1"
+              aria-labelledby="colorDropdown"
+            >
               <div class="row">
                 <li class="col-md-3">
-                  <a class="dropdown-item item " href="#"
-                    v-for="(option, index) in colorOptions.slice(0, Math.ceil(colorOptions.length / 2))" :key="index"
-                    @click="setColorOption(option)">{{ option }}
+                  <a
+                    class="dropdown-item item"
+                    href="#"
+                    v-for="(option, index) in colorOptions.slice(
+                      0,
+                      Math.ceil(colorOptions.length / 2)
+                    )"
+                    :key="index"
+                    @click="setColorOption(option)"
+                    >{{ option }}
                   </a>
                 </li>
                 <li class="col-md-3">
-                  <a class="dropdown-item item" href="#"
-                    v-for="(option, index) in colorOptions.slice(Math.ceil(colorOptions.length / 2),)" :key="index"
-                    @click="setColorOption(option)">{{ option }}
+                  <a
+                    class="dropdown-item item"
+                    href="#"
+                    v-for="(option, index) in colorOptions.slice(
+                      Math.ceil(colorOptions.length / 2)
+                    )"
+                    :key="index"
+                    @click="setColorOption(option)"
+                    >{{ option }}
                   </a>
                 </li>
               </div>
-
             </ul>
           </div>
           <div class="clear" @click="setOriginalOption()">清除篩選</div>
@@ -52,8 +105,12 @@
 
   <div class="container">
     <div class="row">
-      <ProductCard v-if="filteredProducts.length > 0" v-for="item in filteredProducts" :data="item" />
-      <div v-else class="h-1000 col-md-12"> - 無此篩選項目的商品 -</div>
+      <ProductCard
+        v-if="filteredProducts.length > 0"
+        v-for="item in filteredProducts"
+        :data="item"
+      />
+      <div v-else class="h-1000 col-md-12">- 無此篩選項目的商品 -</div>
     </div>
   </div>
 
@@ -76,7 +133,7 @@ const route = useRoute();
 const selectedOption = ref();
 const categoryOptions = ref([]);
 const colorOptions = ref([]);
-const sortOptions = ref(['新到舊', '舊到新', '價格高到低', '價格低到高']);
+const sortOptions = ref(["新到舊", "舊到新", "價格高到低", "價格低到高"]);
 //商品收藏
 const likeProductsId = ref([]);
 let likes = ref([]);
@@ -113,14 +170,23 @@ const loadProducts = async () => {
       });
 
       //把篩選的先列出
-      categoryOptions.value = [...new Set(response.data.map((p) => p.pCategoryName))];
-      colorOptions.value = Array.from(new Set(response.data.flatMap((p) => p.specs.map((s) => s.color))));
+      categoryOptions.value = [
+        "全部",
+        ...new Set(response.data.map((p) => p.pCategoryName)),
+      ];
+      colorOptions.value = Array.from(
+        new Set(response.data.flatMap((p) => p.specs.map((s) => s.color)))
+      );
 
       //console.log(colorOptions.value);
       if (route.params.tag == "new") {
         products.value = response.data.filter((p) => p.tags.includes("新品"));
-      } else {
+      } else if (route.params.tag == "all") {
         products.value = response.data;
+      } else {
+        products.value = response.data.filter((p) =>
+          p.pCategoryName.includes(route.params.tag)
+        );
       }
     })
     .catch((error) => {
@@ -143,25 +209,18 @@ const filteredProducts = computed(() => {
   }
 
   if (colorFilter.value !== null) {
-    filtered = filtered.filter((p) => p.specs.some(spec => spec.color === colorFilter.value));
+    filtered = filtered.filter((p) =>
+      p.specs.some((spec) => spec.color === colorFilter.value)
+    );
   }
-
 
   return filtered;
 });
 
-
 //還原
 const setOriginalOption = () => {
   priceFilter.value = null;
-  categoryFilter.value = null;
   colorFilter.value = null;
-}
-
-
-//種類
-const setCategoryOption = (option) => {
-  categoryFilter.value = option;
 };
 
 //顏色
@@ -172,17 +231,16 @@ const setColorOption = (option) => {
 //排序
 const setSortOption = (option) => {
   // sort the products based on the selected option
-  if (option === '新到舊') {
+  if (option === "新到舊") {
     filteredProducts.value.sort((a, b) => b.displayOrder - a.displayOrder);
-  } else if (option === '舊到新') {
+  } else if (option === "舊到新") {
     filteredProducts.value.sort((a, b) => a.displayOrder - b.displayOrder);
-  } else if (option === '價格高到低') {
+  } else if (option === "價格高到低") {
     filteredProducts.value.sort((a, b) => b.unitPrice - a.unitPrice);
-  } else if (option === '價格低到高') {
+  } else if (option === "價格低到高") {
     filteredProducts.value.sort((a, b) => a.unitPrice - b.unitPrice);
   }
 };
-
 
 watch(
   () => route.params.tag,
@@ -192,7 +250,6 @@ watch(
 );
 eventBus.on("addProductLike", () => {
   likesProducts();
-
 });
 onMounted(() => {
   likesProducts();
@@ -203,7 +260,6 @@ onMounted(() => {
   margin-right: 15%;
   padding-bottom: 0.5%;
   font-size: 12pt;
-
 }
 
 .menu {
