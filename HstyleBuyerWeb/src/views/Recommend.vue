@@ -38,11 +38,13 @@
     <div class="row">
       <div class="h500px">
         <div class="col-md-12">
-          <span class="px-5">| 會員專屬推薦 |</span>
+          <span v-if="orec.length > 0" class="px-5">| 會員專屬推薦 |</span>
+          <span v-else class="px-5">| 新品推薦 |</span>
         </div>
         <div class="col-md-12">
           <div class="row">
-            <RecommendCard v-for="item in orec" :data="item"></RecommendCard>
+            <RecommendCard v-for="item in orec" :data="item" v-if="orec.length > 0"></RecommendCard>
+            <RecommendCard v-for="item in newrec" :data="item" v-else></RecommendCard>
           </div>
         </div>
       </div>
@@ -83,11 +85,21 @@ const getOrderRecommend = async () => {
     .catch(error => { console.log(error); });
 }
 
+const newrec = ref([]);
+const newProductsRecommend = async () => {
+  await axios.get(`https://localhost:7243/api/Products/NewRec`)
+    .then(response => {
+      newrec.value = response.data;
+    })
+    .catch(error => { console.log(error); });
+}
+
 
 
 onMounted(() => {
   getWeatherRecommend();
   getOrderRecommend();
+  newProductsRecommend();
 })
 
 </script>

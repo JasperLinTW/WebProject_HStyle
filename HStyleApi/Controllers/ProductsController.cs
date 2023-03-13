@@ -221,6 +221,23 @@ namespace HStyleApi.Controllers
 			return Ok(data);
 		}
 
+		[HttpGet("NewRec")]
+		public ActionResult<ProductDto> newProductsRecommend()
+		{
+			IEnumerable<ProductDto> data;
+			try
+			{
+				data = _Service.GetNewProductsRecommend();
+			}
+			catch (Exception ex)
+			{
+
+				return BadRequest(ex.Message);
+			}
+
+			return Ok(data);
+		}
+
 
 		//評論頁
 		[HttpGet("comment")]

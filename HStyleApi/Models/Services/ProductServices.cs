@@ -161,16 +161,22 @@ namespace HStyleApi.Models.Services
 
 		public IEnumerable<ProductDto> GetRecommendByOrder(int member_id)
 		{
+			IEnumerable<ProductDto> products;
+			List<int> recommendlist = new List<int>();
+			List<string> tag = new List<string>();
+			tag.Add("新品");
+			List<int> products_id = new List<int>();
+			int targetnumber = 3;
+
+			//如果沒登入推薦新品給他
+
 			//取得order中最多tag的id
 			var maxvaluetag = _repo.GetOrderMaxTag(member_id);
 
 			//找出其他商品中含有此tag的id
-			var products_id = _repo.GetProductsByOrder(maxvaluetag, member_id);
-
-			List<int> recommendlist = new List<int>();
-			int targetnumber = 3;
-			IEnumerable<ProductDto> products;
-
+			products_id = _repo.GetProductsByOrder(maxvaluetag, member_id);
+			
+		
 			recommendlist = RandomSelect(products_id, targetnumber);
 			products = _repo.GetProducts(recommendlist);
 
@@ -261,6 +267,22 @@ namespace HStyleApi.Models.Services
 		{
 			var data = _repo.AllhelpfulComments(commentId);
 			return data;
+		}
+
+		public IEnumerable<ProductDto> GetNewProductsRecommend()
+		{
+			IEnumerable<ProductDto> products;
+			List<int> recommendlist = new List<int>();
+			List<string> tag = new List<string>();
+			tag.Add("新品");
+			List<int> products_id = new List<int>();
+			int targetnumber = 3;
+
+			products_id = _repo.GetProductsByTagsName(tag);
+			recommendlist = RandomSelect(products_id, targetnumber);
+			products = _repo.GetProducts(recommendlist);
+
+			return products;
 		}
 	}
 }

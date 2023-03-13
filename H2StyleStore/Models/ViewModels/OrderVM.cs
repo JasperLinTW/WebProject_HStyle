@@ -23,8 +23,8 @@ namespace H2StyleStore.Models.ViewModels
 		[DisplayName("總額")]
 		public int Total { get; set; }
 
-		[DisplayName("付款金額")]
-		public int Payment { get; set; }
+		[DisplayName("付款方式")]
+		public string Payment { get; set; }
 
 		[DisplayName("出貨時間")]
 		public DateTime? ShippedDate { get; set; }
