@@ -40,8 +40,9 @@
     <div v-else class="m-0 p-0">
       <div class="col-md-12 mt-3  h-100">
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="floatingInput" v-model="Rname" required />
-            <label for="floatingInput">姓名</label>
+            <input id="name" type="text" class="form-control"  v-model="Rname" pattern="^[\u4e00-\u9fa5]{2,5}$" placeholder="請輸入姓名" required />
+            <!-- <div v-if="error.name" class="text-danger ">{{ error.name }}</div> -->
+            <label for="name">姓名</label>
           </div>
         <div class="form-floating mb-3">
             <input type="text" class="form-control" id="floatingInput" v-model="Raccount" required />
@@ -153,15 +154,13 @@ const Remail = ref("")
 const Rphone_Number = ref("")
 const Rgender = ref('male')
 
-// export default {
-//   data() {
-//     return {
-//       Rgender: false,
-//     }
-//   }
-// }
+const emailRegex = /^[^\s@]+@[^\s@]+.[^\s@]+$/;
+const phoneRegex = /^09\d{8}$/;
+const nameRegex=/^[\u4e00-\u9fa5]{2,5}$/;
+const accountPattern=/^[a-zA-Z][a-zA-Z0-9_]{5,15}$/;
+const passwordPattern=/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+const addersPattern=/^[\u4e00-\u9fa5]{3,}(?:縣|市|區|鄉|鎮|村|里)?[\u4e00-\u9fa5]{2,}(?:街|路|巷)?\d{1,4}[號樓室]?$/;
 
-// const Register = ref(true)
 
 const login = () => {
   axios
@@ -174,11 +173,13 @@ const login = () => {
       { withCredentials: true }
     )
     .then((response) => {
+      
       console.log(response.data);
       router.go(-1);
     })
-    .catch((err) => {
-      console.log(err);
+    .catch((error) => {
+      if (error.response.status === 400) {  //傳回BadRequest
+      alert(error.response.data);}
     });
 };
 
@@ -213,6 +214,9 @@ const checkLogin = () => {
 };
 
 const Register = () => {
+  // if (!validateForm()) {
+  //   return;
+  // };
   axios.post('https://localhost:7243/api/Member/Register', {
     account: Raccount.value,
     password:Rpassword.value,
@@ -250,7 +254,16 @@ onMounted(() => {
   checkLogin();
 })
 
+const error = ref({});
+const validateForm = () => {
+  error.value = {};
 
+  if (!shipName.value) {
+    error.value.name = "收件姓名必填";
+  }
+  // 所有驗證都通過，返回 true
+  return true;
+}
 </script>
   
 <style scoped>
