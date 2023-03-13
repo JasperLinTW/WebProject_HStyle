@@ -1,15 +1,4 @@
 <template>
- <div class="container">
-    <div class="row border-bottom mb-5 mt-4 pb-2 d-flex justify-content-evenly">
-      <div class="col-md-1"><router-link to="/Blog/EssaysBlog" class="nav-link targetAll btn-underline">文章</router-link>
-      </div>
-      <div class="col-md-1"> <router-link to="/Blog/VideoBlog" class="nav-link targetAll btn-underline">影音</router-link>
-      </div>
-    </div>
-  </div>
-
-
-
   <div class="container mb-5">
     <div class="column">
       <img :src="essays.imgs === undefined ? '' : essays.imgs[0]" alt="Image" />
@@ -22,105 +11,128 @@
     <div class="Who">By {{ essays.influencerName }}</div>
     <div class="Time">{{ formatDate(essays.uplodTime) }}</div>
     <hr />
-    <!-- <div>
-      <div class="container-text mx-auto h-100">
-        {{
-          decodeURI(essays.econtent)
-            .replace(/<\/?[^>]+(>|$)/g, "")
-            .slice(0, 170)
-        }}
+
+    <div style="height: 100%; overflow-y: scroll">
+      <!-- 內容 -->
+    </div>
+    <div class="row">
+      <div class="col-2">
+        <div
+          style="
+            position: sticky;
+            /* left: 85%; */
+            /* height: 100%; */
+            top: 2%;
+            transform: translate(-10%, 1%);
+            /* overflow-y: scroll; */
+          "
+        >
+          <div
+            class="card d-flex justify-content-center align-items-center"
+            v-for="product in RecoProducts"
+            :key="product.product_Id"
+          >
+            <a :href="`http://localhost:5173/product/${product.product_Id}`">
+              <div class="img-sz">
+                <img
+                  :src="product.imgs[0]"
+                  class="card-img-top"
+                  alt="推薦商品圖片"
+                />
+              </div>
+            </a>
+            <div class="card-body position-relative">
+              <div class="card-title fw-bold">
+                {{ product.product_Name }}
+              </div>
+            </div>
+            <!-- <span>$NT {{ product.unitPrice }}</span> -->
+          </div>
+        </div>
       </div>
-    </div> -->
-    <div>
-      <div
-        v-html="decodeURI(essays.econtent)"
-        class="container-text mx-auto h-100"
-      ></div>
+
+      <div class="col-8">
+        <div
+          v-html="decodeURI(essays.econtent)"
+          class="container-text mx-auto h-100"
+        ></div>
+      </div>
     </div>
   </div>
 
-  <!-- <div v-if="showComment" class="col-md-12 border-top pt-3 mb-big">
-        <PComment v-if="comment.length > 0" v-for="item in comment" :data="item"></PComment>
-        <div v-else class="pt-4">- 此無評論 -</div>
-      </div>
-      <div v-else class="col-md-12 border-top pt-5 px-6  mb-big">
-        {{ product.description }}
-      </div> -->
-
-  <form action="">
-    <div class="h500px">
-      <!-- <div ciass="allComment">
-        <div v-for="comment in essayComments" :key="comment.commentId">
-          <label>{{ comment.memberName }}　說：</label>
-          <div>
-            <label>{{ comment.ecomment }}</label>
-          </div>
-        </div>
-      </div> -->
+  <div class="h500px">
+    <form action="">
       <div class="col-md-12 line">
         <span class="px-5">留言:</span>
-        <input type="text" v-model="comment" />
-        <button @click.prevent="postComment()" type="submit">送出</button>
       </div>
-      <!-- 所有評論 -->
+    </form>
+
+    <div class="comments">
+      <div class="input-group">
+        <img class="avatar" src="https://picsum.photos/50/50" alt="avatar" />
+        <div class="input-group-text">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="留下評論"
+            v-model="comment"
+          />
+          <button
+            class="btn btn-primary"
+            type="button"
+            @click.prevent="postComment()"
+          >
+            送出
+          </button>
+        </div>
+      </div>
       <form action="">
-        <div v-for="comment in essayComments" :key="comment.commentId">
-          <div class="d-flex justify-content-start">
-            <label>{{ comment.memberName }}　說：</label>
-            <div>
-              <label>{{ comment.ecomment }}</label>
-            </div>
-          </div>
-          <div class="">
-            <label>
-              <span>留言按讚 </span>
-              <span
-                v-if="!commentIsClicked"
+        <div
+          class="comment-section"
+          v-for="comment in essayComments"
+          :key="comment.commentId"
+        >
+          <img class="avatar" src="https://picsum.photos/50/50" alt="avatar" />
+          <div class="comment-body">
+            <h5 class="comment-user">{{ comment.memberName }}</h5>
+            <p class="comment-text">{{ comment.ecomment }}</p>
+            <div class="comment-actions">
+              <hr />
+              <button
+                class="btn btn-sm"
+                :class="{
+                  'btn-primary': !commentIsClicked,
+                  'btn-danger': commentIsClicked,
+                }"
                 @click="postCommentLike(comment.id)"
-                ><i class="fa-regular fa-heart icon-hover fz-18"></i
-              ></span>
-              <span v-else @click="postCommentLike(comment.id)"
-                ><i class="fa-solid fa-heart fz-18"></i
-              ></span>
-            </label>
-          </div>
-          <div class="d-flex justify-content-end">
-            <!-- <label>{{ comment.createdTime.slice(0, 10) }}</label> -->
-            <!-- 按讚留言 -->
+              >
+                <i class="far fa-thumbs-up"></i>
+                <span class="likes-count">{{ comment.likes }}</span>
+              </button>
+              <!-- <span class="comment-date">{{ comment.etime.slice(0, 10) }}</span> -->
+            </div>
           </div>
         </div>
       </form>
-
-      <div class="col-md-12">
-        <div class="row">
-          <RecommendCard v-for="item in rec" :data="item"></RecommendCard>
-        </div>
-      </div>
     </div>
-  </form>
 
-  <!-- <div class="h500px">
-        <div class="col-md-12 line">
-          <span class="px-5">猜你喜歡</span>
-        </div>
-        <div class="col-md-12">
-          <div class="row">
-            <RecommendCard v-for="item in rec" :data="item"></RecommendCard>
-          </div>
-        </div> 
-      </div> -->
+    <!-- 結尾 -->
+  </div>
 </template>
 
 <script setup>
 import { useRoute } from "vue-router";
 import { ref, onMounted } from "vue";
+// import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
+
+// const router = useRouter();
 
 const route = useRoute();
 console.log(route.params.id);
 
 const essays = ref({});
-
+//得到essay
 const getEssayInfo = async () => {
   await axios
     .get(`https://localhost:7243/api/Essay/${route.params.id}`)
@@ -134,8 +146,23 @@ const getEssayInfo = async () => {
     });
 };
 
+const RecoProducts = ref([]);
+//商品推薦
+const getEssayRecommenations = async () => {
+  await axios
+    .get(`https://localhost:7243/api/Essay/Recommenations/${route.params.id}`)
+    .then((axiosResponse) => {
+      RecoProducts.value = axiosResponse.data;
+      console.log();
+      //isLoded.value = true;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
 const essayComments = ref([]);
-//得到評論
+//得到評論的值
 const getComments = async () => {
   await axios
     .get(`https://localhost:7243/api/Essay/Comments/${route.params.id}`)
@@ -143,37 +170,62 @@ const getComments = async () => {
       essayComments.value = response.data;
       console.log("comment");
       console.log(essayComments.value);
-      //commentIsClicked.value = likeCommentId.value.includes(parseInt(commentId));
     })
     .catch((error) => {
       console.log(error);
     });
 };
 
-onMounted(async () => {
-  await getEssayInfo();
-  await getComments();
-});
-
-//收藏
-// let likes = ref([])
-
-// const Essays = ref([])
-
-// const likesEssay = async () => {
-//     await axios.get("https://localhost:7243/api/Essay/Elike")
-//         .then(response => {
-//             if (response.data.length > 0) {
-//                 likes.value = response.data;
-//                 console.log(likes.value);
-//                 Essays.value = likes.value.map(e => {
-//                     return e.essayId
-//                 });
-//             }
-
-//         })
-//       .catch(error => { console.log(error); });
+// let likesessayComments = ref([]);
+// let likesCommenrId = ref([]);
+// //評論按贊
+// const getEssayCommentLikes = async () => {
+//   await axios
+//     .get(
+//       `https://localhost:7243/api/Essay/comment/Likes/${commentId}`,
+//       {},
+//       {
+//         withCredentials: true,
+//       }
+//     )
+//     .then((response) => {
+//       commentIsClicked.value = !commentIsClicked.value;
+//     })
+//     .catch((error) => {
+//       console.log(error);
+//       if (error.response.status === 410) {
+//         window.location = "http://localhost:5173/login";
+//       }
+//     });
 // };
+
+//寫留言
+const comment = ref("");
+const postComment = async () => {
+  await axios
+    .post(
+      `https://localhost:7243/api/Essay/Comment/${route.params.id}`,
+      { comment: comment.value },
+      { withCredentials: true }
+    )
+    .then((response) => {
+      getComments();
+      comment.value = "";
+    })
+    .catch((error) => {
+      console.log(error);
+      if (error.response.status === 401) {
+        window.location = "http://localhost:5173/login";
+      }
+    });
+};
+
+onMounted(async () => {
+  getEssayInfo();
+  getComments();
+  // getEssayCommentLikes();
+  getEssayRecommenations();
+});
 
 const formatDate = (dateString) => {
   const date = new Date(dateString);
@@ -189,6 +241,12 @@ const formatDate = (dateString) => {
   height: 500px;
   margin-top: 50px;
   background-color: #f2f2f2;
+  padding: 20px;
+}
+
+.h5000px {
+  height: 500px;
+  margin-top: 50px;
   padding: 20px;
 }
 
@@ -276,6 +334,7 @@ img {
 .container-text {
   width: 905px;
   height: 1212px;
+  /* margin-left: 20px; */
   text-align: justify; /* 上下文對齊 */
 }
 
@@ -326,7 +385,6 @@ img {
   border-radius: 50%;
 }
 
-
 .btn-underline::after {
   content: "";
   position: absolute;
@@ -359,5 +417,153 @@ img {
 }
 a {
   text-decoration: none;
+}
+
+.card-img-top {
+  border: none;
+  border-radius: 0%;
+}
+
+.fz-18 {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.fz-9 {
+  font-size: 15px;
+  color: rgb(116, 129, 143);
+}
+
+.card {
+  border: none;
+  border-radius: 0%;
+  cursor: pointer;
+}
+
+.img-sz {
+  width: 250px;
+  height: 300px;
+  overflow: hidden;
+}
+
+.img-sz img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1s ease-in-out;
+}
+
+.img-sz :hover {
+  transform: scale(1.1);
+  animation: rotate 1s linear infinite;
+}
+
+.img-sz :mouseout {
+  opacity: 0;
+  transition-delay: 1s;
+  transition-timing-function: ease-out;
+}
+
+.card-body {
+  width: 100%;
+}
+
+/* 留言 */
+.comments {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.input-group {
+  margin-top: 16px;
+  margin-bottom: 32px;
+  left: 100px;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 16px;
+}
+
+.comment-section {
+  /* margin-bottom: 32px; */
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+/* 
+.comment {
+  display: flex;
+  margin-bottom: 16px;
+}
+
+.comment-body {
+  background-color: #f5f5f5;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.comment-user {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+
+.comment-text {
+  margin-bottom: 8px;
+}
+
+.comment-actions {
+  display: flex;
+  align-items: center;
+}
+
+.likes-count {
+  margin-left: 8px;
+}
+
+.comment-date {
+  margin-left: auto;
+  font-size: 0.8rem;
+} */
+
+.comment {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.comment-body {
+  margin-left: 10px;
+}
+
+.comment-user {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.comment-text {
+  margin-bottom: 5px;
+  margin-left: 50px;
+}
+
+.comment-actions {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  /* top: 0; */
+  right: 50%;
+  left: 800px;
+}
+
+.likes-count {
+  margin-left: 5px;
+  margin-right: 10px;
+}
+
+.comment-date {
+  font-size: 0.8em;
+  color: grey;
 }
 </style>
