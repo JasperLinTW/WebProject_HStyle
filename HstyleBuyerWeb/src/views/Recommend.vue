@@ -7,33 +7,52 @@
       </div>
     </div>
   </div>
-  <div class="container d-flex justify-content-center mb-6">
-    <div v-if="isLoadEnd" class="row  justify-content-center">
-      <div class="col-md-6 img-container-lg">
-        <router-link :to="'/product/' + rec[0].product_Id">
-          <img :src="recImg.length > 0 ? recImg[0] : ''" alt="Large Image">
-        </router-link>
-
-      </div>
-      <div class="col-md-3 mt-5">
-        <div class="row">
-          <div class="col-md-6 img-container-sm1">
-            <router-link :to="'/product/' + rec[1].product_Id">
-              <img :src="recImg.length > 1 ? recImg[1] : ''" alt="Small Image 1">
-            </router-link>
+  <div>
+    <div id="carouselExampleIndicators" class="carousel slide py-5 mb-6" data-ride="carousel">
+      <ol class="carousel-indicators">
+        <li v-for="(item, index) in rec" :key="index" data-target="#carouselExampleIndicators" :data-slide-to="index"
+          :class="{ active: index === 0 }"></li>
+      </ol>
+      <div class="carousel-inner">
+        <div v-for="(item, index) in rec" :key="index" :class="{ active: index === 0 }" class="carousel-item">
+          <div class="row justify-content-center ps-6">
+            <div class="col-md-6 img-container-lg">
+              <router-link :to="'/product/' + item.product_Id">
+                <img :src="item.imgs[0]" alt="Large Image">
+              </router-link>
+            </div>
+            <div class="col-md-3 mt-5">
+              <div class="row">
+                <div class="col-md-6 img-container-sm1 ms-5 ps-5">
+                  <router-link :to="'/product/' + item.product_Id">
+                    <img :src="item.imgs[1]" alt="Small Image">
+                  </router-link>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 d-flex align-items-end">
+              <div class="row">
+                <div class="col-md-12 img-container-sm2">
+                  <router-link :to="'/product/' + item.product_Id">
+                    <img :src="item.imgs[2]" alt="Small Image">
+                  </router-link>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="col-md-3 d-flex align-items-end">
-        <div class="row">
-          <div class="col-md-12 img-container-sm2">
-            <router-link :to="'/product/' + rec[2].product_Id">
-              <img :src="recImg.length > 2 ? recImg[2] : ''" alt="Small Image 2"></router-link>
-          </div>
-        </div>
-      </div>
+      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
     </div>
   </div>
+
   <div class="container">
     <div class="row">
       <div class="h500px">
@@ -58,7 +77,6 @@ import axios from "axios";
 import RecommendCard from '../components/RecommendCard.vue';
 
 const rec = ref([]);
-const recImg = ref([])
 const isLoadEnd = ref(false);
 //推薦商品
 const getWeatherRecommend = async () => {
@@ -66,11 +84,7 @@ const getWeatherRecommend = async () => {
     .then(response => {
       rec.value = response.data;
       console.log(rec.value);
-      recImg.value = response.data.map((p) => {
-        return p.imgs[0];
-      })
       isLoadEnd.value = true;
-      console.log(rec.value);
     })
     .catch(error => { console.log(error); });
 }
@@ -94,7 +108,7 @@ const newProductsRecommend = async () => {
     .catch(error => { console.log(error); });
 }
 
-
+const modules = ref([Navigation]);
 
 onMounted(() => {
   getWeatherRecommend();
@@ -152,7 +166,7 @@ onMounted(() => {
 }
 
 .img-container-sm1 {
-  width: 330px;
+  width: 350px;
   height: 450px;
   overflow: hidden;
 }
@@ -175,5 +189,9 @@ onMounted(() => {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.ps-6 {
+  padding-left: 10%;
 }
 </style>
