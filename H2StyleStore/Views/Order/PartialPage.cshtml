@@ -6,7 +6,6 @@
 
     IEnumerable<SelectListItem> status_order = ViewBag.Status_order;
     var statusInDb = status_order.ToList();
-    int total = 0;
 }
 
 
@@ -23,35 +22,20 @@
     <table class="table table-bordered table-hover borderless">
         <thead>
             <tr>
-                <th style="width:6%;" class="reset cursor-pointer">
+                <th class="reset cursor-pointer">
                     訂單編號
                 </th>
-                <th style="width: 6%;">
+                <th>
                     會員名稱
                 </th>
-                <th style="width: 6%;" class="sortOrder cursor-pointer" value="@ViewBag.TotalSortParm">
+                <th class="sortOrder cursor-pointer" value="@ViewBag.TotalSortParm">
                     總額 <i class="fa-solid fa-sort "></i>
                 </th>
-                <th style="width: 6%;">
+                <th>
                     付款金額
                 </th>
                 <th>
                     出貨時間
-                </th>
-                <th style="width: 4%;">
-                    配送方式
-                </th>
-                <th>
-                    運費
-                </th>
-                <th style="width: 5%;">
-                    收件人
-                </th>
-                <th style="width: 6%;">
-                    寄送地址
-                </th>
-                <th style="width: 8%;">
-                    收件人電話
                 </th>
                 <th>
                     退貨時間
@@ -115,21 +99,6 @@
                         }
 
                         @Html.ValidationMessageFor(modelItem => item.ShippedDate, "", new { @class = "text-danger" })
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ShipVia)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Freight)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ShipName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ShipAddress)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ShipPhone)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.RequestRefundTime)
@@ -217,57 +186,83 @@
                                     <div style="text-align:right; font-size:20px;" class="mb-2"><span class="badge badge-danger badge-pill">訂單取消原因: @item.Status_Description</span></div>
                                 }
                             </div>
-                            <table class="container-fluid table-hover">
-                                <tr class="no-hover bg-light">
-                                    <th>
-                                        商品編號
-                                    </th>
-                                    <th>
-                                        商品名稱
-                                    </th>
-                                    <th>
-                                        單價
-                                    </th>
-                                    <th>
-                                        小計
-                                    </th>
-                                    <th>
-                                        數量
-                                    </th>
-                                    <th>
-                                        折扣
-                                    </th>
-                                </tr>
-                                @foreach (var details in item.Order_Details.ToList())
-                                {
+                            <div class="row d-flex justify-content-center">
+                                <table class="table-hover mb-5 mx-2 col-5">
+                                    配送詳情
+                                    <tr class="no-hover bg-secondary">
+                                        <th>
+                                            配送方式
+                                        </th>
+                                        <th>
+                                            收件人
+                                        </th>
+                                        <th>
+                                            寄送地址
+                                        </th>
+                                        <th>
+                                            收件人電話
+                                        </th>
+                                    </tr>
                                     <tr class="no-hover">
                                         <td>
-                                            @Html.DisplayFor(modelItem => details.Product_id)
+                                            @Html.DisplayFor(modelItem => item.ShipVia)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => details.ProductName)
+                                            @Html.DisplayFor(modelItem => item.ShipName)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => details.UnitPrice)
+                                            @Html.DisplayFor(modelItem => item.ShipAddress)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => details.Quantity)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => details.SubTotal)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => details.Discount)
+                                            @Html.DisplayFor(modelItem => item.ShipPhone)
                                         </td>
                                     </tr>
-                                    total += (details.SubTotal - details.Discount.Value);
-                                }
-                            </table>
-                            <div class="pl-2" style="font-weight:bold ;">合計:@total 元</div>
+                                </table>
+                                <table class="table-hover col-5 mx-2">
+                                    商品詳情
+                                    <tr class="no-hover bg-light">
+                                        <th>
+                                            商品編號
+                                        </th>
+                                        <th>
+                                            商品名稱
+                                        </th>
+                                        <th>
+                                            單價
+                                        </th>
+                                        <th>
+                                            小計
+                                        </th>
+                                        <th>
+                                            數量
+                                        </th>
+                                    </tr>
+                                    @foreach (var details in item.Order_Details.ToList())
+                                    {
+                                        <tr class="no-hover">
+                                            <td>
+                                                @Html.DisplayFor(modelItem => details.Product_id)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => details.ProductName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => details.UnitPrice)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => details.Quantity)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => details.SubTotal)
+                                            </td>
+                                        </tr>
+                                    }
+                                </table>
+                            </div>
+                            
                         </div>
                     </td>
                 </tr>
-                total = 0;
                 i++;
                 shippedDate = null;
             }

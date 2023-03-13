@@ -119,7 +119,7 @@ namespace H2StyleStore.Controllers
 
 			return Json(data.DefaultIfEmpty(), JsonRequestBehavior.AllowGet);
 		}
-		public ActionResult Details(int? id)
+		public ActionResult Details(int id)
 		{
 			var data = orderService.FindById(id).Select(x => x.ToVM());
 			if (id != null)
