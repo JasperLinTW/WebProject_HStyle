@@ -8,21 +8,27 @@
     </div>
   </div>
   <div class="container d-flex justify-content-center mb-6">
-    <div class="row  justify-content-center">
+    <div v-if="isLoadEnd" class="row  justify-content-center">
       <div class="col-md-6 img-container-lg">
-        <img :src="recImg.length > 0 ? recImg[0] : ''" alt="Large Image">
+        <router-link :to="'/product/' + rec[0].product_Id">
+          <img :src="recImg.length > 0 ? recImg[0] : ''" alt="Large Image">
+        </router-link>
+
       </div>
       <div class="col-md-3 mt-5">
         <div class="row">
           <div class="col-md-6 img-container-sm1">
-            <img :src="recImg.length > 0 ? recImg[1] : ''" alt="Small Image 1">
+            <router-link :to="'/product/' + rec[1].product_Id">
+              <img :src="recImg.length > 1 ? recImg[1] : ''" alt="Small Image 1">
+            </router-link>
           </div>
         </div>
       </div>
       <div class="col-md-3 d-flex align-items-end">
         <div class="row">
           <div class="col-md-12 img-container-sm2">
-            <img :src="recImg.length > 0 ? recImg[2] : ''" alt="Small Image 2">
+            <router-link :to="'/product/' + rec[2].product_Id">
+              <img :src="recImg.length > 2 ? recImg[2] : ''" alt="Small Image 2"></router-link>
           </div>
         </div>
       </div>
@@ -57,10 +63,11 @@ const getWeatherRecommend = async () => {
   await axios.get(`https://localhost:7243/api/Weather/weatherRec`)
     .then(response => {
       rec.value = response.data;
+      console.log(rec.value);
       recImg.value = response.data.map((p) => {
         return p.imgs[0];
       })
-      //isLoadEnd.value = true;
+      isLoadEnd.value = true;
       console.log(rec.value);
     })
     .catch(error => { console.log(error); });

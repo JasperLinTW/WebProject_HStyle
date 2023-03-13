@@ -45,15 +45,15 @@
         <div class="my-4 d-flex justify-content-between">
           <label for="name" class="form-label fw-bold pe-3">姓名</label>
           <input v-model="shipName" type="text" class="textbox_ship flex-grow-1" id="name" placeholder="請輸入姓名" />
-          <div v-if="error.name" class="text-danger ">{{ error.name }}</div>
+          <div v-if="error.name" class="text-danger fz-smer">{{ error.name }}</div>
           <label for="phone" class="form-label fw-bold pe-3">電話</label>
           <input v-model="shipPhone" type="text" class="textbox_ship flex-grow-1" id="phone" placeholder="請輸入電話號碼" />
-          <div v-if="error.phone" class="text-danger ">{{ error.phone }}</div>
+          <div v-if="error.phone" class="text-danger fz-smer">{{ error.phone }}</div>
         </div>
         <div class="mb-4 d-flex justify-content-between">
           <label for="address" class="form-label fw-bold pe-3">地址</label>
           <input v-model="shipAddress" type="text" class="textbox_ship flex-grow-1" id="address" placeholder="請輸入地址" />
-          <div v-if="error.address" class="text-danger ">{{ error.address }}</div>
+          <div v-if="error.address" class="text-danger fz-smer">{{ error.address }}</div>
         </div>
         <div class="mb-3 d-flex justify-content-between">
           <label for="payment" class="form-label fw-bold pe-3">付款方式</label>
@@ -63,7 +63,7 @@
               <option value="信用卡">信用卡</option>
               <option value="Paypal">PayPal</option>
             </select>
-            <div v-if="error.payment" class="text-danger ">{{ error.payment }}</div>
+            <div v-if="error.payment" class="text-danger fz-smer">{{ error.payment }}</div>
           </div>
         </div>
       </div>
@@ -84,7 +84,7 @@
           <div class="fw-bold">使用H幣</div>
           <input v-model="discount" type="number" class="textbox form-floating no-spin" name="" id=""
             placeholder="請輸入數量" />
-          <div v-if="error.discount" class="text-danger ">{{ error.discount }}</div>
+          <div v-if="error.discount" class="text-danger fz-smer">{{ error.discount }}</div>
         </div>
         <div class="fz-sm text-end pb-4">
           目前有{{ H_Coin }}枚，最高可使用{{ coinUseLimit }}枚
@@ -108,6 +108,7 @@
       <img class="loading" src="../assets/progressGif/loading.gif" alt="Loading..." />
     </div>
   </div>
+
   <!-- 用表單送給藍新 -->
   <form name='Newebpay' method='post' action='https://ccore.newebpay.com/MPG/mpg_gateway'>
     <!-- 設定 hidden 可以隱藏不用給使用者看的資訊 -->
@@ -122,7 +123,7 @@
     <!-- 串接程式版本 -->
     <input type='hidden' id='Version' name='Version' value='2.0'>
     <!-- 直接執行送出 -->
-    <input type='submit' value='前往付款'>
+    <!-- <input type='submit' value='前往付款'> -->
   </form>
 </template>
   
@@ -373,6 +374,10 @@ onMounted(() => {
 
 .fz-10 {
   font-size: 15px;
+}
+
+.fz-smer {
+  font-size: 14px;
 }
 
 .checkoutbtn:not(.nav-btns button) {
