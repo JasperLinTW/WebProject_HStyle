@@ -42,20 +42,23 @@
         <div class="fz-12 fw-bold text-start border-bottom pb-1 mb-2">
           收件與付款資訊
         </div>
-        <div class="my-4 d-flex justify-content-between">
+        <div class="my-4 d-flex justify-content-between position-relative">
           <label for="name" class="form-label fw-bold pe-3">姓名</label>
           <input v-model="shipName" type="text" class="textbox_ship flex-grow-1" id="name" placeholder="請輸入姓名" />
-          <div v-if="error.name" class="text-danger fz-smer">{{ error.name }}</div>
+          <div v-if="error.name" class="text-danger fz-smer position-absolute top-50 start-50 translate-middle pe-7">{{
+            error.name }}</div>
           <label for="phone" class="form-label fw-bold pe-3">電話</label>
           <input v-model="shipPhone" type="text" class="textbox_ship flex-grow-1" id="phone" placeholder="請輸入電話號碼" />
-          <div v-if="error.phone" class="text-danger fz-smer">{{ error.phone }}</div>
+          <div v-if="error.phone" class="text-danger fz-smer position-absolute top-50 pb1 end-0 translate-middle-y">{{
+            error.phone }}</div>
         </div>
-        <div class="mb-4 d-flex justify-content-between">
+        <div class="mb-4 d-flex justify-content-between position-relative">
           <label for="address" class="form-label fw-bold pe-3">地址</label>
           <input v-model="shipAddress" type="text" class="textbox_ship flex-grow-1" id="address" placeholder="請輸入地址" />
-          <div v-if="error.address" class="text-danger fz-smer">{{ error.address }}</div>
+          <div v-if="error.address" class="text-danger fz-smer position-absolute pb1 top-50 end-0 translate-middle-y">{{
+            error.address }}</div>
         </div>
-        <div class="mb-3 d-flex justify-content-between">
+        <div class="mb-3 d-flex justify-content-between position-relative">
           <label for="payment" class="form-label fw-bold pe-3">付款方式</label>
           <div class="flex-grow-1">
             <select v-model="payment" aria-label="Select payment method" id="payment">
@@ -63,7 +66,9 @@
               <option value="信用卡">信用卡</option>
               <option value="Paypal">PayPal</option>
             </select>
-            <div v-if="error.payment" class="text-danger fz-smer">{{ error.payment }}</div>
+            <div v-if="error.payment" class="text-danger fz-smer pb-3 position-absolute top-50 end-0 translate-middle-y">
+              {{
+                error.payment }}</div>
           </div>
         </div>
       </div>
@@ -80,11 +85,12 @@
           <div class="fw-bold">運費</div>
           <div class="pe-1">NT$ 0</div>
         </div>
-        <div class="d-flex justify-content-between pb-2">
+        <div class="d-flex justify-content-between pb-2 ">
           <div class="fw-bold">使用H幣</div>
+          <div v-if="error.discount" class="text-danger pe-5 pt-1 fz-smer">
+            {{ error.discount }}</div>
           <input v-model="discount" type="number" class="textbox form-floating no-spin" name="" id=""
             placeholder="請輸入數量" />
-          <div v-if="error.discount" class="text-danger fz-smer">{{ error.discount }}</div>
         </div>
         <div class="fz-sm text-end pb-4">
           目前有{{ H_Coin }}枚，最高可使用{{ coinUseLimit }}枚
@@ -352,6 +358,17 @@ onMounted(() => {
 
 .pe-6 {
   padding-right: 10%;
+}
+
+
+.pe-7 {
+  padding-right: 15%;
+  padding-bottom: 1%;
+}
+
+.pb1 {
+  padding-bottom: 1%;
+  z-index: 9999;
 }
 
 .custom img {
