@@ -8,14 +8,11 @@
     </div>
   </div>
   <div>
-    <div id="carouselExampleIndicators" class="carousel slide mb-6" data-ride="carousel">
-      <ol class="carousel-indicators">
-        <li v-for="(item, index) in rec" :key="index" data-target="#carouselExampleIndicators" :data-slide-to="index"
-          :class="{ active: index === 0 }"></li>
-      </ol>
+    <div id="carouselExampleIndicators" class="carousel slide mb-6 mt-2 " data-ride="carousel">
       <div class="carousel-inner">
-        <div v-for="(item, index) in rec" :key="index" :class="{ active: index === 0 }" class="carousel-item">
-          <div class="row justify-content-center ps-6">
+        <div v-for="(item, index) in rec" :key="index" :class="{ active: index === 0 }" class="carousel-item"
+          data-bs-interval="5000">
+          <div class="row justify-content-center">
             <div class="col-md-6 img-container-lg">
               <router-link :to="'/product/' + item.product_Id">
                 <img :src="item.imgs[0]" alt="Large Image">
@@ -23,20 +20,19 @@
             </div>
             <div class="col-md-3 mt-5">
               <div class="row">
-                <div class="col-md-6 img-container-sm1 ms-5 ps-5">
+                <div class="col-md-6 img-container-sm1 ms-5 position-absolute top-0 start-0">
                   <router-link :to="'/product/' + item.product_Id">
                     <img :src="item.imgs[1]" alt="Small Image">
                   </router-link>
                 </div>
-              </div>
-            </div>
-            <div class="col-md-3 d-flex align-items-end">
-              <div class="row">
-                <div class="col-md-12 img-container-sm2">
+                <div class="col-md-12 img-container-sm2 position-absolute bottom-0 end-0 top-50">
                   <router-link :to="'/product/' + item.product_Id">
                     <img :src="item.imgs[2]" alt="Small Image">
                   </router-link>
                 </div>
+                <div class="col-md-12 position-absolute bottom-0 end-0 text-end text-light fs-5 fw-light">
+                  {{
+                    item.product_Name }}</div>
               </div>
             </div>
           </div>
@@ -110,18 +106,38 @@ const newProductsRecommend = async () => {
 
 const modules = ref([Navigation]);
 
+const windowscroll = () => {
+  const myDiv = document.querySelector('#carouselExampleIndicators');
+  window.addEventListener('scroll', function () {
+    const scrollHeight = window.scrollY;
+    if (scrollHeight >= 200 && scrollHeight < 300) {
+      myDiv.classList.add("bg-color");
+    } else {
+      myDiv.classList.remove("bg-color");
+    }
+  });
+}
+
 onMounted(() => {
   getWeatherRecommend();
   getOrderRecommend();
   newProductsRecommend();
+  windowscroll();
 })
 
 </script>
 
 <style scoped>
+.bg-color {
+  background-image: linear-gradient(to bottom, #434343 0%, black 100%, #6d6d6d 0%);
+  height: 100vh;
+  transition: background-color 10s ease-in-out;
+}
+
 .h500px {
   height: 500px;
 }
+
 
 .line {
   border-top: 1px solid #dee2e6;
@@ -144,7 +160,7 @@ onMounted(() => {
 }
 
 .mb-6 {
-  margin-bottom: 15%;
+  margin-bottom: 12%;
 }
 
 .px-10 {
@@ -156,6 +172,7 @@ onMounted(() => {
   width: 550px;
   height: 800px;
   overflow: hidden;
+  margin-top: 2%;
 }
 
 .img-container-lg img {
@@ -179,9 +196,11 @@ onMounted(() => {
 }
 
 .img-container-sm2 {
-  width: 330px;
-  height: 500px;
+  width: 320px;
+  height: 320px;
   overflow: hidden;
+  margin-top: 3%;
+  margin-left: 10%;
 }
 
 .img-container-sm2 img {

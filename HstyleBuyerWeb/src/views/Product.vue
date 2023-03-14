@@ -12,7 +12,7 @@
               <li>
                 <a class="dropdown-item" href="#" v-for="(option, index) in sortOptions" :key="index"
                   @click="setSortOption(option)">{{ option }} <i class="fa-solid fa-check ps-1 fs-7"
-                    v-if="selectedSortOption === option"></i></a>
+                    v-if="selectedSortOption === option && selectedSortOption !== null && selectedSortOption !== ''"></i></a>
               </li>
             </ul>
           </div>
@@ -24,7 +24,8 @@
               <li>
                 <router-link v-for="(option, index) in categoryOptions" :key="index" :to="
                   option === '全部' ? '/products/all' : `/products/${option}`
-                " class="dropdown-item">{{ option }}</router-link>
+                " class="dropdown-item">{{ option }}<i class="fa-solid fa-check ps-1 fs-7"
+                    v-if="selectedCatoOption === option"></i></router-link>
               </li>
             </ul>
           </div>
@@ -39,7 +40,7 @@
                     0,
                     Math.ceil(colorOptions.length / 2)
                   )" :key="index" @click="setColorOption(option)">{{ option }}<i class="fa-solid fa-check ps-1 fs-7"
-                      v-if="selectedColorOption === option"></i>
+                      v-if="selectedColorOption === option && selectedColorOption !== null"></i>
                   </a>
                 </li>
                 <li class="col-md-3">
@@ -77,12 +78,14 @@ import { ref, onMounted, watch, computed } from "vue";
 import { eventBus } from "../mybus";
 //商品預覽
 const products = ref([]);
+const productsResetOrder = ref([]);
 const route = useRoute();
 //console.log(route.params.tag);
 
 //商品篩選排序
 let selectedSortOption = ref();
 let selectedColorOption = ref();
+let selectedCatoOption = ref();
 const categoryOptions = ref([]);
 const colorOptions = ref([]);
 const sortOptions = ref(["新到舊", "舊到新", "價格高到低", "價格低到高"]);
@@ -135,6 +138,7 @@ const loadProducts = async () => {
         products.value = response.data.filter((p) => p.tags.includes("新品"));
       } else if (route.params.tag == "all") {
         products.value = response.data;
+
       } else {
         products.value = response.data.filter((p) =>
           p.pCategoryName.includes(route.params.tag)
@@ -146,19 +150,10 @@ const loadProducts = async () => {
     });
 };
 
-const priceFilter = ref(null);
 const categoryFilter = ref(null);
 const colorFilter = ref(null);
 const filteredProducts = computed(() => {
   let filtered = products.value;
-
-  if (priceFilter.value !== null) {
-    filtered = filtered.filter((p) => p.unitPrice <= priceFilter.value);
-  }
-
-  if (categoryFilter.value !== null) {
-    filtered = filtered.filter((p) => p.pCategoryName === categoryFilter.value);
-  }
 
   if (colorFilter.value !== null) {
     filtered = filtered.filter((p) =>
@@ -169,10 +164,11 @@ const filteredProducts = computed(() => {
   return filtered;
 });
 
+
 //還原
 const setOriginalOption = () => {
-  priceFilter.value = null;
   colorFilter.value = null;
+  setSortOption("新到舊");
   selectedColorOption.value = null;
   selectedSortOption.value = null;
 };
@@ -187,9 +183,9 @@ const setColorOption = (option) => {
 const setSortOption = (option) => {
   // sort the products based on the selected option
   if (option === "新到舊") {
-    filteredProducts.value.sort((a, b) => b.displayOrder - a.displayOrder);
-  } else if (option === "舊到新") {
     filteredProducts.value.sort((a, b) => a.displayOrder - b.displayOrder);
+  } else if (option === "舊到新") {
+    filteredProducts.value.sort((a, b) => b.displayOrder - a.displayOrder);
   } else if (option === "價格高到低") {
     filteredProducts.value.sort((a, b) => b.unitPrice - a.unitPrice);
   } else if (option === "價格低到高") {
@@ -205,6 +201,8 @@ watch(
     loadProducts();
   }
 );
+
+
 eventBus.on("addProductLike", () => {
   likesProducts();
 });
