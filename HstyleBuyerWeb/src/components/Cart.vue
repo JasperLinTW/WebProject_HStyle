@@ -85,9 +85,6 @@ const getCartInfo = async () => {
           minusItem(item.specId);
         });
       }
-
-
-      console.log(response.data)
       products.value = response.data;
       if (products.value.cartItems.length > 0) {
         isEmpty.value = false;

@@ -91,7 +91,7 @@ const getWeatherRecommend = async () => {
   await axios.get(`https://localhost:7243/api/Weather/weatherRec`)
     .then(response => {
       rec.value = response.data;
-      console.log(rec.value);
+      //console.log(rec.value);
       isLoadEnd.value = true;
     })
     .catch(error => { console.log(error); });

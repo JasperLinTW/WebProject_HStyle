@@ -2,22 +2,18 @@
 <template>
   <div class="container">
     <div class="row border-bottom mb-5 mt-4 pb-2 d-flex justify-content-evenly">
-      <div class="col-md-1"><router-link to="/Blog/EssaysBlog" class="nav-link targetAll btn-underline">文章</router-link></div>
-      <div class="col-md-1"><router-link to="/Blog/VideoBlog" class="nav-link targetAll btn-underline">影音</router-link></div>
+      <div class="col-md-1"><router-link to="/Blog/EssaysBlog" class="nav-link targetAll btn-underline">文章</router-link>
+      </div>
+      <div class="col-md-1"><router-link to="/Blog/VideoBlog" class="nav-link targetAll btn-underline">影音</router-link>
+      </div>
     </div>
   </div>
 
   <div class="container">
     <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
       <div class="carousel-indicators">
-        <button
-          type="button"
-          data-bs-target="#carouselExampleFade"
-          data-bs-slide-to="0"
-          class="active"
-          aria-current="true"
-          aria-label="Slide 1"
-        ></button>
+        <button type="button" data-bs-target="#carouselExampleFade" data-bs-slide-to="0" class="active"
+          aria-current="true" aria-label="Slide 1"></button>
         <button type="button" data-bs-target="#carouselExampleFade" data-bs-slide-to="1" aria-label="Slide 2"></button>
         <button type="button" data-bs-target="#carouselExampleFade" data-bs-slide-to="2" aria-label="Slide 3"></button>
         <button type="button" data-bs-target="#carouselExampleFade" data-bs-slide-to="3" aria-label="Slide 4"></button>
@@ -77,8 +73,8 @@
     <div class="container">
       <div class="row">
         <EssayCard v-for="item in essays.slice(0, 4)" :data="item"></EssayCard>
-        <!-- </div>
-      <div class="row"> -->
+      <!-- </div>
+              <div class="row"> -->
         <VideoCard v-for="items in videos.slice(0, 4)" :data="items"></VideoCard>
       </div>
       <!-- <EssayCard v-for="item in newessays.slice(0, 2)" :data="item"></EssayCard> -->
@@ -86,7 +82,7 @@
 
     <!-- 左右兩邊文章專區 -->
 
-    <!-- <div v-if="loaded" class="container-essay">
+  <!-- <div v-if="loaded" class="container-essay">
       <div class="column">
         <router-link :to="'/EssaysBlog/' + essays[1].essayId">
           <img :src="essays[0].imgs[0]" class="" alt="" />
@@ -108,7 +104,7 @@
         <img src="../assets/image/jisoo.jpg" alt="Image" />
         <img src="../assets/image/jisoo.jpg" alt="Image" />
       </div>
-                                      </div> -->
+                                              </div> -->
 
     <div class="container-essay" ref="container">
       <div class="col-4 column card" ref="firstColumn">
@@ -138,10 +134,10 @@
                 <img src="../assets/image/jisoo.jpg" class="card-img-top" alt="..." />
                 <div class="card-body">
                   <h5 class="card-title1">jisoo來了!開箱韓國女星的隨身包!</h5>
-                  <!-- <p class="card-text">
+                <!-- <p class="card-text">
                     2222222222This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit
                     longer.
-                  </p> -->
+                          </p> -->
                   <!-- <small class="text-muted">Last updated 3 mins ago</small> -->
                 </div>
               </div>
@@ -151,11 +147,11 @@
           <div class="row mt-3">
             <div class="col mb-3">
               <div class="custom-card">
-                <!-- <img src="../assets/image/column06.jpg" class="card-img-top" alt="..." />
+              <!-- <img src="../assets/image/column06.jpg" class="card-img-top" alt="..." />
                 <div class="card-body">
                   <h5 class="card-title1">Chanel 2023秋冬:這裡不是天堂，而是香奈兒秀場</h5>
                   
-                </div> -->
+                        </div> -->
               </div>
             </div>
           </div>
@@ -166,7 +162,7 @@
         <label for=""> 劉芒 配色小天才 #一週ootd</label>
         <img src="../assets/image/carousel03.jpg" alt="Image" />
         <label for="">【2023奧斯卡】得獎名單一覽！《媽的多重宇宙》勇奪最佳影片等7大獎、楊紫瓊寫新歷史成為華人首位奧斯卡影后</label>
-        <img src="../assets/image carousel04.webp" alt="" />
+        <img src="../assets/image/carousel04.webp" alt="" />
 
         <img src="../assets/image/column05.jpg" alt="Image" />
         <label for="">巴黎人冬天怎麼穿？直擊2023流行趨勢</label>
@@ -187,10 +183,10 @@
         <EssayCard v-for="item in essays.slice(2, 6)" :data="item"></EssayCard>
         <VideoCard v-for="item in videos.slice(7, 11)" :data="item"></VideoCard>
       </div>
-      <!-- <div class="row">
+    <!-- <div class="row">
           <VideoCard v-for="item in videos.slice(0,3)" :data="item"></VideoCard>
         </div>
-                                            <EssayCard v-for="item in newessays.slice(0, 2)" :data="item"></EssayCard> -->
+                                                    <EssayCard v-for="item in newessays.slice(0, 2)" :data="item"></EssayCard> -->
     </div>
   </div>
 </template>
@@ -210,10 +206,10 @@ const getEssayInfo = async () => {
     .get("https://localhost:7243/api/Essay")
     .then((response) => {
       essays.value = response.data;
-      console.log("essay");
+      //console.log("essay");
       // console.log(essays.value);
-      console.log(essays.value);
-      loaded.value = true;
+      //console.log(essays.value);
+      //loaded.value = true;
     })
     .catch((error) => {
       console.log(error);
@@ -266,7 +262,7 @@ $(function () {
     index = $(this).index();
   });
   let slideLiLength = $(".pages li").length;
-  console.log(slideLiLength);
+  // console.log(slideLiLength);
   $("#slideNext").on("click", function () {
     // console.log("123");
     index++;
@@ -343,6 +339,7 @@ const setup = () => {
   position: relative;
   overflow: hidden;
 }
+
 .slide-img {
   position: absolute;
   margin: 0;
@@ -353,10 +350,12 @@ const setup = () => {
   width: 6500px;
   /* left: -1600px; */
 }
+
 .slide-img li {
   width: 1300px;
   height: 500px;
 }
+
 .slide-img li img {
   width: 100%;
   /* height: 100%; */
@@ -364,6 +363,7 @@ const setup = () => {
   object-fit: cover;
   margin-top: -150px;
 }
+
 .pages {
   position: absolute;
   list-style: none;
@@ -374,6 +374,7 @@ const setup = () => {
   width: 100%;
   justify-content: center;
 }
+
 .pages li {
   border: 1px solid #fff;
   width: 5px;
@@ -381,6 +382,7 @@ const setup = () => {
   border-radius: 50%;
   margin: 0 5px;
 }
+
 .slide-arrow {
   position: absolute;
   /* background-color: red; */
@@ -394,17 +396,21 @@ const setup = () => {
   cursor: pointer;
   opacity: 0.6;
 }
+
 .right {
   right: 0;
 }
+
 .slide-arrow:hover {
   opacity: 1;
 }
+
 /* card custom-card */
 .custom-card {
   position: relative;
   top: 50px;
 }
+
 /* .custom-card:nth-child(2) {
   
 } */
@@ -418,6 +424,7 @@ const setup = () => {
   text-align: center;
   background-color: rgba(84, 88, 90, 0.5);
 }
+
 /* 
 .card-body {
   height: auto;
@@ -435,6 +442,7 @@ const setup = () => {
 .card-img-overlay {
   height: 500px;
 }
+
 hr .lan {
   border: none;
   border: 5px;
@@ -443,16 +451,19 @@ hr .lan {
   top: -15em;
   background-color: transparent;
 }
+
 /* essay card 排版 */
 .details {
   position: relative;
 }
+
 .details div {
   position: absolute;
   bottom: 0;
   font-weight: bold;
   color: white;
 }
+
 .category {
   right: 180px;
   left: 190px;
@@ -461,6 +472,7 @@ hr .lan {
   padding: 0px;
   height: 320px;
 }
+
 .title {
   font-family: 標楷體;
   font-size: large;
@@ -469,6 +481,7 @@ hr .lan {
   /* padding:60px; */
   height: 300px;
 }
+
 .influencer {
   font-family: cursive;
   padding: 60px;
@@ -476,6 +489,7 @@ hr .lan {
   left: 115px;
   right: 150px;
 }
+
 .formatDate {
   left: 80px;
   right: 90px;
@@ -485,6 +499,7 @@ hr .lan {
   padding: 60px;
   height: 150px;
 }
+
 /* 
 .custom-card {
   width: 100%;
@@ -493,6 +508,7 @@ hr .lan {
   max-width: 500px;
   max-height: 500px;
 }
+
 /* 文章專區 */
 .container-essay {
   display: flex;
@@ -501,23 +517,29 @@ hr .lan {
   height: 100vh;
   /* overflow-x: scroll; */
 }
+
 .card-img-top {
   height: 100vh;
 }
+
 /* 隱藏 scroll bar */
 .container-essay::-webkit-scrollbar {
   display: none;
 }
+
 .container::-webkit-scrollbar-thumb {
   background-color: transparent;
 }
+
 .column::-webkit-scrollbar {
   width: 0;
   height: 0;
 }
+
 .column::-webkit-scrollbar-thumb {
   background-color: transparent;
 }
+
 /* 
 .column {
   flex: 1;
@@ -547,6 +569,7 @@ img {
   padding: 10px;
   margin-right: 10px;
 }
+
 .column:first-child {
   flex: none;
   width: 33.33%;
@@ -557,22 +580,27 @@ img {
   right: 0;
   overflow: filled;
 }
+
 .column:first-child img {
   height: 100%;
   object-fit: cover;
 }
+
 .column:not(:first-child) {
   position: relative;
   z-index: -1;
 }
+
 img {
   display: block;
   width: 100%;
   margin-bottom: 10px;
 }
+
 a {
   text-decoration: none;
 }
+
 .btn-underline::after {
   content: "";
   position: absolute;
@@ -584,9 +612,11 @@ a {
   transform: scaleX(0);
   transition: transform 0.3s ease;
 }
+
 .btn-underline:hover::after {
   transform: scaleX(1);
 }
+
 .btn-underline {
   position: relative;
   padding: 0;
@@ -597,6 +627,7 @@ a {
   color: #333;
   cursor: pointer;
 }
+
 .btn-underline:hover {
   color: #000000;
 }

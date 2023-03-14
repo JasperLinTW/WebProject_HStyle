@@ -23,18 +23,11 @@
     <div class="row">
       <div class="col-2">
         <div style="position: sticky; top: 2%; transform: translate(-10%, 1%)">
-          <div
-            class="card d-flex justify-content-center align-items-center"
-            v-for="product in RecoProducts"
-            :key="product.product_Id"
-          >
+          <div class="card d-flex justify-content-center align-items-center" v-for="product in RecoProducts"
+            :key="product.product_Id">
             <a :href="`http://localhost:5173/product/${product.product_Id}`">
               <div class="img-sz">
-                <img
-                  :src="product.imgs[0]"
-                  class="card-img-top"
-                  alt="推薦商品圖片"
-                />
+                <img :src="product.imgs[0]" class="card-img-top" alt="推薦商品圖片" />
               </div>
             </a>
             <div class="card-body position-relative">
@@ -48,10 +41,7 @@
       </div>
 
       <div class="col-8">
-        <div
-          v-html="decodeURI(essays.econtent)"
-          class="container-text mx-auto h-100"
-        ></div>
+        <div v-html="decodeURI(essays.econtent)" class="container-text mx-auto h-100"></div>
       </div>
     </div>
   </div>
@@ -67,27 +57,14 @@
       <div class="input-group">
         <img class="avatar" src="../assets/image/user.png" alt="avatar" />
         <div class="input-group-text">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="留下評論"
-            v-model="comment"
-          />
-          <button
-            class="btn btn-primary"
-            type="button"
-            @click.prevent="postComment()"
-          >
+          <input type="text" class="form-control" placeholder="留下評論" v-model="comment" />
+          <button class="btn btn-primary" type="button" @click.prevent="postComment()">
             送出
           </button>
         </div>
       </div>
       <form action="">
-        <div
-          class="comment-section"
-          v-for="comment in essayComments"
-          :key="comment.commentId"
-        >
+        <div class="comment-section" v-for="comment in essayComments" :key="comment.commentId">
           <img class="avatar" src="../assets/image/user.png" alt="avatar" />
           <div class="comment-body">
             <h5 class="comment-user">{{ comment.memberName }}</h5>
@@ -95,14 +72,10 @@
             <div class="comment-actions">
               <hr />
 
-              <button
-                class="btn btn-sm"
-                :class="{
-                  'btn-primary': !commentIsClicked,
-                  'btn-danger': commentIsClicked,
-                }"
-                @click="postCommentLike(comment.id)"
-              >
+              <button class="btn btn-sm" :class="{
+                'btn-primary': !commentIsClicked,
+                'btn-danger': commentIsClicked,
+              }" @click="postCommentLike(comment.id)">
                 <i class="far fa-thumbs-up"></i>
                 <span class="likes-count">{{ comment.likes }}</span>
               </button>
@@ -126,7 +99,7 @@ import axios from "axios";
 // const router = useRouter();
 
 const route = useRoute();
-console.log(route.params.id);
+//console.log(route.params.id);
 
 const essays = ref({});
 //得到essay
@@ -135,7 +108,7 @@ const getEssayInfo = async () => {
     .get(`https://localhost:7243/api/Essay/${route.params.id}`)
     .then((response) => {
       essays.value = response.data;
-      console.log(essays.value);
+      //console.log(essays.value);
     })
 
     .catch((error) => {
@@ -150,7 +123,7 @@ const getEssayRecommenations = async () => {
     .get(`https://localhost:7243/api/Essay/Recommenations/${route.params.id}`)
     .then((axiosResponse) => {
       RecoProducts.value = axiosResponse.data;
-      console.log();
+      //console.log();
       //isLoded.value = true;
     })
     .catch((error) => {
@@ -170,7 +143,7 @@ const getComments = async () => {
         return v;
       });
       isLoaded.value = true;
-      console.log(commentIsClicked.value);
+      //console.log(commentIsClicked.value);
       // console.log(essayComments.value);
     })
     .catch((error) => {
@@ -319,7 +292,8 @@ const formatDate = (dateString) => {
 }
 
 .allComment {
-  z-index: 99; /* 將z-index設為1 */
+  z-index: 99;
+  /* 將z-index設為1 */
   position: absolute;
 }
 
@@ -345,6 +319,7 @@ img {
   width: 150%;
   margin-bottom: 10px;
 }
+
 .text {
   font-size: 25px;
   font-family: 標楷體;
@@ -377,7 +352,8 @@ img {
   width: 905px;
   height: 1212px;
   /* margin-left: 20px; */
-  text-align: justify; /* 上下文對齊 */
+  text-align: justify;
+  /* 上下文對齊 */
 }
 
 .fashion:hover {
@@ -407,15 +383,18 @@ img {
   left: 70%;
   transform: translateX(-50%);
 }
+
 .wrapper {
   padding: 0 20%;
 }
 
 .content {
   display: flex;
-  text-align: justify; /* 上下文對齊 */
+  text-align: justify;
+  /* 上下文對齊 */
   text-justify: inter-word;
 }
+
 #topButton {
   display: none;
   position: fixed;
@@ -457,6 +436,7 @@ img {
 .btn-underline:hover {
   color: #000000;
 }
+
 a {
   text-decoration: none;
 }
@@ -535,6 +515,7 @@ a {
   align-items: center;
   margin-bottom: 10px;
 }
+
 /* 
 .comment {
   display: flex;

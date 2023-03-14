@@ -1,32 +1,16 @@
 <template>
   <ul class="nav nav-tabs mt-5">
     <li class="nav-item">
-      <a
-        class="nav-link"
-        :class="{ active: currentTab === 'Product' }"
-        aria-current="page"
-        href="#"
-        @click.prevent="currentTab = 'Product'"
-        >商品收藏</a
-      >
+      <a class="nav-link" :class="{ active: currentTab === 'Product' }" aria-current="page" href="#"
+        @click.prevent="currentTab = 'Product'">商品收藏</a>
     </li>
     <li class="nav-item">
-      <a
-        class="nav-link"
-        :class="{ active: currentTab === 'Essay' }"
-        href="#"
-        @click.prevent="currentTab = 'Essay'"
-        >文章收藏</a
-      >
+      <a class="nav-link" :class="{ active: currentTab === 'Essay' }" href="#"
+        @click.prevent="currentTab = 'Essay'">文章收藏</a>
     </li>
     <li class="nav-item">
-      <a
-        class="nav-link"
-        :class="{ active: currentTab === 'Video' }"
-        href="#"
-        @click.prevent="currentTab = 'Video'"
-        >影片收藏</a
-      >
+      <a class="nav-link" :class="{ active: currentTab === 'Video' }" href="#"
+        @click.prevent="currentTab = 'Video'">影片收藏</a>
     </li>
   </ul>
   <div v-if="currentTab === 'Product'" class="mt-4 container-fluid">
@@ -75,8 +59,8 @@ const likesEssay = async () => {
     .get("https://localhost:7243/api/Essay/Elike", { withCredentials: true })
     .then((response) => {
       essaylikes.value = response.data;
-      console.log(`111111`);
-      console.log(essaylikes.value);
+
+      //console.log(essaylikes.value);
     })
     .catch((error) => {
       console.log(error);

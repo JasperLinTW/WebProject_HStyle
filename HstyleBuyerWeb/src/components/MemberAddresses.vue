@@ -1,9 +1,9 @@
 <template>
   <div id="div-t1">
     <h1>我的地址</h1>
-        <hr>
+    <hr>
   </div>
-  
+
   <div class="container my-5" id="div-t">
     <div class="order-header border-top border-bottom pt-2" id="div-t">
       <div class="row mb-2" id="div-t">
@@ -14,21 +14,21 @@
       </div>
     </div>
   </div>
-          <!-- <div class="accordion accordion-flush" id="accordionExample"> -->
-          <div style="text-align: left;" v-for="addressone in address" class="accordion-item" id="a12344">
-          <div style="text-align: left;" class="accordion-header row">
-          <div id="as" class="col-1 text-center ">{{ addressone.destinationName }}</div>
-          <!-- <div class="col-1 text-center pt-2"></div> -->
-          <div id="asdf" class="col-1 text-center pt-2">{{ addressone.destinationThe }}</div>
-          <div style="text-align: left;" id="asd" class="col-1">{{ addressone.destination}}</div>
-        
-        </div>
-      </div>
-    <!-- </div> -->
+  <!-- <div class="accordion accordion-flush" id="accordionExample"> -->
+  <div style="text-align: left;" v-for="addressone in address" class="accordion-item" id="a12344">
+    <div style="text-align: left;" class="accordion-header row">
+      <div id="as" class="col-1 text-center ">{{ addressone.destinationName }}</div>
+      <!-- <div class="col-1 text-center pt-2"></div> -->
+      <div id="asdf" class="col-1 text-center pt-2">{{ addressone.destinationThe }}</div>
+      <div style="text-align: left;" id="asd" class="col-1">{{ addressone.destination }}</div>
+
+    </div>
+  </div>
+  <!-- </div> -->
 
 
-          
-<!-- <div v-for="addressone in address" >
+
+  <!-- <div v-for="addressone in address" >
   <li class="list-group-item">姓名:{{ addressone.destinationName }}</li>
   <li class="list-group-item">地址：{{ addressone.destination}}</li>
   <li class="list-group-item">電話號碼:{{ addressone.destinationThe }}</li>
@@ -36,8 +36,8 @@
 
   <div style="text-align: left; text-indent: 60px">
 
-    <button id="btn-l" type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal111"
-      data-bs-whatever="@mdo">新增地址</button>
+    <button id="btn-l" type="button" class="btn btn-outline-secondary" data-bs-toggle="modal"
+      data-bs-target="#exampleModal111" data-bs-whatever="@mdo">新增地址</button>
   </div>
   <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@fat">Open modal for @fat</button>
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">Open modal for @getbootstrap</button> -->
@@ -67,11 +67,11 @@
               <!-- <textarea class="form-control" id="message-text" v-model="destinationThe" require></textarea> -->
             </div>
             <div class="form-check">
-            <!-- <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"> -->
-            <!-- id 跟 for沒有對稱 -->
-            <input style="margin-left:  133px;" class="form-check-input" id="one-checkbox" type="checkbox"/>   
-            <label class="form-check-label" for="flexCheckDefault" id="aa123">設為常用地址</label>
-          </div>
+              <!-- <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"> -->
+              <!-- id 跟 for沒有對稱 -->
+              <input style="margin-left:  133px;" class="form-check-input" id="one-checkbox" type="checkbox" />
+              <label class="form-check-label" for="flexCheckDefault" id="aa123">設為常用地址</label>
+            </div>
             <!-- <div class="mb-3">
             <label style="text-align: left;" for="message-text" class="col-form-label">四大超商收件:</label>
             <input type="text" class="form-control" id="floatingPassword" v-model="destinationCategory" require>
@@ -118,12 +118,12 @@ const AddAddress = () => {
 };
 
 const GetAddressInfo = async () => {
-    await axios.get("https://localhost:7243/api/Member/GetAddressInfo", { withCredentials: true, })
-        .then(response => {
-          address.value = response.data;
-            console.log(address.value)
-        })
-        .catch(error => { console.log(error); });
+  await axios.get("https://localhost:7243/api/Member/GetAddressInfo", { withCredentials: true, })
+    .then(response => {
+      address.value = response.data;
+      //console.log(address.value)
+    })
+    .catch(error => { console.log(error); });
 }
 onMounted(() => {
   GetAddressInfo();
@@ -147,66 +147,67 @@ label {
 
 
 }
-#as{
+
+#as {
   margin-left: -15px;
   /* padding: 10px; */
   /* background-color: #5f4646; */
   text-align: left;
 }
-#asdf
-{
+
+#asdf {
   margin-left: 80px;
   /* background-color: #eee; */
   text-align: left;
 }
-#asd
-{
+
+#asd {
   margin-left: 90px;
   margin-right: -800px;
-  display: inline-block; 
+  display: inline-block;
   width: 1000px;
   /* background-color: #eee; */
 }
 
-#a12344
-{
+#a12344 {
   border-bottom: 1px solid rgb(216, 217, 218);
   text-align: left;
-  padding-left:  133px;
+  padding-left: 133px;
   padding-right: 133px;
-  margin-left:  133px;
-  margin-right:  133px;
-  
+  margin-left: 133px;
+  margin-right: 133px;
+
   /* background-color: #47afc2; */
 }
-#div-t
-{
+
+#div-t {
   margin-top: 0px;
 
   margin-bottom: -30px;
 
 }
-#div-t1
-{
+
+#div-t1 {
   margin-top: 0px;
 
   margin-bottom: -50px;
 
 }
-#btn-l
-{ margin-top: 1px;
+
+#btn-l {
+  margin-top: 1px;
   margin-left: 620px;
 
 }
-#flexCheckDefault
-{
+
+#flexCheckDefault {
   /* padding-left:  500; */
-  margin-left:  133px;
+  margin-left: 133px;
 
 }
-#aa123
-{
-  padding-left:  -50px;
-  margin-left:  -200px;
+
+#aa123 {
+  padding-left: -50px;
+  margin-left: -200px;
 }
 </style>
