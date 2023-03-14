@@ -26,7 +26,7 @@
         <div class="col-md-12 mt-3">
           <div class="row">
             <div class="col-md-12 d-flex justify-content-center">
-              <button type="button" @click="login" class="btn_Login mt-3 px-6 ms-6">
+              <button type="button" @click="login" class="btn_Login mt-3 px-5 ms-6">
                 登入
               </button>
               <button type="button" class="btn btn-link mt-3 ps-5" data-bs-toggle="modal"
