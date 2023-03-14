@@ -1,37 +1,37 @@
 <template>
-  <div class="container-fluid m-5">
-    <div class="row">
+  <div class="container m-5">
+    <div class="row d-flex justify-content-center">
       <div class="col-md-12 ps-5 mb-5">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="http://localhost:5173/">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">{{ product.pCategoryName }}</a></li>
+            <li class="breadcrumb-item click text-secondary" @click="returnToCategory()">{{ product.pCategoryName }}</li>
             <li class="breadcrumb-item active">{{ product.product_Name }}</li>
           </ol>
         </nav>
       </div>
-      <div class="col-md-2"></div>
-      <div class="col-md-5">
+      <div class="col-md-7 ps-7 mb-5">
         <swiper :direction="'vertical'" :pagination="{
           clickable: true,
         }" :modules="modules" class="MySwiper">
           <swiper-slide v-for="(image, index) in product.imgs" :key="index"><img :src="image"></swiper-slide>
         </swiper>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-5 ps-6">
         <div class="row m-0">
-          <div class="col-md-8 d-flex justify-content-start">
+          <div class="col-md-12 pt-6"></div>
+          <div class="col-md-12 d-flex justify-content-between p-0">
             <div v-for="(image, index) in product.imgs" :key="index" class="thumb" @click="showMultiple(index)">
-              <img :src="image" class="pe-3">
+              <img :src="image" class="p-0 pe-2">
             </div>
             <vue-easy-lightbox :visible="visibleRef" :imgs="imgsRef" :index="indexRef" @hide="onHide"></vue-easy-lightbox>
           </div>
           <div class="col-md-12 text-start">
             <h5 class="py-5">{{ product.product_Name }}</h5>
           </div>
-          <div class="col-md-12 mb-5 text-start">
+          <div class="col-md-12 mb-5">
             <div>
-              <div class="product-options">
+              <div class="product-options text-start">
                 <label>規格:</label>
                 <select v-model="SelectSpecId" class="mx-2">
                   <option v-for="spec in product.specs" :value="spec.specId">
@@ -41,13 +41,13 @@
               </div>
             </div>
           </div>
-          <div class="col-md-12"></div>
-          <div class="col-md-12  mt-5 text-start">
+          <div class="col-md-12 pt-5"></div>
+          <div class="col-md-12 text-start mt-2">
             <button @click="addItem()" class="add-to-cart"> NT$ {{ product.unitPrice }}<span class="border-start  ms-2"
                 data-bs-target="#exampleModal"><span class="ps-2">加入購物車</span></span></button>
-            <span class="m-3" v-if="!isClicked" @click="likesProduct()"><i
+            <span class=" pl-2" v-if="!isClicked" @click="likesProduct()"><i
                 class="fa-regular fa-heart icon-hover fz-18"></i></span>
-            <span class="m-3" v-else @click="likesProduct()"><i class="fa-solid fa-heart fz-18"></i></span>
+            <span class="pl-2" v-else @click="likesProduct()"><i class="fa-solid fa-heart fz-18"></i></span>
           </div>
         </div>
       </div>
@@ -237,12 +237,14 @@ const getComment = async () => {
       response.data.map((p) => {
         p.isClicked = helpfulCommentsId.value.includes(p.commentId);
       });
+
     })
     .catch((error) => {
       console.log(error);
     });
 };
 //評論點讚
+let isLoaded = ref(false);
 let helpfulComments = ref([]);
 let helpfulCommentsId = ref([]);
 const loadHelpfulComments = async () => {
@@ -253,19 +255,22 @@ const loadHelpfulComments = async () => {
       helpfulCommentsId.value = helpfulComments.value.map((c) => { return c.commentId })
     })
     .catch(error => { console.log(error); });
+
+  getComment();
 }
 
 eventBus.on("addhelpfulComments", () => {
   loadHelpfulComments();
 });
 
-
+const returnToCategory = () => {
+  window.location = `http://localhost:5173/products/${product.value.pCategoryName}`
+}
 
 onMounted(() => {
   likesProducts();
   getProduct();
   getRecommend();
-  getComment();
   loadHelpfulComments();
 });
 </script>
@@ -306,6 +311,10 @@ onMounted(() => {
   cursor: pointer;
 }
 
+.pt-6 {
+  padding-top: 30%;
+}
+
 .btn-underline:hover {
   color: #000000;
 }
@@ -326,15 +335,15 @@ onMounted(() => {
   transform: scaleX(1);
 }
 
-.container-fluid {
-  overflow-x: hidden;
-}
-
 .thumb {
   width: 100px;
   height: 100px;
   margin-bottom: 10px;
   cursor: pointer;
+}
+
+.ps-8 {
+  padding-right: 15%;
 }
 
 .thumb img {
@@ -343,14 +352,18 @@ onMounted(() => {
   object-fit: cover;
 }
 
+.ps-6 {
+  padding-left: 17%;
+  margin-right: 0%;
+}
+
 .MySwiper {
-  width: 500px;
+  width: 480px;
   height: 600px;
   overflow: hidden;
 }
 
 .MySwiper .swiper-slide img {
-  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -359,6 +372,10 @@ onMounted(() => {
 .fz-18 {
   font-size: 20px;
   cursor: pointer;
+}
+
+.ps-7 {
+  padding-left: 30%;
 }
 
 .add-to-cart {
@@ -390,6 +407,10 @@ onMounted(() => {
   border: 1px solid #ccc;
   border-radius: 5%;
   font-size: 15px;
+}
+
+.click {
+  cursor: pointer;
 }
 
 a {

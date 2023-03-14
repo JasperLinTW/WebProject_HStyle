@@ -22,6 +22,7 @@ const props = defineProps({
     overflow: hidden;
     border: none;
     padding-bottom: 2%;
+    border-radius: 0%;
 }
 
 .card img {

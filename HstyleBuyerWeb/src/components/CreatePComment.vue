@@ -120,13 +120,13 @@ watch(files, (newFiles, oldFiles) => {
 const maxFileSize = 4 * 1024 * 1024; // 2MB
 const createComment = async () => {
   if (files.value != null) {
+    if (files.value.length > 2) {
+      alert("超過照片張數限制");
+      return;
+    }
     for (let i = 0; i < files.value.length; i++) {
       if (files.value[i].size > maxFileSize) {
         alert(`檔案 ${files.value[i].name} 過大，請選擇小於 4MB 的檔案`);
-        return;
-      }
-      else if (files.value.length > 2) {
-        alert("超過照片張數限制");
         return;
       }
     }

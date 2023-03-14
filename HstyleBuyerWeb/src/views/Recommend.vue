@@ -7,36 +7,71 @@
       </div>
     </div>
   </div>
-  <div class="container d-flex justify-content-center mb-6">
-    <div class="row  justify-content-center">
-      <div class="col-md-6 img-container-lg">
-        <img :src="recImg.length > 0 ? recImg[0] : ''" alt="Large Image">
-      </div>
-      <div class="col-md-3 mt-5">
-        <div class="row">
-          <div class="col-md-6 img-container-sm1">
-            <img :src="recImg.length > 0 ? recImg[1] : ''" alt="Small Image 1">
+  <div>
+    <div id="carouselExampleIndicators" class="carousel slide mb-6 mt-2 " data-ride="carousel">
+      <div class="carousel-inner">
+
+        <div v-for="(item, index) in rec" :key="index" :class="{ active: index === 0 }" class="carousel-item"
+          data-bs-interval="5000">
+          <div class="row justify-content-center">
+            <div class="col-md-2"></div>
+            <div class="col-md-3 img-container-lg">
+              <router-link :to="'/product/' + item.product_Id">
+                <img :src="item.imgs[0]" alt="Large Image">
+              </router-link>
+            </div>
+            <div class="col-md-3 mt-5">
+              <div class="row">
+                <div class="col-md-6 img-container-sm1 ms-5 position-absolute top-0 start-0">
+                  <router-link :to="'/product/' + item.product_Id">
+                    <img :src="item.imgs[1]" alt="Small Image">
+                  </router-link>
+                </div>
+                <div class="col-md-12 img-container-sm2 position-absolute bottom-0 end-0 top-50">
+                  <router-link :to="'/product/' + item.product_Id">
+                    <img :src="item.imgs[2]" alt="Small Image">
+                  </router-link>
+                </div>
+                <div class="col-md-12 position-absolute bottom-0 end-0 text-end fs-5 fw-light">
+                  {{
+                    item.product_Name }}</div>
+              </div>
+            </div>
+            <div class="col-md-3 mt-5">
+              <div class="row">
+                <div class="col-md-2">
+                  <label>最高溫</label>
+                  <div class="fs-1 mb-5">{{ temp[0] }}</div>
+                  <label>最低溫</label>
+                  <div class="fs-1">{{ temp[1] }}</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="col-md-3 d-flex align-items-end">
-        <div class="row">
-          <div class="col-md-12 img-container-sm2">
-            <img :src="recImg.length > 0 ? recImg[2] : ''" alt="Small Image 2">
-          </div>
-        </div>
-      </div>
+      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
     </div>
   </div>
+
   <div class="container">
     <div class="row">
       <div class="h500px">
         <div class="col-md-12">
-          <span class="px-5">| 會員專屬推薦 |</span>
+          <span v-if="orec.length > 0" class="px-5">| 會員專屬推薦 |</span>
+          <span v-else class="px-5">| 新品推薦 |</span>
         </div>
         <div class="col-md-12">
           <div class="row">
-            <RecommendCard v-for="item in orec" :data="item"></RecommendCard>
+            <RecommendCard v-for="item in orec" :data="item" v-if="orec.length > 0"></RecommendCard>
+            <RecommendCard v-for="item in newrec" :data="item" v-else></RecommendCard>
           </div>
         </div>
       </div>
@@ -50,18 +85,14 @@ import axios from "axios";
 import RecommendCard from '../components/RecommendCard.vue';
 
 const rec = ref([]);
-const recImg = ref([])
 const isLoadEnd = ref(false);
 //推薦商品
 const getWeatherRecommend = async () => {
   await axios.get(`https://localhost:7243/api/Weather/weatherRec`)
     .then(response => {
       rec.value = response.data;
-      recImg.value = response.data.map((p) => {
-        return p.imgs[0];
-      })
-      //isLoadEnd.value = true;
       console.log(rec.value);
+      isLoadEnd.value = true;
     })
     .catch(error => { console.log(error); });
 }
@@ -76,19 +107,69 @@ const getOrderRecommend = async () => {
     .catch(error => { console.log(error); });
 }
 
+const newrec = ref([]);
+const newProductsRecommend = async () => {
+  await axios.get(`https://localhost:7243/api/Products/NewRec`)
+    .then(response => {
+      newrec.value = response.data;
+    })
+    .catch(error => { console.log(error); });
+}
 
+const modules = ref([Navigation]);
+
+const temp = ref([]);
+const getWeather = async () => {
+  await axios.get(`https://localhost:7243/api/Weather/weather`)
+    .then(response => {
+      temp.value = response.data;
+    })
+    .catch(error => { console.log(error); });
+}
+
+
+
+
+const windowscroll = () => {
+  const myDiv = document.querySelector('#carouselExampleIndicators');
+  let isScrollingDown = false;
+  let lastScrollPosition = 0;
+
+  window.addEventListener('scroll', function () {
+    const scrollHeight = window.scrollY;
+    isScrollingDown = scrollHeight > lastScrollPosition;
+    lastScrollPosition = scrollHeight;
+
+    if (isScrollingDown && scrollHeight >= 200 && scrollHeight < 300) {
+      myDiv.classList.add("bg-color");
+    } else {
+      myDiv.classList.remove("bg-color");
+    }
+  });
+};
 
 onMounted(() => {
   getWeatherRecommend();
   getOrderRecommend();
+  newProductsRecommend();
+  windowscroll();
+  getWeather();
 })
 
 </script>
 
 <style scoped>
+.bg-color {
+  background-image: linear-gradient(to bottom, #434343 0%, black 100%, #6d6d6d 0%);
+  height: 100vh;
+  transition: background-color 10s ease-in-out;
+  color: white;
+}
+
 .h500px {
   height: 500px;
 }
+
 
 .line {
   border-top: 1px solid #dee2e6;
@@ -111,7 +192,7 @@ onMounted(() => {
 }
 
 .mb-6 {
-  margin-bottom: 15%;
+  margin-bottom: 12%;
 }
 
 .px-10 {
@@ -123,6 +204,7 @@ onMounted(() => {
   width: 550px;
   height: 800px;
   overflow: hidden;
+  margin-top: 2%;
 }
 
 .img-container-lg img {
@@ -133,7 +215,7 @@ onMounted(() => {
 }
 
 .img-container-sm1 {
-  width: 330px;
+  width: 350px;
   height: 450px;
   overflow: hidden;
 }
@@ -146,9 +228,11 @@ onMounted(() => {
 }
 
 .img-container-sm2 {
-  width: 330px;
-  height: 500px;
+  width: 320px;
+  height: 320px;
   overflow: hidden;
+  margin-top: 3%;
+  margin-left: 10%;
 }
 
 .img-container-sm2 img {
@@ -156,5 +240,9 @@ onMounted(() => {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.ps-6 {
+  padding-left: 10%;
 }
 </style>

@@ -25,29 +25,25 @@
         </div>
         <div class="col-md-12 mt-3">
           <div class="row">
-            <div class="col-md-3"></div>
-            <div class="col-md-5">
-              <button type="button" @click="login" class="btn mt-3 me-4">
+            <div class="col-md-12 d-flex justify-content-center">
+              <button type="button" @click="login" class="btn_Login mt-3 px-5 ms-6">
                 登入
               </button>
-              <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal456" data-bs-whatever="@mdo">
+              <button type="button" class="btn btn-link mt-3 ps-5" data-bs-toggle="modal"
+                data-bs-target="#exampleModal456" data-bs-whatever="@mdo">
                 忘記密碼?
               </button>
             </div>
-            <div>
-            <button class="btn mt-3 me-4" @click="fillIn">填入</button>
           </div>
-              </div>
+        </div>
       </div>
-    </div>
-    <div v-else class="m-0 p-0">
-      <div class="col-md-12 mt-3  h-100">
-        <div class="form-floating mb-3">
-            <input id="name" type="text" class="form-control"  v-model="Rname" pattern="^[\u4e00-\u9fa5]{2,5}$" placeholder="請輸入姓名" required />
-            <div v-if="error.name" class="text-danger ">{{ error.name }}</div>
-            <label for="name">姓名</label>
+      <div v-else class="m-0 p-0">
+        <div class="col-md-12 mt-3  h-500px">
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="floatingInput" v-model="Rname" required />
+            <label for="floatingInput">姓名</label>
           </div>
-        <div class="form-floating mb-3">
+          <div class="form-floating mb-3">
             <input type="text" class="form-control" id="floatingInput" v-model="Raccount" required />
             <label for="floatingInput">帳號</label>
             <div v-if="error.Raccount" class="text-danger ">{{ error.Raccount }}</div>
@@ -77,73 +73,73 @@
             <div v-if="error.Rbirthday" class="text-danger ">{{ error.Rbirthday }}</div>
 
           </div>
-          <div class="text-center " >
-  <input class="form-check-input " type="radio" name="gender" id="male" value="true" v-model="Rgender" required>
-  <label class="form-check-label" for="male">
-    男
-  </label>
-</div>
-<div class="text-center">
-  <input class="form-check-input" type="radio" name="gender" id="female" value="false" v-model="Rgender" required>
-  <label class="form-check-label" for="female">
-    女
-  </label>
-</div>
-<div v-if="error.Rgender" class="text-danger ">{{ error.Rgender }}</div>
-      
-<div class="form-floating mb-3">
-            <input type="text" class="form-control" id="floatingInput" v-model="Rphone_Number" required />
-            <label for="floatingInput">電話</label>
+          <div class="col-md-12">
+            <div class="row d-flex justify-content-start mb-2">
+              <div class="col-md-4 text-start p-0 fz-10"> <label class="ps-c ">性別</label></div>
+              <div class="col-md-4 text-start">
+                <input class="form-check-input " type="radio" name="gender" id="male" value="true" v-model="Rgender">
+                <label class="form-check-label" for="male">
+                  男
+                </label>
+              </div>
+              <div class="col-md-4 text-start">
+                <input class="form-check-input" type="radio" name="gender" id="female" value="false" v-model="Rgender">
+                <label class="form-check-label" for="female">
+                  女
+                </label>
+              </div>
+            </div>
           </div>
-          <div v-if="error.Rphone_Number" class="text-danger ">{{ error.Rphone_Number }}</div>
 
-        <div class="row">
-          <div class="col-md-3"></div>
-          <div class="col-md-5">
-            <button type="button" @click="Register" class="btn mt-3 me-4">
-              註                            冊
-            </button>
-            <div>
-            <button class="btn mt-3 me-4" @click="RfillIn">填入</button>
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="floatingInput" v-model="Rphone_Number" required />
+            <label for="floatingInput ms-2">電話</label>
           </div>
+
+          <div class="row mb-5">
+            <div class="col-md-3"></div>
+            <div class="col-md-5">
+              <button type="button" @click="Register" class="btn_Login mt-3 ms-5 px-6">
+                註冊
+              </button>
+            </div>
           </div>
-        </div>
         </div>
       </div>
-            <!-- <div class="col-md-3">
+      <!-- <div class="col-md-3">
               <div class="pt-4 mt-1 text-start fz-sm">忘記密碼?</div>
             </div> -->
-         
-<!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@fat">Open modal for @fat</button>
+
+      <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@fat">Open modal for @fat</button>
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">Open modal for @getbootstrap</button> -->
 
-<div class="modal fade" id="exampleModal456" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">請輸入帳號信箱以更新密碼!!</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="mb-3">
-            <label for="forgetaccont" class="col-form-label">帳號:</label>
-            <input type="text" class="form-control" id="forgetaccont" v-model="forgetaccont" require>
+      <div class="modal fade" id="exampleModal456" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">請輸入帳號信箱以更新密碼!!</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="mb-3">
+                  <label for="forgetaccont" class="col-form-label">帳號:</label>
+                  <input type="text" class="form-control" id="forgetaccont" v-model="forgetaccont" require>
+                </div>
+                <div class="mb-3">
+                  <label for="mail" class="col-form-label">信箱:</label>
+                  <input class="form-control" id="mail" v-model="mail" require>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+              <button type="button" class="btn btn-primary" @click="ForgetPassword">送出驗證信</button>
+            </div>
           </div>
-          <div class="mb-3">
-            <label for="mail" class="col-form-label">信箱:</label>
-            <input class="form-control" id="mail" v-model="mail" require>
-          </div>
-        </form>
+        </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-        <button type="button" class="btn btn-primary" @click="ForgetPassword">送出驗證信</button>
-      </div>
-    </div>
-  </div>
-</div>
-   
+
     </div>
     <!-- <button type="button" @click="getMemberId" class="btn btn-light">取id</button>
         <button type="button" @click="getCartInfo" class="btn btn-light">取購物車測試</button> -->
@@ -225,7 +221,7 @@ const checkLogin = () => {
     });
 };
 
-  const ForgetPassword = () => {
+const ForgetPassword = () => {
   axios.post('https://localhost:7243/api/Member/ForgetPassword', {
     account: forgetaccont.value,
     email: mail.value,
@@ -245,12 +241,12 @@ const Register = () => {
   };
   axios.post('https://localhost:7243/api/Member/Register', {
     account: Raccount.value,
-    password:Rpassword.value,
-    address:Raddress.value,
-    birthday:Rbirthday.value,
-    gender:Rgender.value,
-    name:Rname.value,
-    phone_Number:Rphone_Number.value,
+    password: Rpassword.value,
+    address: Raddress.value,
+    birthday: Rbirthday.value,
+    gender: Rgender.value,
+    name: Rname.value,
+    phone_Number: Rphone_Number.value,
     email: Remail.value,
 
   }, { withCredentials: true }).then((response) => {
@@ -364,6 +360,31 @@ const RfillIn = () => {
 </script>
   
 <style scoped>
+.fz-10 {
+  font-size: 13.5px;
+  padding-left: 5%;
+  color: #6c757d;
+}
+
+.ps-c {
+  padding-left: 5%;
+}
+
+.btn-link {
+  text-decoration: none;
+  color: #000;
+}
+
+.btn-link:hover {
+  color: #adb5bd;
+}
+
+.ms-6 {
+  margin-left: 21%;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
 .fz-sm {
   font-size: 14px;
 }
@@ -386,8 +407,8 @@ const RfillIn = () => {
   margin-bottom: 50px;
 }
 
-.h-500px{
-  height: 500px;
+.h-500px {
+  height: 720px;
 }
 
 
@@ -400,7 +421,7 @@ const RfillIn = () => {
   padding-right: 4px;
 }
 
-.btn {
+.btn_Login {
   background-color: #fff;
   color: rgb(12, 13, 12);
   padding: 10px 28px;
@@ -409,12 +430,12 @@ const RfillIn = () => {
   transition: all 0.3s ease;
 }
 
-.btn:hover {
+.btn_Login:hover {
   background-color: #000;
   color: #fff;
 }
 
-.h-100{
+.h-100 {
   height: auto;
 }
 
@@ -442,6 +463,10 @@ select:-webkit-autofill {
   background-image: none;
 
   transition: background-color 50000s ease-in-out 0s;
+}
+
+.px-6 {
+  padding-inline: 75px;
 }
 
 .btn-underline::after {
