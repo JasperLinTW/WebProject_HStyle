@@ -41,6 +41,8 @@
                      <div v-if="errorMessage">{{ errorMessage }}</div>
                   </div>
                   <button type="submit" class="btn btn-primary">送出</button>
+                  <hr>
+                  <button type="buttom" @click="putData()" class="btn btn-dark">填入資料</button>
                </form>
             </div>
          </div>
@@ -58,6 +60,11 @@ import axios from "axios";
 import AlertModal from "../components/AlertModal.vue";
 import { useRouter } from "vue-router";
 const router = useRouter();
+
+const putData = () => {
+   title.value = "訂製商品";
+   problemDescription.value = "我想訂製商品可以嗎?";
+};
 
 const categoryQ = ref([]);
 const getQCategoryInfo = async () => {

@@ -10,6 +10,7 @@
             <i class="fa-solid fa-magnifying-glass"></i>
          </button>
       </form>
+      <button type="buttom" @click="putData()" class="btn btn-dark">填入資料</button>
    </div>
    <!-- 呈現問題 -->
    <div class="container-sm" style="min-height: 800px">
@@ -128,7 +129,11 @@ import CustmorQForm from "../components/CustomerQForm.vue";
 import MemberQForm from "../components/MemberQForm.vue";
 import AlertModal from "../components/AlertModal.vue";
 import ChatRoom from "../components/ChatRoom.vue";
-// import io from "socket.io-client";
+
+// 填入資料
+const putData = () => {
+   searchKeyword.value = "消";
+};
 
 // 常見問題
 const categoryQ = ref([]);
