@@ -7,10 +7,27 @@
 <h2>員工登入</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
+    <script>
+        function fillAccountAndPassword1() {
+            // 填充账号和密码
+            document.getElementById("Account").value = "level1";
+            document.getElementById("Password").value = "level1";
+        }
+        function fillAccountAndPassword2() {
+            // 填充账号和密码
+            document.getElementById("Account").value = "level2";
+            document.getElementById("Password").value = "level2";
+        }
+        function fillAccountAndPassword3() {
+            // 填充账号和密码
+            document.getElementById("Account").value = "level3";
+            document.getElementById("Password").value = "level3";
+        }
+    </script>
     <div class="form-horizontal">
         @*<h4>Login_EmployeesVM</h4>*@
         <hr />
@@ -34,14 +51,40 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="登入" class="btn btn-default" />
+                <input type="button" value="一般員工權限" class="btn btn-default" onclick="fillAccountAndPassword1()" />
+                <input type="button" value="員工權限" class="btn btn-default" onclick="fillAccountAndPassword2()" />
+                <input type="button" value="全部權限" class="btn btn-default" onclick="fillAccountAndPassword3()" />
             </div>
         </div>
+
+        @*<div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="登入" class="btn btn-default" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="button" value="一般員工權限" class="btn btn-default" onclick="fillAccountAndPassword1()" />
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="button" value="員工權限" class="btn btn-default" onclick="fillAccountAndPassword2()" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="button" value="全部權限" class="btn btn-default" onclick="fillAccountAndPassword3()" />
+                </div>
+            </div>
+        </div>*@
     </div>
 }
 
 @*<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>*@
+        @Html.ActionLink("Back to List", "Index")
+    </div>*@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

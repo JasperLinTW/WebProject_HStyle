@@ -34,6 +34,9 @@
                 忘記密碼?
               </button>
             </div>
+            <div>
+            <button class="btn mt-3 me-4" @click="fillIn">填入</button>
+          </div>
               </div>
       </div>
     </div>
@@ -41,52 +44,68 @@
       <div class="col-md-12 mt-3  h-100">
         <div class="form-floating mb-3">
             <input id="name" type="text" class="form-control"  v-model="Rname" pattern="^[\u4e00-\u9fa5]{2,5}$" placeholder="請輸入姓名" required />
-            <!-- <div v-if="error.name" class="text-danger ">{{ error.name }}</div> -->
+            <div v-if="error.name" class="text-danger ">{{ error.name }}</div>
             <label for="name">姓名</label>
           </div>
         <div class="form-floating mb-3">
             <input type="text" class="form-control" id="floatingInput" v-model="Raccount" required />
             <label for="floatingInput">帳號</label>
+            <div v-if="error.Raccount" class="text-danger ">{{ error.Raccount }}</div>
+
           </div>
           <div class="form-floating mb-3">
             <input type="password" class="form-control" id="floatingInput" v-model="Rpassword" required />
             <label for="floatingInput">密碼</label>
+            <div v-if="error.Rpassword" class="text-danger ">{{ error.Rpassword }}</div>
+
           </div>
           <div class="form-floating mb-3">
             <input type="text" class="form-control" id="floatingInput" v-model="Remail" required />
             <label for="floatingInput">信箱</label>
+            <div v-if="error.Remail" class="text-danger ">{{ error.Remail }}</div>
+
           </div>
           <div class="form-floating mb-3">
             <input type="text" class="form-control" id="floatingInput" v-model="Raddress" required />
             <label for="floatingInput">地址</label>
+            <div v-if="error.Raddress" class="text-danger ">{{ error.Raddress }}</div>
+
           </div>
           <div class="form-floating mb-3">
             <input type="date" class="form-control" id="floatingInput" v-model="Rbirthday" required />
             <label for="floatingInput">生日</label>
+            <div v-if="error.Rbirthday" class="text-danger ">{{ error.Rbirthday }}</div>
+
           </div>
           <div class="text-center " >
-  <input class="form-check-input " type="radio" name="gender" id="male" value="true" v-model="Rgender">
+  <input class="form-check-input " type="radio" name="gender" id="male" value="true" v-model="Rgender" required>
   <label class="form-check-label" for="male">
     男
   </label>
 </div>
 <div class="text-center">
-  <input class="form-check-input" type="radio" name="gender" id="female" value="false" v-model="Rgender">
+  <input class="form-check-input" type="radio" name="gender" id="female" value="false" v-model="Rgender" required>
   <label class="form-check-label" for="female">
     女
   </label>
 </div>
-          <div class="form-floating mb-3">
+<div v-if="error.Rgender" class="text-danger ">{{ error.Rgender }}</div>
+      
+<div class="form-floating mb-3">
             <input type="text" class="form-control" id="floatingInput" v-model="Rphone_Number" required />
             <label for="floatingInput">電話</label>
           </div>
-      
+          <div v-if="error.Rphone_Number" class="text-danger ">{{ error.Rphone_Number }}</div>
+
         <div class="row">
           <div class="col-md-3"></div>
           <div class="col-md-5">
             <button type="button" @click="Register" class="btn mt-3 me-4">
               註                            冊
             </button>
+            <div>
+            <button class="btn mt-3 me-4" @click="RfillIn">填入</button>
+          </div>
           </div>
         </div>
         </div>
@@ -129,6 +148,7 @@
     <!-- <button type="button" @click="getMemberId" class="btn btn-light">取id</button>
         <button type="button" @click="getCartInfo" class="btn btn-light">取購物車測試</button> -->
   </div>
+
 </template>
   
 <script setup>
@@ -137,7 +157,14 @@ import { ref, onMounted } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
 
+// function loginbutton() {   test
+// 			var Account = document.getElementById("Account").value;
+// 			var Password = document.getElementById("Password").value;
 
+// 			// 这里可以添加验证逻辑，比如检查用户名和密码是否符合要求
+
+// 			alert("您输入的用户名是：" + Account + "\n您输入的密码是：" + Password);
+// 		}
 const router = useRouter();
 const account = ref("");
 const password = ref("");
@@ -154,7 +181,6 @@ const Remail = ref("")
 const Rphone_Number = ref("")
 const Rgender = ref('male')
 
-const emailRegex = /^[^\s@]+@[^\s@]+.[^\s@]+$/;
 const phoneRegex = /^09\d{8}$/;
 const nameRegex=/^[\u4e00-\u9fa5]{2,5}$/;
 const accountPattern=/^[a-zA-Z][a-zA-Z0-9_]{5,15}$/;
@@ -214,9 +240,9 @@ const checkLogin = () => {
 };
 
 const Register = () => {
-  // if (!validateForm()) {
-  //   return;
-  // };
+  if (!validateForm()) {
+    return;
+  };
   axios.post('https://localhost:7243/api/Member/Register', {
     account: Raccount.value,
     password:Rpassword.value,
@@ -235,19 +261,15 @@ const Register = () => {
     console.log(err)
   })
 };
-// const getCartInfo = async () => {
-//   await axios
-//     .get("https://localhost:7243/api/Cart", { withCredentials: true })
-//     .then((response) => {
-//       console.log(response.data);
-//     })
-//     .catch((error) => {
-//       console.log(error.response.status);
-//       if (error.response.status === 401) {
-//         window.location = "http://localhost:5173/login";
-//       }
-//     });
-// };
+
+
+
+
+
+
+
+
+
 const showLogin = ref(true);
 
 onMounted(() => {
@@ -258,12 +280,87 @@ const error = ref({});
 const validateForm = () => {
   error.value = {};
 
-  if (!shipName.value) {
+  if (!Rname.value) {
     error.value.name = "收件姓名必填";
+  }
+  else if (Rname.value.length < 2) {
+    error.value.name = "姓名長度太短";
+  }
+  if (!Rname.value) {
+    error.value.Raccount = "帳號必填";
+  }
+
+  if (!Rname.value) {
+    error.value.Rpassword = "密碼必填";
+    }
+  const emailRegex = /^[^\s@]+@[^\s@]+.[^\s@]+$/;
+    if (!Rname.value) {
+    error.value.Remail = "信箱必填";
+  }  
+  else if (!emailRegex.test(Remail.value)) {
+    error.value.Remail = "信箱格式錯誤,例xxx@gmcil.com";
+  }
+  const addressPattern = /^(台灣省|台灣|臺灣省|臺灣)?([^\s]+?[市|縣|州])([^\s]+?[區|鄉|鎮])([^\s]+?(?:街|路|巷))([^\s]+?(?:號))?$/;
+  if (!Raddress.value) {
+    error.value.Raddress = "地址欄位必填";
+  }
+  else if (!addressPattern.test(Raddress.value)) {
+    error.value.Raddress = "地址格式錯誤,例:桃園市中壢區新生路二段421號";
+  }
+  if (!Rbirthday.value) {
+    error.value.Rbirthday = "生日欄位必填";
+  }
+  if (!Rgender.value) {
+    error.value.Rgender = "性別欄位必填";
+  }
+  const phonePattern = /^09\d{8}$/;
+  if (!Rphone_Number.value) {
+    error.value.Rphone_Number = "電話欄位必填";
+  }
+  else if (!phonePattern.test(Rphone_Number.value)) {
+    error.value.Rphone_Number = "電話格式錯誤,例:0900000000";
   }
   // 所有驗證都通過，返回 true
   return true;
 }
+
+
+ //以下是登入填值用
+    const fillIn = () => {
+      account.value = 'test';
+      password.value = 'test';
+
+
+    return {
+      account,
+      password,
+      fillIn,
+    };
+  };
+//以下註冊用
+
+const RfillIn = () => {
+    Raccount.value= 'test888885';
+    Rpassword.value= 'test888885';
+    Raddress.value= '桃園市中壢區新生路二段421號';
+    Rbirthday.value= Date.now;
+    Rgender.value= true;
+    Rname.value= 'test';
+    Rphone_Number.value= '0955878888';
+    Remail.value= 'vunvun0213@gmail.com';
+    return {
+      Raccount,
+      Rpassword,
+      Raddress,
+      Rbirthday,
+      Rgender,
+      Rname,
+      Rphone_Number,
+      Remail,
+      RfillIn,
+    };
+  };
+
 </script>
   
 <style scoped>
