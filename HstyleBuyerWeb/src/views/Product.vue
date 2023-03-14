@@ -35,8 +35,8 @@
             </div>
             <ul class="dropdown-menu menu border-0 mt-1" aria-labelledby="colorDropdown">
               <div class="row">
-                <li class="col-md-3">
-                  <a class="dropdown-item item" href="#" v-for="(option, index) in colorOptions.slice(
+                <li class="col-md-4">
+                  <a class="dropdown-item item me-3" href="#" v-for="(option, index) in colorOptions.slice(
                     0,
                     Math.ceil(colorOptions.length / 2)
                   )" :key="index" @click="setColorOption(option)">{{ option }}<i class="fa-solid fa-check ps-1 fs-7"
@@ -60,6 +60,9 @@
   </div>
 
   <div class="container">
+    <div v-if="route.params.tag == 'new'" class="fs-5"> | 新品 |</div>
+    <div v-else-if="route.params.tag == 'all'" class="fs-5">| 全部商品 |</div>
+    <div v-else class="fs-5">| {{ route.params.tag }} |</div>
     <div class="row">
       <ProductCard v-if="filteredProducts.length > 0" v-for="item in filteredProducts" :data="item" />
       <div v-else class="h-1000 col-md-12">- 無此篩選項目的商品 -</div>
@@ -148,6 +151,7 @@ const loadProducts = async () => {
     .catch((error) => {
       console.log(error);
     });
+
 };
 
 const categoryFilter = ref(null);
@@ -216,6 +220,8 @@ onMounted(() => {
   padding-bottom: 0.5%;
   font-size: 12pt;
 }
+
+
 
 .menu {
   border: none;

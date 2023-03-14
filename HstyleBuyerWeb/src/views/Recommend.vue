@@ -10,10 +10,12 @@
   <div>
     <div id="carouselExampleIndicators" class="carousel slide mb-6 mt-2 " data-ride="carousel">
       <div class="carousel-inner">
+
         <div v-for="(item, index) in rec" :key="index" :class="{ active: index === 0 }" class="carousel-item"
           data-bs-interval="5000">
           <div class="row justify-content-center">
-            <div class="col-md-6 img-container-lg">
+            <div class="col-md-2"></div>
+            <div class="col-md-3 img-container-lg">
               <router-link :to="'/product/' + item.product_Id">
                 <img :src="item.imgs[0]" alt="Large Image">
               </router-link>
@@ -30,9 +32,19 @@
                     <img :src="item.imgs[2]" alt="Small Image">
                   </router-link>
                 </div>
-                <div class="col-md-12 position-absolute bottom-0 end-0 text-end text-light fs-5 fw-light">
+                <div class="col-md-12 position-absolute bottom-0 end-0 text-end fs-5 fw-light">
                   {{
                     item.product_Name }}</div>
+              </div>
+            </div>
+            <div class="col-md-3 mt-5">
+              <div class="row">
+                <div class="col-md-2">
+                  <label>最高溫</label>
+                  <div class="fs-1 mb-5">{{ temp[0] }}</div>
+                  <label>最低溫</label>
+                  <div class="fs-1">{{ temp[1] }}</div>
+                </div>
               </div>
             </div>
           </div>
@@ -106,23 +118,42 @@ const newProductsRecommend = async () => {
 
 const modules = ref([Navigation]);
 
+const temp = ref([]);
+const getWeather = async () => {
+  await axios.get(`https://localhost:7243/api/Weather/weather`)
+    .then(response => {
+      temp.value = response.data;
+    })
+    .catch(error => { console.log(error); });
+}
+
+
+
+
 const windowscroll = () => {
   const myDiv = document.querySelector('#carouselExampleIndicators');
+  let isScrollingDown = false;
+  let lastScrollPosition = 0;
+
   window.addEventListener('scroll', function () {
     const scrollHeight = window.scrollY;
-    if (scrollHeight >= 200 && scrollHeight < 300) {
+    isScrollingDown = scrollHeight > lastScrollPosition;
+    lastScrollPosition = scrollHeight;
+
+    if (isScrollingDown && scrollHeight >= 200 && scrollHeight < 300) {
       myDiv.classList.add("bg-color");
     } else {
       myDiv.classList.remove("bg-color");
     }
   });
-}
+};
 
 onMounted(() => {
   getWeatherRecommend();
   getOrderRecommend();
   newProductsRecommend();
   windowscroll();
+  getWeather();
 })
 
 </script>
@@ -132,6 +163,7 @@ onMounted(() => {
   background-image: linear-gradient(to bottom, #434343 0%, black 100%, #6d6d6d 0%);
   height: 100vh;
   transition: background-color 10s ease-in-out;
+  color: white;
 }
 
 .h500px {

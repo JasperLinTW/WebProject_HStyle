@@ -233,18 +233,14 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 		{
 			var products = _db.Products.Include(x => x.Tags).Where(x => x.ProductId != product_id);
 
-			List<int> products_id = new List<int>();
 
-			foreach (var item in products)
-			{
-				foreach (var tag in data)
-				{
-					if (item.Tags.Any(x => x.Id == tag) == true)
-					{
-						products_id.Add(item.ProductId);
-					}
-				}
-			}
+			var products_id = products
+	                         .Where(item => item.Tags.Any(x => data.Contains(x.Id)))
+	                         .Select(item => item.ProductId)
+	                         .Distinct()
+	                         .ToList();
+
+
 			return products_id;
 		}
 
@@ -295,17 +291,24 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 
 		public List<int> GetProductsByOrder(int maxvaluetag, int member_id)
 		{
+			//最新一筆order
 			var orders = _db.Orders.Where(x => x.MemberId == member_id).ToList().TakeLast(1);
-			var productsId = orders.Select(x => x.OrderDetails.Select(x => x.ProductId));
 
-			List<int> ordersproducts = new List<int>();
-			foreach (var order in productsId)
+			//沒買過東西推新品給他
+			List<int> newproducts = new List<int>();
+			if (orders == null)
 			{
-				foreach (var pId in order)
-				{
-					ordersproducts.Add(pId);
-				}
-			}
+				newproducts = _db.Products.Where(x => x.Tags.Any(t => t.TagName.Contains("新品"))).Select(x => x.ProductId).ToList();
+				return newproducts;
+			};
+
+
+			//最多購買的商品
+			var productsId = orders.SelectMany(x => x.OrderDetails.Select(d => d.ProductId));
+
+			List<int> ordersproducts = productsId.Distinct().ToList();
+
+			//推給顧客有最多購買商品的tag項目
 			var dbPro = _db.Products.Where(x => !ordersproducts.Contains(x.ProductId)).Where(x => x.Tags.Select(x => x.Id).Contains(maxvaluetag));
 
 			var products = new List<int>();

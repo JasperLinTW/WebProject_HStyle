@@ -73,8 +73,8 @@ namespace HStyleApi.Models.Services
 			//取得此筆product的所有tag Id
 			var data = _repo.GetProductInfo(product_id);
 
-			var tags = data.Tags.Select(x => x.Id);
-			//找出其他有這個tag的商品
+			var tags = data.Tags.Where(x => x.TagName != "新品").Select(x => x.Id);
+			//找出其他有這個tag的商品 (新品除外)
 
 			var products_id = _repo.GetProductByTags(tags, product_id);
 
