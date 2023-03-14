@@ -20,6 +20,7 @@ namespace ScheduleWork
 			// 發放購物活動H幣
 			HcoinForOrder(today);
 
+			// 影片的排程
 			ChangeIsOnShelf(today);
 
 			// 文章的排程
@@ -56,38 +57,38 @@ namespace ScheduleWork
 			foreach (var member in memberInBirth)
 			{
 				//var sendHcoin = memberBirthInActivity.Where(a => a.Member_Id == member.Id);
-				try
+				//try
+				//{
+				if (!memberBirthInActivity.Any(a => a.Member_Id == member.Id))
 				{
-					if (!memberBirthInActivity.Any(a => a.Member_Id == member.Id))
+					// 加入Member中的Total_H
+					Member memberData = _db.Members.SingleOrDefault(m => m.Id == member.Id);
+					memberData.Total_H += activity_value;
+					_db.SaveChanges();
+
+					// 新增一筆紀錄
+					H_Source_Details detail = new H_Source_Details()
 					{
-						// 加入Member中的Total_H
-						Member memberData = _db.Members.SingleOrDefault(m => m.Id == member.Id);
-						memberData.Total_H += activity_value;
-						_db.SaveChanges();
+						Member_Id = member.Id,
+						Activity_Id = activityId,
+						Difference_H = activity_value,
+						Event_Time = today,
+						Total_H_SoFar = memberData.Total_H
+					};
+					_db.H_Source_Details.Add(detail);
+					_db.SaveChanges();
 
-						// 新增一筆紀錄
-						H_Source_Details detail = new H_Source_Details()
-						{
-							Member_Id = member.Id,
-							Activity_Id = activityId,
-							Difference_H = activity_value,
-							Event_Time = today,
-							Total_H_SoFar = memberData.Total_H
-						};
-						_db.H_Source_Details.Add(detail);
-						_db.SaveChanges();
-
-						Console.WriteLine(member.Account.ToString() + "獲得生日活動H幣");
-					}
-					//else
-					//{
-					//	Console.WriteLine("今年已發送過了");
-					//}
+					Console.WriteLine(member.Account.ToString() + "獲得生日活動H幣");
 				}
-				catch (Exception ex)
-				{
-					throw new Exception(ex.Message);
-				}
+				//else
+				//{
+				//	Console.WriteLine("今年已發送過了");
+				//	//}
+				//}
+				//catch (Exception ex)
+				//{
+				//	throw new Exception(ex.Message);
+				//}
 			}
 		}
 
@@ -103,7 +104,7 @@ namespace ScheduleWork
 			int fullPrice = _db.H_Activities.SingleOrDefault(a => a.H_Activity_Id == fullPriceId).H_Value;
 			// 購物滿額發送的H幣，以購買金額的(多少)%來做為發放的金額
 			int hCoinId = 5;
-			double hCoinPercent = _db.H_Activities.SingleOrDefault(a => a.H_Activity_Id == hCoinId).H_Value / 100;
+			double hCoinPercent = _db.H_Activities.SingleOrDefault(a => a.H_Activity_Id == hCoinId).H_Value / 100.0;
 			// 已發送過H幣的訂單(三個月內)
 			DateTime inDays = today.AddDays(-90);
 			var orderInSources = _db.H_Source_Details
@@ -128,38 +129,41 @@ namespace ScheduleWork
 						Member memberData = _db.Members.SingleOrDefault(m => m.Id == order.Member_id);
 						// 訂單金額
 						int price = _db.Orders.SingleOrDefault(o => o.Order_id == order.Order_id).Total;
-						// 計算發送的H幣，白金會員
-						double calHCoin = price * hCoinPercent;
-						// 依據會員等級發放
-						if (memberData.Permission_Id == 1)
+						if (memberData != null && price >= fullPrice)
 						{
-							// 銀級會員
-							calHCoin *= 0.5;
-						}
-						else if (memberData.Permission_Id == 2)
-						{
-							// 金級會員
-							calHCoin *= 0.75;
-						}
-						int hCoin = (int)Math.Round(calHCoin, 0, MidpointRounding.AwayFromZero);
-						// 加入Member中的Total_H						
-						memberData.Total_H += hCoin;
-						_db.SaveChanges();
+							// 計算發送的H幣，白金會員
+							double calHCoin = price * hCoinPercent;
+							// 依據會員等級發放
+							if (memberData.Permission_Id == 1)
+							{
+								// 銀級會員
+								calHCoin *= 0.5;
+							}
+							else if (memberData.Permission_Id == 2)
+							{
+								// 金級會員
+								calHCoin *= 0.75;
+							}
+							int hCoin = (int)Math.Round(calHCoin, 0, MidpointRounding.AwayFromZero);
+							// 加入Member中的Total_H						
+							memberData.Total_H += hCoin;
+							_db.SaveChanges();
 
-						// 新增一筆紀錄
-						H_Source_Details detail = new H_Source_Details()
-						{
-							Member_Id = order.Member_id,
-							Activity_Id = hCoinId,
-							Difference_H = hCoin,
-							Event_Time = today,
-							Total_H_SoFar = memberData.Total_H,
-							Remark = "訂單編號:" + order.Order_id.ToString()
-						};
-						_db.H_Source_Details.Add(detail);
-						_db.SaveChanges();
+							// 新增一筆紀錄
+							H_Source_Details detail = new H_Source_Details()
+							{
+								Member_Id = order.Member_id,
+								Activity_Id = hCoinId,
+								Difference_H = hCoin,
+								Event_Time = today,
+								Total_H_SoFar = memberData.Total_H,
+								Remark = "訂單編號:" + order.Order_id.ToString()
+							};
+							_db.H_Source_Details.Add(detail);
+							_db.SaveChanges();
 
-						Console.WriteLine($"訂單:{order.Order_id.ToString()}，已發送貨幣");
+							Console.WriteLine($"訂單:{order.Order_id.ToString()}，已發送貨幣");
+						}
 					}
 				}
 				catch (Exception ex)
