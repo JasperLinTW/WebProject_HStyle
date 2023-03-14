@@ -13,6 +13,7 @@ const routes = [
     ]},
     { path: '/Blog',name:'Blog', component:()=> import('../views/Blog.vue'),meta: { requiresAuth: false } },
     { path: '/Blog/EssaysBlog',name:'EssaysBlog', component:()=> import('../views/EssaysBlog.vue'),meta: { requiresAuth: false } },
+    { path: '/Blog/EssaysBlog/:authorName',name:'AuthorPage', component:()=> import('../views/AuthorPage.vue'),meta: { requiresAuth: false } },
     { path: '/Blog/VideoBlog', name: 'VideoBlog', component: () => import('../views/VideoBlog.vue'), meta: { requiresAuth: false } },
     { path: '/VideoBlog/:id', name: 'SingleVideo', component: () => import('../views/SingleVideo.vue'), meta: { requiresAuth: false } },
     { path: '/EssaysBlog/:id', name: 'SingleEssay', component: () => import('../views/SingleEssay.vue') , meta: { requiresAuth: false } },

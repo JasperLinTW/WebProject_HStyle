@@ -35,7 +35,7 @@
     </div>
   </div>
   <div v-if="currentTab === 'Essay'">
-    <EssayCollection v-for="item in likes" :data="item" />
+    <EssayCollection v-for="item in essaylikes" :data="item" />
   </div>
   <div v-if="currentTab === 'Video'">
     <VideoCollection v-for="item in vlikes" :data="item" />
@@ -62,19 +62,21 @@ const likesProducts = async () => {
     })
     .then((response) => {
       likes.value = response.data;
-      console.log(response.data);
+      //console.log(response.data);
     })
     .catch((error) => {
       console.log(error);
     });
 };
+const essaylikes = ref([]);
 
 const likesEssay = async () => {
   await axios
     .get("https://localhost:7243/api/Essay/Elike", { withCredentials: true })
     .then((response) => {
-      likes.value = response.data;
-      console.log(likes.value);
+      essaylikes.value = response.data;
+      console.log(`111111`);
+      console.log(`${essaylikes.value}`);
     })
     .catch((error) => {
       console.log(error);
@@ -90,7 +92,7 @@ const likesVideos = async () => {
     })
     .then((response) => {
       vlikes.value = response.data;
-      console.log(response.data);
+      //console.log(response.data);
     })
     .catch((error) => {
       console.log(error);

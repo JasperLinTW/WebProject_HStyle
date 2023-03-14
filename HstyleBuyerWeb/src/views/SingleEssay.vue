@@ -8,7 +8,12 @@
   <div class="column">
     <div class="fashion">{{ essays.categoryName }}</div>
     <div class="text">{{ essays.etitle }}</div>
-    <div class="Who">By {{ essays.influencerName }}</div>
+    <div class="Who">
+      By
+      <router-link :to="`/Blog/EssaysBlog/${essays.influencerName}`">{{
+        essays.influencerName
+      }}</router-link>
+    </div>
     <div class="Time">{{ formatDate(essays.uplodTime) }}</div>
     <hr />
 
@@ -17,16 +22,7 @@
     </div>
     <div class="row">
       <div class="col-2">
-        <div
-          style="
-            position: sticky;
-            /* left: 85%; */
-            /* height: 100%; */
-            top: 2%;
-            transform: translate(-10%, 1%);
-            /* overflow-y: scroll; */
-          "
-        >
+        <div style="position: sticky; top: 2%; transform: translate(-10%, 1%)">
           <div
             class="card d-flex justify-content-center align-items-center"
             v-for="product in RecoProducts"
@@ -98,6 +94,7 @@
             <p class="comment-text">{{ comment.ecomment }}</p>
             <div class="comment-actions">
               <hr />
+
               <button
                 class="btn btn-sm"
                 :class="{
@@ -198,6 +195,29 @@ const getComments = async () => {
 //       }
 //     });
 // };
+
+// 點擊喜歡的留言
+// const commentId = ref(false);
+const postCommentLike = (commentId) => {
+  console.log(commentId);
+  console.log(essayComments.value.commentId);
+  axios
+    .post(
+      `https://localhost:7243/api/Essay/comment/Likes/${commentId}`,
+      {},
+      { withCredentials: true }
+    )
+    .then((response) => {
+      commentIsClicked.value = !commentIsClicked.value;
+      getCommentLikes();
+    })
+    .catch((error) => {
+      console.log(error);
+      if (error.response.status === 401) {
+        window.location = "http://localhost:5173/login";
+      }
+    });
+};
 
 //寫留言
 const comment = ref("");
