@@ -21,7 +21,6 @@ namespace H2StyleStore.Models.EFModels
 
         public int Order_id { get; set; }
 
-        [Required]
         [StringLength(1000)]
         public string Comment_content { get; set; }
 

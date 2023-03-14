@@ -17,7 +17,7 @@ namespace H2StyleStore.Models.EFModels
 		public virtual DbSet<CommonQuestion> CommonQuestions { get; set; }
 		public virtual DbSet<CustomerQuestion> CustomerQuestions { get; set; }
 		public virtual DbSet<Eassy_Follows> Eassy_Follows { get; set; }
-		public virtual DbSet<ECommentlike> ECommentlikes { get; set; }
+		public virtual DbSet<EComments_Likes> EComments_Likes { get; set; }
 		public virtual DbSet<Elike> Elikes { get; set; }
 		public virtual DbSet<Employee> Employees { get; set; }
 		public virtual DbSet<Essay> Essays { get; set; }
@@ -95,16 +95,6 @@ namespace H2StyleStore.Models.EFModels
 				.HasMany(e => e.Tags)
 				.WithMany(e => e.Essays)
 				.Map(m => m.ToTable("Essays_Tags").MapLeftKey("Essay_Id"));
-
-			modelBuilder.Entity<Essays_Comments>()
-				.HasMany(e => e.ECommentlikes)
-				.WithRequired(e => e.Essays_Comments)
-				.WillCascadeOnDelete(false);
-
-			modelBuilder.Entity<Essays_Comments>()
-				.HasMany(e => e.Members)
-				.WithMany(e => e.Essays_Comments1)
-				.Map(m => m.ToTable("EComments_Likes").MapLeftKey("Comment_Id"));
 
 			modelBuilder.Entity<H_Activities>()
 				.HasMany(e => e.H_CheckIns)
@@ -302,7 +292,5 @@ namespace H2StyleStore.Models.EFModels
 				.HasOptional(e => e.VideoView)
 				.WithRequired(e => e.Video);
 		}
-
-        public System.Data.Entity.DbSet<H2StyleStore.Models.ViewModels.CustomerQuestionVM> CustomerQuestionVMs { get; set; }
-    }
+	}
 }

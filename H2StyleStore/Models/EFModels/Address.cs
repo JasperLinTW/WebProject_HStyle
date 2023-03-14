@@ -14,7 +14,7 @@ namespace H2StyleStore.Models.EFModels
 
         public int Member_id { get; set; }
 
-        public bool Gender { get; set; }
+        public bool? Gender { get; set; }
 
         [Required]
         [StringLength(100)]
@@ -28,9 +28,8 @@ namespace H2StyleStore.Models.EFModels
         [StringLength(10)]
         public string destination_THE { get; set; }
 
-        public bool preset { get; set; }
+        public bool? preset { get; set; }
 
-        [Required]
         [StringLength(50)]
         public string destination_category { get; set; }
 

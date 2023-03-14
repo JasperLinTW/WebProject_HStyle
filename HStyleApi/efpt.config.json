@@ -187,10 +187,11 @@
          "ObjectType": 0
       }
    ],
-   "UiHint": "ispanteam3.HstyleStore",
+   "UiHint": "DESKTOP-F962CH5.HstyleStore",
    "UncountableWords": null,
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": false,
+   "UseDateOnlyTimeOnly": false,
    "UseDbContextSplitting": false,
    "UseFluentApiOnly": true,
    "UseHandleBars": false,

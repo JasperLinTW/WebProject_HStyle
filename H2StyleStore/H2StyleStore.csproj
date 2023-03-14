@@ -203,7 +203,7 @@
     <Compile Include="Models\EFModels\CommonQuestion.cs" />
     <Compile Include="Models\EFModels\CustomerQuestion.cs" />
     <Compile Include="Models\EFModels\Eassy_Follows.cs" />
-    <Compile Include="Models\EFModels\ECommentlike.cs" />
+    <Compile Include="Models\EFModels\EComments_Likes.cs" />
     <Compile Include="Models\EFModels\Elike.cs" />
     <Compile Include="Models\EFModels\Employee.cs" />
     <Compile Include="Models\EFModels\Essay.cs" />

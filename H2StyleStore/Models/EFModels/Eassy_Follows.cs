@@ -9,6 +9,7 @@ namespace H2StyleStore.Models.EFModels
     public partial class Eassy_Follows
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Member_Id { get; set; }
 
         public int Eassy_Id { get; set; }

@@ -40,6 +40,8 @@ namespace H2StyleStore.Models.EFModels
 
         public int CategoryId { get; set; }
 
+        public bool? PON { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Eassy_Follows> Eassy_Follows { get; set; }
 

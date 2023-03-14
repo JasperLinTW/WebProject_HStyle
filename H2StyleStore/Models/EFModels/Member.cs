@@ -19,7 +19,6 @@ namespace H2StyleStore.Models.EFModels
             H_Source_Details = new HashSet<H_Source_Details>();
             Orders = new HashSet<Order>();
             VideoComments = new HashSet<VideoComment>();
-            Essays_Comments1 = new HashSet<Essays_Comments>();
         }
 
         public int Id { get; set; }
@@ -32,27 +31,23 @@ namespace H2StyleStore.Models.EFModels
         [StringLength(50)]
         public string Email { get; set; }
 
-        [Required]
         [StringLength(50)]
         public string Account { get; set; }
 
-        [Required]
         [StringLength(10)]
         public string Phone_Number { get; set; }
 
-        [Required]
         [StringLength(100)]
         public string Address { get; set; }
 
-        public bool Gender { get; set; }
+        public bool? Gender { get; set; }
 
         [Column(TypeName = "datetime2")]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
         public DateTime Birthday { get; set; }
 
         public int? Permission_Id { get; set; }
-        [DisplayFormat(DataFormatString ="{0:yyyy-MM-dd HH:mm:ss}",ApplyFormatInEditMode =true)]
-        public DateTime Jointime { get; set; }
+
+        public DateTime? Jointime { get; set; }
 
         public bool? Mail_verify { get; set; }
 
@@ -91,8 +86,5 @@ namespace H2StyleStore.Models.EFModels
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VideoComment> VideoComments { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Essays_Comments> Essays_Comments1 { get; set; }
     }
 }
