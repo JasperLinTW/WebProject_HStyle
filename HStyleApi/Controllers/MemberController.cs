@@ -217,7 +217,7 @@ namespace HStyleApi.Controllers
                 DestinationThe = dto.DestinationThe,
                 DestinationCategory = "7-11",  //改了這個 保護資料庫不會錯
                 MemberId = member.Id,
-                Preset=true, //改了這個 保護資料庫不會錯
+                Preset=false, //改了這個 保護資料庫不會錯
                 Gender =true,  //改了這個 保護資料庫不會錯
 
 
@@ -255,17 +255,6 @@ namespace HStyleApi.Controllers
                 MailCode = Guid.NewGuid().ToString("N"),//mail的確認確認碼  ConfirmCode=我資料庫的 Mail_code
                 EncryptedPassword = register.EncryptedPassword, //加密密碼 
                 TotalH = 0,
-
-                //Account = register.Account,
-                //Name = register.Name,
-                //EncryptedPassword = register.EncryptedPassword,
-                //PhoneNumber = register.Phone_Number,
-                //Email = register.Email,
-                //Birthday = register.Birthday,
-                //Gender=register.Gender,
-                //Address = register.Address,
-                //IsConfirmed = false,
-                //ConfirmCode = Guid.NewGuid().ToString("N"),
 
             };
             _context.Members.Add(member);
