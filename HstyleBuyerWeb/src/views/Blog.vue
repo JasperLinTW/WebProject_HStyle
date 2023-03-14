@@ -15,20 +15,20 @@
       <a class="slide-arrow" id="slidePrev"><i class="fa-solid fa-chevron-left"></i></a>
       <a class="slide-arrow right" id="slideNext"><i class="fa-solid fa-chevron-right"></i></a>
       <ul class="slide-img" id="slideImg">
-        <li><img src="../assets/image/chanel1.jpg" alt="" /><figcaption>1111</figcaption></li>
-        <li><img src="../assets/image/chanel2.jpg" alt="" /><figcaption>2222</figcaption></li>
+        <li><img class="carouselimg" src="../assets/image/carousel01.avif" alt=""/></li>
+        <li><img src="../assets/image/carousel02.jpg" alt="" /></li>
         <li><img src="../assets/image/chanel3.jpg" alt="" /><figcaption>3333</figcaption></li>
         <li><img src="../assets/image/chanel4.jpg" alt="" /><figcaption>1111</figcaption></li>
         <li><img src="../assets/image/chanel5.jpg" alt="" /><figcaption>1111</figcaption></li>
       </ul>
-      <!-- <div class="card-img-overlay">
+      <div class="card-img-overlay">
         <div class="card-title">
           <h5 class="">
             This is a wider card with supporting text below as a natural lead-in
             to additional content. This content is a little bit longer.
           </h5>
         </div>
-      </div> -->
+      </div>
       <ul class="pages">
         <li></li>
         <li></li>
@@ -49,10 +49,10 @@
     </div>
     <div  class="container">
       <div class="row">
-        <EssayCard v-for="item in essays.slice(0, 2)" :data="item"></EssayCard>
+        <EssayCard v-for="item in essays.slice(0, 4)" :data="item"></EssayCard>
       <!-- </div>
       <div class="row"> -->
-        <VideoCard v-for="items in videos.slice(0, 2)" :data="items"></VideoCard>
+        <VideoCard v-for="items in videos.slice(0, 4)" :data="items"></VideoCard>
       </div>
       <!-- <EssayCard v-for="item in newessays.slice(0, 2)" :data="item"></EssayCard> -->
     </div>
@@ -92,7 +92,7 @@
           </div>
         </a>
       </div>
-      <div class="col-4 column" ref="secondColumn">
+      <div class="col-4 " ref="secondColumn">
         <div class="container">
           <div class="row mb-3">
             <div class="col mb-3">
@@ -132,7 +132,7 @@
               </div>
             </div>
           </div>
-
+        <!-- 原本class有加column 但會影響link所以拿掉 -->
           <div class="row mt-3">
             <div class="col mb-3">
               <a :href="`http://localhost:5173/EssaysBlog/${essays.essayId}`">
@@ -153,8 +153,8 @@
           </div>
         </div>
       </div>
-      <!-- 原本class有加column card 但會影響link所以拿掉 -->
-      <div class="col-4 column card" ref="thirdColumn">
+      <!-- 原本class有加column 但會影響link所以拿掉 -->
+      <div class="col-4  card" ref="thirdColumn">
         <a class="" :href="`http://localhost:5173/EssaysBlog/${essays[5].essayId}`"> 
           <img :src="essays[5].imgs" alt="Image" />
         </a>
@@ -181,8 +181,8 @@
     </div>
     <div class="container">
       <div class="row">
-        <EssayCard v-for="item in essays.slice(7,9)" :data="item"></EssayCard>
-        <VideoCard v-for="item in videos.slice(6,8)" :data="item"></VideoCard>
+        <EssayCard v-for="item in essays.slice(5,9)" :data="item"></EssayCard>
+        <VideoCard v-for="item in videos.slice(5,9)" :data="item"></VideoCard>
       </div>
         <!-- <EssayCard v-for="item in newessays.slice(0, 2)" :data="item"></EssayCard> -->
     </div>
@@ -398,17 +398,24 @@ const setup = () => {
   /* left: -1600px; */
 }
 
+/* 圖片輪播 */
+.carouselimg{
+  width: 100%;
+  /* height: 100%; */
+}
+
+
 .slide-img li {
   width: 1300px;
   height: 500px;
 }
 
-.slide-img li img {
+/* .slide-img li img {
   width: 100%;
   height: 100%;
-  /* 控制元素內容大小 調整比例 */
+  控制元素內容大小 調整比例
   object-fit: cover;
-}
+} */
 
 .pages {
   position: absolute;
@@ -680,6 +687,9 @@ a {
 
 figcaption{
   z-index: 99;
-  
+}
+
+a{
+  color: black;
 }
 </style>
