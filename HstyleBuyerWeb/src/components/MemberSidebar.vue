@@ -43,7 +43,6 @@ const logout = () => {
 
 eventBus.on("ResetPassword", () => {
     logout();
-
 });
 </script>
   

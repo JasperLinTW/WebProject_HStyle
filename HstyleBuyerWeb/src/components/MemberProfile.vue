@@ -143,7 +143,6 @@ const ResetPassword1 = () => {
     axios.post(`https://localhost:7243/api/Member/ResetPassword?oldPassword=${oldPassword.value}&newPassword=${newPassword.value}&newPassword2=${newPassword2.value}`,{},
      { withCredentials: true })
     .then((response) => {
-        // alert(response.data);
         alert(response.data)
         
         if(response.data==="修改成功"){
