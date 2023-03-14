@@ -1,10 +1,10 @@
 <template>
   <div class="d-inline-flex p-2 bd-highlight">
     <div class="card bg-dark text-white cardImage">
-      <router-link :to="'/VideoBlog/' + data.videoId" class="card">
-        <img :src="data.image" alt="VideoImage" />
+      <router-link :to="'/EssaysBlog/' + data.essayId" class="card">
+        <img :src="data.imgs" alt="Essay Card" />
         <div class="card-overlay">
-          <h5 class="card-title">{{ data.title }}</h5>
+          <h3>{{ data.etitle }}</h3>
         </div>
       </router-link>
     </div>
@@ -18,23 +18,26 @@ const props = defineProps({
 </script>
 
 <style scoped>
-.cardImage {
+.card {
   position: relative;
-  width: 350px;
+  width: 250px;
   height: 250px;
-  overflow: hidden;
+  /* overflow: hidden; */
   border: none;
   padding-bottom: 2%;
 }
-.cardImage img {
+
+.card img {
   width: 100%;
-  height: 120%;
+  height: 150%;
   object-fit: cover;
   transition: all 0.3s ease;
 }
-.cardImage:hover img {
+
+.card:hover img {
   filter: brightness(70%);
 }
+/* 元素上方創建一個半透明層 */
 .card-overlay {
   position: absolute;
   top: 50%;
@@ -45,12 +48,17 @@ const props = defineProps({
   opacity: 0;
   transition: all 0.3s ease;
 }
+
 .card:hover .card-overlay {
   opacity: 1;
 }
 
-.card-overlay h3 {
+/* .card-overlay h3 {
   font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+} */
+.card-overlay h3 {
+  font-size: 1.2rem;
   margin-bottom: 0.5rem;
 }
 

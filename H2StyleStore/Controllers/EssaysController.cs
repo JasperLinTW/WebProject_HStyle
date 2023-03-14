@@ -95,7 +95,7 @@ namespace H2StyleStore.Controllers
 
 			int pageSize = 5;
 			int pageNumber = (page ?? 1);
-			return View(data.ToPagedList(pageNumber, pageSize));
+			return View(data.OrderByDescending(x=>x.UpLoad).ToPagedList(pageNumber, pageSize));
 		}
 
 		//public ActionResult UploadEssay()

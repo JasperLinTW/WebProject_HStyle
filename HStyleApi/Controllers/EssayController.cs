@@ -31,7 +31,7 @@ namespace HStyleApi.Controllers
 		// GET: api/<EssayController>
 		[HttpGet]
 		//FromQuery  =傳value篩選 代 service rpst
-		public async Task<ActionResult< IEnumerable<EssayDTO>>> GetEssays([FromQuery] string? keyword)
+		public async Task<ActionResult<IEnumerable<EssayDTO>>> GetEssays([FromQuery] string? keyword)
 		{
 			try
 			{
@@ -61,7 +61,7 @@ namespace HStyleApi.Controllers
 			}
 		}
 		// GET api/<VideoController>/5  
-		// 推薦商品?????????????????????????
+		// 推薦商品
 		[HttpGet("Recommenations/{id}")]
 		public async Task<ActionResult<IEnumerable<ProductDto>>> GetRecommendationProduct(int id)
 		{
@@ -72,8 +72,8 @@ namespace HStyleApi.Controllers
 
 		//[HttpGet("News")] 
 		[HttpGet("News")]
-        public async Task<ActionResult<IEnumerable<EssayDTO>>> GetNews()
-        {
+		public async Task<ActionResult<IEnumerable<EssayDTO>>> GetNews()
+		{
 			try
 			{
 				IEnumerable<EssayDTO> data = await _service.GetNews();
@@ -90,7 +90,7 @@ namespace HStyleApi.Controllers
 		// GET api/<EssayController>/EssayLike/5
 		[Authorize]
 		[HttpGet("Elike")]
-		public async Task<IEnumerable<EssayLikeDTO>> GetlikeEssays()
+		public async Task<IEnumerable<EssayDTO>> GetlikeEssays()
 		{
 			var memberId = _memberId;
 			if (memberId == null)
@@ -104,7 +104,7 @@ namespace HStyleApi.Controllers
 		}
 		// POST api/<EssayController>
 		[Authorize]
-		[HttpPost("Elike")]
+		[HttpPost("Elike /{essayId}")]
 		public void PostELike( int essayId)
 		{
 			var memberId = _memberId;
@@ -129,11 +129,11 @@ namespace HStyleApi.Controllers
 		//POST api/<VideoController>/Comment/5
 		//POST 評論
 		[Authorize]
-		[HttpPost("Comment/{id}")]
+		[HttpPost("Comment/{essayId}")]
 		public void CreateComment([FromBody] CommentDTO comment, int essayId)
 		{
 			var memberId = _memberId;
-			if(memberId <= 0)
+			if(memberId <= null)
 			{
 				throw new Exception("請先登入會員");
 			}
@@ -146,11 +146,18 @@ namespace HStyleApi.Controllers
 
 		//POST api/<VideoController>/CommentLike
 		[Authorize]
-		[HttpPost("CommentLike")]
-		public void PostCommentLike(int essayId)
+		[HttpPost("CommentLike/{ecommentId}")]
+		public void PostCommentLike(int ecommentId)
 		{
 			var memberId = _memberId;
-			_service.PostCommentLike(memberId, essayId);
+			if(memberId == null)
+			{
+				throw new Exception("請先登入會員");
+			}
+			else
+			{
+				_service.PostCommentLike(memberId, ecommentId);
+			}
 		}
 
 		//TODO 抓到使用者按讚的留言
