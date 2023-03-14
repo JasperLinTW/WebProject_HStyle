@@ -9,17 +9,17 @@
     </div>
   </div>
 
-  <div class="container"  v-if="isLoaded">
+  <div class="container">
     <!-- 圖片倫播 -->
     <div class="wrap">
       <a class="slide-arrow" id="slidePrev"><i class="fa-solid fa-chevron-left"></i></a>
       <a class="slide-arrow right" id="slideNext"><i class="fa-solid fa-chevron-right"></i></a>
       <ul class="slide-img" id="slideImg">
-        <li><img class="carouselimg" src="../assets/image/carousel01.avif" alt=""/></li>
+        <li><img src="../assets/image/carousel01.webp" alt="" /></li>
         <li><img src="../assets/image/carousel02.jpg" alt="" /></li>
-        <li><img src="../assets/image/chanel3.jpg" alt="" /><figcaption>3333</figcaption></li>
-        <li><img src="../assets/image/chanel4.jpg" alt="" /><figcaption>1111</figcaption></li>
-        <li><img src="../assets/image/chanel5.jpg" alt="" /><figcaption>1111</figcaption></li>
+        <li><img src="../assets/image/carousel03.jpg" alt="" /></li>
+        <li><img src="../assets/image/carousel03.jpg" alt="" /></li>
+        <li><img src="../assets/image/carousel03.jpg" alt="" /></li>
       </ul>
       <div class="card-img-overlay">
         <div class="card-title">
@@ -38,21 +38,22 @@
       </ul>
     </div>
     <!-- 圖片倫播 end -->
-    <div class="" >
+
+    <div class="">
       <div class="vegas-slide-container">
         <div id="example"></div>
       </div>
 
       <hr />
-      <p class="lan">熱門推薦</p>
+      <p class="lan">最新消息</p>
       <hr />
     </div>
-    <div  class="container">
+    <div class="container">
       <div class="row">
-        <EssayCard v-for="item in essays.slice(0, 4)" :data="item"></EssayCard>
+        <EssayCard v-for="item in essays.slice(0, 2)" :data="item"></EssayCard>
       <!-- </div>
       <div class="row"> -->
-        <VideoCard v-for="items in videos.slice(0, 4)" :data="items"></VideoCard>
+        <VideoCard v-for="items in videos.slice(0, 2)" :data="items"></VideoCard>
       </div>
       <!-- <EssayCard v-for="item in newessays.slice(0, 2)" :data="item"></EssayCard> -->
     </div>
@@ -84,89 +85,67 @@
                                       </div> -->
 
     <div class="container-essay" ref="container">
-      <div class="col-4 column card" ref="firstColumn">
-        <a :href="`http://localhost:5173/EssaysBlog/${essays.essayId}`">
-          <img :src="essays[0].imgs" alt="Image" />
-          <div class="card-overlay">
-            <h5>{{essays[0].etitle}}</h5>
-          </div>
-        </a>
+      <div class="col-4 column" ref="firstColumn">
+        <img src="../assets/image/jisoo.jpg" alt="Image" />
       </div>
-      <div class="col-4 " ref="secondColumn">
+      <div class="col-4 column" ref="secondColumn">
         <div class="container">
           <div class="row mb-3">
             <div class="col mb-3">
-                <div class="custom-card">
-                  <a :href="`http://localhost:5173/EssaysBlog/${essays.essayId}`">
-                  <img :src="essays[3].imgs" class="card-img-top" alt="..." />
-                  <div class="card-body">
-                    <h5 class="card-title1">{{essays[3].etitle}}</h5>
-                    <p class="card-text">
-                      <!-- v-html="decodeURI(essays.econtent)"
-                      11111111This is a wider card with supporting text below as a
-                      natural lead-in to additional content. This content is a
-                      little bit longer. -->
-                    </p>
-                    <!-- <small class="text-muted">Last updated 3 mins ago</small> -->
-                  </div>
-                  </a>
+              <div class="custom-card">
+                <img src="https://via.placeholder.com/150" class="card-img-top" alt="..." />
+                <div class="card-body">
+                  <h5 class="card-title1">Card title 1</h5>
+                  <p class="card-text">
+                    11111111This is a wider card with supporting text below as a
+                    natural lead-in to additional content. This content is a
+                    little bit longer.
+                  </p>
+                  <small class="text-muted">Last updated 3 mins ago</small>
                 </div>
+              </div>
             </div>
           </div>
 
           <div class="row mt-3">
             <div class="col mb-3">
               <div class="custom-card">
-                <a :href="`http://localhost:5173/VideoBlog/${videos.id}`">
-                <img src="../assets/image/gigi.webp" class="card-img-top" alt="..." />
+                <img src="https://via.placeholder.com/150" class="card-img-top" alt="..." />
                 <div class="card-body">
-                  <h5 class="card-title1">{{videos[3].title}}</h5>
+                  <h5 class="card-title1">Card title 2</h5>
                   <p class="card-text">
-                    <!-- 2222222222This is a wider card with supporting text below as
+                    2222222222This is a wider card with supporting text below as
                     a natural lead-in to additional content. This content is a
-                    little bit longer. -->
+                    little bit longer.
                   </p>
-                  <!-- <small class="text-muted">Last updated 3 mins ago</small> -->
+                  <small class="text-muted">Last updated 3 mins ago</small>
                 </div>
-              </a>
               </div>
             </div>
           </div>
-        <!-- 原本class有加column 但會影響link所以拿掉 -->
+
           <div class="row mt-3">
             <div class="col mb-3">
-              <a :href="`http://localhost:5173/EssaysBlog/${essays.essayId}`">
               <div class="custom-card">
-                <img :src="essays[4].imgs" class="card-img-top" alt="..." />
+                <img src="https://via.placeholder.com/150" class="card-img-top" alt="..." />
                 <div class="card-body">
-                  <h5 class="card-title1">{{essays[4].etitle}}</h5>
+                  <h5 class="card-title1">Card title 3</h5>
                   <p class="card-text">
-                    <!-- 333333333333This is a wider card with supporting text below
+                    333333333333This is a wider card with supporting text below
                     as a natural lead-in to additional content. This content is
-                    a little bit longer. -->
+                    a little bit longer.
                   </p>
-                  <!-- <small class="text-muted">Last updated 3 mins ago</small> -->
+                  <small class="text-muted">Last updated 3 mins ago</small>
                 </div>
               </div>
-            </a>
             </div>
           </div>
         </div>
       </div>
-      <!-- 原本class有加column 但會影響link所以拿掉 -->
-      <div class="col-4  card" ref="thirdColumn">
-        <a class="" :href="`http://localhost:5173/EssaysBlog/${essays[5].essayId}`"> 
-          <img :src="essays[5].imgs" alt="Image" />
-        </a>
-        <a :href="`http://localhost:5173/VideoBlog/${videos[4].id}`">
-          <img :src="videos[4].image" alt="Image" />
-        </a>
-        <a :href="`http://localhost:5173/EssaysBlog/${essays[6].essayId}`">
-          <img :src="essays[6].imgs" alt="Image" />
-        </a>
-        <a :href="`http://localhost:5173/VideoBlog/${videos[5].id}`">
-          <img :src="videos[5].image" alt="Image" />
-        </a>
+      <div class="col-4 column" ref="thirdColumn">
+        <img src="../assets/image/jisoo.jpg" alt="Image" />
+        <img src="../assets/image/jisoo.jpg" alt="Image" />
+        <img src="../assets/image/jisoo.jpg" alt="Image" />
       </div>
     </div>
 
@@ -181,10 +160,12 @@
     </div>
     <div class="container">
       <div class="row">
-        <EssayCard v-for="item in essays.slice(5,9)" :data="item"></EssayCard>
-        <VideoCard v-for="item in videos.slice(5,9)" :data="item"></VideoCard>
+        <EssayCard v-for="item in essays.slice(0, 2)" :data="item"></EssayCard>
       </div>
-        <!-- <EssayCard v-for="item in newessays.slice(0, 2)" :data="item"></EssayCard> -->
+    <!-- <div class="row">
+          <VideoCard v-for="item in videos.slice(0,3)" :data="item"></VideoCard>
+        </div>
+                                            <EssayCard v-for="item in newessays.slice(0, 2)" :data="item"></EssayCard> -->
     </div>
   </div>
 </template>
@@ -193,26 +174,21 @@
 import EssayCard from "../components/EssayCard.vue";
 import VideoCard from "../components/VideoCard.vue";
 import { ref, onMounted } from "vue";
-import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
-const router = useRouter();
-const route = useRoute();
 const loaded = ref(false);
 const essays = ref([]);
-const isLoaded=ref(false);
 const getEssayInfo = async () => {
   await axios
     .get("https://localhost:7243/api/Essay")
     .then((response) => {
       essays.value = response.data;
-      isLoaded.value = true;
       // console.log(essays.value);
+      loaded.value = true;
     })
     .catch((error) => {
       console.log(error);
     });
 };
-
 // 影片
 const videos = ref([])
 const getVideos = async () => {
@@ -220,11 +196,10 @@ const getVideos = async () => {
     .then(response => {
       videos.value = response.data;
       // console.log(videos.value);
-     
+      loaded.value = true;
     })
     .catch(error => { console.log(error); });
 }
-
 onMounted(() => {
   getEssayInfo();
   getVideos();
@@ -333,51 +308,6 @@ const setup = () => {
 </script>
 
 <style scoped>
-.card {
-    position: relative;
-    width: 350px;
-    height: 700px;
-    overflow: hidden;
-    border: none;
-    padding-bottom: 2%;
-}
-
-.card img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: all 0.3s ease;
-}
-
-.card:hover img {
-    filter: brightness(70%);
-}
-
-.card-overlay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    color: #fff;
-    opacity: 0;
-    transition: all 0.3s ease;
-}
-
-.card:hover .card-overlay {
-    opacity: 1;
-}
-
-.card-overlay h5 {
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-}
-
-.card-overlay p {
-    font-size: 1rem;
-    margin: 0;
-}
-
 .wrap {
   width: 1300px;
   height: 400px;
@@ -386,7 +316,6 @@ const setup = () => {
   position: relative;
   overflow: hidden;
 }
-
 .slide-img {
   position: absolute;
   margin: 0;
@@ -397,26 +326,16 @@ const setup = () => {
   width: 6500px;
   /* left: -1600px; */
 }
-
-/* 圖片輪播 */
-.carouselimg{
-  width: 100%;
-  /* height: 100%; */
-}
-
-
 .slide-img li {
   width: 1300px;
   height: 500px;
 }
-
-/* .slide-img li img {
+.slide-img li img {
   width: 100%;
   height: 100%;
-  控制元素內容大小 調整比例
+  /* 控制元素內容大小 調整比例 */
   object-fit: cover;
-} */
-
+}
 .pages {
   position: absolute;
   list-style: none;
@@ -427,7 +346,6 @@ const setup = () => {
   width: 100%;
   justify-content: center;
 }
-
 .pages li {
   border: 1px solid #fff;
   width: 5px;
@@ -435,7 +353,6 @@ const setup = () => {
   border-radius: 50%;
   margin: 0 5px;
 }
-
 .slide-arrow {
   position: absolute;
   /* background-color: red; */
@@ -449,21 +366,17 @@ const setup = () => {
   cursor: pointer;
   opacity: 0.6;
 }
-
 .right {
   right: 0;
 }
-
 .slide-arrow:hover {
   opacity: 1;
 }
-
 /* card custom-card */
 .custom-card {
   position: relative;
   top: 50px;
 }
-
 /* .custom-card:nth-child(2) {
   
 } */
@@ -477,7 +390,6 @@ const setup = () => {
   text-align: center;
   background-color: rgba(84, 88, 90, 0.5);
 }
-
 /* 
 .card-body {
   height: auto;
@@ -495,7 +407,6 @@ const setup = () => {
 .card-img-overlay {
   height: 500px;
 }
-
 hr .lan {
   border: none;
   border: 5px;
@@ -504,19 +415,16 @@ hr .lan {
   top: -15em;
   background-color: transparent;
 }
-
 /* essay card 排版 */
 .details {
   position: relative;
 }
-
 .details div {
   position: absolute;
   bottom: 0;
   font-weight: bold;
   color: white;
 }
-
 .category {
   right: 180px;
   left: 190px;
@@ -525,7 +433,6 @@ hr .lan {
   padding: 0px;
   height: 320px;
 }
-
 .title {
   font-family: 標楷體;
   font-size: large;
@@ -534,7 +441,6 @@ hr .lan {
   /* padding:60px; */
   height: 300px;
 }
-
 .influencer {
   font-family: cursive;
   padding: 60px;
@@ -542,7 +448,6 @@ hr .lan {
   left: 115px;
   right: 150px;
 }
-
 .formatDate {
   left: 80px;
   right: 90px;
@@ -552,7 +457,6 @@ hr .lan {
   padding: 60px;
   height: 150px;
 }
-
 /* 
 .custom-card {
   width: 100%;
@@ -561,7 +465,6 @@ hr .lan {
   max-width: 500px;
   max-height: 500px;
 }
-
 /* 文章專區 */
 .container-essay {
   display: flex;
@@ -570,29 +473,23 @@ hr .lan {
   height: 100vh;
   /* overflow-x: scroll; */
 }
-
 .card-img-top {
   height: 100vh;
 }
-
 /* 隱藏 scroll bar */
 .container-essay::-webkit-scrollbar {
   display: none;
 }
-
 .container::-webkit-scrollbar-thumb {
   background-color: transparent;
 }
-
 .column::-webkit-scrollbar {
   width: 0;
   height: 0;
 }
-
 .column::-webkit-scrollbar-thumb {
   background-color: transparent;
 }
-
 /* 
 .column {
   flex: 1;
@@ -622,7 +519,6 @@ img {
   padding: 10px;
   margin-right: 10px;
 }
-
 .column:first-child {
   flex: none;
   width: 33.33%;
@@ -633,27 +529,22 @@ img {
   right: 0;
   overflow: hidden;
 }
-
 .column:first-child img {
   height: 100%;
   object-fit: cover;
 }
-
 .column:not(:first-child) {
   position: relative;
   z-index: -1;
 }
-
 img {
   display: block;
   width: 100%;
   margin-bottom: 10px;
 }
-
 a {
   text-decoration: none;
 }
-
 .btn-underline::after {
   content: "";
   position: absolute;
@@ -665,11 +556,9 @@ a {
   transform: scaleX(0);
   transition: transform 0.3s ease;
 }
-
 .btn-underline:hover::after {
   transform: scaleX(1);
 }
-
 .btn-underline {
   position: relative;
   padding: 0;
@@ -680,16 +569,6 @@ a {
   color: #333;
   cursor: pointer;
 }
-
 .btn-underline:hover {
   color: #000000;
-}
-
-figcaption{
-  z-index: 99;
-}
-
-a{
-  color: black;
-}
-</style>
+}</style>

@@ -198,9 +198,10 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 
 		public void PostCommentLike(int memberId, int commentId)
 		{
-			var data = _db.VideoComments.SingleOrDefault(v => v.Id == commentId);
+			var commentData= _db.VideoComments.SingleOrDefault(v => v.Id == commentId);
+			var data = _db.VcommentLikes.SingleOrDefault(v => v.CommentId == commentId && v.MemberId == memberId);
 
-			if (data != null)
+			if (data == null)
 			{
 				VcommentLike commentlike = new VcommentLike()
 				{
@@ -208,7 +209,11 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 					CommentId = commentId
 				};
 				_db.Add(commentlike);
-				data.Like++;
+				commentData.Like++;
+			}else
+			{
+				_db.Remove(data);
+				commentData.Like--;
 			}
 
 			_db.SaveChanges();

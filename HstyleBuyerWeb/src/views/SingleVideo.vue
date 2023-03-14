@@ -1,11 +1,11 @@
 <template>
- <div class="container">
-    <div class="row border-bottom mb-5 mt-4 pb-2 d-flex justify-content-evenly">
-      <div class="col-md-1"><router-link to="/Blog/EssaysBlog" class="nav-link targetAll btn-underline">文章</router-link></div>
-      <div class="col-md-1"> <router-link to="/Blog/VideoBlog" class="nav-link targetAll btn-underline">影音</router-link></div>
-    </div>
-  </div>
-  
+   <div class="container">
+      <div class="row border-bottom mb-5 mt-4 pb-2 d-flex justify-content-evenly">
+         <div class="col-md-1"><router-link to="/Blog/EssaysBlog" class="nav-link targetAll btn-underline">文章</router-link></div>
+         <div class="col-md-1"><router-link to="/Blog/VideoBlog" class="nav-link targetAll btn-underline">影音</router-link></div>
+      </div>
+   </div>
+
    <div class="container mt-5">
       <div v-if="isLoaded" class="row">
          <div class="col-lg-8">
@@ -18,46 +18,44 @@
             <!-- <div class="">
                     <video class="video" :src="video.filePath"></video>
                 </div> -->
-                <div class="badge bg-secondary opacity-50 me-1" v-for="tag in video.tags" :key="tag">#{{ tag }}</div>
-               <div class="videoLike">
+            <div class="badge bg-secondary opacity-50 me-1" v-for="tag in video.tags" :key="tag">#{{ tag }}</div>
+            <div class="videoLike">
                <div class="me-auto">
                   <label>
                      <label><i class="fa-solid fa-eye fz-16"></i> {{ video.views }}</label>
                      <label class="ms-1"><i class="fa-solid fa-heart fz-16"></i> {{ video.likes }}</label>
-                     <span>   喜歡 </span>
-                     <span v-if="!isClicked" @click="postVideoLike(video.id)"><i
-                           class="fa-regular fa-heart icon-hover fz-18"></i></span>
+                     <span> 喜歡 </span>
+                     <span v-if="!isClicked" @click="postVideoLike(video.id)"><i class="fa-regular fa-heart icon-hover fz-18"></i></span>
                      <span v-else @click="postVideoLike(video.id)"><i class="fa-solid fa-heart fz-18"></i></span>
                   </label>
                </div>
-               <div class="content"> 
-               </div>
+               <div class="content"></div>
                <label class="title">{{ video.title }}</label>
                <p class="description">{{ video.description }}</p>
             </div>
          </div>
-         <div class=" col-lg-4">
+         <div class="col-lg-4">
             <div class="row">
-               <div class=" col-lg-12">
-                  <form action="" class="comment ">
-                     <div v-if="comment!==null" >
-                        <div class="form-group commentContent"  v-for="comment in videoComments" :key="comment.id">
+               <div class="col-lg-12">
+                  <form action="" class="comment">
+                     <div v-if="comment !== null">
+                        <div class="form-group commentContent" v-for="comment in videoComments" :key="comment.id">
                            <div class="d-flex justify-content-start">
                               <div class="user">
-                                 <img  src="../assets/image/user.png" alt="">
+                                 <img src="../assets/image/user.png" alt="" />
                               </div>
-                                 <label>{{ comment.memberName }}　說：</label>
+                              <label>{{ comment.memberName }}　說：</label>
                               <div>
                                  <label>{{ comment.comment }}</label>
                               </div>
                            </div>
-                           <div class="videoCommentLike ">
+                           <div class="videoCommentLike">
                               <label class="">
                                  <span>留言按讚 </span>
-                                 <span v-if="!commentIsClicked" @click="postCommentLike()"><i
-                                       class="fa-regular fa-heart icon-hover fz-18"></i></span>
-                                 <span v-else @click="postCommentLike(comment.commentId)"><i
-                                       class="fa-solid fa-heart fz-18"></i></span>
+                                 <span v-if="!comment.commentIsClicked" @click="postCommentLike(comment.id)"
+                                    ><i class="fa-regular fa-heart icon-hover fz-18"></i
+                                 ></span>
+                                 <span v-else @click="postCommentLike(comment.id)"><i class="fa-solid fa-heart fz-18"></i></span>
                               </label>
                            </div>
                            <div class="d-flex justify-content-end">
@@ -85,24 +83,23 @@
       </div>
    </div>
    <!-- 商品推薦 -->
-   <div class="container ">
-      <div class=""  v-if="RecoProducts!==null">
-         <p for="" class="border-bottom ">商品推薦</p>
+   <div class="container">
+      <div class="" v-if="RecoProducts !== null">
+         <p for="" class="border-bottom">商品推薦</p>
          <div class="recoProducts d-inline-flex flex-row bd-highlight mb-3" v-for="product in RecoProducts" :key="product.product_Id">
             <div class="">
                <div class="card d-flex justify-content-center align-items-center me-4">
-               <a :href="`http://localhost:5173/product/${product.product_Id}`">
-                  <div class="img-sz">
-                     <img :src="product.imgs[0]" class="card-img-top" alt="Product Image">
+                  <a :href="`http://localhost:5173/product/${product.product_Id}`">
+                     <div class="img-sz">
+                        <img :src="product.imgs[0]" class="card-img-top" alt="Product Image" />
+                     </div>
+                  </a>
+                  <div class="card-body position-relative">
+                     <div class="card-title fw-bold">{{ product.product_Name }}</div>
+                     <span>$NT {{ product.unitPrice }}</span>
                   </div>
-               </a>
-               <div class="card-body position-relative">
-                  <div class="card-title fw-bold">{{ product.product_Name }}</div>
-                  <span>$NT {{ product.unitPrice }}</span>
                </div>
             </div>
-            </div>
-            
          </div>
       </div>
    </div>
@@ -137,24 +134,44 @@ const getVideo = async () => {
       .then((response) => {
          video.value = response.data;
          isClicked.value = likevideoId.value.includes(route.params.id);
-         console.log(likevideoId.value);
+         // console.log(likevideoId.value);
       })
       .catch((error) => {
          console.log(error);
       });
 };
 
+// 喜歡的評論
+const likeCommentId = ref([]);
+const getCommentLikes = async () => {
+   await axios
+      .get(`https://localhost:7243/api/Video/comment/Likes`, { withCredentials: true })
+      .then((response) => {
+         if (response.data.length > 0) {
+            likesComments.value = response.data;
+            likeCommentId.value = likesComments.value.map((likes) => {
+               return likes.commentId;
+            });
+         }
+      })
+      .catch((error) => {
+         console.log(error);
+      });
+   getComments();
+};
+
 //得到評論
-const commentIsClicked=ref([]);
+const commentIsClicked = ref([]);
 const getComments = async () => {
    await axios
       .get(`https://localhost:7243/api/Video/Comments/${route.params.id}`)
       .then((response) => {
          videoComments.value = response.data;
-         commentIsClicked.value=response.data.map((v)=>{
-            v.commentIsClicked=likeCommentId.value.includes(parseInt(v.commentId));
+         commentIsClicked.value = response.data.map((v) => {
+            v.commentIsClicked = likeCommentId.value.includes(parseInt(v.id));
+            return v;
          });
-         console.log(commentIsClicked.value);
+         isLoaded.value = true;
       })
       .catch((error) => {
          console.log(error);
@@ -167,26 +184,11 @@ const getRecommenations = async () => {
       .get(`https://localhost:7243/api/Video/Recommenations/${route.params.id}`)
       .then((response) => {
          RecoProducts.value = response.data;
-         isLoaded.value = true;
+         // isLoaded.value = true;
       })
       .catch((error) => {
          console.log(error);
       });
-};
-
-// 喜歡的評論
-const likeCommentId = ref([]);
-const getCommentLikes = async () => {
-   await axios.get(`https://localhost:7243/api/Video/comment/Likes`, { withCredentials: true })
-      .then((response) => {
-         if (response.data.length > 0) {
-            likesComments.value = response.data;
-            likeCommentId.value = likesComments.value.map((likes) => {
-               return likes.commentId;
-            });
-         }
-         console.log(likeCommentId.value);
-      }).catch(error => { console.log(error) });
 };
 
 // 喜歡的video
@@ -225,10 +227,12 @@ const postVideoLike = (videoId) => {
 // const commentId = ref(false);
 const postCommentLike = (commentId) => {
    console.log(commentId);
+   console.log(videoComments.value.commentId);
    axios
       .post(`https://localhost:7243/api/Video/CommentLike/${commentId}`, {}, { withCredentials: true })
       .then((response) => {
          commentIsClicked.value = !commentIsClicked.value;
+         getCommentLikes();
       })
       .catch((error) => {
          console.log(error);
@@ -237,12 +241,25 @@ const postCommentLike = (commentId) => {
          }
       });
 };
-
+// const postCommentLike = (commentId) => {
+//    console.log(commentId);
+//    axios
+//       .post(`https://localhost:7243/api/Video/CommentLike/${commentId}`, {}, { withCredentials: true })
+//       .then((response) => {
+//          commentIsClicked.value = !commentIsClicked.value;
+//       })
+//       .catch((error) => {
+//          console.log(error);
+//          if (error.response.status === 401) {
+//             window.location = "http://localhost:5173/login";
+//          }
+//       });
+// };
 const postView = () => {
    axios
       .post(`https://localhost:7243/api/Video/View/${route.params.id}`)
       .then((response) => {
-         console.log("view");
+         // console.log("view");
       })
       .catch((error) => {
          console.log(error);
@@ -269,14 +286,13 @@ const postComment = async () => {
 // const onReady = () => {
 //    console.log(player.value.duration);
 // }
-onMounted( () => {
-   
-    getVideo();
-    getLikesVideos();
-    getCommentLikes();
-    getComments();
-    getRecommenations();
-    postView();
+onMounted(() => {
+   getVideo();
+   getLikesVideos();
+   getCommentLikes();
+   // getComments();
+   getRecommenations();
+   postView();
    // const plyrPlayer = new Plyr(player.value);
    // plyrPlayer.on('ready', onReady);
 });
@@ -294,7 +310,6 @@ onMounted( () => {
 eventBus.on("postVideoLike", () => {
    getLikesVideos();
 });
-
 </script>
 
 <style scoped>
@@ -317,57 +332,56 @@ video {
    overflow: auto;
    width: 400px;
    height: 700px;
-
 }
 
-.commentContent{
+.commentContent {
    border-bottom: 1px ridge;
    width: 95%;
 }
 
-.user img{
+.user img {
    width: 30px;
    height: 30px;
    margin-right: 5px;
 }
 
-.fz-20{
+.fz-20 {
    font-size: 20px;
 }
 
-.img-sz{
+.img-sz {
    width: 100%;
 }
 
-.card{
+.card {
    width: 200px;
    border: none;
 }
 
-.comment{
-   height:600px;
+.comment {
+   height: 600px;
 }
 
-input{
-   border-radius: 25PX;
+input {
+   border-radius: 25px;
 }
 
 #search-input {
    width: 400px;
    padding: 10px 10px;
    border-radius: 50px;
-   border:#f2f2f2 ;
-   background-color :#f2f2f2;
+   border: #f2f2f2;
+   background-color: #f2f2f2;
    outline: none;
 }
 #searchButtom {
-   position: absolute   ;
+   position: absolute;
    left: 385px;
    top: 625px;
    padding: 0px;
    background-color: #f2f2f2;
    border: none;
-   border-radius:50px;
+   border-radius: 50px;
    outline: none;
 }
 </style>
