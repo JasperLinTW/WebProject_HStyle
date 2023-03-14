@@ -62,7 +62,7 @@
         <button class="btn-underline" @click="showComment = true" :class="{ active: showComment }">商品評論</button>
       </div>
       <div v-if="showComment" class="col-md-12 border-top pt-3 mb-big">
-        <PComment v-if="comment.length > 0 && isLoaded" v-for="item in comment" :data="item"></PComment>
+        <PComment v-if="comment.length > 0" v-for="item in comment" :data="item"></PComment>
         <div v-else class="pt-4">- 此商品無評論 -</div>
       </div>
       <div v-else class="col-md-12 border-top pt-5 px-6  mb-big">
@@ -253,9 +253,10 @@ const loadHelpfulComments = async () => {
     .then(response => {
       helpfulComments.value = response.data;
       helpfulCommentsId.value = helpfulComments.value.map((c) => { return c.commentId })
-      isLoaded.value = true;
     })
     .catch(error => { console.log(error); });
+
+  getComment();
 }
 
 eventBus.on("addhelpfulComments", () => {
@@ -270,7 +271,6 @@ onMounted(() => {
   likesProducts();
   getProduct();
   getRecommend();
-  getComment();
   loadHelpfulComments();
 });
 </script>

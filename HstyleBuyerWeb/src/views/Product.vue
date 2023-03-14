@@ -5,93 +5,48 @@
       <div class="col-lg-5 border-bottom">
         <div class="d-flex justify-content-start">
           <div class="filter">
-            <div
-              class="dropdown-toggle"
-              id="sortDropdown"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
+            <div class="dropdown-toggle" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
               排序
             </div>
-            <ul
-              class="dropdown-menu menu border-0 mt-1"
-              aria-labelledby="sortDropdown"
-            >
+            <ul class="dropdown-menu menu border-0 mt-1" aria-labelledby="sortDropdown">
               <li>
-                <a
-                  class="dropdown-item"
-                  href="#"
-                  v-for="(option, index) in sortOptions"
-                  :key="index"
-                  @click="setSortOption(option)"
-                  >{{ option }}</a
-                >
+                <a class="dropdown-item" href="#" v-for="(option, index) in sortOptions" :key="index"
+                  @click="setSortOption(option)">{{ option }} <i class="fa-solid fa-check ps-1 fs-7"
+                    v-if="selectedSortOption === option"></i></a>
               </li>
             </ul>
           </div>
           <div class="filter">
-            <div
-              class="dropdown-toggle"
-              id="categoryDropdown"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
+            <div class="dropdown-toggle" id="categoryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
               類別
             </div>
-            <ul
-              class="dropdown-menu menu border-0 mt-1"
-              aria-labelledby="categoryDropdown"
-            >
+            <ul class="dropdown-menu menu border-0 mt-1" aria-labelledby="categoryDropdown">
               <li>
-                <router-link
-                  v-for="(option, index) in categoryOptions"
-                  :key="index"
-                  :to="
-                    option === '全部' ? '/products/all' : `/products/${option}`
-                  "
-                  class="dropdown-item"
-                  >{{ option }}</router-link
-                >
+                <router-link v-for="(option, index) in categoryOptions" :key="index" :to="
+                  option === '全部' ? '/products/all' : `/products/${option}`
+                " class="dropdown-item">{{ option }}</router-link>
               </li>
             </ul>
           </div>
           <div class="filter">
-            <div
-              class="dropdown-toggle"
-              id="colorDropdown"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
+            <div class="dropdown-toggle" id="colorDropdown" data-bs-toggle="dropdown" aria-expanded="false">
               顏色
             </div>
-            <ul
-              class="dropdown-menu menu border-0 mt-1"
-              aria-labelledby="colorDropdown"
-            >
+            <ul class="dropdown-menu menu border-0 mt-1" aria-labelledby="colorDropdown">
               <div class="row">
                 <li class="col-md-3">
-                  <a
-                    class="dropdown-item item"
-                    href="#"
-                    v-for="(option, index) in colorOptions.slice(
-                      0,
-                      Math.ceil(colorOptions.length / 2)
-                    )"
-                    :key="index"
-                    @click="setColorOption(option)"
-                    >{{ option }}
+                  <a class="dropdown-item item" href="#" v-for="(option, index) in colorOptions.slice(
+                    0,
+                    Math.ceil(colorOptions.length / 2)
+                  )" :key="index" @click="setColorOption(option)">{{ option }}<i class="fa-solid fa-check ps-1 fs-7"
+                      v-if="selectedColorOption === option"></i>
                   </a>
                 </li>
                 <li class="col-md-3">
-                  <a
-                    class="dropdown-item item"
-                    href="#"
-                    v-for="(option, index) in colorOptions.slice(
-                      Math.ceil(colorOptions.length / 2)
-                    )"
-                    :key="index"
-                    @click="setColorOption(option)"
-                    >{{ option }}
+                  <a class="dropdown-item item" href="#" v-for="(option, index) in colorOptions.slice(
+                    Math.ceil(colorOptions.length / 2)
+                  )" :key="index" @click="setColorOption(option)">{{ option }}<i class="fa-solid fa-check ps-1 fs-7"
+                      v-if="selectedColorOption === option"></i>
                   </a>
                 </li>
               </div>
@@ -105,11 +60,7 @@
 
   <div class="container">
     <div class="row">
-      <ProductCard
-        v-if="filteredProducts.length > 0"
-        v-for="item in filteredProducts"
-        :data="item"
-      />
+      <ProductCard v-if="filteredProducts.length > 0" v-for="item in filteredProducts" :data="item" />
       <div v-else class="h-1000 col-md-12">- 無此篩選項目的商品 -</div>
     </div>
   </div>
@@ -130,7 +81,8 @@ const route = useRoute();
 //console.log(route.params.tag);
 
 //商品篩選排序
-const selectedOption = ref();
+let selectedSortOption = ref();
+let selectedColorOption = ref();
 const categoryOptions = ref([]);
 const colorOptions = ref([]);
 const sortOptions = ref(["新到舊", "舊到新", "價格高到低", "價格低到高"]);
@@ -221,11 +173,14 @@ const filteredProducts = computed(() => {
 const setOriginalOption = () => {
   priceFilter.value = null;
   colorFilter.value = null;
+  selectedColorOption.value = null;
+  selectedSortOption.value = null;
 };
 
 //顏色
 const setColorOption = (option) => {
   colorFilter.value = option;
+  selectedColorOption.value = option;
 };
 
 //排序
@@ -240,7 +195,9 @@ const setSortOption = (option) => {
   } else if (option === "價格低到高") {
     filteredProducts.value.sort((a, b) => a.unitPrice - b.unitPrice);
   }
+  selectedSortOption.value = option;
 };
+
 
 watch(
   () => route.params.tag,
@@ -274,6 +231,10 @@ onMounted(() => {
 
 .dropdown-toggle {
   cursor: pointer;
+}
+
+.fs-7 {
+  font-size: 12px;
 }
 
 .item {
