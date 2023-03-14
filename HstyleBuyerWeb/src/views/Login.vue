@@ -65,7 +65,7 @@
           </div>
           <div class="col-md-12">
             <div class="row d-flex justify-content-start mb-2">
-              <div class="col-md-4 text-start fz-10"> <label for="floatingInput">性別</label></div>
+              <div class="col-md-4 text-start p-0 fz-10"> <label class="ps-c ">性別</label></div>
               <div class="col-md-4 text-start">
                 <input class="form-check-input " type="radio" name="gender" id="male" value="true" v-model="Rgender">
                 <label class="form-check-label" for="male">
@@ -262,8 +262,12 @@ onMounted(() => {
 <style scoped>
 .fz-10 {
   font-size: 13.5px;
-  padding-right: 1%;
+  padding-left: 5%;
   color: #6c757d;
+}
+
+.ps-c {
+  padding-left: 5%;
 }
 
 .btn-link {
