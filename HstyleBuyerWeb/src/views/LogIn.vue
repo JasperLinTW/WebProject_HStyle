@@ -197,7 +197,7 @@ const login = () => {
     .then((response) => {
       
       console.log(response.data);
-       eventBus.emit("Login");
+        eventBus.emit("Login");
       router.go(-1);
     })
     .catch((error) => {
