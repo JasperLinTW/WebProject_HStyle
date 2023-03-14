@@ -49,7 +49,7 @@
           </div>
         </div>
         <div class="carousel-item">
-          <img src="../assets/image/carousel03.jpg" alt="" />
+          <img src="../assets/image/carousel05.jpg" alt="" />
           <div class="carousel-caption d-none d-md-block">
             <h5>Gigi吉吉哈蒂德的 #一週ootd</h5>
           </div>
@@ -111,22 +111,22 @@
                                       </div> -->
 
     <div class="container-essay" ref="container">
-      <div class="col-4 column" ref="firstColumn">
-        <img src="../assets/image/.jpg" alt="Image" />
+      <div class="col-4 column card" ref="firstColumn">
+        <img src="../assets/image/chanel1.jpg" alt="Image" />
+        <div class="card-overlay">
+          <h5>VOGUE 3月號封面，在柏林邂逅完美的Jennie</h5>
+        </div>
       </div>
       <div class="col-4 column" ref="secondColumn">
         <div class="container">
           <div class="row mb-3">
             <div class="col mb-3">
               <div class="custom-card">
-                <img src="https://via.placeholder.com/150" class="card-img-top" alt="..." />
+                <img src="../assets/image/gigi.webp" class="card-img-top" alt="..." />
                 <div class="card-body">
-                  <h5 class="card-title1">Card title 1</h5>
-                  <p class="card-text">
-                    11111111This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit
-                    longer.
-                  </p>
-                  <small class="text-muted">Last updated 3 mins ago</small>
+                  <h5 class="card-title1"></h5>
+                  <p class="card-text">BLACKPINK Lisa、NewJeans都在戴！小雛菊WILHELMINA GARCIA紅遍韓國娛樂圈，推薦4個小眾平價飾品</p>
+                  <!-- <small class="text-muted">Last updated 3 mins ago</small> -->
                 </div>
               </div>
             </div>
@@ -135,14 +135,14 @@
           <div class="row mt-3">
             <div class="col mb-3">
               <div class="custom-card">
-                <img src="https://via.placeholder.com/150" class="card-img-top" alt="..." />
+                <img src="../assets/image/jisoo.jpg" class="card-img-top" alt="..." />
                 <div class="card-body">
-                  <h5 class="card-title1">Card title 2</h5>
-                  <p class="card-text">
+                  <h5 class="card-title1">jisoo來了!開箱韓國女星的隨身包!</h5>
+                  <!-- <p class="card-text">
                     2222222222This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit
                     longer.
-                  </p>
-                  <small class="text-muted">Last updated 3 mins ago</small>
+                  </p> -->
+                  <!-- <small class="text-muted">Last updated 3 mins ago</small> -->
                 </div>
               </div>
             </div>
@@ -151,24 +151,25 @@
           <div class="row mt-3">
             <div class="col mb-3">
               <div class="custom-card">
-                <img src="https://via.placeholder.com/150" class="card-img-top" alt="..." />
+                <!-- <img src="../assets/image/column06.jpg" class="card-img-top" alt="..." />
                 <div class="card-body">
-                  <h5 class="card-title1">Card title 3</h5>
-                  <p class="card-text">
-                    333333333333This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little
-                    bit longer.
-                  </p>
-                  <small class="text-muted">Last updated 3 mins ago</small>
-                </div>
+                  <h5 class="card-title1">Chanel 2023秋冬:這裡不是天堂，而是香奈兒秀場</h5>
+                  
+                </div> -->
               </div>
             </div>
           </div>
         </div>
       </div>
       <div class="col-4 column" ref="thirdColumn">
-        <img src="../assets/image/jisoo.jpg" alt="Image" />
-        <img src="../assets/image/jisoo.jpg" alt="Image" />
-        <img src="../assets/image/jisoo.jpg" alt="Image" />
+        <img src="../assets/image/column04.jpg" alt="Image" />
+        <label for=""> 劉芒 配色小天才 #一週ootd</label>
+        <img src="../assets/image/carousel03.jpg" alt="Image" />
+        <label for="">【2023奧斯卡】得獎名單一覽！《媽的多重宇宙》勇奪最佳影片等7大獎、楊紫瓊寫新歷史成為華人首位奧斯卡影后</label>
+        <img src="../assets/image carousel04.webp" alt="" />
+
+        <img src="../assets/image/column05.jpg" alt="Image" />
+        <label for="">巴黎人冬天怎麼穿？直擊2023流行趨勢</label>
       </div>
     </div>
 
@@ -183,8 +184,8 @@
     </div>
     <div class="container">
       <div class="row">
-        <EssayCard v-for="item in essays.slice(5, 9)" :data="item"></EssayCard>
-        <VideoCard v-for="item in videos.slice(5, 9)" :data="item"></VideoCard>
+        <EssayCard v-for="item in essays.slice(2, 6)" :data="item"></EssayCard>
+        <VideoCard v-for="item in videos.slice(7, 11)" :data="item"></VideoCard>
       </div>
       <!-- <div class="row">
           <VideoCard v-for="item in videos.slice(0,3)" :data="item"></VideoCard>
@@ -202,7 +203,7 @@ import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
 const router = useRouter();
 const isClicked = ref([]);
-const loaded = ref(false);
+// const loaded = ref(false);
 const essays = ref([]);
 const getEssayInfo = async () => {
   await axios
@@ -226,7 +227,7 @@ const getVideos = async () => {
     .then((response) => {
       videos.value = response.data;
       // console.log(videos.value);
-      loaded.value = true;
+      // loaded.value = true;
     })
     .catch((error) => {
       console.log(error);
@@ -618,7 +619,7 @@ a {
 .carousel-item img {
   width: 100%;
   height: 100%;
-  margin-top: -150px;
+  margin-top: -50px;
   object-fit: cover;
 }
 
@@ -635,17 +636,54 @@ a {
 }
 
 .carousel-caption {
-  position: absolute;
-  top: 500px;
+  top: 450px;
+  /* bottom: 100px; */
   left: 50%;
   transform: translate(-50%, -50%);
   /* background-color: rgba(70, 67, 67, 0.5);  */
-  padding: 20px;
+  padding: 50px;
   color: white;
+}
+
+.carousel-item {
+  position: absolute;
 }
 
 .queenImg {
   position: relative;
-  margin-top: -200px;
+  width: 100%;
+  height: 100%;
+  margin-top: 100px;
+  object-fit: cover;
+  /* margin-top: -200px; */
+  max-width: 1300px;
+}
+
+.card {
+  border: none;
+}
+
+.card:hover img {
+  filter: brightness(70%);
+}
+
+.card-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #fff;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.card:hover .card-overlay {
+  opacity: 1;
+}
+
+.card-overlay h5 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
 }
 </style>
