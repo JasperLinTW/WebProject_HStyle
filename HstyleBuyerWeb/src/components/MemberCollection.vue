@@ -68,15 +68,15 @@ const likesProducts = async () => {
       console.log(error);
     });
 };
-const essaylikes = ref([]);
 
+const essaylikes = ref([]);
 const likesEssay = async () => {
   await axios
     .get("https://localhost:7243/api/Essay/Elike", { withCredentials: true })
     .then((response) => {
       essaylikes.value = response.data;
       console.log(`111111`);
-      console.log(`${essaylikes.value}`);
+      console.log(essaylikes.value);
     })
     .catch((error) => {
       console.log(error);

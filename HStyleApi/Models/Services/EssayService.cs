@@ -41,7 +41,7 @@ namespace HStyleApi.Models.Services
             var data = _essayReposity.GetNews();
             return await data;
         }
-		public async Task<IEnumerable<EssayLikeDTO>> GetlikeEssays(int MemberId)
+		public async Task<IEnumerable<EssayDTO>> GetlikeEssays(int MemberId)
 		{
 			var data = _essayReposity.GetlikeEssays(MemberId);
 			return await data;

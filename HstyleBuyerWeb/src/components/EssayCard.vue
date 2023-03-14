@@ -57,27 +57,27 @@ const router = useRouter();
 let likes = ref([]);
 const Essays = ref([]);
 
-const likesEssay = async () => {
-  await axios
-    .get("https://localhost:7243/api/Essay/Elike", { withCredentials: true })
-    .then((response) => {
-      if (response.data.length > 0) {
-        likes.value = response.data;
-        console.log(likes.value);
-        Essays.value = likes.value.map((e) => {
-          return e.essayId;
-        });
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-};
+// const likesEssay = async () => {
+//   await axios
+//     .get("https://localhost:7243/api/Essay/Elike", { withCredentials: true })
+//     .then((response) => {
+//       if (response.data.length > 0) {
+//         likes.value = response.data;
+//         console.log(likes.value);
+//         Essays.value = likes.value.map((e) => {
+//           return e.essayId;
+//         });
+//       }
+//     })
+//     .catch((error) => {
+//       console.log(error);
+//     });
+// };
 
 const postEssayLike = async (data) => {
   await axios
     .post(
-      `https://localhost:7243/api/Essay/Elike?essayId=${props.data.essayId}`,
+      `https://localhost:7243/api/Essay/Elike /${props.data.essayId}`,
       {},
       { withCredentials: true }
     )
@@ -94,7 +94,7 @@ const postEssayLike = async (data) => {
 
 onMounted(async () => {
   // getEssayInfo();
-  await likesEssay();
+  //await likesEssay();
 });
 </script>
 <style scoped>

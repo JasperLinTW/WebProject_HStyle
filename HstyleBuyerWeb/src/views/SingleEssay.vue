@@ -65,7 +65,7 @@
 
     <div class="comments">
       <div class="input-group">
-        <img class="avatar" src="https://picsum.photos/50/50" alt="avatar" />
+        <img class="avatar" src="../assets/image/user.png" alt="avatar" />
         <div class="input-group-text">
           <input
             type="text"
@@ -88,7 +88,7 @@
           v-for="comment in essayComments"
           :key="comment.commentId"
         >
-          <img class="avatar" src="https://picsum.photos/50/50" alt="avatar" />
+          <img class="avatar" src="../assets/image/user.png" alt="avatar" />
           <div class="comment-body">
             <h5 class="comment-user">{{ comment.memberName }}</h5>
             <p class="comment-text">{{ comment.ecomment }}</p>
@@ -165,26 +165,27 @@ const getComments = async () => {
     .get(`https://localhost:7243/api/Essay/Comments/${route.params.id}`)
     .then((response) => {
       essayComments.value = response.data;
-      console.log("comment");
-      console.log(essayComments.value);
+      commentIsClicked.value = response.data.map((v) => {
+        v.commentIsClicked = likeCommentId.value.includes(parseInt(v.id));
+        return v;
+      });
+      isLoaded.value = true;
+      console.log(commentIsClicked.value);
+      // console.log(essayComments.value);
     })
     .catch((error) => {
       console.log(error);
     });
 };
 
-// let likesessayComments = ref([]);
-// let likesCommenrId = ref([]);
+// const likesessayComments = ref([]);
+// const likesCommenrId = ref([]);
 // //評論按贊
 // const getEssayCommentLikes = async () => {
 //   await axios
-//     .get(
-//       `https://localhost:7243/api/Essay/comment/Likes/${commentId}`,
-//       {},
-//       {
-//         withCredentials: true,
-//       }
-//     )
+//     .get(`https://localhost:7243/api/Essay/comment/Likes/${commentId}`, {
+//       withCredentials: true,
+//     })
 //     .then((response) => {
 //       commentIsClicked.value = !commentIsClicked.value;
 //     })
@@ -195,6 +196,27 @@ const getComments = async () => {
 //       }
 //     });
 // };
+
+// 喜歡的評論
+const likeCommentId = ref([]);
+const getCommentLikes = async () => {
+  await axios
+    .get(`https://localhost:7243/api/Essay/comment/Likes`, {
+      withCredentials: true,
+    })
+    .then((response) => {
+      if (response.data.length > 0) {
+        likesComments.value = response.data;
+        likeCommentId.value = likesComments.value.map((likes) => {
+          return likes.commentId;
+        });
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  getComments();
+};
 
 // 點擊喜歡的留言
 // const commentId = ref(false);

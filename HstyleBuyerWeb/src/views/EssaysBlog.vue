@@ -31,14 +31,39 @@ import EssayCard from "../components/EssayCard.vue";
 import { ref, onMounted } from "vue";
 import axios from "axios";
 
+//收藏
+let likes = ref([]);
+
+const likeEssays = ref([]);
+
+const likesEssay = async () => {
+  await axios
+    .get("https://localhost:7243/api/Essay/Elike", { withCredentials: true })
+    .then((response) => {
+      if (response.data.length > 0) {
+        likes.value = response.data;
+        likeEssays.value = likes.value.map((e) => {
+          return e.essayId;
+        });
+        console.log(likeEssays.value);
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
 const essays = ref([]);
 
 const getEssayInfo = async () => {
   await axios
     .get("https://localhost:7243/api/Essay")
     .then((response) => {
+      response.data.map((e) => {
+        e.isClicked = likeEssays.value.includes(e.essayId);
+      });
       essays.value = response.data;
-      console.log(essays.value);
+      //console.log(essays.value);
     })
 
     .catch((error) => {
@@ -49,27 +74,9 @@ onMounted(() => {
   getEssayInfo();
 });
 
-//收藏
-let likes = ref([]);
-
-const Essays = ref([]);
-
-const likesEssay = async () => {
-  await axios
-    .get("https://localhost:7243/api/Essay/Elike")
-    .then((response) => {
-      if (response.data.length > 0) {
-        likes.value = response.data;
-        console.log(likes.value);
-        Essays.value = likes.value.map((e) => {
-          return e.essayId;
-        });
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-};
+onMounted(() => {
+  likesEssay();
+});
 </script>
 
 <style>

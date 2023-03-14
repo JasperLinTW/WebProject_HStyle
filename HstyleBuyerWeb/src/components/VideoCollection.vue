@@ -1,23 +1,21 @@
 <template>
-    <div class="d-inline-flex p-2 bd-highlight">
-        <div class="card bg-dark text-white cardImage">
-            <router-link :to="'/VideoBlog/' + data.videoId" class="card">
-            <img :src="data.image" alt="VideoImage" />
-            <div class="card-overlay">
-                <h5 class="card-title">{{ data.title }}</h5>
-            </div>
-            </router-link>
+  <div class="d-inline-flex p-2 bd-highlight">
+    <div class="card bg-dark text-white cardImage">
+      <router-link :to="'/VideoBlog/' + data.videoId" class="card">
+        <img :src="data.image" alt="VideoImage" />
+        <div class="card-overlay">
+          <h5 class="card-title">{{ data.title }}</h5>
         </div>
+      </router-link>
     </div>
+  </div>
 </template>
-
 
 <script setup>
 const props = defineProps({
   data: Object,
 });
 </script>
-
 
 <style scoped>
 .cardImage {
