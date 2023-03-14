@@ -10,18 +10,23 @@
             <i class="fa-solid fa-magnifying-glass"></i>
          </button>
       </form>
+      <button type="buttom" @click="putData()" class="btn btn-dark">填入資料</button>
    </div>
    <!-- 呈現問題 -->
    <div class="container-sm" style="min-height: 800px">
       <!-- 搜尋的結果 -->
       <div v-if="searchResult !== null">
          <div v-for="question in searchResult" :key="question.id">
-            <div class="card">
-               <div class="card-body">
-                  <h5 class="card-title">{{ question.question }}</h5>
-                  <p class="card-text">{{ question.answer }}</p>
-                  <button class="btn btn-light" @click="SatisfYes(question.commonQuestionId)">有幫助</button>
-                  <button class="btn btn-light" @click="SatisfNo(question.commonQuestionId)">無幫助</button>
+            <div class="card" style="width: 700px; margin: 0px auto">
+               <div class="card">
+                  <div class="card-body">
+                     <h5 class="card-title border-bottom mb-3">{{ question.question }}</h5>
+                     <p class="card-text">{{ question.answer }}</p>
+                     <button class="btn btn-light me-2" @click="SatisfYes(question.commonQuestionId)">
+                        <i class="fa-regular fa-thumbs-up"></i>
+                     </button>
+                     <button class="btn btn-light" @click="SatisfNo(question.commonQuestionId)"><i class="fa-regular fa-thumbs-down"></i></button>
+                  </div>
                </div>
             </div>
          </div>
@@ -67,8 +72,12 @@
             <div class="mt-5">
                <p>
                   是否有回答你的問題?
-                  <button type="button" @click="SatisfYes(selectedQuestion.commonQuestionId)" class="btn btn-light ms-2">是</button>
-                  <button type="button" @click="SatisfNo(selectedQuestion.commonQuestionId)" class="btn btn-light ms-2">否</button>
+                  <button type="button" @click="SatisfYes(selectedQuestion.commonQuestionId)" class="btn btn-light ms-2">
+                     <i class="fa-regular fa-thumbs-up me-2"></i>是
+                  </button>
+                  <button type="button" @click="SatisfNo(selectedQuestion.commonQuestionId)" class="btn btn-light ms-2">
+                     <i class="fa-regular fa-thumbs-down me-2 SolidHeart"></i>否
+                  </button>
                </p>
             </div>
          </div>
@@ -90,7 +99,8 @@
    <!-- 聊天室 -->
    <div>
       <div class="chat-button" @click="toggleChat">
-         <span>{{ showChat ? "關閉聊天室" : "聊天室" }}</span>
+         <i id="chatIcon" class="fa-solid fa-comment" style="font-size: 25px"></i>
+         <!-- <span>{{ showChat ? "關閉聊天室" : "聊天室" }}</span> -->
       </div>
       <div class="chat-window" :class="{ show: showChat }">
          <div class="chat-header">
@@ -102,7 +112,7 @@
          </div>
       </div>
    </div>
-   
+
    <!-- 客服聊天室 -->
    <router-link to="/ServerChatRoom" class="text-decoration-none text-dark" style="display: none">客服回覆</router-link>
 
@@ -119,7 +129,11 @@ import CustmorQForm from "../components/CustomerQForm.vue";
 import MemberQForm from "../components/MemberQForm.vue";
 import AlertModal from "../components/AlertModal.vue";
 import ChatRoom from "../components/ChatRoom.vue";
-// import io from "socket.io-client";
+
+// 填入資料
+const putData = () => {
+   searchKeyword.value = "消";
+};
 
 // 常見問題
 const categoryQ = ref([]);
@@ -270,22 +284,31 @@ hr {
    cursor: pointer;
 }
 /* 聊天室的樣式 */
+#chatIcon {
+   -moz-transform: scaleX(-1);
+   -webkit-transform: scaleX(-1);
+   -o-transform: scaleX(-1);
+   transform: scaleX(-1);
+}
 .chat-button {
    position: fixed;
    bottom: 20px;
    right: 20px;
-   z-index: 9999;
-   background-color: #46a3ff;
+   z-index: 3;
+   background-color: #000;
    color: #fff;
-   padding: 10px;
-   border-radius: 5px 0 0 5px;
+   padding: 15px;
+   /* border-radius: 5px 0 0 5px; */
+   border-radius: 50%;
+   width: 55px;
+   height: 55px;
    cursor: pointer;
 }
 .chat-window {
    position: fixed;
    bottom: 0;
    right: 0;
-   z-index: 9998;
+   z-index: 2;
    width: 300px;
    height: 400px;
    border-radius: 5px 0 0 0;
@@ -300,7 +323,7 @@ hr {
    display: block;
 }
 .chat-header {
-   background-color: #46a3ff;
+   background-color: #000;
    color: #fff;
    padding: 10px;
    border-radius: 5px 0 0 0;

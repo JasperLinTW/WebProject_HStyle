@@ -83,8 +83,8 @@ export default {
    border: 1px solid rgb(12, 13, 12);
 }
 .btn:not(.nav-btns button):hover {
-   background-color: #46a3ff;
+   background-color: #000;
    color: #fff;
-   border-color: #46a3ff;
+   border-color: #000;
 }
 </style>

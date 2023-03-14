@@ -14,10 +14,11 @@
             <div class="accordion-header row" :id="'heading' + index">
                <div class="col-1 text-center">
                   <button
-                     class="accordion-button collapsed"
+                     class="accordion-button btn-order"
                      type="button"
                      data-bs-toggle="collapse"
-                     :data-bs-target="'#collapse' + index"                     
+                     :data-bs-target="'#collapse' + index"
+                     :class="{ collapsed: index !== -1 }"
                      aria-expanded="false"
                      :aria-controls="'collapse' + index"
                   ></button>
@@ -30,12 +31,7 @@
                   <div v-else><i class="fa-solid fa-check"></i></div>
                </div>
             </div>
-            <div
-               :id="'collapse' + index"
-               class="accordion-collapse collapse"
-               :aria-labelledby="'heading' + index"
-               data-bs-parent="#accordionExample"
-            >
+            <div :id="'collapse' + index" class="accordion-collapse collapse" :aria-labelledby="'heading' + index" data-bs-parent="#accordionExample">
                <div class="accordion-body">
                   {{ question.solutionDescription }}
                </div>

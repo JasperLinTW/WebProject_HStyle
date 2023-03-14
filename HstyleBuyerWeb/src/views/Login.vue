@@ -146,12 +146,12 @@
   </div>
 
 </template>
-  
-<script setup>
 
+<script setup>
 import { ref, onMounted } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
+import { eventBus } from "../mybus";
 
 // function loginbutton() {   test
 // 			var Account = document.getElementById("Account").value;
@@ -166,16 +166,16 @@ const account = ref("");
 const password = ref("");
 const forgetaccont = ref("");
 const mail = ref("");
-const isLoging = ref(true)
+const isLoging = ref(true);
 
-const Raccount = ref("")
-const Rpassword = ref("")
-const Raddress = ref("")
-const Rbirthday = ref(new Date())
-const Rname = ref("")
-const Remail = ref("")
-const Rphone_Number = ref("")
-const Rgender = ref('male')
+const Raccount = ref("");
+const Rpassword = ref("");
+const Raddress = ref("");
+const Rbirthday = ref(new Date());
+const Rname = ref("");
+const Remail = ref("");
+const Rphone_Number = ref("");
+const Rgender = ref("male");
 
 const phoneRegex = /^09\d{8}$/;
 const nameRegex=/^[\u4e00-\u9fa5]{2,5}$/;
@@ -197,6 +197,7 @@ const login = () => {
     .then((response) => {
       
       console.log(response.data);
+        eventBus.emit("Login");
       router.go(-1);
     })
     .catch((error) => {
@@ -206,19 +207,18 @@ const login = () => {
 };
 
 const checkLogin = () => {
-  axios
-    .get("https://localhost:7243/api/Member/id", { withCredentials: true })
-    .then((response) => {
-      if (response.data <= 0) {
-        isLoging.value = false;
-      }
-      else {
-        router.push("/");
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+   axios
+      .get("https://localhost:7243/api/Member/id", { withCredentials: true })
+      .then((response) => {
+         if (response.data <= 0) {
+            isLoging.value = false;
+         } else {
+            router.push("/");
+         }
+      })
+      .catch((error) => {
+         console.error(error);
+      });
 };
 
 const ForgetPassword = () => {
@@ -358,7 +358,7 @@ const RfillIn = () => {
   };
 
 </script>
-  
+
 <style scoped>
 .fz-10 {
   font-size: 13.5px;
@@ -386,39 +386,38 @@ const RfillIn = () => {
 }
 
 .fz-sm {
-  font-size: 14px;
+   font-size: 14px;
 }
 
 .px-10 {
-  padding-left: 19%;
-  padding-right: 19%;
+   padding-left: 19%;
+   padding-right: 19%;
 }
 
 .fz-big {
-  font-size: 20px;
-  font-weight: bold;
+   font-size: 20px;
+   font-weight: bold;
 }
 
 .login {
-  height: 100%;
+   height: 100%;
 }
 
 .mb-6 {
-  margin-bottom: 50px;
+   margin-bottom: 50px;
 }
 
 .h-500px {
   height: 720px;
 }
 
-
 .textbox {
-  border: none;
-  border-bottom: 1px solid transparent;
-  outline: none;
-  font-size: 16px;
-  transition: border-bottom-color 0.2s ease-in-out;
-  padding-right: 4px;
+   border: none;
+   border-bottom: 1px solid transparent;
+   outline: none;
+   font-size: 16px;
+   transition: border-bottom-color 0.2s ease-in-out;
+   padding-right: 4px;
 }
 
 .btn_Login {
@@ -440,29 +439,29 @@ const RfillIn = () => {
 }
 
 .form-control {
-  border: none;
-  border-bottom: 1px solid #ccc;
-  border-radius: 0;
-  box-shadow: none;
+   border: none;
+   border-bottom: 1px solid #ccc;
+   border-radius: 0;
+   box-shadow: none;
 }
 
 .form-control:focus {
-  border: none;
-  outline: none;
-  border-bottom: 1px solid #ccc;
-  box-shadow: none;
+   border: none;
+   outline: none;
+   border-bottom: 1px solid #ccc;
+   box-shadow: none;
 }
 
 input:-webkit-autofill,
 textarea:-webkit-autofill,
 select:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+   -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
 
-  background-color: transparent;
+   background-color: transparent;
 
-  background-image: none;
+   background-image: none;
 
-  transition: background-color 50000s ease-in-out 0s;
+   transition: background-color 50000s ease-in-out 0s;
 }
 
 .px-6 {
@@ -470,34 +469,33 @@ select:-webkit-autofill {
 }
 
 .btn-underline::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background-color: #000000;
-  transform: scaleX(0);
-  transition: transform 0.3s ease;
+   content: "";
+   position: absolute;
+   bottom: 0;
+   left: 0;
+   width: 100%;
+   height: 2px;
+   background-color: #000000;
+   transform: scaleX(0);
+   transition: transform 0.3s ease;
 }
 
 .btn-underline:hover::after {
-  transform: scaleX(1);
+   transform: scaleX(1);
 }
 
 .btn-underline {
-  position: relative;
-  padding: 0;
-  border: none;
-  background: none;
-  text-decoration: none;
-  font-size: 12pt;
-  color: #333;
-  cursor: pointer;
+   position: relative;
+   padding: 0;
+   border: none;
+   background: none;
+   text-decoration: none;
+   font-size: 12pt;
+   color: #333;
+   cursor: pointer;
 }
 
 .btn-underline:hover {
-  color: #000000;
+   color: #000000;
 }
 </style>
-  

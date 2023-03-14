@@ -43,6 +43,11 @@
                 <input type="submit" value="新增" class="btn btn-success" />
             </div>
         </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="button" id="putData" value="填入資料" class="btn btn-dark" />
+            </div>
+        </div>
     </div>
 }
 
@@ -55,4 +60,12 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $("#putData").on("click", function () {
+            document.getElementById("Activity_Name").value = "新品購買打折";
+            document.getElementById("Activity_Describe").value = "購買當季新品可以折扣多少(H_value)%";
+            document.getElementById("H_Value").value = "2";
+        })
+    </script>
 }

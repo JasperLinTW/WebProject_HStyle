@@ -73,8 +73,12 @@
 // 點擊之後再做判斷
 import { ref, onMounted } from "vue";
 import axios from "axios";
+import { eventBus } from "../mybus";
 const checkIns = ref([]);
 let leftTimes = 0;
+eventBus.on("Login", () => {
+   getCheckInfo();
+});
 
 const getCheckInfo = async () => {
    await axios
@@ -82,6 +86,8 @@ const getCheckInfo = async () => {
       .then((response) => {
          checkIns.value = response.data;
          leftTimes = 7 - checkIns.value.checkInTimes;
+         document.getElementById("alertLogin").style.display = "none";
+         document.getElementById("checkButton").style.display = "block";
          //  console.log(checkIns.value);
       })
       .catch((error) => {
