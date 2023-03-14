@@ -187,6 +187,7 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 		public void Edit(CreateProductDto dto)
 		{
 			var product = _db.Products.Find(dto.ProductID);
+			product.Category_Id = dto.Category_Id;
 			product.Product_Name = dto.Product_Name;
 			product.Product_Id = dto.ProductID;
 			product.UnitPrice = dto.UnitPrice;
