@@ -74,3 +74,8 @@
 .mt-50 {
     margin-top: -50px;
 }
+
+.orderrow {
+    height: 100px; /* 設定表格容器的高度 */
+    overflow-y: scroll; /* 設定垂直捲軸，以便處理表格內容過多的情況 */
+}

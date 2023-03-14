@@ -31,9 +31,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.SubTotal)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Discount)
-            </th>
         </tr>
 
         @foreach (var item in Model)
@@ -53,9 +50,6 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.SubTotal)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Discount)
                 </td>
             </tr>
         }

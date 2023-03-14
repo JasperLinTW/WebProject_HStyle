@@ -8,7 +8,7 @@
     </div>
   </div>
   <div>
-    <div id="carouselExampleIndicators" class="carousel slide py-5 mb-6" data-ride="carousel">
+    <div id="carouselExampleIndicators" class="carousel slide mb-6" data-ride="carousel">
       <ol class="carousel-indicators">
         <li v-for="(item, index) in rec" :key="index" data-target="#carouselExampleIndicators" :data-slide-to="index"
           :class="{ active: index === 0 }"></li>

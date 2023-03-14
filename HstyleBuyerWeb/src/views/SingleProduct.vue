@@ -45,9 +45,9 @@
           <div class="col-md-12 text-start mt-2">
             <button @click="addItem()" class="add-to-cart"> NT$ {{ product.unitPrice }}<span class="border-start  ms-2"
                 data-bs-target="#exampleModal"><span class="ps-2">加入購物車</span></span></button>
-            <span class="m-3" v-if="!isClicked" @click="likesProduct()"><i
+            <span class=" pl-2" v-if="!isClicked" @click="likesProduct()"><i
                 class="fa-regular fa-heart icon-hover fz-18"></i></span>
-            <span class="m-3" v-else @click="likesProduct()"><i class="fa-solid fa-heart fz-18"></i></span>
+            <span class="pl-2" v-else @click="likesProduct()"><i class="fa-solid fa-heart fz-18"></i></span>
           </div>
         </div>
       </div>
@@ -237,7 +237,7 @@ const getComment = async () => {
       response.data.map((p) => {
         p.isClicked = helpfulCommentsId.value.includes(p.commentId);
       });
-      isLoaded.value = true;
+
     })
     .catch((error) => {
       console.log(error);
@@ -253,6 +253,7 @@ const loadHelpfulComments = async () => {
     .then(response => {
       helpfulComments.value = response.data;
       helpfulCommentsId.value = helpfulComments.value.map((c) => { return c.commentId })
+      isLoaded.value = true;
     })
     .catch(error => { console.log(error); });
 }
