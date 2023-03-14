@@ -16,7 +16,7 @@ namespace ScheduleWork
 		{
 			DateTime today = DateTime.Now;
 			// 發放生日H幣
-			HcoinForBirth(today);
+			//HcoinForBirth(today);
 			// 發放購物活動H幣
 			HcoinForOrder(today);
 
@@ -24,7 +24,7 @@ namespace ScheduleWork
 			ChangeIsOnShelf(today);
 
 			// 文章的排程
-			ChangePon(today);
+			//ChangePon(today);
 
 		}
 
