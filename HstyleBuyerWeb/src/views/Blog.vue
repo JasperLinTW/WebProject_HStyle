@@ -2,42 +2,68 @@
 <template>
   <div class="container">
     <div class="row border-bottom mb-5 mt-4 pb-2 d-flex justify-content-evenly">
-      <div class="col-md-1"><router-link to="/Blog/EssaysBlog" class="nav-link targetAll btn-underline">文章</router-link>
-      </div>
-      <div class="col-md-1"> <router-link to="/Blog/VideoBlog" class="nav-link targetAll btn-underline">影音</router-link>
-      </div>
+      <div class="col-md-1"><router-link to="/Blog/EssaysBlog" class="nav-link targetAll btn-underline">文章</router-link></div>
+      <div class="col-md-1"><router-link to="/Blog/VideoBlog" class="nav-link targetAll btn-underline">影音</router-link></div>
     </div>
   </div>
 
   <div class="container">
-    <!-- 圖片倫播 -->
-    <div class="wrap">
-      <a class="slide-arrow" id="slidePrev"><i class="fa-solid fa-chevron-left"></i></a>
-      <a class="slide-arrow right" id="slideNext"><i class="fa-solid fa-chevron-right"></i></a>
-      <ul class="slide-img" id="slideImg">
-        <li><img src="../assets/image/carousel01.webp" alt="" /></li>
-        <li><img src="../assets/image/carousel02.jpg" alt="" /></li>
-        <li><img src="../assets/image/carousel03.jpg" alt="" /></li>
-        <li><img src="../assets/image/carousel03.jpg" alt="" /></li>
-        <li><img src="../assets/image/carousel03.jpg" alt="" /></li>
-      </ul>
-      <div class="card-img-overlay">
-        <div class="card-title">
-          <h5 class="">
-            This is a wider card with supporting text below as a natural lead-in
-            to additional content. This content is a little bit longer.
-          </h5>
+    <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <button
+          type="button"
+          data-bs-target="#carouselExampleFade"
+          data-bs-slide-to="0"
+          class="active"
+          aria-current="true"
+          aria-label="Slide 1"
+        ></button>
+        <button type="button" data-bs-target="#carouselExampleFade" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleFade" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        <button type="button" data-bs-target="#carouselExampleFade" data-bs-slide-to="3" aria-label="Slide 4"></button>
+        <button type="button" data-bs-target="#carouselExampleFade" data-bs-slide-to="4" aria-label="Slide 5"></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="../assets/image/carousel01.webp" alt="" />
+          <div class="carousel-caption d-none d-md-block">
+            <h5>26歲的南韓女生Miss Sohee，是如何成為BLACKPINK演唱會指定的訂製服設計師？一件訂製服甚至要價上百萬</h5>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="../assets/image/carousel02.jpg" alt="" />
+          <div class="carousel-caption d-none d-md-block">
+            <h5>回顧英國女王伊麗莎白二世19套經典造型：從少女優雅到七彩同色系套裝</h5>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="../assets/image/carousel03.jpg" alt="" />
+          <div class="carousel-caption d-none d-md-block">
+            <h5>新一代人間 Gucci！ 盤點 NewJeans Hanni 五種穿搭典範，為你示範Z世代的青春無敵</h5>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img class="queenImg" src="../assets/image/carousel04.jpg" alt="" />
+          <div class="carousel-caption d-none d-md-block">
+            <h5>從黛安娜王妃、凱特王妃到 Jennie，Chanel 斜紋軟呢外套橫跨 70 年仍經典不敗</h5>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="../assets/image/carousel03.jpg" alt="" />
+          <div class="carousel-caption d-none d-md-block">
+            <h5>Gigi吉吉哈蒂德的 #一週ootd</h5>
+          </div>
         </div>
       </div>
-      <ul class="pages">
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-      </ul>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
     </div>
-    <!-- 圖片倫播 end -->
 
     <div class="">
       <div class="vegas-slide-container">
@@ -50,17 +76,17 @@
     </div>
     <div class="container">
       <div class="row">
-        <EssayCard v-for="item in essays.slice(0, 2)" :data="item"></EssayCard>
-      <!-- </div>
+        <EssayCard v-for="item in essays.slice(0, 4)" :data="item"></EssayCard>
+        <!-- </div>
       <div class="row"> -->
-        <VideoCard v-for="items in videos.slice(0, 2)" :data="items"></VideoCard>
+        <VideoCard v-for="items in videos.slice(0, 4)" :data="items"></VideoCard>
       </div>
       <!-- <EssayCard v-for="item in newessays.slice(0, 2)" :data="item"></EssayCard> -->
     </div>
 
     <!-- 左右兩邊文章專區 -->
 
-  <!-- <div v-if="loaded" class="container-essay">
+    <!-- <div v-if="loaded" class="container-essay">
       <div class="column">
         <router-link :to="'/EssaysBlog/' + essays[1].essayId">
           <img :src="essays[0].imgs[0]" class="" alt="" />
@@ -86,7 +112,7 @@
 
     <div class="container-essay" ref="container">
       <div class="col-4 column" ref="firstColumn">
-        <img src="../assets/image/jisoo.jpg" alt="Image" />
+        <img src="../assets/image/.jpg" alt="Image" />
       </div>
       <div class="col-4 column" ref="secondColumn">
         <div class="container">
@@ -97,9 +123,8 @@
                 <div class="card-body">
                   <h5 class="card-title1">Card title 1</h5>
                   <p class="card-text">
-                    11111111This is a wider card with supporting text below as a
-                    natural lead-in to additional content. This content is a
-                    little bit longer.
+                    11111111This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit
+                    longer.
                   </p>
                   <small class="text-muted">Last updated 3 mins ago</small>
                 </div>
@@ -114,9 +139,8 @@
                 <div class="card-body">
                   <h5 class="card-title1">Card title 2</h5>
                   <p class="card-text">
-                    2222222222This is a wider card with supporting text below as
-                    a natural lead-in to additional content. This content is a
-                    little bit longer.
+                    2222222222This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit
+                    longer.
                   </p>
                   <small class="text-muted">Last updated 3 mins ago</small>
                 </div>
@@ -131,9 +155,8 @@
                 <div class="card-body">
                   <h5 class="card-title1">Card title 3</h5>
                   <p class="card-text">
-                    333333333333This is a wider card with supporting text below
-                    as a natural lead-in to additional content. This content is
-                    a little bit longer.
+                    333333333333This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little
+                    bit longer.
                   </p>
                   <small class="text-muted">Last updated 3 mins ago</small>
                 </div>
@@ -160,9 +183,10 @@
     </div>
     <div class="container">
       <div class="row">
-        <EssayCard v-for="item in essays.slice(0, 2)" :data="item"></EssayCard>
+        <EssayCard v-for="item in essays.slice(5, 9)" :data="item"></EssayCard>
+        <VideoCard v-for="item in videos.slice(5, 9)" :data="item"></VideoCard>
       </div>
-    <!-- <div class="row">
+      <!-- <div class="row">
           <VideoCard v-for="item in videos.slice(0,3)" :data="item"></VideoCard>
         </div>
                                             <EssayCard v-for="item in newessays.slice(0, 2)" :data="item"></EssayCard> -->
@@ -174,7 +198,10 @@
 import EssayCard from "../components/EssayCard.vue";
 import VideoCard from "../components/VideoCard.vue";
 import { ref, onMounted } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
+const router = useRouter();
+const isClicked = ref([]);
 const loaded = ref(false);
 const essays = ref([]);
 const getEssayInfo = async () => {
@@ -182,7 +209,9 @@ const getEssayInfo = async () => {
     .get("https://localhost:7243/api/Essay")
     .then((response) => {
       essays.value = response.data;
+      console.log("essay");
       // console.log(essays.value);
+      console.log(essays.value);
       loaded.value = true;
     })
     .catch((error) => {
@@ -190,16 +219,19 @@ const getEssayInfo = async () => {
     });
 };
 // 影片
-const videos = ref([])
+const videos = ref([]);
 const getVideos = async () => {
-  await axios.get(`https://localhost:7243/api/Video`)
-    .then(response => {
+  await axios
+    .get(`https://localhost:7243/api/Video`)
+    .then((response) => {
       videos.value = response.data;
       // console.log(videos.value);
       loaded.value = true;
     })
-    .catch(error => { console.log(error); });
-}
+    .catch((error) => {
+      console.log(error);
+    });
+};
 onMounted(() => {
   getEssayInfo();
   getVideos();
@@ -253,11 +285,7 @@ $(function () {
   function moveImg() {
     slideMove = 0 - index * 1300;
     $("#slideImg").css("left", slideMove);
-    $(".pages li")
-      .eq(index)
-      .css("background", "white")
-      .siblings()
-      .css("background", "transparent");
+    $(".pages li").eq(index).css("background", "white").siblings().css("background", "transparent");
   }
   setInterval(autoImg, 2000);
   function autoImg() {
@@ -280,10 +308,8 @@ const setup = () => {
     const thirdColumnEl = thirdColumn.value;
     containerEl.addEventListener("scroll", () => {
       const scrollTop = containerEl.scrollTop;
-      const secondColumnTop =
-        secondColumnEl.getBoundingClientRect().top + window.scrollY;
-      const thirdColumnTop =
-        thirdColumnEl.getBoundingClientRect().top + window.scrollY;
+      const secondColumnTop = secondColumnEl.getBoundingClientRect().top + window.scrollY;
+      const thirdColumnTop = thirdColumnEl.getBoundingClientRect().top + window.scrollY;
       if (scrollTop < secondColumnTop || scrollTop > thirdColumnTop) {
         firstColumnEl.classList.add("col-4");
         secondColumnEl.classList.add("col-4");
@@ -332,9 +358,10 @@ const setup = () => {
 }
 .slide-img li img {
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
   /* 控制元素內容大小 調整比例 */
   object-fit: cover;
+  margin-top: -150px;
 }
 .pages {
   position: absolute;
@@ -527,7 +554,7 @@ img {
   bottom: 0;
   left: 0;
   right: 0;
-  overflow: hidden;
+  overflow: filled;
 }
 .column:first-child img {
   height: 100%;
@@ -571,4 +598,54 @@ a {
 }
 .btn-underline:hover {
   color: #000000;
-}</style>
+}
+
+#carouselExampleFade {
+  width: 1300px;
+  height: 500px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.carousel-inner {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: 100%;
+  margin-top: -150px;
+  object-fit: cover;
+}
+
+.carousel-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem;
+}
+
+.image-container {
+  position: relative;
+}
+
+.carousel-caption {
+  position: absolute;
+  top: 500px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* background-color: rgba(70, 67, 67, 0.5);  */
+  padding: 20px;
+  color: white;
+}
+
+.queenImg {
+  position: relative;
+  margin-top: -200px;
+}
+</style>

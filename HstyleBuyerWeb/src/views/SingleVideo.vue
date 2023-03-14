@@ -1,108 +1,127 @@
 <template>
-   <div class="container">
-      <div class="row border-bottom mb-5 mt-4 pb-2 d-flex justify-content-evenly">
-         <div class="col-md-1"><router-link to="/Blog/EssaysBlog" class="nav-link targetAll btn-underline">文章</router-link></div>
-         <div class="col-md-1"><router-link to="/Blog/VideoBlog" class="nav-link targetAll btn-underline">影音</router-link></div>
-      </div>
-   </div>
+  <div class="container">
+    <div class="row border-bottom mb-5 mt-4 pb-2 d-flex justify-content-evenly">
+      <div class="col-md-1"><router-link to="/Blog/EssaysBlog" class="nav-link targetAll btn-underline">文章</router-link></div>
+      <div class="col-md-1"><router-link to="/Blog/VideoBlog" class="nav-link targetAll btn-underline">影音</router-link></div>
+    </div>
+  </div>
 
-   <div class="container mt-5">
-      <div v-if="isLoaded" class="row">
-         <div class="col-lg-8">
-            <!-- plyr影片串接 -->
-            <div>
-               <video ref="player" id="player" class="plyr__video-embed" playsinline controls autoplay>
-                  <source :src="video.filePath" type="video/mp4" autoplay />
-               </video>
-            </div>
-            <!-- <div class="">
+  <div class="container mt-5">
+    <div v-if="isLoaded" class="row">
+      <div class="col-lg-8">
+        <div class="row">
+          <!-- plyr影片串接 -->
+          <div>
+            <video ref="player" id="player" class="plyr__video-embed" playsinline controls autoplay>
+              <source :src="video.filePath" type="video/mp4" autoplay />
+            </video>
+          </div>
+        </div>
+        <!-- <div class="">
                     <video class="video" :src="video.filePath"></video>
                 </div> -->
-            <div class="badge bg-secondary opacity-50 me-1" v-for="tag in video.tags" :key="tag">#{{ tag }}</div>
+        <div class="row justify-content-evenly">
+          <!-- tags -->
+          <div class="col-4">
+            <span class="badge bg-secondary opacity-50 me-1" v-for="tag in video.tags" :key="tag">#{{ tag }}</span>
+          </div>
+          <!-- 觀看喜歡次數 -->
+          <div class="col-4">
             <div class="videoLike">
-               <div class="me-auto">
-                  <label>
-                     <label><i class="fa-solid fa-eye fz-16"></i> {{ video.views }}</label>
-                     <label class="ms-1"><i class="fa-solid fa-heart fz-16"></i> {{ video.likes }}</label>
-                     <span> 喜歡 </span>
-                     <span v-if="!isClicked" @click="postVideoLike(video.id)"><i class="fa-regular fa-heart icon-hover fz-18"></i></span>
-                     <span v-else @click="postVideoLike(video.id)"><i class="fa-solid fa-heart fz-18"></i></span>
-                  </label>
-               </div>
-               <div class="content"></div>
-               <label class="title">{{ video.title }}</label>
-               <p class="description">{{ video.description }}</p>
+              <label>
+                <label><i class="fa-solid fa-eye fz-16"></i> {{ video.views }}</label>
+                <label class="ms-1"><i class="fa-solid fa-heart fz-16"></i> {{ video.likes }}</label>
+                <span> 喜歡 </span>
+                <span v-if="!isClicked" @click="postVideoLike(video.id)"><i class="fa-regular fa-heart icon-hover fz-18"></i></span>
+                <span v-else @click="postVideoLike(video.id)"><i class="fa-solid fa-heart fz-18"></i></span>
+              </label>
             </div>
-         </div>
-         <div class="col-lg-4">
-            <div class="row">
-               <div class="col-lg-12">
-                  <form action="" class="comment">
-                     <div v-if="comment !== null">
-                        <div class="form-group commentContent" v-for="comment in videoComments" :key="comment.id">
-                           <div class="d-flex justify-content-start">
-                              <div class="user">
-                                 <img src="../assets/image/user.png" alt="" />
-                              </div>
-                              <label>{{ comment.memberName }}　說：</label>
-                              <div>
-                                 <label>{{ comment.comment }}</label>
-                              </div>
-                           </div>
-                           <div class="videoCommentLike">
-                              <label class="">
-                                 <span>留言按讚 </span>
-                                 <span v-if="!comment.commentIsClicked" @click="postCommentLike(comment.id)"
-                                    ><i class="fa-regular fa-heart icon-hover fz-18"></i
-                                 ></span>
-                                 <span v-else @click="postCommentLike(comment.id)"><i class="fa-solid fa-heart fz-18"></i></span>
-                              </label>
-                           </div>
-                           <div class="d-flex justify-content-end">
-                              <label>{{ comment.createdTime.slice(0, 10) }}</label>
-                              <!-- 按讚留言 -->
-                           </div>
+          </div>
+        </div>
+        <div class="row">
+          <!-- 影片標題 -->
+          <div class="content">
+            <label class="title fs-2"
+              ><strong>{{ video.title }}</strong></label
+            >
+            <p class="description fs-5">{{ video.description }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="row">
+          <div class="col-lg-12">
+            <form action="" class="comment">
+              <div v-if="comment !== null">
+                <div class="form-group commentContent" v-for="comment in videoComments" :key="comment.id">
+                  <div class="row">
+                    <div class="col-10">
+                      <!-- 所有留言 -->
+                      <div class="d-flex justify-content-start">
+                        <div class="user">
+                          <img src="../assets/image/user.png" alt="" />
                         </div>
-                     </div>
-                     <div v-else>目前並無留言</div>
-                  </form>
-                  <form>
-                     <!-- 留言板 -->
-                     <div class="searchDiv mb-4 mt-3">
-                        <!-- <label for="search-input" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden"> 搜尋： </label> -->
-                        <input type="text" id="search-input" v-model="comment" placeholder="輸入留言..." />
-                        <button @click.prevent="postComment()" id="searchButtom" type="submit">
-                           <i class="fa-regular fa-paper-plane"></i>
-                        </button>
-                     </div>
-                  </form>
-               </div>
-               <br />
-            </div>
-         </div>
-      </div>
-   </div>
-   <!-- 商品推薦 -->
-   <div class="container">
-      <div class="" v-if="RecoProducts !== null">
-         <p for="" class="border-bottom">商品推薦</p>
-         <div class="recoProducts d-inline-flex flex-row bd-highlight mb-3" v-for="product in RecoProducts" :key="product.product_Id">
-            <div class="">
-               <div class="card d-flex justify-content-center align-items-center me-4">
-                  <a :href="`http://localhost:5173/product/${product.product_Id}`">
-                     <div class="img-sz">
-                        <img :src="product.imgs[0]" class="card-img-top" alt="Product Image" />
-                     </div>
-                  </a>
-                  <div class="card-body position-relative">
-                     <div class="card-title fw-bold">{{ product.product_Name }}</div>
-                     <span>$NT {{ product.unitPrice }}</span>
+                        <p>{{ comment.memberName }}說：{{ comment.comment }}</p>
+                      </div>
+                    </div>
+                    <!-- 留言按讚 -->
+                    <div class="col-1">
+                      <div class="videoCommentLike">
+                        <label class="">
+                          <span> </span>
+                          <span v-if="!comment.commentIsClicked" @click="postCommentLike(comment.id)"
+                            ><i class="fa-regular fa-heart icon-hover fz-18"></i
+                          ></span>
+                          <span v-else @click="postCommentLike(comment.id)"><i class="fa-solid fa-heart fz-18"></i></span>
+                        </label>
+                      </div>
+                    </div>
                   </div>
-               </div>
-            </div>
-         </div>
+                  <div class="d-flex justify-content-end">
+                    <label>{{ comment.createdTime.slice(0, 10) }}</label>
+                    <!-- 按讚留言 -->
+                  </div>
+                </div>
+              </div>
+              <div v-else>目前並無留言</div>
+            </form>
+            <form>
+              <!-- 留言板 -->
+              <div class="searchDiv mb-4 mt-3">
+                <!-- <label for="search-input" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden"> 搜尋： </label> -->
+                <input type="text" id="search-input" v-model="comment" placeholder="輸入留言..." />
+                <button @click.prevent="postComment()" id="searchButtom" type="submit">
+                  <i class="fa-regular fa-paper-plane"></i>
+                </button>
+              </div>
+            </form>
+          </div>
+          <br />
+        </div>
       </div>
-   </div>
+    </div>
+  </div>
+  <!-- 商品推薦 -->
+  <div class="container">
+    <div class="" v-if="RecoProducts !== null">
+      <p for="" class="border-bottom">商品推薦</p>
+      <div class="recoProducts d-inline-flex flex-row bd-highlight mb-3" v-for="product in RecoProducts" :key="product.product_Id">
+        <div class="">
+          <div class="card d-flex justify-content-center align-items-center me-4">
+            <a :href="`http://localhost:5173/product/${product.product_Id}`">
+              <div class="img-sz">
+                <img :src="product.imgs[0]" class="card-img-top" alt="Product Image" />
+              </div>
+            </a>
+            <div class="card-body position-relative">
+              <div class="card-title fw-bold">{{ product.product_Name }}</div>
+              <span>$NT {{ product.unitPrice }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -112,6 +131,7 @@ import axios from "axios";
 import Plyr from "plyr";
 import { slotFlagsText } from "@vue/shared";
 import { eventBus } from "../mybus";
+
 
 const video = ref([]);
 const route = useRoute();
@@ -129,259 +149,247 @@ let likesComments = ref([]);
 // get
 //得到影片
 const getVideo = async () => {
-   await axios
-      .get(`https://localhost:7243/api/Video/${route.params.id}`)
-      .then((response) => {
-         video.value = response.data;
-         isClicked.value = likevideoId.value.includes(route.params.id);
-         // console.log(likevideoId.value);
-      })
-      .catch((error) => {
-         console.log(error);
-      });
+  await axios
+    .get(`https://localhost:7243/api/Video/${route.params.id}`)
+    .then((response) => {
+      video.value = response.data;
+      isClicked.value = likevideoId.value.includes(route.params.id);
+      // console.log(likevideoId.value);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
 
 // 喜歡的評論
 const likeCommentId = ref([]);
 const getCommentLikes = async () => {
-   await axios
-      .get(`https://localhost:7243/api/Video/comment/Likes`, { withCredentials: true })
-      .then((response) => {
-         if (response.data.length > 0) {
-            likesComments.value = response.data;
-            likeCommentId.value = likesComments.value.map((likes) => {
-               return likes.commentId;
-            });
-         }
-      })
-      .catch((error) => {
-         console.log(error);
-      });
-   getComments();
+  await axios
+    .get(`https://localhost:7243/api/Video/comment/Likes`, { withCredentials: true })
+    .then((response) => {
+      if (response.data.length > 0) {
+        likesComments.value = response.data;
+        likeCommentId.value = likesComments.value.map((likes) => {
+          return likes.commentId;
+        });
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  getComments();
 };
 
 //得到評論
 const commentIsClicked = ref([]);
 const getComments = async () => {
-   await axios
-      .get(`https://localhost:7243/api/Video/Comments/${route.params.id}`)
-      .then((response) => {
-         videoComments.value = response.data;
-         commentIsClicked.value = response.data.map((v) => {
-            v.commentIsClicked = likeCommentId.value.includes(parseInt(v.id));
-            return v;
-         });
-         isLoaded.value = true;
-      })
-      .catch((error) => {
-         console.log(error);
+  await axios
+    .get(`https://localhost:7243/api/Video/Comments/${route.params.id}`)
+    .then((response) => {
+      videoComments.value = response.data;
+      commentIsClicked.value = response.data.map((v) => {
+        v.commentIsClicked = likeCommentId.value.includes(parseInt(v.id));
+        return v;
       });
+      isLoaded.value = true;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
 
 //商品推薦
 const getRecommenations = async () => {
-   await axios
-      .get(`https://localhost:7243/api/Video/Recommenations/${route.params.id}`)
-      .then((response) => {
-         RecoProducts.value = response.data;
-         // isLoaded.value = true;
-      })
-      .catch((error) => {
-         console.log(error);
-      });
+  await axios
+    .get(`https://localhost:7243/api/Video/Recommenations/${route.params.id}`)
+    .then((response) => {
+      RecoProducts.value = response.data;
+      // isLoaded.value = true;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
 
 // 喜歡的video
 let likes = ref([]);
 const likevideoId = ref([]);
 const getLikesVideos = async () => {
-   await axios.get(`https://localhost:7243/api/Video/MyLike`, { withCredentials: true }).then((response) => {
-      if (response.data.length > 0) {
-         likes.value = response.data;
-         likevideoId.value = likes.value.map((v) => {
-            return v.videoId;
-         });
-         // console.log(likevideoId.value);
-      }
-   });
+  await axios.get(`https://localhost:7243/api/Video/MyLike`, { withCredentials: true }).then((response) => {
+    if (response.data.length > 0) {
+      likes.value = response.data;
+      likevideoId.value = likes.value.map((v) => {
+        return v.videoId;
+      });
+    }
+  });
 };
 
 // post
 //點擊喜歡的影片
 const postVideoLike = (videoId) => {
-   axios
-      .post(`https://localhost:7243/api/Video/Like/${videoId}`, {}, { withCredentials: true })
-      .then((response) => {
-         isClicked.value = !isClicked.value;
-         //getVideo();
-      })
-      .catch((error) => {
-         console.log(error.response.status);
-         if (error.response.status === 401) {
-            router.push("/login");
-         }
-      });
+  axios
+    .post(`https://localhost:7243/api/Video/Like/${videoId}`, {}, { withCredentials: true })
+    .then((response) => {
+      isClicked.value = !isClicked.value;
+      //getVideo();
+    })
+    .catch((error) => {
+      console.log(error.response.status);
+      if (error.response.status === 401) {
+        router.push("/login");
+      }
+    });
 };
 
 // 點擊喜歡的留言
 // const commentId = ref(false);
 const postCommentLike = (commentId) => {
-   console.log(commentId);
-   console.log(videoComments.value.commentId);
-   axios
-      .post(`https://localhost:7243/api/Video/CommentLike/${commentId}`, {}, { withCredentials: true })
-      .then((response) => {
-         commentIsClicked.value = !commentIsClicked.value;
-         getCommentLikes();
-      })
-      .catch((error) => {
-         console.log(error);
-         if (error.response.status === 401) {
-            window.location = "http://localhost:5173/login";
-         }
-      });
+  axios
+    .post(`https://localhost:7243/api/Video/CommentLike/${commentId}`, {}, { withCredentials: true })
+    .then((response) => {
+      commentIsClicked.value = !commentIsClicked.value;
+      getCommentLikes();
+    })
+    .catch((error) => {
+      console.log(error);
+      if (error.response.status === 401) {
+        window.location = "http://localhost:5173/login";
+      }
+    });
 };
-// const postCommentLike = (commentId) => {
-//    console.log(commentId);
-//    axios
-//       .post(`https://localhost:7243/api/Video/CommentLike/${commentId}`, {}, { withCredentials: true })
-//       .then((response) => {
-//          commentIsClicked.value = !commentIsClicked.value;
-//       })
-//       .catch((error) => {
-//          console.log(error);
-//          if (error.response.status === 401) {
-//             window.location = "http://localhost:5173/login";
-//          }
-//       });
-// };
+
 const postView = () => {
-   axios
-      .post(`https://localhost:7243/api/Video/View/${route.params.id}`)
-      .then((response) => {
-         // console.log("view");
-      })
-      .catch((error) => {
-         console.log(error);
-      });
+  axios
+    .post(`https://localhost:7243/api/Video/View/${route.params.id}`)
+    .then((response) => {})
+    .catch((error) => {
+      console.log(error);
+    });
 };
 
 // 送出留言
 const comment = ref("");
 const postComment = async () => {
-   await axios
-      .post(`https://localhost:7243/api/Video/Comment/${route.params.id}`, { comment: comment.value }, { withCredentials: true })
-      .then((response) => {
-         getComments();
-         comment.value = "";
-      })
-      .catch((error) => {
-         console.log(error);
-         if (error.response.status === 401) {
-            window.location = "http://localhost:5173/login";
-         }
-      });
+  await axios
+    .post(`https://localhost:7243/api/Video/Comment/${route.params.id}`, { comment: comment.value }, { withCredentials: true })
+    .then((response) => {
+      getComments();
+      comment.value = "";
+    })
+    .catch((error) => {
+      console.log(error);
+      if (error.response.status === 401) {
+        window.location = "http://localhost:5173/login";
+      }
+    });
 };
 
-// const onReady = () => {
-//    console.log(player.value.duration);
-// }
 onMounted(() => {
-   getVideo();
-   getLikesVideos();
-   getCommentLikes();
-   // getComments();
-   getRecommenations();
-   postView();
-   // const plyrPlayer = new Plyr(player.value);
-   // plyrPlayer.on('ready', onReady);
+  getVideo();
+  getLikesVideos();
+  getCommentLikes();
+  // getComments();
+  getRecommenations();
+  postView();
 });
-// onMounted(async () => {
-//    await getVideo();
-//    await getLikesVideos();
-//    await getCommentLikes();
-//    await getComments();
-//    await getRecommenations();
-//    await postView();
-//    // const plyrPlayer = new Plyr(player.value);
-//    // plyrPlayer.on('ready', onReady);
-// });
 
 eventBus.on("postVideoLike", () => {
-   getLikesVideos();
+  getLikesVideos();
 });
 </script>
 
 <style scoped>
-/* @import "plyr/dist/plyr.css"; */
-/* @import '~plyr/dist/plyr.css'; */
-
 .video {
-   width: 800px;
+  width: 800px;
 }
 
 img {
-   height: 140px;
+  height: 140px;
 }
 
 video {
-   width: 800px;
+  width: 800px;
 }
 
 .comment {
-   overflow: auto;
-   width: 400px;
-   height: 700px;
+  overflow: auto;
+  width: 400px;
+  height: 700px;
 }
 
 .commentContent {
-   border-bottom: 1px ridge;
-   width: 95%;
+  border-bottom: 1px ridge;
+  width: 95%;
 }
 
 .user img {
-   width: 30px;
-   height: 30px;
-   margin-right: 5px;
+  width: 30px;
+  height: 30px;
+  margin-right: 5px;
 }
 
 .fz-20 {
-   font-size: 20px;
+  font-size: 20px;
 }
 
 .img-sz {
-   width: 100%;
+  width: 100%;
 }
 
 .card {
-   width: 200px;
-   border: none;
+  width: 200px;
+  border: none;
 }
 
 .comment {
-   height: 600px;
+  height: 600px;
 }
 
 input {
-   border-radius: 25px;
+  border-radius: 25px;
 }
 
 #search-input {
-   width: 400px;
-   padding: 10px 10px;
-   border-radius: 50px;
-   border: #f2f2f2;
-   background-color: #f2f2f2;
-   outline: none;
+  width: 400px;
+  padding: 10px 10px;
+  border-radius: 50px;
+  border: #f2f2f2;
+  background-color: #f2f2f2;
+  outline: none;
 }
 #searchButtom {
-   position: absolute;
-   left: 385px;
-   top: 625px;
-   padding: 0px;
-   background-color: #f2f2f2;
-   border: none;
-   border-radius: 50px;
-   outline: none;
+  position: absolute;
+  left: 385px;
+  top: 625px;
+  padding: 0px;
+  background-color: #f2f2f2;
+  border: none;
+  border-radius: 50px;
+  outline: none;
+}
+
+/* 網頁捲軸【寬度】 */
+::-webkit-scrollbar {
+  width: 15px;
+}
+
+/* 網頁捲軸【背景】顏色 */
+::-webkit-scrollbar-track {
+  /* background: #002e65; */
+  background: #eeeeee;
+  /* background: #000; */
+}
+
+/* 網頁捲軸【把手】顏色 */
+::-webkit-scrollbar-thumb {
+  background: #000;
+  /* background: #eeeeee; */
+}
+
+/* 網頁捲軸【滑過時】把手的顏色 */
+::-webkit-scrollbar-thumb:hover {
+  /* background: #fff; */
+  border-block-color: #fff;
 }
 </style>
