@@ -2,42 +2,68 @@
 <template>
   <div class="container">
     <div class="row border-bottom mb-5 mt-4 pb-2 d-flex justify-content-evenly">
-      <div class="col-md-1"><router-link to="/Blog/EssaysBlog" class="nav-link targetAll btn-underline">文章</router-link>
-      </div>
-      <div class="col-md-1"> <router-link to="/Blog/VideoBlog" class="nav-link targetAll btn-underline">影音</router-link>
-      </div>
+      <div class="col-md-1"><router-link to="/Blog/EssaysBlog" class="nav-link targetAll btn-underline">文章</router-link></div>
+      <div class="col-md-1"><router-link to="/Blog/VideoBlog" class="nav-link targetAll btn-underline">影音</router-link></div>
     </div>
   </div>
 
   <div class="container">
-    <!-- 圖片倫播 -->
-    <div class="wrap">
-      <a class="slide-arrow" id="slidePrev"><i class="fa-solid fa-chevron-left"></i></a>
-      <a class="slide-arrow right" id="slideNext"><i class="fa-solid fa-chevron-right"></i></a>
-      <ul class="slide-img" id="slideImg">
-        <li><img src="../assets/image/chanel1.jpg" alt="" /></li>
-        <li><img src="../assets/image/chanel2.jpg" alt="" /></li>
-        <li><img src="../assets/image/chanel3.jpg" alt="" /></li>
-        <li><img src="../assets/image/chanel4.jpg" alt="" /></li>
-        <li><img src="../assets/image/chanel5.jpg" alt="" /></li>
-      </ul>
-      <div class="card-img-overlay">
-        <div class="card-title">
-          <h5 class="">
-            This is a wider card with supporting text below as a natural lead-in
-            to additional content. This content is a little bit longer.
-          </h5>
+    <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <button
+          type="button"
+          data-bs-target="#carouselExampleFade"
+          data-bs-slide-to="0"
+          class="active"
+          aria-current="true"
+          aria-label="Slide 1"
+        ></button>
+        <button type="button" data-bs-target="#carouselExampleFade" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleFade" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        <button type="button" data-bs-target="#carouselExampleFade" data-bs-slide-to="3" aria-label="Slide 4"></button>
+        <button type="button" data-bs-target="#carouselExampleFade" data-bs-slide-to="4" aria-label="Slide 5"></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="../assets/image/carousel01.webp" alt="" />
+          <div class="carousel-caption d-none d-md-block">
+            <h5>26歲的南韓女生Miss Sohee，是如何成為BLACKPINK演唱會指定的訂製服設計師？一件訂製服甚至要價上百萬</h5>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="../assets/image/carousel02.jpg" alt="" />
+          <div class="carousel-caption d-none d-md-block">
+            <h5>回顧英國女王伊麗莎白二世19套經典造型：從少女優雅到七彩同色系套裝</h5>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="../assets/image/carousel03.jpg" alt="" />
+          <div class="carousel-caption d-none d-md-block">
+            <h5>新一代人間 Gucci！ 盤點 NewJeans Hanni 五種穿搭典範，為你示範Z世代的青春無敵</h5>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img class="queenImg" src="../assets/image/carousel04.jpg" alt="" />
+          <div class="carousel-caption d-none d-md-block">
+            <h5>從黛安娜王妃、凱特王妃到 Jennie，Chanel 斜紋軟呢外套橫跨 70 年仍經典不敗</h5>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="../assets/image/carousel05.jpg" alt="" />
+          <div class="carousel-caption d-none d-md-block">
+            <h5>Gigi吉吉哈蒂德的 #一週ootd</h5>
+          </div>
         </div>
       </div>
-      <ul class="pages">
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-      </ul>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
     </div>
-    <!-- 圖片倫播 end -->
 
     <div class="">
       <div class="vegas-slide-container">
@@ -50,17 +76,17 @@
     </div>
     <div class="container">
       <div class="row">
-        <EssayCard v-for="item in essays.slice(0, 2)" :data="item"></EssayCard>
-      <!-- </div>
+        <EssayCard v-for="item in essays.slice(0, 4)" :data="item"></EssayCard>
+        <!-- </div>
       <div class="row"> -->
-        <VideoCard v-for="items in videos.slice(0, 2)" :data="items"></VideoCard>
+        <VideoCard v-for="items in videos.slice(0, 4)" :data="items"></VideoCard>
       </div>
       <!-- <EssayCard v-for="item in newessays.slice(0, 2)" :data="item"></EssayCard> -->
     </div>
 
     <!-- 左右兩邊文章專區 -->
 
-  <!-- <div v-if="loaded" class="container-essay">
+    <!-- <div v-if="loaded" class="container-essay">
       <div class="column">
         <router-link :to="'/EssaysBlog/' + essays[1].essayId">
           <img :src="essays[0].imgs[0]" class="" alt="" />
@@ -85,23 +111,22 @@
                                       </div> -->
 
     <div class="container-essay" ref="container">
-      <div class="col-4 column" ref="firstColumn">
-        <img src="../assets/image/jisoo.jpg" alt="Image" />
+      <div class="col-4 column card" ref="firstColumn">
+        <img src="../assets/image/chanel1.jpg" alt="Image" />
+        <div class="card-overlay">
+          <h5>VOGUE 3月號封面，在柏林邂逅完美的Jennie</h5>
+        </div>
       </div>
       <div class="col-4 column" ref="secondColumn">
         <div class="container">
           <div class="row mb-3">
             <div class="col mb-3">
               <div class="custom-card">
-                <img src="https://via.placeholder.com/150" class="card-img-top" alt="..." />
+                <img src="../assets/image/gigi.webp" class="card-img-top" alt="..." />
                 <div class="card-body">
-                  <h5 class="card-title1">Card title 1</h5>
-                  <p class="card-text">
-                    11111111This is a wider card with supporting text below as a
-                    natural lead-in to additional content. This content is a
-                    little bit longer.
-                  </p>
-                  <small class="text-muted">Last updated 3 mins ago</small>
+                  <h5 class="card-title1"></h5>
+                  <p class="card-text">BLACKPINK Lisa、NewJeans都在戴！小雛菊WILHELMINA GARCIA紅遍韓國娛樂圈，推薦4個小眾平價飾品</p>
+                  <!-- <small class="text-muted">Last updated 3 mins ago</small> -->
                 </div>
               </div>
             </div>
@@ -110,15 +135,14 @@
           <div class="row mt-3">
             <div class="col mb-3">
               <div class="custom-card">
-                <img src="https://via.placeholder.com/150" class="card-img-top" alt="..." />
+                <img src="../assets/image/jisoo.jpg" class="card-img-top" alt="..." />
                 <div class="card-body">
-                  <h5 class="card-title1">Card title 2</h5>
-                  <p class="card-text">
-                    2222222222This is a wider card with supporting text below as
-                    a natural lead-in to additional content. This content is a
-                    little bit longer.
-                  </p>
-                  <small class="text-muted">Last updated 3 mins ago</small>
+                  <h5 class="card-title1">jisoo來了!開箱韓國女星的隨身包!</h5>
+                  <!-- <p class="card-text">
+                    2222222222This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit
+                    longer.
+                  </p> -->
+                  <!-- <small class="text-muted">Last updated 3 mins ago</small> -->
                 </div>
               </div>
             </div>
@@ -127,25 +151,25 @@
           <div class="row mt-3">
             <div class="col mb-3">
               <div class="custom-card">
-                <img src="https://via.placeholder.com/150" class="card-img-top" alt="..." />
+                <!-- <img src="../assets/image/column06.jpg" class="card-img-top" alt="..." />
                 <div class="card-body">
-                  <h5 class="card-title1">Card title 3</h5>
-                  <p class="card-text">
-                    333333333333This is a wider card with supporting text below
-                    as a natural lead-in to additional content. This content is
-                    a little bit longer.
-                  </p>
-                  <small class="text-muted">Last updated 3 mins ago</small>
-                </div>
+                  <h5 class="card-title1">Chanel 2023秋冬:這裡不是天堂，而是香奈兒秀場</h5>
+                  
+                </div> -->
               </div>
             </div>
           </div>
         </div>
       </div>
       <div class="col-4 column" ref="thirdColumn">
-        <img src="../assets/image/jisoo.jpg" alt="Image" />
-        <img src="../assets/image/jisoo.jpg" alt="Image" />
-        <img src="../assets/image/jisoo.jpg" alt="Image" />
+        <img src="../assets/image/column04.jpg" alt="Image" />
+        <label for=""> 劉芒 配色小天才 #一週ootd</label>
+        <img src="../assets/image/carousel03.jpg" alt="Image" />
+        <label for="">【2023奧斯卡】得獎名單一覽！《媽的多重宇宙》勇奪最佳影片等7大獎、楊紫瓊寫新歷史成為華人首位奧斯卡影后</label>
+        <img src="../assets/image carousel04.webp" alt="" />
+
+        <img src="../assets/image/column05.jpg" alt="Image" />
+        <label for="">巴黎人冬天怎麼穿？直擊2023流行趨勢</label>
       </div>
     </div>
 
@@ -160,9 +184,10 @@
     </div>
     <div class="container">
       <div class="row">
-        <EssayCard v-for="item in essays.slice(0, 2)" :data="item"></EssayCard>
+        <EssayCard v-for="item in essays.slice(2, 6)" :data="item"></EssayCard>
+        <VideoCard v-for="item in videos.slice(7, 11)" :data="item"></VideoCard>
       </div>
-    <!-- <div class="row">
+      <!-- <div class="row">
           <VideoCard v-for="item in videos.slice(0,3)" :data="item"></VideoCard>
         </div>
                                             <EssayCard v-for="item in newessays.slice(0, 2)" :data="item"></EssayCard> -->
@@ -174,34 +199,40 @@
 import EssayCard from "../components/EssayCard.vue";
 import VideoCard from "../components/VideoCard.vue";
 import { ref, onMounted } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
-const loaded = ref(false);
+const router = useRouter();
+const isClicked = ref([]);
+// const loaded = ref(false);
 const essays = ref([]);
 const getEssayInfo = async () => {
   await axios
     .get("https://localhost:7243/api/Essay")
     .then((response) => {
       essays.value = response.data;
+      console.log("essay");
       // console.log(essays.value);
+      console.log(essays.value);
       loaded.value = true;
     })
     .catch((error) => {
       console.log(error);
     });
 };
-
 // 影片
-const videos = ref([])
+const videos = ref([]);
 const getVideos = async () => {
-  await axios.get(`https://localhost:7243/api/Video`)
-    .then(response => {
+  await axios
+    .get(`https://localhost:7243/api/Video`)
+    .then((response) => {
       videos.value = response.data;
       // console.log(videos.value);
-      loaded.value = true;
+      // loaded.value = true;
     })
-    .catch(error => { console.log(error); });
-}
-
+    .catch((error) => {
+      console.log(error);
+    });
+};
 onMounted(() => {
   getEssayInfo();
   getVideos();
@@ -255,11 +286,7 @@ $(function () {
   function moveImg() {
     slideMove = 0 - index * 1300;
     $("#slideImg").css("left", slideMove);
-    $(".pages li")
-      .eq(index)
-      .css("background", "white")
-      .siblings()
-      .css("background", "transparent");
+    $(".pages li").eq(index).css("background", "white").siblings().css("background", "transparent");
   }
   setInterval(autoImg, 2000);
   function autoImg() {
@@ -282,10 +309,8 @@ const setup = () => {
     const thirdColumnEl = thirdColumn.value;
     containerEl.addEventListener("scroll", () => {
       const scrollTop = containerEl.scrollTop;
-      const secondColumnTop =
-        secondColumnEl.getBoundingClientRect().top + window.scrollY;
-      const thirdColumnTop =
-        thirdColumnEl.getBoundingClientRect().top + window.scrollY;
+      const secondColumnTop = secondColumnEl.getBoundingClientRect().top + window.scrollY;
+      const thirdColumnTop = thirdColumnEl.getBoundingClientRect().top + window.scrollY;
       if (scrollTop < secondColumnTop || scrollTop > thirdColumnTop) {
         firstColumnEl.classList.add("col-4");
         secondColumnEl.classList.add("col-4");
@@ -318,7 +343,6 @@ const setup = () => {
   position: relative;
   overflow: hidden;
 }
-
 .slide-img {
   position: absolute;
   margin: 0;
@@ -329,19 +353,17 @@ const setup = () => {
   width: 6500px;
   /* left: -1600px; */
 }
-
 .slide-img li {
   width: 1300px;
   height: 500px;
 }
-
 .slide-img li img {
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
   /* 控制元素內容大小 調整比例 */
   object-fit: cover;
+  margin-top: -150px;
 }
-
 .pages {
   position: absolute;
   list-style: none;
@@ -352,7 +374,6 @@ const setup = () => {
   width: 100%;
   justify-content: center;
 }
-
 .pages li {
   border: 1px solid #fff;
   width: 5px;
@@ -360,7 +381,6 @@ const setup = () => {
   border-radius: 50%;
   margin: 0 5px;
 }
-
 .slide-arrow {
   position: absolute;
   /* background-color: red; */
@@ -374,21 +394,17 @@ const setup = () => {
   cursor: pointer;
   opacity: 0.6;
 }
-
 .right {
   right: 0;
 }
-
 .slide-arrow:hover {
   opacity: 1;
 }
-
 /* card custom-card */
 .custom-card {
   position: relative;
   top: 50px;
 }
-
 /* .custom-card:nth-child(2) {
   
 } */
@@ -402,7 +418,6 @@ const setup = () => {
   text-align: center;
   background-color: rgba(84, 88, 90, 0.5);
 }
-
 /* 
 .card-body {
   height: auto;
@@ -420,7 +435,6 @@ const setup = () => {
 .card-img-overlay {
   height: 500px;
 }
-
 hr .lan {
   border: none;
   border: 5px;
@@ -429,19 +443,16 @@ hr .lan {
   top: -15em;
   background-color: transparent;
 }
-
 /* essay card 排版 */
 .details {
   position: relative;
 }
-
 .details div {
   position: absolute;
   bottom: 0;
   font-weight: bold;
   color: white;
 }
-
 .category {
   right: 180px;
   left: 190px;
@@ -450,7 +461,6 @@ hr .lan {
   padding: 0px;
   height: 320px;
 }
-
 .title {
   font-family: 標楷體;
   font-size: large;
@@ -459,7 +469,6 @@ hr .lan {
   /* padding:60px; */
   height: 300px;
 }
-
 .influencer {
   font-family: cursive;
   padding: 60px;
@@ -467,7 +476,6 @@ hr .lan {
   left: 115px;
   right: 150px;
 }
-
 .formatDate {
   left: 80px;
   right: 90px;
@@ -477,7 +485,6 @@ hr .lan {
   padding: 60px;
   height: 150px;
 }
-
 /* 
 .custom-card {
   width: 100%;
@@ -486,7 +493,6 @@ hr .lan {
   max-width: 500px;
   max-height: 500px;
 }
-
 /* 文章專區 */
 .container-essay {
   display: flex;
@@ -495,29 +501,23 @@ hr .lan {
   height: 100vh;
   /* overflow-x: scroll; */
 }
-
 .card-img-top {
   height: 100vh;
 }
-
 /* 隱藏 scroll bar */
 .container-essay::-webkit-scrollbar {
   display: none;
 }
-
 .container::-webkit-scrollbar-thumb {
   background-color: transparent;
 }
-
 .column::-webkit-scrollbar {
   width: 0;
   height: 0;
 }
-
 .column::-webkit-scrollbar-thumb {
   background-color: transparent;
 }
-
 /* 
 .column {
   flex: 1;
@@ -547,7 +547,6 @@ img {
   padding: 10px;
   margin-right: 10px;
 }
-
 .column:first-child {
   flex: none;
   width: 33.33%;
@@ -556,29 +555,24 @@ img {
   bottom: 0;
   left: 0;
   right: 0;
-  overflow: hidden;
+  overflow: filled;
 }
-
 .column:first-child img {
   height: 100%;
   object-fit: cover;
 }
-
 .column:not(:first-child) {
   position: relative;
   z-index: -1;
 }
-
 img {
   display: block;
   width: 100%;
   margin-bottom: 10px;
 }
-
 a {
   text-decoration: none;
 }
-
 .btn-underline::after {
   content: "";
   position: absolute;
@@ -590,11 +584,9 @@ a {
   transform: scaleX(0);
   transition: transform 0.3s ease;
 }
-
 .btn-underline:hover::after {
   transform: scaleX(1);
 }
-
 .btn-underline {
   position: relative;
   padding: 0;
@@ -605,7 +597,93 @@ a {
   color: #333;
   cursor: pointer;
 }
-
 .btn-underline:hover {
   color: #000000;
-}</style>
+}
+
+#carouselExampleFade {
+  width: 1300px;
+  height: 500px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.carousel-inner {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: 100%;
+  margin-top: -50px;
+  object-fit: cover;
+}
+
+.carousel-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem;
+}
+
+.image-container {
+  position: relative;
+}
+
+.carousel-caption {
+  top: 450px;
+  /* bottom: 100px; */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* background-color: rgba(70, 67, 67, 0.5);  */
+  padding: 50px;
+  color: white;
+}
+
+.carousel-item {
+  position: absolute;
+}
+
+.queenImg {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  margin-top: 100px;
+  object-fit: cover;
+  /* margin-top: -200px; */
+  max-width: 1300px;
+}
+
+.card {
+  border: none;
+}
+
+.card:hover img {
+  filter: brightness(70%);
+}
+
+.card-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #fff;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.card:hover .card-overlay {
+  opacity: 1;
+}
+
+.card-overlay h5 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+</style>

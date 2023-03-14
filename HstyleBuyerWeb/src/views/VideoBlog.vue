@@ -9,15 +9,14 @@
             </div>
         </div>
     </div>
-    <div>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 d-flex">
-                    <input type="text" class="form-control " v-model="keyword" placeholder="請輸入影片關鍵字">
-                    <button type="submit" class="btn btn-light" @click="searchVideosByIndex(keyword)">搜尋</button>
-                </div>
-            </div>
+        <div class="searchDiv mb-4">
+            <!-- <label for="search-input" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden"> 搜尋： </label> -->
+            <input type="text" id="search-input" v-model="keyword" placeholder="搜尋" />
+            <button @click="searchVideosByIndex(keyword)" id="searchButtom" type="submit">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
         </div>
+    <div class="">
         <div class="container">
             <div class="row">
                 <VideoCard v-for="video in videos" :data="video" />
@@ -37,8 +36,8 @@ const videos = ref([])
 const Likesvideos = ref([])
 //const likeVideosId=ref([]);
 //影片收藏
-let likes = ref([]);
-const likevideoId = ref([]);
+let likes = ref([]); //會員喜歡的影片
+const likevideoId = ref([]); //會員喜歡的影片Id
 const getLikesVideos = async () => {
     await axios.get(`https://localhost:7243/api/Video/MyLike`, { withCredentials: true })
         .then((response) => {
@@ -48,6 +47,7 @@ const getLikesVideos = async () => {
                     return v.videoId;
                 });
                 getVideos();
+                // console.log( videos.value);
             }
         })
         .catch((error) => {
@@ -56,15 +56,13 @@ const getLikesVideos = async () => {
 };
 
 const getVideos = async () => {
-    await axios.get(`https://localhost:7243/api/Video`, {
-        withCredentials: true,
-    })//為什麼需要身分驗證?
+    await axios.get(`https://localhost:7243/api/Video`)
         .then(response => {
             response.data.map((v) => {
                 v.isClicked = likevideoId.value.includes(v.id);
             })
-            console.log(response.data);
             videos.value = response.data;
+            //console.log(videos.value);
             //isLoaded.value=true;
         })
         .catch(error => { console.log(error); });
@@ -110,4 +108,25 @@ eventBus.on("postVideoLike", () => {
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+#search-input {
+   width: 200px;
+   padding: 10px 10px;
+   border-radius: 50px;
+   border:#f2f2f2 ;
+   background-color :#f2f2f2;
+   outline: none;
+}
+#searchButtom {
+   position: relative;
+   left: -40px;
+   padding: 10px;
+   background-color: #f2f2f2;
+   border: none;
+   border-radius:50px;
+   outline: none;
+}
+.searchDiv{
+    /* left:50px; */
+}
+</style>

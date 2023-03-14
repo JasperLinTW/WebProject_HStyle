@@ -66,17 +66,17 @@
             </div>
             <br />
             <!--<div class="form-group">
-            <div class="col-md-10">
-                <div class="mx-auto">-->
+    <div class="col-md-10">
+        <div class="mx-auto">-->
             @*<video controls width="800" id="videoPath">
-                    <source src="@Model.FilePath" type="video/mp4;codecs='avc1, mp4a'">
-                </video>
-                <video controls width="800" id="preview">
-                    <source src="#" type="video/mp4;codecs='avc1, mp4a'">
-                </video>*@
+            <source src="@Model.FilePath" type="video/mp4;codecs='avc1, mp4a'">
+        </video>
+        <video controls width="800" id="preview">
+            <source src="#" type="video/mp4;codecs='avc1, mp4a'">
+        </video>*@
             <!--</div>-->
             <!--</div>
-            </div>-->
+    </div>-->
             <div class="row">
                 <div class="form-group col-md-6">
                     @Html.LabelFor(model => model.CategoryId, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -110,7 +110,7 @@
                     @Html.ValidationMessageFor(model => model.FilePath, "", new { @class = "text-danger" })
                 </div>
                 <label class="control-label col-md-2" for="File">上傳影片檔案</label>
-                <input type="file" name="videoFile" id="upload" onchange="setPreview(this)"  accept = "video/*" clss="form-control" />
+                <input type="file" name="videoFile" id="upload" onchange="setPreview(this)" accept="video/*" clss="form-control" />
             </div>
 
 
@@ -123,14 +123,19 @@
                     @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
                 </div>
                 @*<div>
-                        <img id="previewI" src="#" alt="" width="700" />
-                    </div>*@
+                <img id="previewI" src="#" alt="" width="700" />
+            </div>*@
                 <label class="control-label col-md-2" for="File">上傳圖片檔案</label>
-                <input type="file" id="upload" name="imageFile"  accept = "image/*" onchange="setPreviewI(this);" />
+                <input type="file" id="upload" name="imageFile" accept="image/*" onchange="setPreviewI(this);" />
             </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="儲存" class="btn btn-default" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10 d-flex-inline">
+                    <input type="button" id="insertInfo" value="資料" class="btn btn-default" />
                 </div>
             </div>
         </div>
@@ -182,5 +187,16 @@
                 reader.readAsDataURL(input.files[0]);
             }
         }
+
+        $('#insertInfo').on("click", function () {
+            document.getElementById("Title").value = "《驚聲尖笑》安娜法瑞絲回顧5套電影造型";
+            document.getElementById("Description").value = "安娜·法瑞絲（Anna Faris）回顧了她的職業生涯，並分解了她最喜歡的一些電影和電視造型！ 安娜談到她在拍攝《女郎我最兔》時學會接受自己的身體樣貌，並回憶起在與萊恩·雷諾斯（Ryan Reynolds）共同主演《謝謝！再聯絡》時所扮演的角色。 她還讓我們回到了她的首次《驚聲尖笑》電影試鏡。";
+            //document.getElementById("OnShelffTime").value = ;
+            //document.getElementById("OffShelffTime").value = ;
+            document.getElementById("CategoryId").value = 1;
+            document.getElementById("Tags").value = "女郎我最兔";
+            //document.getElementById("FilePath").value = "";
+            //document.getElementById("FilePath").value = "";
+        })
     </script>
 }

@@ -19,6 +19,7 @@
         </div>
     </div>
     <div v-if="currentTab === 'Essay'">
+        
     </div>
     <div v-if="currentTab === 'Video'">
         <VideoCollection v-for="item in vlikes" :data="item" />

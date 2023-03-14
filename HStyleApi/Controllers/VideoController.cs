@@ -152,6 +152,7 @@ namespace HStyleApi.Controllers
 
 		//TODO 抓到使用者按讚的留言
 		//GET api/<VideoController>/Comment/Likes
+		[Authorize]
 		[HttpGet("comment/Likes")]
 		public async Task<IEnumerable<VCommentLikeDTO>> GetCommentLikes()
 		{
