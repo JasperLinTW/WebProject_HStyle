@@ -1,19 +1,35 @@
 <template>
-  <div class="modal come-from-modal fade" id="cartModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+  <div
+    class="modal come-from-modal fade"
+    id="cartModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
     <div class="modal-dialog">
       <div class="modal-content h-100">
         <div class="modal-header">
-          <h5 class="modal-title position-absolute fw-bolder start-50 translate-middle-x" id="exampleModalLabel">
+          <h5
+            class="modal-title position-absolute fw-bolder start-50 translate-middle-x"
+            id="exampleModalLabel"
+          >
             購物車
           </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
         </div>
         <div class="modal-body mt-3">
           <div v-if="isEmpty">
             <p>您的購物車沒有商品</p>
           </div>
-          <div v-for="item in products.cartItems" class="row g-2 align-items-center border-bottom pb-4 mb-3 mt-2">
+          <div
+            v-for="item in products.cartItems"
+            class="row g-2 align-items-center border-bottom pb-4 mb-3 mt-2"
+          >
             <div class="col-md-4 img-sz">
               <img :src="item.image" class="img-fluid" alt="Product Image" />
             </div>
@@ -26,21 +42,31 @@
                   {{ item.color + ", " + item.size }}
                 </p>
               </div>
-              <div class="d-flex justify-content-between align-items-center pt-3">
+              <div
+                class="d-flex justify-content-between align-items-center pt-3"
+              >
                 <div class="mb-0 fz-15 mx-2 pt-2">
                   <span>NT$ {{ item.unitPrice * item.quantity }}</span>
                 </div>
                 <div class="btn-group-sm" role="group">
-                  <button type="button" class="btn btn-custom-left btn-outline-secondary btn-s"
-                    @click="minusItem(item.specId)">
+                  <button
+                    type="button"
+                    class="btn btn-custom-left btn-outline-secondary btn-s"
+                    @click="minusItem(item.specId)"
+                  >
                     <i class="fa-solid fa-minus fz-10"></i>
                   </button>
-                  <button type="button"
-                    class="btn border-0 border-top border-bottom border-secondary btn-outline-secondary btn-s quantity">
+                  <button
+                    type="button"
+                    class="btn border-0 border-top border-bottom border-secondary btn-outline-secondary btn-s quantity"
+                  >
                     <div class="text-center mx-6">{{ item.quantity }}</div>
                   </button>
-                  <button type="button" class="btn btn-custom-right btn-outline-secondary btn-s"
-                    @click="addItem(item.specId)">
+                  <button
+                    type="button"
+                    class="btn btn-custom-right btn-outline-secondary btn-s"
+                    @click="addItem(item.specId)"
+                  >
                     <i class="fa-solid fa-plus fz-10"></i>
                   </button>
                 </div>
@@ -55,7 +81,11 @@
 
           <div class="ps-2">
             <router-link to="/Checkout" class="nav-link targetAll">
-              <button type="button" class="btn btn-secondary checkoutbtn" data-bs-dismiss="modal">
+              <button
+                type="button"
+                class="btn btn-secondary checkoutbtn"
+                data-bs-dismiss="modal"
+              >
                 檢視購物車及付款
               </button>
             </router-link>
@@ -78,10 +108,12 @@ const getCartInfo = async () => {
   await axios
     .get("https://localhost:7243/api/Cart", { withCredentials: true })
     .then((response) => {
-      const itemsToDelete = response.data.cartItems.filter(item => item.discontinued === true);
+      const itemsToDelete = response.data.cartItems.filter(
+        (item) => item.discontinued === true
+      );
       if (itemsToDelete.length > 0) {
         alert("部分款式已下架，請重新選購");
-        itemsToDelete.forEach(item => {
+        itemsToDelete.forEach((item) => {
           minusItem(item.specId);
         });
       }
@@ -135,6 +167,7 @@ const cartCount = computed(() => {
 });
 
 eventBus.on("addCartEvent", getCartInfo);
+eventBus.on("Login", getCartInfo);
 
 onMounted(() => {
   getCartInfo();
