@@ -16,9 +16,9 @@ namespace ScheduleWork
 		{
 			DateTime today = DateTime.Now;
 			// 發放生日H幣
-			HcoinForBirth(today);
+			//HcoinForBirth(today);
 			// 發放購物活動H幣
-			HcoinForOrder(today);
+			//HcoinForOrder(today);
 
 			// 影片的排程
 			ChangeIsOnShelf(today);
@@ -220,6 +220,22 @@ namespace ScheduleWork
 				}
 			}
 			_db.SaveChanges();
+			Console.WriteLine("已完成上下架排程");
+
+			Console.WriteLine("已上架影片:") ;
+			var videoDataOn = data.Where(v => v.IsOnShelff == true).Select(v => v.Title).ToList();
+			foreach (var item in videoDataOn)
+			{
+				Console.WriteLine(item);
+			}
+			var videoDataOff = data.Where(v => v.IsOnShelff == true).Select(v => v.Title).ToList();
+
+			Console.WriteLine("已下架影片:");
+			foreach (var item in videoDataOff)
+			{
+				Console.WriteLine(item);
+			}
+			Console.ReadKey();
 		}
 
 		/// <summary>

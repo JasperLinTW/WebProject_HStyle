@@ -25,10 +25,15 @@ namespace H2StyleStore.Models.ViewModels
         //public int ImageId { get; set; }
 
 		[Display(Name = "上架時間")]
-		public DateTime? OnShelffTime { get; set; }
+		//public DateTime? OnShelffTime { get; set; }
+		public string OnShelffTime { get; set; }
 
 		[Display(Name = "下架時間")]
-		public DateTime? OffShelffTime { get; set; }
+		//public DateTime? OffShelffTime { get; set; }
+		public string OffShelffTime { get; set; }
+
+        [Display(Name = "狀態")]
+		public string IsOnShelff { get; set; }
 
 		[Display(Name = "標籤")]
 		public IEnumerable<string> Tags { get; set; }
@@ -45,18 +50,34 @@ namespace H2StyleStore.Models.ViewModels
     {
         public static VideoVM ToVM(this VideoDto source)
         {
-            return new VideoVM
+            string onShelffTimeValue = "";
+            string offShelffTimeValue = "";
+            string isOnShelff = "";
+
+
+			if (source.OnShelffTime == null)onShelffTimeValue = "無";            
+            else onShelffTimeValue = source.OnShelffTime.ToString();
+
+            if (source.OffShelffTime == null) offShelffTimeValue = "無";
+            else offShelffTimeValue = source.OffShelffTime.ToString();
+
+			if (source.IsOnShelff==true) isOnShelff = "已上架";
+			else isOnShelff ="未上架" ;
+
+
+			return new VideoVM
             {
                 Id = source.Id,
                 CategoryId= source.CategoryId,
                 Title = source.Title,
                 Description = source.Description,
                 //ImageId = source.ImageId,
-                OnShelffTime = source.OnShelffTime,
-                OffShelffTime = source.OffShelffTime,
+                OnShelffTime = onShelffTimeValue,
+                OffShelffTime = offShelffTimeValue,
                 Image = source.Image.Path,
                 Tags = source.Tags.Select(x=>x.TagName), 
-                CategoryName=source.CategoryName
+                CategoryName=source.CategoryName,
+                IsOnShelff= isOnShelff,
             };
         }
     }
