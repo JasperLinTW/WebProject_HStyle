@@ -34,6 +34,14 @@
                 忘記密碼?
               </button>
             </div>
+            <div>
+            <button class="btn_Login1 mt-3 px-5 ms-6" @click="fillIn">
+              填入正式用
+            </button>
+            <button class="btn_Login1 mt-3 px-5 ms-6" @click="fillIn1">
+              填入註冊驗證
+            </button>
+          </div>
           </div>
         </div>
       </div>
@@ -102,6 +110,9 @@
               <button type="button" @click="Register" class="btn_Login mt-3 ms-5 px-6">
                 註冊
               </button>
+              <div>
+            <button class="btn_Login mt-3 ms-5 px-7" @click="RfillIn">填入：註冊資訊</button>
+          </div>
             </div>
           </div>
         </div>
@@ -133,6 +144,9 @@
               </form>
             </div>
             <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" @click="fillIn2">
+              填入註冊驗證
+            </button>
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
               <button type="button" class="btn btn-primary" @click="ForgetPassword">送出驗證信</button>
             </div>
@@ -153,14 +167,7 @@ import axios from "axios";
 import { useRouter } from "vue-router";
 import { eventBus } from "../mybus";
 
-// function loginbutton() {   test
-// 			var Account = document.getElementById("Account").value;
-// 			var Password = document.getElementById("Password").value;
 
-// 			// 这里可以添加验证逻辑，比如检查用户名和密码是否符合要求
-
-// 			alert("您输入的用户名是：" + Account + "\n您输入的密码是：" + Password);
-// 		}
 const router = useRouter();
 const account = ref("");
 const password = ref("");
@@ -333,15 +340,37 @@ const validateForm = () => {
       fillIn,
     };
   };
+  const fillIn1 = () => {
+      account.value = 'test88888';
+      password.value = 'test88888';
+
+
+    return {
+      account,
+      password,
+      fillIn1,
+    };
+  };
+  const fillIn2 = () => {
+    forgetaccont.value = 'test88888';
+    mail.value = 'vunvun0213@gmail.com';
+
+
+    return {
+      forgetaccont,
+      mail,
+      fillIn2,
+    };
+  };
 //以下註冊用
 
 const RfillIn = () => {
-    Raccount.value= 'test888885';
-    Rpassword.value= 'test888885';
+    Raccount.value= 'test88888';
+    Rpassword.value= 'test88888';
     Raddress.value= '桃園市中壢區新生路二段421號';
     Rbirthday.value= Date.now;
     Rgender.value= true;
-    Rname.value= 'test';
+    Rname.value= 'test88888';
     Rphone_Number.value= '0955878888';
     Remail.value= 'vunvun0213@gmail.com';
     return {
@@ -424,6 +453,15 @@ const RfillIn = () => {
   background-color: #fff;
   color: rgb(12, 13, 12);
   padding: 10px 28px;
+  border-radius: 25px;
+  border: 1px solid rgb(12, 13, 12);
+  transition: all 0.3s ease;
+}
+.btn_Login1{
+  background-color: #fff;
+  color: rgb(12, 13, 12);
+  padding: 10px 28px;
+  margin: 50px;
   border-radius: 25px;
   border: 1px solid rgb(12, 13, 12);
   transition: all 0.3s ease;
