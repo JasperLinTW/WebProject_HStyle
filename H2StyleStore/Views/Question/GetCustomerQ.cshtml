@@ -41,7 +41,7 @@
         </th>
         <th>
             @*@Html.DisplayNameFor(model => model.FilePath)*@
-            檔案名稱
+            檔案
         </th>
         <th>
             @*@Html.DisplayNameFor(model => model.AskTime)*@
@@ -78,10 +78,17 @@
                 @Html.DisplayFor(modelItem => item.Problem_Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FilePath)
+                @*@Html.DisplayFor(modelItem => item.FilePath)*@
+                @*@if (Html.DisplayFor(modelItem => item.FilePath) != null)*@
+                @*{<img class="m-2" src="../../Images/QuestionImages/@Html.DisplayFor(modelItem => item.FilePath)" width="120px" name="" />}*@
+                @if (System.IO.File.Exists(Server.MapPath("~/Images/QuestionImages/" + Html.DisplayFor(modelItem => item.FilePath))))
+                {
+                    <img class="m-2" src="../../Images/QuestionImages/@Html.DisplayFor(modelItem => item.FilePath)" width="120px" name="" />
+                }
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AskTime)
+                @*@Html.DisplayFor(modelItem => item.AskTime)*@
+                @item.AskTime.ToString("yyyy/MM/dd")
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Solution_Description)
@@ -93,7 +100,7 @@
                 @Html.DisplayFor(modelItem => item.Employee_Id)
             </td>
             <td>
-                @Html.ActionLink("回覆", "EditCustomerQ", new { id = item.CustomerQuestion_Id }, new { @class = "btn btn-default" }) 
+                @Html.ActionLink("回覆", "EditCustomerQ", new { id = item.CustomerQuestion_Id }, new { @class = "btn btn-default" })
             </td>
         </tr>
     }
@@ -103,3 +110,8 @@
     Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
     @Html.PagedListPager(Model, page => Url.Action("GetCustomerQ", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
 </div>
+
+@section Scripts {
+    <script>
+    </script>
+}
