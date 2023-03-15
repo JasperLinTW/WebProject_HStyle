@@ -55,6 +55,9 @@
         <th>
             @Html.ActionLink("下架時間", "Index", new { sortOrder = ViewBag.NameSortParm }, new { @class = "text-dark fa-solid fa-sort" })
         </th>
+        <th>
+            狀態
+        </th>
     </tr>
 
     @foreach (var item in Model)
@@ -79,19 +82,26 @@
             </td>
             <td>
                 @*<div id = "OnShelf">
-                    @item.OnShelffTime
-                </div>*@
+                @item.OnShelffTime
+            </div>*@
                 @Html.DisplayFor(modelItem => item.OnShelffTime, new { id = "OnShelf" })
                 <p id="onValue"></p>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.OffShelffTime, new { id = "OffShelf" })
                 @*<div id="OffShelf">
-                    @item.OffShelffTime
-                </div>*@
+                @item.OffShelffTime
+            </div>*@
                 <p id="offValue"></p>
             </td>
-            <td> 
+            <td>
+                @Html.DisplayFor(modelItem => item.IsOnShelff, new { id = "IsOnShelff" })
+                @*<div id="OffShelf">
+                @item.OffShelffTime
+            </div>*@
+                <p id="offValue"></p>
+            </td>
+            <td>
                 @Html.ActionLink("修改", "EditVideo", new { id = item.Id }, new { @class = "btn btn-default" })
             </td>
         </tr>
@@ -107,16 +117,16 @@
 {
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript">
-        $(document).ready(function () {
-            let onShelfTime = $("#OnShelf").val();
-            let offShelfTime = $("#OffShelf").val();
-            if (onShelfTime==null) {
-                $("#onValue").text("無");
-            }
-            if (offShelfTime == null) {
-                $("#offValue").text("無");
-            }
-        })
+        //$(document).ready(function () {
+        //    let onShelfTime = $("#OnShelf").val();
+        //    let offShelfTime = $("#OffShelf").val();
+        //    if (onShelfTime==null) {
+        //        $("#onValue").text("無");
+        //    }
+        //    if (offShelfTime == null) {
+        //        $("#offValue").text("無");
+        //    }
+        //})
         //function setPreview(input) {
         //    $('#preview').show();
         //    if (input.files && input.files[0]) {
