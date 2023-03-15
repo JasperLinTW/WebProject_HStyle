@@ -53,7 +53,9 @@
               </div>
             </ul>
           </div>
-          <div class="clear" @click="setOriginalOption()">清除篩選</div>
+          <router-link to="/products/all" class="clear">
+            <div @click="setOriginalOption()">清除篩選</div>
+          </router-link>
         </div>
       </div>
     </div>
@@ -251,5 +253,7 @@ onMounted(() => {
 
 .clear {
   cursor: pointer;
+  text-decoration: none;
+  color: black;
 }
 </style>

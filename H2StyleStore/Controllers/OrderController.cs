@@ -56,8 +56,8 @@ namespace H2StyleStore.Controllers
 		{
 
 			ViewBag.Status_order = orderService.GetStatus();
-			ViewBag.CreatetimeSortParm = sortOrder == "date" ? "date_desc" : "date";
-			ViewBag.TotalSortParm = sortOrder == "total" ? "total_desc" : "total";
+			//ViewBag.CreatetimeSortParm = sortOrder == "date" ? "date_desc" : "date";
+			//ViewBag.TotalSortParm = sortOrder == "total" ? "total_desc" : "";
 
 			var data = orderService.Load();
 
@@ -65,20 +65,20 @@ namespace H2StyleStore.Controllers
 			switch (sortOrder)
 			{
 
-				case "date":
-					data = data.OrderBy(o => o.CreatedTime);
-					break;
-				case "date_desc":
-					data = data.OrderByDescending(o => o.CreatedTime);
-					break;
-				case "total":
-					data = data.OrderBy(o => o.Total);
-					break;
-				case "total_desc":
-					data = data.OrderByDescending(o => o.Total);
-					break;
+				//	case "date":
+				//		data = data.OrderBy(o => o.CreatedTime);
+				//		break;
+				//	case "date_desc":
+				//		data = data.OrderByDescending(o => o.CreatedTime);
+				//		break;
+				//	case "total":
+				//		data = data.OrderBy(o => o.Total);
+				//		break;
+				//	case "total_desc":
+				//		data = data.OrderByDescending(o => o.Total);
+				//		break;
 				default:
-					data = data.OrderBy(o => o.Order_id);
+					data = data.OrderByDescending(o => o.Order_id);
 					break;
 			}
 

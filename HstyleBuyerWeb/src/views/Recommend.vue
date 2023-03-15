@@ -8,7 +8,7 @@
     </div>
   </div>
   <div>
-    <div id="carouselExampleIndicators" class="carousel slide mb-6 mt-2 " data-ride="carousel">
+    <div id="carouselExampleIndicators" class="carousel slide mb-6 mt-2 vh-100" data-ride="carousel">
       <div class="carousel-inner">
 
         <div v-for="(item, index) in rec" :key="index" :class="{ active: index === 0 }" class="carousel-item"
@@ -41,9 +41,9 @@
               <div class="row">
                 <div class="col-md-2">
                   <label>最高溫</label>
-                  <div class="fs-1 mb-5">{{ temp[0] }}</div>
+                  <div class="fs-1 mb-5">{{ temp[1] }}</div>
                   <label>最低溫</label>
-                  <div class="fs-1">{{ temp[1] }}</div>
+                  <div class="fs-1">{{ temp[0] }}</div>
                 </div>
               </div>
             </div>
@@ -140,10 +140,10 @@ const windowscroll = () => {
     isScrollingDown = scrollHeight > lastScrollPosition;
     lastScrollPosition = scrollHeight;
 
-    if (isScrollingDown && scrollHeight >= 200 && scrollHeight < 300) {
-      myDiv.classList.add("bg-color");
+    if (isScrollingDown && scrollHeight >= 200) {
+      myDiv.classList.add("bg-color-day");
     } else {
-      myDiv.classList.remove("bg-color");
+      myDiv.classList.remove("bg-color-day");
     }
   });
 };
@@ -159,15 +159,28 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.bg-color {
+.vh-100 {
+  height: 100vh;
+}
+
+.bg-color-night {
   background-image: linear-gradient(to bottom, #434343 0%, black 100%, #6d6d6d 0%);
   height: 100vh;
   transition: background-color 10s ease-in-out;
   color: white;
+  background-attachment: fixed;
+}
+
+.bg-color-day {
+  background-image: linear-gradient(to top, #fdedc9 0%, #e9feff 100%);
+  height: 100vh;
+  transition: background-color 10s ease-in-out;
+  color: #757474;
+  background-attachment: fixed;
 }
 
 .h500px {
-  height: 500px;
+  height: 650px;
 }
 
 
@@ -192,7 +205,7 @@ onMounted(() => {
 }
 
 .mb-6 {
-  margin-bottom: 12%;
+  margin-bottom: 8%;
 }
 
 .px-10 {
