@@ -14,19 +14,19 @@
           data-bs-interval="5000">
           <div class="row justify-content-center">
             <div class="col-md-2"></div>
-            <div class="col-md-3 img-container-lg">
+            <div class="col-md-3 img-container-lg img-sz">
               <router-link :to="'/product/' + item.product_Id">
                 <img :src="item.imgs[0]" alt="Large Image" />
               </router-link>
             </div>
             <div class="col-md-3 mt-5">
               <div class="row">
-                <div class="col-md-6 img-container-sm1 ms-5 position-absolute top-0 start-0">
+                <div class="col-md-6 img-container-sm1 img-sz ms-5 position-absolute top-0 start-0">
                   <router-link :to="'/product/' + item.product_Id">
                     <img :src="item.imgs[1]" alt="Small Image" />
                   </router-link>
                 </div>
-                <div class="col-md-12 img-container-sm2 position-absolute bottom-0 end-0 top-50">
+                <div class="col-md-12 img-container-sm2 img-sz position-absolute bottom-0 end-0 top-50">
                   <router-link :to="'/product/' + item.product_Id">
                     <img :src="item.imgs[2]" alt="Small Image" />
                   </router-link>
@@ -237,23 +237,22 @@ onMounted(() => {
 }
 
 .img-container-lg img {
-  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 1.0s ease-in-out;
 }
 
 .img-container-sm1 {
   width: 350px;
   height: 450px;
-  overflow: hidden;
 }
 
 .img-container-sm1 img {
-  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 1.0s ease-in-out;
 }
 
 .img-container-sm2 {
@@ -265,11 +264,24 @@ onMounted(() => {
 }
 
 .img-container-sm2 img {
-  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 1.0s ease-in-out;
 }
+
+.img-sz :hover {
+  transform: scale(1.05);
+  animation: rotate 1s linear infinite;
+
+}
+
+.img-sz :mouseout {
+  opacity: 0;
+  transition-delay: 1s;
+  transition-timing-function: ease-out;
+}
+
 
 .ps-6 {
   padding-left: 10%;
