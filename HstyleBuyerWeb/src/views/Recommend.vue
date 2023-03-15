@@ -164,7 +164,7 @@ onMounted(() => {
 }
 
 .bg-color-night {
-  background-image: linear-gradient(to bottom, #434343 0%, black 100%, #6d6d6d 0%);
+  background-image: linear-gradient(to top, #031124 0%, #3c3969 100%);
   height: 100vh;
   transition: background-color 10s ease-in-out;
   color: white;
