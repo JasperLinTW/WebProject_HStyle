@@ -272,6 +272,7 @@ onMounted(() => {
   getProduct();
   getRecommend();
   loadHelpfulComments();
+  window.scrollTo(0, 0);
 });
 </script>
 

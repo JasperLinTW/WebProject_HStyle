@@ -10,13 +10,8 @@
   <div>
     <div id="carouselExampleIndicators" class="carousel slide mb-6 mt-2 vh-100" data-ride="carousel">
       <div class="carousel-inner">
-        <div
-          v-for="(item, index) in rec"
-          :key="index"
-          :class="{ active: index === 0 }"
-          class="carousel-item"
-          data-bs-interval="5000"
-        >
+        <div v-for="(item, index) in rec" :key="index" :class="{ active: index === 0 }" class="carousel-item"
+          data-bs-interval="5000">
           <div class="row justify-content-center">
             <div class="col-md-2"></div>
             <div class="col-md-3 img-container-lg">
@@ -26,23 +21,17 @@
             </div>
             <div class="col-md-3 mt-5">
               <div class="row">
-                <div
-                  class="col-md-6 img-container-sm1 ms-5 position-absolute top-0 start-0"
-                >
+                <div class="col-md-6 img-container-sm1 ms-5 position-absolute top-0 start-0">
                   <router-link :to="'/product/' + item.product_Id">
                     <img :src="item.imgs[1]" alt="Small Image" />
                   </router-link>
                 </div>
-                <div
-                  class="col-md-12 img-container-sm2 position-absolute bottom-0 end-0 top-50"
-                >
+                <div class="col-md-12 img-container-sm2 position-absolute bottom-0 end-0 top-50">
                   <router-link :to="'/product/' + item.product_Id">
                     <img :src="item.imgs[2]" alt="Small Image" />
                   </router-link>
                 </div>
-                <div
-                  class="col-md-12 position-absolute bottom-0 end-0 text-end fs-5 fw-light"
-                >
+                <div class="col-md-12 position-absolute bottom-0 end-0 text-end fs-5 fw-light">
                   {{ item.product_Name }}
                 </div>
               </div>
@@ -60,21 +49,11 @@
           </div>
         </div>
       </div>
-      <a
-        class="carousel-control-prev"
-        href="#carouselExampleIndicators"
-        role="button"
-        data-slide="prev"
-      >
+      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="sr-only">Previous</span>
       </a>
-      <a
-        class="carousel-control-next"
-        href="#carouselExampleIndicators"
-        role="button"
-        data-slide="next"
-      >
+      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
       </a>
@@ -90,16 +69,8 @@
         </div>
         <div class="col-md-12">
           <div class="row">
-            <RecommendCard
-              v-for="item in orec"
-              :data="item"
-              v-if="orec.length > 0"
-            ></RecommendCard>
-            <RecommendCard
-              v-for="item in newrec"
-              :data="item"
-              v-else
-            ></RecommendCard>
+            <RecommendCard v-for="item in orec" :data="item" v-if="orec.length > 0"></RecommendCard>
+            <RecommendCard v-for="item in newrec" :data="item" v-else></RecommendCard>
           </div>
         </div>
       </div>
@@ -108,7 +79,7 @@
 </template>
   
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watchEffect } from "vue";
 import axios from "axios";
 import RecommendCard from "../components/RecommendCard.vue";
 
@@ -173,16 +144,24 @@ const windowscroll = () => {
   const myDiv = document.querySelector("#carouselExampleIndicators");
   let isScrollingDown = false;
   let lastScrollPosition = 0;
+  let now = new Date();
+  let hour = now.getHours();
 
   window.addEventListener("scroll", function () {
     const scrollHeight = window.scrollY;
     isScrollingDown = scrollHeight > lastScrollPosition;
     lastScrollPosition = scrollHeight;
 
-    if (isScrollingDown && scrollHeight >= 200) {
+    if (isScrollingDown && scrollHeight >= 200 && hour > 6 && hour < 18) {
       myDiv.classList.add("bg-color-day");
     } else {
       myDiv.classList.remove("bg-color-day");
+    }
+
+    if (isScrollingDown && scrollHeight >= 200 && hour >= 18 || hour == 0) {
+      myDiv.classList.add("bg-color-night");
+    } else {
+      myDiv.classList.remove("bg-color-night");
     }
   });
 };

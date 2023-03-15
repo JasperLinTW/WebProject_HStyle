@@ -10,7 +10,7 @@
         <span class="icon ma-1 my-1 px-3">
           <i class="fa-solid fa-magnifying-glass search targetAll"></i>
         </span>
-        <input class="fz14 pb-1 ps-4 textbox" id="search" type="text" />
+        <input class="fz14 pb-1 ps-4 textbox" id="search" type="text" v-model="keyword" @keydown.enter="onEnter" />
       </div>
       <div id="NavbarContent" class="nav">
         <ul class="navbar-nav">
@@ -81,7 +81,7 @@
 <script setup>
 import Cart from "./Cart.vue";
 import CheckIn from "./CheckIn.vue";
-import { ref, onMounted, watchEffect, nextTick } from "vue";
+import { ref, onMounted, watch, watchEffect, nextTick } from "vue";
 import { eventBus } from "../mybus";
 
 const cartItemsNum = ref();
@@ -97,6 +97,11 @@ const showCart = () => {
 eventBus.on('showCartEvent', showCart)
 
 
+const keyword = ref(null);
+
+const onEnter = () => {
+  eventBus.emit('search', keyword)
+}
 
 
 onMounted(() => {

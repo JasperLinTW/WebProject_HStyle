@@ -120,7 +120,7 @@ const likesProducts = async () => {
 };
 const loadProducts = async () => {
   await axios
-    .get("https://localhost:7243/api/Products/products", {
+    .get(`https://localhost:7243/api/Products/products`, {
       withCredentials: true,
     })
     .then((response) => {
@@ -208,10 +208,54 @@ watch(
   }
 );
 
+const loadProductsWithKeyWord = async (keyword) => {
+  const obj = { name: keyword };
+  const rawValue = obj.name._rawValue;
+  await axios
+    .get(`https://localhost:7243/api/Products/products?keyword=${encodeURIComponent(rawValue)}`, {
+      withCredentials: true,
+    })
+    .then((response) => {
+      //console.log(response.data);
+      response.data.map((p) => {
+        p.isClicked = likeProductsId.value.includes(p.product_Id);
+      });
+
+      //把篩選的先列出
+      categoryOptions.value = [
+        "全部",
+        ...new Set(response.data.map((p) => p.pCategoryName)),
+      ];
+      colorOptions.value = Array.from(
+        new Set(response.data.flatMap((p) => p.specs.map((s) => s.color)))
+      );
+
+      //console.log(colorOptions.value);
+      if (route.params.tag == "new") {
+        products.value = response.data.filter((p) => p.tags.includes("新品"));
+      } else if (route.params.tag == "all") {
+        products.value = response.data;
+
+      } else {
+        products.value = response.data.filter((p) =>
+          p.pCategoryName.includes(route.params.tag)
+        );
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+};
 
 eventBus.on("addProductLike", () => {
   likesProducts();
 });
+
+eventBus.on("search", (keyword) => {
+  loadProductsWithKeyWord(keyword);
+});
+
 onMounted(() => {
   likesProducts();
 });
