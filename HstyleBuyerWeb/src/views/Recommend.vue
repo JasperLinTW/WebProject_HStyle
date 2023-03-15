@@ -152,13 +152,13 @@ const windowscroll = () => {
     isScrollingDown = scrollHeight > lastScrollPosition;
     lastScrollPosition = scrollHeight;
 
-    if (isScrollingDown && scrollHeight >= 200 && hour > 6 && hour < 18) {
+    if (isScrollingDown && scrollHeight >= 200 && hour >= 6 && hour < 18) {
       myDiv.classList.add("bg-color-day");
     } else {
       myDiv.classList.remove("bg-color-day");
     }
 
-    if (isScrollingDown && scrollHeight >= 200 && hour >= 18 || hour == 0) {
+    if (isScrollingDown && scrollHeight >= 200 && hour >= 18 || hour < 6) {
       myDiv.classList.add("bg-color-night");
     } else {
       myDiv.classList.remove("bg-color-night");
