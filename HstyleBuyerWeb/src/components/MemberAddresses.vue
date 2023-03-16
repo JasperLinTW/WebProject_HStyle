@@ -1,11 +1,11 @@
 <template>
-  <div id="div-t1">
+  <div id="div-t1" style="margin-left: 20px;">
     <h1>我的地址</h1>
-    <hr>
+    <hr style="margin-left: 20px;">
   </div>
 
   <div class="container my-5" id="div-t">
-    <div class="order-header border-top border-bottom pt-2" id="div-t">
+    <div class="order-header border-bottom pt-2" id="div-t">
       <div class="row mb-2" id="div-t">
         <div class="col-1 text-center"></div>
         <div class="col-1 text-center">姓名:</div>
@@ -14,25 +14,18 @@
       </div>
     </div>
   </div>
-  <!-- <div class="accordion accordion-flush" id="accordionExample"> -->
   <div style="text-align: left;" v-for="addressone in address" class="accordion-item" id="a12344">
     <div style="text-align: left;" class="accordion-header row">
       <div id="as" class="col-1 text-center ">{{ addressone.destinationName }}</div>
-      <!-- <div class="col-1 text-center pt-2"></div> -->
       <div id="asdf" class="col-1 text-center pt-2">{{ addressone.destinationThe }}</div>
       <div style="text-align: left;" id="asd" class="col-1">{{ addressone.destination }}</div>
 
+      <div><input  id="redio11" type="radio" name="destination" :value="addressone.destinationName">設為常用地址</div>
+      
+
     </div>
   </div>
-  <!-- </div> -->
 
-
-
-  <!-- <div v-for="addressone in address" >
-  <li class="list-group-item">姓名:{{ addressone.destinationName }}</li>
-  <li class="list-group-item">地址：{{ addressone.destination}}</li>
-  <li class="list-group-item">電話號碼:{{ addressone.destinationThe }}</li>
-</div> -->
 
   <div style="text-align: left; text-indent: 60px">
 
@@ -162,17 +155,17 @@ label {
 }
 
 #asd {
-  margin-left: 90px;
-  margin-right: -800px;
+  margin-left: 100px;
+  margin-right: -500px;
   display: inline-block;
-  width: 1000px;
+  width: 800px;
   /* background-color: #eee; */
 }
 
 #a12344 {
   border-bottom: 1px solid rgb(216, 217, 218);
   text-align: left;
-  padding-left: 133px;
+  padding-left: 65px;
   padding-right: 133px;
   margin-left: 133px;
   margin-right: 133px;
@@ -209,5 +202,10 @@ label {
 #aa123 {
   padding-left: -50px;
   margin-left: -200px;
+}
+#redio11
+{
+  /* padding-left:-1000px; */
+
 }
 </style>

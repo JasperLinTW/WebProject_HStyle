@@ -1,8 +1,8 @@
 <template>
-  <div>
-    <h1>會員資料</h1>
-    <hr>
-
+  
+    <h1 style="margin-left: 20px;">會員資料</h1>
+    <hr style="margin-left: 20px;">
+    <div style="margin-left: 20px;">
     <form class="row g-3">
       <div class="col-md-4">
         <label for="validationDefault01" class="form-label">用戶名：</label>
