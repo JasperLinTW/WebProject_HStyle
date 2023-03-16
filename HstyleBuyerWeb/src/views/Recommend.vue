@@ -189,7 +189,7 @@ onMounted(() => {
 }
 
 .bg-color-day {
-  background-image: linear-gradient(to top, #fdedc9 0%, #e9feff 100%);
+  background-image: linear-gradient(to top, #ffffff 0%, #e9feff 100%);
   height: 100vh;
   transition: background-color 10s ease-in-out;
   color: #757474;
