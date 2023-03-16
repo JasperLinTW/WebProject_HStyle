@@ -21,34 +21,44 @@
       </div>
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <img src="../assets/image/carousel01.webp" alt="" />
-          <div class="carousel-caption d-none d-md-block">
-            <h5>26歲的南韓女生Miss Sohee，是如何成為BLACKPINK演唱會指定的訂製服設計師？一件訂製服甚至要價上百萬</h5>
-          </div>
+          <router-link :to="'/EssaysBlog/' + 19">
+            <img src="../assets/image/carousel01.webp" alt="" />
+            <div class="carousel-caption d-none d-md-block">
+              <h5 class="caouselText1">26歲的南韓女生Miss Sohee，是如何成為BLACKPINK演唱會指定的訂製服設計師？一件訂製服甚至要價上百萬</h5>
+            </div>
+          </router-link>
         </div>
         <div class="carousel-item">
-          <img src="../assets/image/carousel02.jpg" alt="" />
-          <div class="carousel-caption d-none d-md-block">
-            <h5>回顧英國女王伊麗莎白二世19套經典造型：從少女優雅到七彩同色系套裝</h5>
-          </div>
+          <router-link :to="'/VideoBlog/' + 1">
+            <img src="../assets/image/carousel02.jpg" alt="" />
+            <div class="carousel-caption d-none d-md-block">
+              <h5>回顧英國女王伊麗莎白二世19套經典造型：從少女優雅到七彩同色系套裝</h5>
+            </div>
+          </router-link>
         </div>
         <div class="carousel-item">
-          <img src="../assets/image/carousel03.jpg" alt="" />
-          <div class="carousel-caption d-none d-md-block">
-            <h5>新一代人間 Gucci！ 盤點 NewJeans Hanni 五種穿搭典範，為你示範Z世代的青春無敵</h5>
-          </div>
+          <router-link :to="'/EssaysBlog/' + 27">
+            <img src="../assets/image/carousel03.jpg" alt="" />
+            <div class="carousel-caption d-none d-md-block">
+              <h5 class="caption-title caouselText1">【2023奧斯卡】得獎名單一覽！《媽的多重宇宙》勇奪最佳影片等7大獎、楊紫瓊寫新歷史成為華人首位奧斯卡影后</h5>
+            </div>
+          </router-link>
         </div>
         <div class="carousel-item">
-          <img class="queenImg" src="../assets/image/carousel04.jpg" alt="" />
-          <div class="carousel-caption d-none d-md-block">
-            <h5>從黛安娜王妃、凱特王妃到 Jennie，Chanel 斜紋軟呢外套橫跨 70 年仍經典不敗</h5>
-          </div>
+          <router-link :to="'/EssaysBlog/' + 20">
+            <img class="queenImg" src="../assets/image/carousel04.jpg" alt="" />
+            <div class="carousel-caption d-none d-md-block">
+              <h5 class=".caouselText4">從黛安娜王妃、凱特王妃到 Jennie，Chanel 斜紋軟呢外套橫跨 70 年仍經典不敗</h5>
+            </div>
+          </router-link>
         </div>
         <div class="carousel-item">
-          <img src="../assets/image/carousel05.jpg" alt="" />
-          <div class="carousel-caption d-none d-md-block">
-            <h5>Gigi吉吉哈蒂德的 #一週ootd</h5>
-          </div>
+          <router-link :to="'/VideoBlog/' + 6">
+            <img src="../assets/image/carousel05.jpg" alt="" />
+            <div class="carousel-caption d-none d-md-block caouselText5">
+              <h5>Gigi吉吉哈蒂德的 #一週ootd</h5>
+            </div>
+          </router-link>
         </div>
       </div>
       <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
@@ -104,26 +114,30 @@
         <img src="../assets/image/jisoo.jpg" alt="Image" />
         <img src="../assets/image/jisoo.jpg" alt="Image" />
       </div>
-                                              </div> -->
+      </div> -->
 
     <div class="container-essay" ref="container">
-      <div class="col-4 column card" ref="firstColumn">
-        <img src="../assets/image/chanel1.jpg" alt="Image" />
-        <div class="card-overlay">
-          <h5>VOGUE 3月號封面，在柏林邂逅完美的Jennie</h5>
-        </div>
+      <div class="col-4 column card " ref="firstColumn">
+        <router-link :to="'/EssaysBlog/' + 19">
+          <img src="../assets/image/jisoo.jpg" alt="Image" />
+          <div class="card-overlay">
+            <h5>26歲的南韓女生Miss Sohee，是如何成為BLACKPINK演唱會指定的訂製服設計師？一件訂製服甚至要價上百萬</h5>
+          </div>
+        </router-link>
       </div>
       <div class="col-4 column" ref="secondColumn">
         <div class="container">
           <div class="row mb-3">
             <div class="col mb-3">
               <div class="custom-card">
-                <img src="../assets/image/gigi.webp" class="card-img-top" alt="..." />
-                <div class="card-body">
-                  <h5 class="card-title1"></h5>
-                  <p class="card-text">BLACKPINK Lisa、NewJeans都在戴！小雛菊WILHELMINA GARCIA紅遍韓國娛樂圈，推薦4個小眾平價飾品</p>
-                  <!-- <small class="text-muted">Last updated 3 mins ago</small> -->
-                </div>
+                <router-link :to="'/VideoBlog/' + 6">
+                  <img src="../assets/image/gigi.webp" class="card-img-top" alt="..." />
+                  <div class="card-body">
+                    <h5 class="card-title1"></h5>
+                    <p class="card-text">Gigi吉吉哈蒂德的 #一週ootd：時裝週下班舒適不失時尚、酷媽工裝穿搭口袋藏女兒的零食</p>
+                    <!-- <small class="text-muted">Last updated 3 mins ago</small> -->
+                  </div>
+                </router-link>
               </div>
             </div>
           </div>
@@ -131,15 +145,15 @@
           <div class="row mt-3">
             <div class="col mb-3">
               <div class="custom-card">
-                <img src="../assets/image/jisoo.jpg" class="card-img-top" alt="..." />
-                <div class="card-body">
-                  <h5 class="card-title1">jisoo來了!開箱韓國女星的隨身包!</h5>
-                <!-- <p class="card-text">
-                    2222222222This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit
-                    longer.
-                          </p> -->
-                  <!-- <small class="text-muted">Last updated 3 mins ago</small> -->
-                </div>
+                  <img src="../assets/image/column07.jpg" class="card-img-top" alt="..." />
+                  <div class="card-body">
+                    <h5 class="card-text">從街拍學 5 種風衣穿搭——懂得搭配經典風衣，讓都市女人美得更有情調</h5>
+                  <!-- <p class="card-text">
+                      2222222222This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit
+                      longer.
+                            </p> -->
+                    <!-- <small class="text-muted">Last updated 3 mins ago</small> -->
+                  </div>
               </div>
             </div>
           </div>
@@ -158,14 +172,22 @@
         </div>
       </div>
       <div class="col-4 column" ref="thirdColumn">
-        <img src="../assets/image/column04.jpg" alt="Image" />
-        <label for=""> 劉芒 配色小天才 #一週ootd</label>
-        <img src="../assets/image/carousel03.jpg" alt="Image" />
-        <label for="">【2023奧斯卡】得獎名單一覽！《媽的多重宇宙》勇奪最佳影片等7大獎、楊紫瓊寫新歷史成為華人首位奧斯卡影后</label>
-        <img src="../assets/image/carousel04.webp" alt="" />
-
-        <img src="../assets/image/column05.jpg" alt="Image" />
-        <label for="">巴黎人冬天怎麼穿？直擊2023流行趨勢</label>
+        <router-link :to="'/VideoBlog/' + 9">
+          <img src="../assets/image/column04.jpg" alt="Image" />
+          <label class="card-text" for=""> 劉芒 配色小天才 #一週ootd</label>
+        </router-link>
+        <router-link :to="'/EssaysBlog/' + 27">
+          <img src="../assets/image/carousel03.jpg" alt="Image" />
+          <label class="card-text" for="">【2023奧斯卡】得獎名單一覽！《媽的多重宇宙》勇奪最佳影片等7大獎、楊紫瓊寫新歷史成為華人首位奧斯卡影后</label>
+        </router-link>
+        <router-link :to="'/EssaysBlog/' + 20">
+          <img src="../assets/image/carousel04.webp" alt="" />
+          <label class="card-text" for="">從黛安娜王妃、凱特王妃到 Jennie，Chanel 斜紋軟呢外套橫跨 70 年仍經典不敗</label>
+        </router-link>
+        <router-link :to="'/VideoBlog/' + 10">
+          <img src="../assets/image/column05.jpg" alt="Image" />
+          <label class="card-text" for="">巴黎人冬天怎麼穿？直擊2023流行趨勢</label>
+        </router-link>
       </div>
     </div>
 
@@ -208,7 +230,7 @@ const getEssayInfo = async () => {
       essays.value = response.data;
       //console.log("essay");
       // console.log(essays.value);
-      //console.log(essays.value);
+      console.log(essays.value[0].essayId);
       //loaded.value = true;
     })
     .catch((error) => {
@@ -222,7 +244,7 @@ const getVideos = async () => {
     .get(`https://localhost:7243/api/Video`)
     .then((response) => {
       videos.value = response.data;
-      // console.log(videos.value);
+       console.log(videos.value);
       // loaded.value = true;
     })
     .catch((error) => {
@@ -331,6 +353,41 @@ const setup = () => {
 </script>
 
 <style scoped>
+.caouselText1{
+  margin-top: 100px;
+}
+
+.caouselText4{
+  margin-top: 110px;
+}
+
+
+.caouselText5{
+  margin-top: 80px;
+}
+
+.carousel-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  /* background-color: rgba(0, 0, 0, 0.5);  */
+  padding: 10px;
+}
+
+.caption-text {
+  margin-bottom: -50px; /* 清除<h5>元素預設的底部間距 */
+  color: #fff;
+}
+
+.caption-title{
+  top:100px;
+}
+
+ .card-text{
+  color: black;
+ }
+
 .wrap {
   width: 1300px;
   height: 400px;
@@ -656,10 +713,11 @@ a {
 
 .carousel-caption {
   position: absolute;
-  bottom: 0;
+  top: -100px;
+  /* bottom: 0;
   left: 0;
-  right: 0;
-  padding: 1rem;
+  right: 0; */
+  /* padding: 1rem; */
 }
 
 .image-container {
