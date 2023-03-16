@@ -144,7 +144,7 @@ const createCommonModal = (productId, orderId, productName, color, size) => {
   commentParams.value.orderId = orderId;
   commentParams.value.productName = productName;
   commentParams.value.productSpec = `${color}, ${size}`;
-  console.log(commentParams.value);
+  //console.log(commentParams.value);
 };
 
 onMounted(() => {
