@@ -38,13 +38,18 @@ namespace H2StyleStore.Models.ViewModels
 		[Display(Name = "類別名稱")]
 		public string CategoryName { get; set; }
 
+
+		[Display(Name = "狀態")]
+		public string PON { get; set; }
+
 		[Required]
-		[Display(Name = "設定發佈時間")]
+		[Display(Name = "下架時間")]
 		public DateTime UpLoad { get; set; }
 
 		[Required]
-		[Display(Name = "設定下架時間")]
+		[Display(Name = "下架時間")]
 		public DateTime Removed { get; set; }
+
 
 		[Required]
 		[Display(Name = "圖片")]
@@ -60,9 +65,16 @@ namespace H2StyleStore.Models.ViewModels
 	public static class EssayDtoExts
 	{
 		public static EssayVM ToVM(this EssayDTO source)
-			=> new EssayVM
+		{
+			string UpLoad = "";
+			string Removed = "";
+			string PON = " ";
+
+			if (source.PON == true) PON = "已上架";
+			else PON = "未上架";
+			return new EssayVM
 			{
-				Essay_Id = source.Essay_Id,
+								Essay_Id = source.Essay_Id,
 				Influencer_Name = source.Influencer_Name,
 				UplodTime = source.UplodTime,
 				ETitle = source.ETitle,
@@ -72,8 +84,11 @@ namespace H2StyleStore.Models.ViewModels
 				UpLoad = source.UpLoad,
 				Removed = source.Removed,
 				Images = source.images,
-				Tags = source.Tags
+				Tags = source.Tags,
+				PON = PON,
 			};
+		}
+
 
 		public static EssayDTO ToDto(this EssayVM source)
 			=> new EssayDTO

@@ -38,6 +38,8 @@ namespace H2StyleStore.Models.DTOs
 		public IEnumerable<string> images { get; set; }
 
 		public IEnumerable<string> Tags { get; set; }
+
+		public bool? PON { get; set; }
 	}
 
 
@@ -57,7 +59,8 @@ namespace H2StyleStore.Models.DTOs
 			UpLoad = source.UpLoad.Value,
 			Removed = source.Removed.Value,
 			images = source.Images.Select(i => i.ToPDto()),
-			Tags = source.Tags.Select(i => i.ToPDto())
+			Tags = source.Tags.Select(i => i.ToPDto()),
+			PON = source.PON
 		};
 
 		public static Essay ToDb(this EssayDTO source)

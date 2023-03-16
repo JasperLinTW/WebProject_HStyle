@@ -39,134 +39,164 @@
 </form>
 <br />
 
-<div>
-    <h4>文章列表<span style="margin-left:30px;margin-bottom:10px;"> @Html.ActionLink("新增文章", "NewEssay", null, new { @class = "btn btn-secondary" })</span> </h4>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-8">
 
-</div>
+            <h3>文章列表<span style="margin-left:30px;margin-bottom:10px;"> @Html.ActionLink("新增文章", "NewEssay", null, new { @class = "btn btn-secondary" })</span> </h3>
+        </div>
+        <div class="col-4">
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.ActionLink("上架時間", "Index", new { sortOrder = ViewBag.NameSortParm }, new { @class = "text-dark fa-solid fa-sort" })
+                        @*上架時間*@
+                    </th>
+                    <th>
+                        @Html.ActionLink("下架時間", "Index", new { sortOrder = ViewBag.NameSortParm }, new { @class = "text-dark fa-solid fa-sort" })
+                        @*下架時間*@
+                    </th>
+                    <th class="text-center">
+                        狀態
+                    </th>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="row">
 
 
-
-<table class="table">
-
-
-    @foreach (var item in Model)
-    {
-        <tr>
-
-        <tr>
-            <td>
-                <br />
-                <div class="row">
-
-                    <div class="col-md-2">
-
-                        @*@foreach (var img in item.Images)
+        @foreach (var item in Model)
         {
-            <img class="img w-100 " style="object-fit: cover; width: 100%; height: 100%" src="../../Images/Essaysimage/@img" />
+            <div class="col-8">
+                <table class="table">
+                    <tr>
+
+                    <tr>
+                        <td>
+                            <br />
+                            <div class="row">
+
+                                <div class="col-md-2">
+
+
+                                    @foreach (var img in item.Images)
+                                    {
+
+                                        <img class="img w-100" style="object-fit: cover; width: 200px; height: 150px;" src="../../Images/Essaysimage/@img" />
+
+                                    }
+                                </div>
+                                <br />
+                                <div class="col-md-10">
+                                    <p>
+                                        <b style="color: #78BEF5; font-size: large; font-weight: bold;">@Html.DisplayFor(modelItem => item.ETitle)</b>
+                                    </p>
+                                    <label class="econtent">@item.EContent</label>
+                                </div>
+                            </div>
+
+                            <br />
+                            <b> 建立時間：</b>
+                            @Html.DisplayFor(modelItem => item.UplodTime)
+
+                            <b>分類：</b>
+                            @Html.DisplayFor(modelItem => item.CategoryName)
+
+                            <b>標簽：</b>
+                            @("#"+string.Join(" #",item.Tags))
+
+                            <b>上架：</b>
+                            @Html.DisplayFor(modelItem => item.UpLoad)
+
+                            <b>下架：</b>
+                            @Html.DisplayFor(modelItem => item.Removed)
+                        </td>
+                        <td class="invisible">
+                            @Html.DisplayFor(modelItem => item.CategoryId)
+                        </td>
+                    </tr>
+
+                    <td>
+                        @Html.ActionLink("Edit", "EditEssays", new { id = item.Essay_Id }, new { @class = "btn btn-default" }) |
+                        @*@Html.ActionLink("Details", "Details", new { id = item.Essay_Id }) |*@
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Essay_Id, }, new { @class = "btn btn-danger" })|
+                        <b style="color: hotpink; " ;>by</b><b class="ml-1" style="color: hotpink; font-size: medium;">@Html.DisplayFor(modelItem => item.Influencer_Name)</b>
+
+                    </td>
+                    </tr>
+
+                </table>
+            </div>
+            <div class="col-4">
+                <table class="table">
+                    <div class="row">
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UpLoad)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Removed)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PON, new { id = "IsOnShelff" })
+                            @*<div id="OffShelf">
+                                    @item.OffShelffTime
+                                </div>*@
+                            <p id="offValue"></p>
+                        </td>
+                    </tr>
+            </div>
+            </table>
+        </div>
+    }
+    </div>
+    </div>
+    <br />
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+
+    @*@section Scripts{
+            <script>
+                $(".econtent").each(function () {
+                    var decodedContent = decodeURI($(this)).html();
+                    var trimmedContent = decodedContent.Substring(0, 150);
+                    $(this).html(trimmedContent);
+                    if (decodedContent.length > 150) {
+                        $(this).append('<span>...</span>');
+                    }
+                });
+            </script>
+
         }*@
 
-                        @foreach (var img in item.Images)
-                        {
-                            @*<img class="img w-100" style="object-fit: cover;" src="../../Images/Essaysimage/@img" />*@
+    <style>
+        .econtent {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            height: 85px;
+        }
 
-                            <img class="img w-100" style="object-fit: cover; width: 200px; height: 150px;" src="../../Images/Essaysimage/@img" />
+        /*.img {
+                max-width: 500px;
+                max-height: 500px;
+            }*/
 
-                        }
-                    </div>
-                    <br />
-                    <div class="col-md-10">
-                        <p>
-                            <b style="color: #78BEF5; font-size: large; font-weight: bold;">@Html.DisplayFor(modelItem => item.ETitle)</b>
-                        </p>
-                        <label class="econtent">@item.EContent</label>
+    </style>
 
-                        @*<label class="econtent">@((item.EContent.Length > 150) ? (item.EContent.Substring(0, 150)) : item.EContent)</label>*@
-
-                        @*<td>
-                                @item.EContent;
-                            </td>*@
-
-                    </div>
-                </div>
-
-                <br />
-                <b> 建立時間：</b>
-                @Html.DisplayFor(modelItem => item.UplodTime)
-
-                <b>分類：</b>
-                @Html.DisplayFor(modelItem => item.CategoryName)
-                @*<a href="~/Essays/@item.CategoryName"> @Html.DisplayFor(modelItem => item.CategoryName)</a>*@
-
-                <b>標簽：</b>
-                @("#"+string.Join(" #",item.Tags))
-
-                <b>上架：</b>
-                @Html.DisplayFor(modelItem => item.UpLoad)
-
-                <b>下架：</b>
-                @Html.DisplayFor(modelItem => item.Removed)
-            </td>
-            <td class="invisible">
-                @Html.DisplayFor(modelItem => item.CategoryId)
-            </td>
-        </tr>
-
-        <td>
-            @Html.ActionLink("Edit", "EditEssays", new { id = item.Essay_Id }, new { @class = "btn btn-default" }) |
-            @*@Html.ActionLink("Details", "Details", new { id = item.Essay_Id }) |*@
-            @Html.ActionLink("Delete", "Delete", new { id = item.Essay_Id, }, new { @class = "btn btn-danger" })|
-            <b style="color: hotpink; " ;>by</b><b class="ml-1" style="color: hotpink; font-size: medium;">@Html.DisplayFor(modelItem => item.Influencer_Name)</b>
-
-        </td>
-        </tr>
-    }
-
-</table>
-<br />
-Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-
-@Html.PagedListPager(Model, page => Url.Action("Index",
-    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
-
-
-@*@section Scripts{
+    @section Scripts{
         <script>
             $(".econtent").each(function () {
-                var decodedContent = decodeURI($(this)).html();
-                var trimmedContent = decodedContent.Substring(0, 150);
-                $(this).html(trimmedContent);
-                if (decodedContent.length > 150) {
-                    $(this).append('<span>...</span>');
-                }
+
+                $(this).html(decodeURI($(this).html()).replace(/<\/?[^>]+(>|$)/g, "")
+                    .slice(0, 170));
+                console.log(decodeURI($(this)));
+
             });
         </script>
 
-    }*@
-
-<style>
-    .econtent {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        height:85px;
     }
-
-    /*.img {
-        max-width: 500px;
-        max-height: 500px;
-    }*/
-
-</style>
-
-@section Scripts{
-    <script>
-        $(".econtent").each(function () {
-
-            $(this).html(decodeURI($(this).html()).replace(/<\/?[^>]+(>|$)/g, "")
-                .slice(0, 170));
-            console.log(decodeURI($(this)));
-           
-        });
-    </script>
-
-}
 
