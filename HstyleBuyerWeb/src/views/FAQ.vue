@@ -4,7 +4,8 @@
    </div>
    <div class="text-center">
       <form class="border" @submit.prevent="searchClick">
-         <label for="search-input" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden"> 搜尋： </label>
+         <label for="search-input"
+            style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden"> 搜尋： </label>
          <input type="text" id="search-input" v-model="searchKeyword" placeholder="搜尋" />
          <button id="searchButtom" type="submit">
             <i class="fa-solid fa-magnifying-glass"></i>
@@ -25,7 +26,8 @@
                      <button class="btn btn-light me-2" @click="SatisfYes(question.commonQuestionId)">
                         <i class="fa-regular fa-thumbs-up"></i>
                      </button>
-                     <button class="btn btn-light" @click="SatisfNo(question.commonQuestionId)"><i class="fa-regular fa-thumbs-down"></i></button>
+                     <button class="btn btn-light" @click="SatisfNo(question.commonQuestionId)"><i
+                           class="fa-regular fa-thumbs-down"></i></button>
                   </div>
                </div>
             </div>
@@ -38,25 +40,16 @@
             <div class="accordion accordion-flush" id="accordionExample">
                <div v-for="(category, index) in categoryQ" :key="category.categoryId" class="accordion-item">
                   <div class="accordion-header row" :id="'heading' + index">
-                     <button
-                        class="accordion-button collapsed"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        :data-bs-target="'#collapse' + index"
-                        aria-expanded="true"
-                        :aria-controls="'collapse' + index"
-                        @click="selectCategory(category.qcategoryId)"
-                     >
+                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        :data-bs-target="'#collapse' + index" aria-expanded="true" :aria-controls="'collapse' + index"
+                        @click="selectCategory(category.qcategoryId)">
                         {{ category.categoryName }}
                      </button>
                   </div>
-                  <div
-                     :id="'collapse' + index"
-                     class="accordion-collapse collapse"
-                     :aria-labelledby="'heading' + index"
-                     data-bs-parent="#accordionExample"
-                  >
-                     <div class="accordion-body" v-for="question in filteredQuestions" :key="question.commonQuestionId" @click="showAnswer(question)">
+                  <div :id="'collapse' + index" class="accordion-collapse collapse" :aria-labelledby="'heading' + index"
+                     data-bs-parent="#accordionExample">
+                     <div class="accordion-body" v-for="question in filteredQuestions" :key="question.commonQuestionId"
+                        @click="showAnswer(question)">
                         <p id="qTitle">{{ question.question }}</p>
                      </div>
                   </div>
@@ -86,13 +79,16 @@
    </div>
 
    <!-- Button trigger modal -->
-   <button id="CustomerQForm" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#CustomerQModal" style="display: none">
+   <button id="CustomerQForm" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#CustomerQModal"
+      style="display: none">
       顧客提問
    </button>
-   <button id="MemberQForm" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#MemberQModal" style="display: none">
+   <button id="MemberQForm" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#MemberQModal"
+      style="display: none">
       會員提問
    </button>
-   <button id="AlertModal" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ThanksModal" style="display: none">
+   <button id="AlertModal" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ThanksModal"
+      style="display: none">
       alertThanks
    </button>
 
@@ -245,6 +241,7 @@ const chatComponent = computed(() => {
 onMounted(() => {
    getQCategoryInfo();
    getCommonQInfo();
+   window.scrollTo(0, 0);
 });
 </script>
 
@@ -256,6 +253,7 @@ hr {
    max-width: 400px;
    margin: 0 auto;
 }
+
 #search-input {
    width: 200px;
    padding: 10px 10px;
@@ -263,6 +261,7 @@ hr {
    border: none;
    outline: none;
 }
+
 #searchButtom {
    position: relative;
    left: -40px;
@@ -272,17 +271,21 @@ hr {
    border-radius: 100%;
    outline: none;
 }
+
 #v-pills-home-tab {
    background-color: darkgray;
    margin: 0px;
 }
+
 #qTitle {
    margin: 0px;
 }
+
 #qTitle:hover {
    background-color: lightgray;
    cursor: pointer;
 }
+
 /* 聊天室的樣式 */
 #chatIcon {
    -moz-transform: scaleX(-1);
@@ -290,6 +293,7 @@ hr {
    -o-transform: scaleX(-1);
    transform: scaleX(-1);
 }
+
 .chat-button {
    position: fixed;
    bottom: 20px;
@@ -304,6 +308,7 @@ hr {
    height: 55px;
    cursor: pointer;
 }
+
 .chat-window {
    position: fixed;
    bottom: 0;
@@ -319,9 +324,11 @@ hr {
    overflow: hidden;
    display: none;
 }
+
 .chat-window.show {
    display: block;
 }
+
 .chat-header {
    background-color: #000;
    color: #fff;
@@ -331,6 +338,7 @@ hr {
    align-items: center;
    justify-content: space-between;
 }
+
 .close-button {
    background-color: transparent;
    color: #fff;
@@ -338,15 +346,16 @@ hr {
    font-size: 20px;
    cursor: pointer;
 }
+
 .chat-content {
    height: calc(100% - 50px);
    overflow-y: auto;
    padding: 10px;
 }
+
 .chat-input {
    position: absolute;
    bottom: 0;
    width: 100%;
    padding: 10px;
-}
-</style>
+}</style>

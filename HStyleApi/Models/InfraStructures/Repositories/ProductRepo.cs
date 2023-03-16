@@ -86,11 +86,12 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 
 		public PCommentGetDTO GetComment(int productId, int orderId)
 		{
-			IEnumerable<Product> data = _db.Products.Include(product => product.Category)
+			var data = _db.Products.Include(product => product.Category)
 										.Include(product => product.Imgs)
 										.Include(product => product.Specs)
-										.Include(product => product.Tags);
-			var product = data.FirstOrDefault(x => x.ProductId == productId).ToDto();
+										.Include(product => product.Tags).FirstOrDefault(x => x.ProductId == productId);
+
+			var product = data.ToDto();
 
 			var orderDetail = _db.OrderDetails.Where(x => x.OrderId == orderId).FirstOrDefault(x => x.ProductId == productId);
 

@@ -86,37 +86,6 @@ const handleFileUpload = (event) => {
 };
 
 // 檔案
-const errorMessage = ref(null);
-
-watch(files, (newFiles, oldFiles) => {
-  const errors = {};
-  if (newFiles.length === 0) { // 沒有新的檔案
-    createComment(); // 直接執行 createComment()
-  } else {
-    newFiles.forEach((newFile) => {
-      const formData = new FormData();
-      formData.append("file", newFile);
-      const fileSize = newFile.size / 1024 / 1024; // 轉換為 MB
-      if (fileSize > 2) {
-        // 限制檔案大小為 4 MB
-        errors[newFile.name] = "檔案大小超過限制";
-        file.value = null;
-        alert(errors.value);
-      }
-    });
-
-    if (Object.keys(errors).length > 0) {
-      // 顯示錯誤訊息
-      errorMessage.value = "有檔案大小超過限制";
-      files.value = null;
-      alert(errors.value);
-    } else {
-      // 沒有錯誤，執行上傳
-      errorMessage.value = null;
-      createComment();
-    }
-  }
-});
 const maxFileSize = 4 * 1024 * 1024; // 2MB
 const createComment = async () => {
   if (files.value != null) {
