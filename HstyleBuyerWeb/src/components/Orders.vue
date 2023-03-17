@@ -1,5 +1,10 @@
 <template>
   <div class="container my-5">
+    <div class="row">
+      <div class="col-md-12 text-start">
+        <h5 class="fw-bold">訂單查詢</h5>
+      </div>
+    </div>
     <div class="order-header border-top border-bottom pt-2">
       <div class="row mb-2">
         <div class="col-1 text-center"></div>
@@ -33,7 +38,7 @@
               {{ order.status }}
             </div>
           </div>
-          <div class="col-2 pt-2 text-center">
+          <div class="col-2 pt-2 text-center mb-2">
             <a class="blink" data-bs-toggle="modal" data-bs-target="#MemberQModal">聯絡客服</a>
             <br />
 
@@ -89,6 +94,7 @@
         </div>
       </div>
     </div>
+    <div class="border-bottom mt-1"></div>
   </div>
   <CreatePComment :modalData="commentParams"></CreatePComment>
   <MemberQForm></MemberQForm>

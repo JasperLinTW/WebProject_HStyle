@@ -216,6 +216,18 @@ header .sticky ul li a {
   opacity: 0.85;
 }
 
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+
+  background-color: transparent;
+
+  background-image: none;
+
+  transition: background-color 50000s ease-in-out 0s;
+}
+
 .dropdown-menu.show {
   display: block;
 }
