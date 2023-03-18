@@ -71,14 +71,22 @@
             <p class="comment-text">{{ comment.ecomment }}</p>
             <div class="comment-actions">
               <hr />
+              <!-- 測試按鈕 -->
+              <div class="col-md-1 text-end">
+                <i v-if="!comment.commentIsClicked" class="fa-regular fa-thumbs-up fz-icon"
+                  @click="postCommentLike()"></i>
+                <i v-else="comment.commentIsClicked" class="fa-solid fa-thumbs-up fz-icon" @click="postCommentLike()"></i>
+                <!-- <span class="ps-1">{{ num }}</span> -->
+              </div>
 
-              <button class="btn btn-sm" :class="{
+
+              <!-- <button class="btn btn-sm" :class="{
                 'btn-primary': !commentIsClicked,
                 'btn-danger': commentIsClicked,
               }" @click="postCommentLike(comment.id)">
                 <i class="far fa-thumbs-up"></i>
                 <span class="likes-count">{{ comment.likes }}</span>
-              </button>
+              </button> -->
               <!-- <span class="comment-date">{{ comment.etime.slice(0, 10) }}</span> -->
             </div>
           </div>
@@ -137,14 +145,14 @@ const getComments = async () => {
   await axios
     .get(`https://localhost:7243/api/Essay/Comments/${route.params.id}`)
     .then((response) => {
-      essayComments.value = response.data;
-      commentIsClicked.value = response.data.map((v) => {
+      response.data.map((v) => {
         v.commentIsClicked = likeCommentId.value.includes(parseInt(v.id));
         return v;
       });
-      isLoaded.value = true;
+      essayComments.value = response.data;
+      //isLoaded.value = true;
       //console.log(commentIsClicked.value);
-      // console.log(essayComments.value);
+      console.log(essayComments.value);
     })
     .catch((error) => {
       console.log(error);
@@ -179,16 +187,17 @@ const getCommentLikes = async () => {
     })
     .then((response) => {
       if (response.data.length > 0) {
-        likesComments.value = response.data;
-        likeCommentId.value = likesComments.value.map((likes) => {
+        //likesComments.value = response.data;
+        likeCommentId.value = response.data.map((likes) => {
           return likes.commentId;
         });
       }
+      console.log(response.data)
     })
     .catch((error) => {
       console.log(error);
     });
-  getComments();
+  // getComments();
 };
 
 // 點擊喜歡的留言
@@ -238,7 +247,7 @@ const postComment = async () => {
 onMounted(async () => {
   getEssayInfo();
   getComments();
-  // getEssayCommentLikes();
+  getCommentLikes();
   getEssayRecommenations();
 });
 
