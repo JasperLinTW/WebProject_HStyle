@@ -2,6 +2,7 @@
 using HStyleApi.Models.EFModels;
 using HStyleApi.Models.InfraStructures.Repositories;
 using HStyleApi.Models.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HStyleApi.Controllers
 {
+	[Authorize]
 	[EnableCors("AllowAny")]
 	[Route("api/[controller]")]
 	[ApiController]
@@ -19,12 +21,17 @@ namespace HStyleApi.Controllers
 		private readonly OrderRepo _repo;
 		private readonly int _memberId;
 		private readonly AppDbContext _db;
-		public OrderController(AppDbContext db)
+		public OrderController(AppDbContext db, IHttpContextAccessor httpContextAccessor)
 		{
+			var claims = httpContextAccessor.HttpContext.User.Claims;
+			if (claims.Any())
+			{
+				var data = int.TryParse(claims.Where(x => x.Type == "MemberId").FirstOrDefault().Value, out int memberid);
+				_memberId = memberid;
+			}
 			_repo = new OrderRepo(db);
 			_orderService = new OrderService(_repo);
 			_db= db;
-			_memberId = 1;//TODO從COOKIE取
 		}
 		// GET: api/<OrderController>
 		[HttpGet]

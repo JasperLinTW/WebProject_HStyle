@@ -239,7 +239,7 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 				Id = x.Id,
 				Color = x.Color,
 				Size = x.Size,
-				Stock = x.Stock,
+				Stock = x.Stock
 			}).ToList();
 			
 			var dbSpecs = _db.Specs.Where(x => x.Product_Id == dto.ProductID).ToArray();
@@ -260,8 +260,10 @@ namespace H2StyleStore.Models.Infrastructures.Repositories
 				}
 				else if (dbSpecId.Contains(spec.Id))
 				{
-					var dbspec = product.Specs.Where(x => x.Id == spec.Id).FirstOrDefault();
-					dbspec = specs.Where(x => x.Id == spec.Id).FirstOrDefault();
+					var dbspec = _db.Specs.Where(x => x.Id == spec.Id).FirstOrDefault();
+					dbspec.Size = spec.Size;
+					dbspec.Stock = spec.Stock;
+					dbspec.Color = spec.Color;
 					dtoSpIds.Add(spec.Id);
 				}
 			}

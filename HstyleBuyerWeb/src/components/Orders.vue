@@ -105,7 +105,7 @@ const orders = ref([]);
 
 const getOrdersInfo = async () => {
   await axios
-    .get("https://localhost:7243/api/Order")
+    .get("https://localhost:7243/api/Order", { withCredentials: true })
     .then((response) => {
       orders.value = response.data;
       //console.log(orders.value);
