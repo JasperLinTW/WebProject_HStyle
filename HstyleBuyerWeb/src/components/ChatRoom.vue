@@ -1,7 +1,7 @@
 <template>
    <div>
       <h6>Chat Room</h6>
-         <p v-for="(message, index) in messages" :key="index">{{ message.substring(3,100) }}</p>
+      <p v-for="(message, index) in messages" :key="index">{{ message.substring(3, 100) }}</p>
       <!-- <ul>
          <p v-for="(message, index) in messages" :key="index">{{ message.substring(3,3+messageLength) }}</p>
          <p v-for="(message, index) in messages" :key="index">{{ message.slice(7+messageLength, 100) }}</p>
@@ -12,7 +12,7 @@
       </div> -->
       <form @submit.prevent="handleSubmit">
          <input v-model="message" type="text" class="form-control" name="messageContent" placeholder="Type your message" />
-         <button class="btn" type="submit">Send</button>
+         <button class="btn mt-3" type="submit">Send</button>
       </form>
    </div>
 
@@ -82,9 +82,29 @@ export default {
    border-radius: 25px;
    border: 1px solid rgb(12, 13, 12);
 }
+
 .btn:not(.nav-btns button):hover {
    background-color: #000;
    color: #fff;
    border-color: #000;
+}
+
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+   -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+
+   background-color: transparent;
+
+   background-image: none;
+
+   transition: background-color 50000s ease-in-out 0s;
+}
+
+.form-control:focus,
+.form-control:active {
+   box-shadow: none;
+   outline: none;
+   color: #000;
 }
 </style>

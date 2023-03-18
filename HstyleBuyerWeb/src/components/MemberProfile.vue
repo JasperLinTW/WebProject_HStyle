@@ -7,7 +7,7 @@
       <div class="col-md-12 text-end">
         <button class="btn btn-link text-dark text-decoration-none fw-bold" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapseExample999" aria-expanded="false" aria-controls="collapseExample">
-          變更密碼
+          變更密碼<i class="fa-regular fa-pen-to-square ps-2"></i>
         </button>
         <div class="collapse text-start mb-5" id="collapseExample999">
           <div class="card card-body">
@@ -214,5 +214,11 @@ h1 {
 
 .textbox input {
   width: 60%;
+}
+
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px white inset;
+  background-color: white !important;
 }
 </style>

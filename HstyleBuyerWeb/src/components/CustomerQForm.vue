@@ -8,40 +8,36 @@
                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-               <div class="mb-3">抱歉該篇文章沒能解決您的問題，如果您願意，請與我們分享缺乏的部分，我們將努力使說明內容更為完善。</div>
+               <div class="mb-4">抱歉該篇文章沒能解決您的問題，如果您願意，請與我們分享缺乏的部分，我們將努力使說明內容更為完善。</div>
                <form @submit.prevent="postCustomerQ">
-                  <div class="mb-3">
+                  <div class="mb-3 text-start">
                      <label for="Qcategory" class="form-label">問題類別</label>
-                     <select id="Qcategory" v-model="qcategoryId" class="form-select" aria-label="Default select example" required>
+                     <select id="Qcategory" v-model="qcategoryId" class="form-select  border-bottom"
+                        aria-label="Default select example" required>
                         <option v-for="(option, index) in categoryQ" :key="index" :value="option.qcategoryId">
                            {{ option.categoryName }}
                         </option>
                      </select>
                   </div>
-                  <div class="mb-3">
+                  <div class="mb-3 text-start">
                      <label for="Qtitle" class="form-label">提問題目</label>
-                     <input type="text" id="Qtitle" v-model="title" class="form-control" placeholder="請輸入想要問的題目" required />
+                     <input type="text" id="Qtitle" v-model="title" class="form-control" placeholder="請輸入想要問的題目"
+                        required />
                   </div>
-                  <div class="mb-3">
+                  <div class="mb-3 text-start">
                      <label for="Qcontent">提問內容</label>
-                     <textarea
-                        class="form-control"
-                        id="Qcontent"
-                        v-model="problemDescription"
-                        rows="3"
-                        placeholder="請輸入問題內容..."
-                        required
-                     ></textarea>
+                     <textarea class="form-control" id="Qcontent" v-model="problemDescription" rows="3"
+                        placeholder="請輸入問題內容..." required></textarea>
                   </div>
-                  <button type="submit" class="btn btn-primary">送出</button>
-                  <hr>
-                  <button type="buttom" @click="putData()" class="btn btn-dark">填入資料</button>
+                  <button type="submit" class="btn-submit">送出</button>
                </form>
+               <button type="buttom" @click="putData()" class="btn btn-link text-dark text-decoration-none">填入資料</button>
             </div>
          </div>
       </div>
    </div>
-   <button id="AlertModal" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ThanksModal" style="display: none">
+   <button id="AlertModal" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ThanksModal"
+      style="display: none">
       alertThanks
    </button>
    <AlertModal />
@@ -99,4 +95,46 @@ onMounted(() => {
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.btn-submit {
+   background-color: #fff;
+   color: rgb(12, 13, 12);
+   padding: 10px 28px;
+   border-radius: 25px;
+   border: 1px solid rgb(12, 13, 12);
+   transition: all 0.3s ease;
+}
+
+.btn-submit:hover {
+   background-color: #000;
+   color: #fff;
+}
+
+.form-select {
+   border: none;
+}
+
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+   -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+
+   background-color: transparent;
+
+   background-image: none;
+
+   transition: background-color 50000s ease-in-out 0s;
+}
+
+input:focus {
+   box-shadow: none;
+}
+
+textarea:focus {
+   box-shadow: none;
+}
+
+select:focus {
+   box-shadow: none;
+}
+</style>

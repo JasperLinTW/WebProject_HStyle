@@ -11,7 +11,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div> -->
             <div class="modal-body">
-               <div class="fs-2">感謝您的回饋!!</div>
+               <div class="fs-2">感謝您的回饋!</div>
                <div><i class="fa-regular fa-face-smile"></i></div>
             </div>
 
@@ -24,6 +24,4 @@
    </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
