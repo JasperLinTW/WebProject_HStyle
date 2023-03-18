@@ -20,20 +20,20 @@
         <!-- <div class="">
                     <video class="video" :src="video.filePath"></video>
                 </div> -->
-        <div class="row justify-content-evenly">
+        <div class="row d-flex justify-content-between">
           <!-- tags -->
           <div class="col-4">
             <span class="badge bg-secondary opacity-50 me-1" v-for="tag in video.tags" :key="tag">#{{ tag }}</span>
           </div>
-          <!-- 觀看喜歡次數 -->
+          <!-- 觀看收藏次數 -->
           <div class="col-4">
             <div class="videoLike">
               <label>
                 <label><i class="fa-solid fa-eye fz-16"></i> {{ video.views }}</label>
-                <label class="ms-1"><i class="fa-solid fa-heart fz-16"></i> {{ video.likes }}</label>
-                <span> 喜歡 </span>
-                <span v-if="!isClicked" @click="postVideoLike(video.id)"><i class="fa-regular fa-heart icon-hover fz-18"></i></span>
-                <span v-else @click="postVideoLike(video.id)"><i class="fa-solid fa-heart fz-18"></i></span>
+                <label class="ms-1"><i class="fa-solid fa-bookmark fz-16"></i> {{ video.likes }}</label>
+                <span> 收藏 </span>
+                <span v-if="!isClicked" @click="postVideoLike(video.id)"><i class="fa-regular fa-bookmark icon-hover fz-18"></i></span>
+                <span v-else @click="postVideoLike(video.id)"><i class="fa-solid fa-bookmark SolidHeart fz-18"></i></span>
               </label>
             </div>
           </div>
@@ -69,10 +69,10 @@
                       <div class="videoCommentLike">
                         <label class="">
                           <span> </span>
-                          <span v-if="!comment.commentIsClicked" @click="postCommentLike(comment.id)"
-                            ><i class="fa-regular fa-heart icon-hover fz-18"></i
-                          ></span>
-                          <span v-else @click="postCommentLike(comment.id)"><i class="fa-solid fa-heart fz-18"></i></span>
+                          <span v-if="!comment.commentIsClicked" @click="postCommentLike(comment.id)">
+                            <i class="fa-regular fa-thumbs-up fz-icon"></i>
+                          </span>
+                          <span v-else @click="postCommentLike(comment.id)"><i class="fa-solid fa-thumbs-up fz-icon"></i></span>
                         </label>
                       </div>
                     </div>
@@ -125,13 +125,12 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
 import Plyr from "plyr";
 import { slotFlagsText } from "@vue/shared";
 import { eventBus } from "../mybus";
-
 
 const video = ref([]);
 const route = useRoute();
@@ -191,6 +190,7 @@ const getComments = async () => {
         v.commentIsClicked = likeCommentId.value.includes(parseInt(v.id));
         return v;
       });
+
       isLoaded.value = true;
     })
     .catch((error) => {
@@ -232,7 +232,9 @@ const postVideoLike = (videoId) => {
     .post(`https://localhost:7243/api/Video/Like/${videoId}`, {}, { withCredentials: true })
     .then((response) => {
       isClicked.value = !isClicked.value;
-      //getVideo();
+      eventBus.emit("postVideoLike");
+      // getLikesVideos();
+      // getVideo();
     })
     .catch((error) => {
       console.log(error.response.status);
@@ -295,6 +297,7 @@ onMounted(() => {
 });
 
 eventBus.on("postVideoLike", () => {
+  // getVideos();
   getLikesVideos();
 });
 </script>
@@ -391,5 +394,10 @@ input {
 ::-webkit-scrollbar-thumb:hover {
   /* background: #fff; */
   border-block-color: #fff;
+}
+
+/* 收藏變藍色 */
+.SolidHeart {
+  color: #46a3ff;
 }
 </style>

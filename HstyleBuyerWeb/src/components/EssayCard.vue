@@ -2,23 +2,16 @@
   <!-- 内文解碼 -->
 
   <div class="col-md-3 mb-4">
-    <router-link
-      :to="'/EssaysBlog/' + data.essayId"
-      class="text-dark text-decoration-none"
-    >
+    <router-link :to="'/EssaysBlog/' + data.essayId" class="text-dark text-decoration-none">
       <div class="card border-0 card1">
         <div class="card-img w-100 h200px rounded overflow-hidden">
           <img :src="data.imgs[0]" class="card-img-top" alt="Essays Image" />
         </div>
 
         <div class="card-header d-flex bg-white border-bottom-0">
-          <span
-            class="badge bg-secondary opacity-50 me-1"
-            v-for="tag in data.tags"
-            >{{ tag }}</span
-          >
+          <span class="badge bg-secondary opacity-50 me-1" v-for="tag in data.tags">{{ tag }}</span>
         </div>
-        <div class="card-body">
+        <div class="card-body text-truncate" style="max-width: 320px">
           {{ data.etitle }}
         </div>
         <div class="card-footer bg-white border-top-0 d-flex">
@@ -26,15 +19,8 @@
 
           <!-- <span><i class="fa-regular fa-bookmark"></i></span> -->
           <div @click.stop class="card-text text-end">
-            <span
-              v-if="!data.isClicked"
-              @click.prevent
-              @click="postEssayLike(data)"
-              ><i class="fa-regular fa-bookmark icon-hover fz-18"></i
-            ></span>
-            <span v-else @click.prevent @click="postEssayLike(data)"
-              ><i class="fa-solid fa-bookmark SolidHeart fz-18"></i
-            ></span>
+            <span v-if="!data.isClicked" @click.prevent @click="postEssayLike(data)"><i class="fa-regular fa-bookmark icon-hover fz-18"></i></span>
+            <span v-else @click.prevent @click="postEssayLike(data)"><i class="fa-solid fa-bookmark SolidHeart fz-18"></i></span>
           </div>
         </div>
       </div>
@@ -76,11 +62,7 @@ const Essays = ref([]);
 
 const postEssayLike = async (data) => {
   await axios
-    .post(
-      `https://localhost:7243/api/Essay/Elike /${props.data.essayId}`,
-      {},
-      { withCredentials: true }
-    )
+    .post(`https://localhost:7243/api/Essay/Elike /${props.data.essayId}`, {}, { withCredentials: true })
     .then((response) => {
       data.isClicked = !data.isClicked;
     })
