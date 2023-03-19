@@ -14,7 +14,7 @@
             </button>
          </div>
       </form>
-      <button type="buttom" @click="putData()" class="btn btn-link text-dark text-decoration-none">填入資料</button>
+      <button type="buttom" @click="putData()" class="btn btn-link text-dark text-decoration-none">Demo</button>
    </div>
    <!-- 呈現問題 -->
    <div class="container-sm" style="min-height: 800px">
