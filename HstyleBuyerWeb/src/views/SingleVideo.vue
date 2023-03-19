@@ -19,6 +19,7 @@
             </video>
           </div>
         </div>
+
         <!-- <div class="">
                     <video class="video" :src="video.filePath"></video>
                 </div> -->
@@ -103,20 +104,20 @@
   </div>
   <!-- 商品推薦 -->
   <div class="container">
-    <div class="h-500" v-if="RecoProducts !== null">
-      <p for="" class="border-bottom pb-2 pt-5">商品推薦</p>
-      <div class=" recoProducts d-inline-flex flex-row bd-highlight mb-3" v-for="product in RecoProducts"
-        :key="product.product_Id">
-        <div class="">
-          <div class="card me-4">
-            <a :href="`http://localhost:5173/product/${product.product_Id}`">
-              <div class="img-sz">
-                <img :src="product.imgs[0]" class="card-img-top" alt="Product Image" />
+    <div class="h-500 row" v-if="RecoProducts !== null">
+      <div class="border-bottom pt-6">商品推薦</div>
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-lg-4 py-5 px-0" v-for="product in RecoProducts" :key="product.product_Id">
+            <div class="card d-flex justify-content-center align-items-center">
+              <a :href="`http://localhost:5173/product/${product.product_Id}`">
+                <div class="img-sz ">
+                  <img :src="product.imgs[0]" alt="Product Image" />
+                </div>
+              </a>
+              <div class="card-body position-relative">
+                <div class="card-title fw-bold">{{ product.product_Name }}</div>
               </div>
-            </a>
-            <div class="card-body position-relative">
-              <div class="card-title fw-bold">{{ product.product_Name }}</div>
-              <span>$NT {{ product.unitPrice }}</span>
             </div>
           </div>
         </div>
@@ -313,6 +314,10 @@ video {
   width: 800px;
 }
 
+.pt-6 {
+  padding-top: 6%;
+}
+
 .comment {
   overflow: auto;
   width: 400px;
@@ -336,8 +341,8 @@ video {
 
 .img-sz {
   margin-top: 5%;
-  width: 200px;
-  height: 150px;
+  width: 250px;
+  height: 300px;
   overflow: hidden;
 }
 
@@ -355,8 +360,9 @@ img:hover {
 
 
 .card {
-  width: 200px;
   border: none;
+  border-radius: 0%;
+  cursor: pointer;
 }
 
 .comment {
@@ -368,7 +374,7 @@ input {
 }
 
 .h-500 {
-  height: 450px;
+  height: 600px;
 }
 
 #search-input {
@@ -378,6 +384,10 @@ input {
   border: #f2f2f2;
   background-color: #f2f2f2;
   outline: none;
+}
+
+.card-body {
+  width: 100%;
 }
 
 #searchButtom {
