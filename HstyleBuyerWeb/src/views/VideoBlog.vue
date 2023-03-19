@@ -7,7 +7,7 @@
         href="https://fonts.googleapis.com/css2?family=Bona+Nova:ital@1&display=swap"
         rel="stylesheet"
       />
-            <!-- 改樣式 -->
+      <!-- 改樣式 -->
       <h1 class="title">Video</h1>
       <div class="col-md-1">
         <router-link

@@ -22,12 +22,20 @@
     </div>
     <div class="row">
       <div class="col-2">
+        <h5 class="recommendation">相關商品</h5>
         <div style="position: sticky; top: 2%; transform: translate(-10%, 1%)">
-          <div class="card d-flex justify-content-center align-items-center" v-for="product in RecoProducts"
-            :key="product.product_Id">
+          <div
+            class="card d-flex justify-content-center align-items-center"
+            v-for="product in RecoProducts"
+            :key="product.product_Id"
+          >
             <a :href="`http://localhost:5173/product/${product.product_Id}`">
               <div class="img-sz">
-                <img :src="product.imgs[0]" class="card-img-top" alt="推薦商品圖片" />
+                <img
+                  :src="product.imgs[0]"
+                  class="card-img-top"
+                  alt="推薦商品圖片"
+                />
               </div>
             </a>
             <div class="card-body position-relative">
@@ -41,60 +49,63 @@
       </div>
 
       <div class="col-8">
-        <div v-html="decodeURI(essays.econtent)" class="container-text mx-auto h-100"></div>
+        <div
+          v-html="decodeURI(essays.econtent)"
+          class="container-text mx-auto h-100"
+        ></div>
       </div>
     </div>
   </div>
 
-  <div class="h500px">
+  <div class="comments-container">
     <form action="">
-      <div class="col-md-12 line">
-        <span class="px-5">留言:</span>
+      <div class="form-group">
+        <label for="comment-input" class="px-5">留言：</label>
+        <input
+          type="text"
+          id="comment-input"
+          class="form-control"
+          placeholder="輸入留言..."
+          v-model="comment"
+        />
+        <button
+          class="btn btn-primary"
+          type="button"
+          @click.prevent="postComment()"
+        >
+          送出
+        </button>
       </div>
     </form>
-
-    <div class="comments">
-      <div class="input-group">
-        <img class="avatar" src="../assets/image/user.png" alt="avatar" />
-        <div class="input-group-text">
-          <input type="text" class="form-control" placeholder="留下評論" v-model="comment" />
-          <button class="btn btn-primary" type="button" @click.prevent="postComment()">
-            送出
-          </button>
-        </div>
-      </div>
-      <form action="">
-        <div class="comment-section" v-for="comment in essayComments" :key="comment.commentId">
+    <div class="comments-container">
+      <div class="comments">
+        <div
+          class="comment"
+          v-for="comment in essayComments"
+          :key="comment.commentId"
+        >
           <img class="avatar" src="../assets/image/user.png" alt="avatar" />
           <div class="comment-body">
             <h5 class="comment-user">{{ comment.memberName }}</h5>
             <p class="comment-text">{{ comment.ecomment }}</p>
             <div class="comment-actions">
-              <hr />
-              <!-- 測試按鈕 -->
-              <div class="col-md-1 text-end">
-                <i v-if="!comment.commentIsClicked" class="fa-regular fa-thumbs-up fz-icon"
-                  @click="postCommentLike()"></i>
-                <i v-else="comment.commentIsClicked" class="fa-solid fa-thumbs-up fz-icon" @click="postCommentLike()"></i>
-                <!-- <span class="ps-1">{{ num }}</span> -->
-              </div>
-
-
-              <!-- <button class="btn btn-sm" :class="{
-                'btn-primary': !commentIsClicked,
-                'btn-danger': commentIsClicked,
-              }" @click="postCommentLike(comment.id)">
-                <i class="far fa-thumbs-up"></i>
-                <span class="likes-count">{{ comment.likes }}</span>
-              </button> -->
-              <!-- <span class="comment-date">{{ comment.etime.slice(0, 10) }}</span> -->
+              <i
+                v-if="!comment.commentIsClicked"
+                class="far fa-thumbs-up like-btn"
+                @click="postCommentLike()"
+              ></i>
+              <i
+                v-else="comment.commentIsClicked"
+                class="fas fa-thumbs-up like-btn"
+                @click="postCommentLike()"
+              ></i>
+              <span class="likes-count">{{ comment.likes }}</span>
+              <span class="comment-date">{{ comment.etime.slice(0, 10) }}</span>
             </div>
           </div>
         </div>
-      </form>
+      </div>
     </div>
-
-    <!-- 結尾 -->
   </div>
 </template>
 
@@ -192,7 +203,7 @@ const getCommentLikes = async () => {
           return likes.commentId;
         });
       }
-      console.log(response.data)
+      console.log(response.data);
     })
     .catch((error) => {
       console.log(error);
@@ -262,6 +273,29 @@ const formatDate = (dateString) => {
 </script>
 
 <style scoped>
+.recommendation {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  font-family: cursive;
+  margin-left: -45px; /* 將margin調整到和字體左對齊 */
+  padding: 10px;
+}
+
+.recommendation::before,
+.recommendation::after {
+  content: "";
+  flex: 1;
+  border-top: 1px solid #ccc;
+  margin: 0 10px; /* 調整間距 */
+}
+
+.recommendation h1 {
+  text-decoration: underline;
+  margin: 0;
+}
 .h500px {
   height: 500px;
   margin-top: 50px;
@@ -504,6 +538,8 @@ a {
 .comments {
   max-width: 800px;
   margin: 0 auto;
+  max-height: 400px; /* 設定最大高度 */
+  overflow-y: scroll;
 }
 
 .input-group {
@@ -565,6 +601,10 @@ a {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
+  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #f8f8f8;
 }
 
 .comment-body {
@@ -588,6 +628,7 @@ a {
   /* top: 0; */
   right: 50%;
   left: 800px;
+  justify-content: space-between;
 }
 
 .likes-count {
@@ -598,5 +639,87 @@ a {
 .comment-date {
   font-size: 0.8em;
   color: grey;
+}
+/* 留言test 2 */
+.comments-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.form-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  font-size: 1.2rem;
+}
+
+.form-control {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.btn-primary {
+  font-size: 1.2rem;
+}
+
+.comment {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.comment-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.comment-user {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.comment-text {
+  margin-bottom: 10px;
+  margin-left: 60px;
+}
+
+.comment-actions {
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.like-btn {
+  font-size: 1.2rem;
+  margin-right: 5px;
+  color: grey;
+  cursor: pointer;
+}
+
+.like-btn:hover {
+  color: #007bff;
+}
+
+.likes-count {
+  margin-right: 10px;
+  color: grey;
+}
+
+.comment-date {
+  font-size: 0.8rem;
+  color: grey;
+  margin-left: auto;
 }
 </style>

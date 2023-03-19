@@ -131,7 +131,7 @@
       </button>
     </div>
 
-    <div class="">
+    <div class="section">
       <div class="vegas-slide-container">
         <div id="example"></div>
       </div>
@@ -141,15 +141,17 @@
       <hr />
     </div>
     <div class="container">
-      <div class="row">
+      <div class="row" style="margin-bottom: 30px">
         <EssayCard v-for="item in essays.slice(0, 4)" :data="item"></EssayCard>
-        <!-- </div>
-                <div class="row"> -->
+      </div>
+
+      <div class="row" style="margin-bottom: 20px">
         <VideoCard
           v-for="items in videos.slice(0, 4)"
           :data="items"
         ></VideoCard>
       </div>
+
       <!-- <EssayCard v-for="item in newessays.slice(0, 2)" :data="item"></EssayCard> -->
     </div>
 
@@ -183,12 +185,18 @@
       <div class="col-4 column card" ref="firstColumn">
         <router-link :to="'/EssaysBlog/' + 19">
           <img src="../assets/image/jisoo.jpg" alt="Image" />
-          <div class="card-overlay">
-            <h5>
+          <!-- <div class="card-overlay"> -->
+            <!-- <h5>
               26歲的南韓女生Miss
               Sohee，是如何成為BLACKPINK演唱會指定的訂製服設計師？一件訂製服甚至要價上百萬
-            </h5>
+            </h5> -->
+            <div class="details">
+            <div class="category"><a>穿搭</a></div>
+            <div class="title"><a>26歲的南韓女生MissSohee，是如何成為BLACKPINK演唱會指定的訂製服設計師？一件訂製服甚至要價上百萬</a></div>
+            <div class="influencer"><a>By Level 3</a></div>
+            <div class="formatDate"><a>2023年3月8日</a></div>
           </div>
+          <!-- </div> -->
         </router-link>
       </div>
       <div class="col-4 column" ref="secondColumn">
@@ -278,7 +286,7 @@
       </div>
     </div>
 
-    <div class="">
+    <div class="section-beauty">
       <div class="vegas-slide-container">
         <div id="example"></div>
       </div>
@@ -288,8 +296,9 @@
       <hr />
     </div>
     <div class="container">
-      <div class="row">
-        <EssayCard v-for="item in essays.slice(2, 6)" :data="item"></EssayCard>
+      <div class="row" style="margin-bottom: 30px">
+        <EssayCard v-for="item in essays.slice(2, 6)" :data="item"></EssayCard></div>
+        <div class="row" style="margin-bottom: 20px">
         <VideoCard v-for="item in videos.slice(7, 11)" :data="item"></VideoCard>
       </div>
       <!-- <div class="row">
@@ -447,18 +456,23 @@ const setup = () => {
 </script>
 
 <style scoped>
+.section {
+  margin-top: 60px; /* add margin to the top */
+  margin-bottom: 60px; /* add margin to the bottom */
+}
+.section-beauty {
+  margin-top: 10px;
+  margin-bottom: 60px; /* add margin to the bottom */
+}
 .caouselText1 {
   margin-top: 100px;
 }
-
 .caouselText4 {
   margin-top: 110px;
 }
-
 .caouselText5 {
   margin-top: 80px;
 }
-
 .carousel-caption {
   position: absolute;
   bottom: 0;
@@ -467,21 +481,17 @@ const setup = () => {
   /* background-color: rgba(0, 0, 0, 0.5);  */
   padding: 10px;
 }
-
 .caption-text {
   margin-bottom: -50px;
   /* 清除<h5>元素預設的底部間距 */
   color: #fff;
 }
-
 .caption-title {
   top: 100px;
 }
-
 .card-text {
   color: black;
 }
-
 .wrap {
   width: 1300px;
   height: 400px;
@@ -490,7 +500,6 @@ const setup = () => {
   position: relative;
   overflow: hidden;
 }
-
 .slide-img {
   position: absolute;
   margin: 0;
@@ -501,12 +510,10 @@ const setup = () => {
   width: 6500px;
   /* left: -1600px; */
 }
-
 .slide-img li {
   width: 1300px;
   height: 500px;
 }
-
 .slide-img li img {
   width: 100%;
   /* height: 100%; */
@@ -514,7 +521,6 @@ const setup = () => {
   object-fit: cover;
   margin-top: -150px;
 }
-
 .pages {
   position: absolute;
   list-style: none;
@@ -525,7 +531,6 @@ const setup = () => {
   width: 100%;
   justify-content: center;
 }
-
 .pages li {
   border: 1px solid #fff;
   width: 5px;
@@ -533,7 +538,6 @@ const setup = () => {
   border-radius: 50%;
   margin: 0 5px;
 }
-
 .slide-arrow {
   position: absolute;
   /* background-color: red; */
@@ -547,21 +551,17 @@ const setup = () => {
   cursor: pointer;
   opacity: 0.6;
 }
-
 .right {
   right: 0;
 }
-
 .slide-arrow:hover {
   opacity: 1;
 }
-
 /* card custom-card */
 .custom-card {
   position: relative;
   top: 50px;
 }
-
 /* .custom-card:nth-child(2) {
   
 } */
@@ -575,7 +575,6 @@ const setup = () => {
   text-align: center;
   background-color: rgba(84, 88, 90, 0.5);
 }
-
 /* 
 .card-body {
   height: auto;
@@ -593,7 +592,6 @@ const setup = () => {
 .card-img-overlay {
   height: 500px;
 }
-
 hr .lan {
   border: none;
   border: 5px;
@@ -602,19 +600,16 @@ hr .lan {
   top: -15em;
   background-color: transparent;
 }
-
 /* essay card 排版 */
 .details {
   position: relative;
 }
-
 .details div {
   position: absolute;
   bottom: 0;
   font-weight: bold;
   color: white;
 }
-
 .category {
   right: 180px;
   left: 190px;
@@ -623,7 +618,6 @@ hr .lan {
   padding: 0px;
   height: 320px;
 }
-
 .title {
   font-family: 標楷體;
   font-size: large;
@@ -632,25 +626,22 @@ hr .lan {
   /* padding:60px; */
   height: 300px;
 }
-
 .influencer {
   font-family: cursive;
-  padding: 60px;
+  padding:20px;
   height: 180px;
-  left: 115px;
+  left: 140px;
   right: 150px;
 }
-
 .formatDate {
   left: 80px;
-  right: 90px;
+  right: 85px;
   /* bottom: 20px; */
   font-family: cursive;
   font-weight: bold;
-  padding: 60px;
-  height: 150px;
+  padding: 30px;
+  height: 160px;
 }
-
 /* 
 .custom-card {
   width: 100%;
@@ -659,38 +650,31 @@ hr .lan {
   max-width: 500px;
   max-height: 500px;
 }
-
 /* 文章專區 */
 .container-essay {
   display: flex;
   position: relative;
   overflow-x: hidden;
-  height: 85vh;
+  height: 75vh;
   /* overflow-x: scroll; */
 }
-
 .card-img-top {
   height: 100vh;
 }
-
 /* 隱藏 scroll bar */
 .container-essay::-webkit-scrollbar {
   display: none;
 }
-
 .container::-webkit-scrollbar-thumb {
   background-color: transparent;
 }
-
 .column::-webkit-scrollbar {
   width: 0;
   height: 0;
 }
-
 .column::-webkit-scrollbar-thumb {
   background-color: transparent;
 }
-
 /* 
 .column {
   flex: 1;
@@ -720,7 +704,6 @@ img {
   padding: 10px;
   margin-right: 10px;
 }
-
 .column:first-child {
   flex: none;
   width: 33.33%;
@@ -731,27 +714,22 @@ img {
   right: 0;
   overflow: filled;
 }
-
 .column:first-child img {
   height: 100%;
   object-fit: cover;
 }
-
 .column:not(:first-child) {
   position: relative;
   z-index: -1;
 }
-
 img {
   display: block;
   width: 100%;
   margin-bottom: 10px;
 }
-
 a {
   text-decoration: none;
 }
-
 .btn-underline::after {
   content: "";
   position: absolute;
@@ -763,11 +741,9 @@ a {
   transform: scaleX(0);
   transition: transform 0.3s ease;
 }
-
 .btn-underline:hover::after {
   transform: scaleX(1);
 }
-
 .btn-underline {
   position: relative;
   padding: 0;
@@ -778,18 +754,15 @@ a {
   color: #333;
   cursor: pointer;
 }
-
 .btn-underline:hover {
   color: #000000;
 }
-
 #carouselExampleFade {
   width: 1300px;
   height: 500px;
   margin: 0 auto;
   position: relative;
 }
-
 .carousel-inner {
   width: 100%;
   height: 100%;
@@ -797,14 +770,12 @@ a {
   top: 0;
   left: 0;
 }
-
 .carousel-item img {
   width: 100%;
   height: 100%;
   margin-top: -50px;
   object-fit: cover;
 }
-
 .carousel-caption {
   position: absolute;
   top: -100px;
@@ -813,11 +784,9 @@ a {
   right: 0; */
   /* padding: 1rem; */
 }
-
 .image-container {
   position: relative;
 }
-
 .carousel-caption {
   top: 450px;
   /* bottom: 100px; */
@@ -827,11 +796,9 @@ a {
   padding: 50px;
   color: white;
 }
-
 .carousel-item {
   position: absolute;
 }
-
 .queenImg {
   position: relative;
   width: 100%;
@@ -841,15 +808,12 @@ a {
   /* margin-top: -200px; */
   max-width: 1300px;
 }
-
 .card {
   border: none;
 }
-
 .card:hover img {
   filter: brightness(70%);
 }
-
 .card-overlay {
   position: absolute;
   top: 50%;
@@ -860,11 +824,9 @@ a {
   opacity: 0;
   transition: all 0.3s ease;
 }
-
 .card:hover .card-overlay {
   opacity: 1;
 }
-
 .card-overlay h5 {
   font-size: 1.5rem;
   margin-bottom: 0.5rem;
