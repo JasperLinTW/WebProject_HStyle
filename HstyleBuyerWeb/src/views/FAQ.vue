@@ -1,32 +1,35 @@
 <template>
-   <div class="text-center">
-      <h1 style="font-weight: bold; text-transform: uppercase">常見問題</h1>
+   <div class="mt-5">
+      <h3 style="font-weight: bold; text-transform: uppercase">- 常見問題 -</h3>
    </div>
-   <div class="text-center">
-      <form class="border" @submit.prevent="searchClick">
-         <label for="search-input"
-            style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden"> 搜尋： </label>
-         <input type="text" id="search-input" v-model="searchKeyword" placeholder="搜尋" />
-         <button id="searchButtom" type="submit">
-            <i class="fa-solid fa-magnifying-glass"></i>
-         </button>
+   <div class="text-center container mt-2 mb-4">
+      <form class="ps-4" @submit.prevent="searchClick">
+         <div class="mt-3">
+            <label for="search-input"
+               style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden"> 搜尋：
+            </label>
+            <input type="text" id="search-input" v-model="searchKeyword" placeholder="搜尋" />
+            <button id="searchButtom" type="submit">
+               <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+         </div>
       </form>
-      <button type="buttom" @click="putData()" class="btn btn-dark">填入資料</button>
+      <button type="buttom" @click="putData()" class="btn btn-link text-dark text-decoration-none">填入資料</button>
    </div>
    <!-- 呈現問題 -->
    <div class="container-sm" style="min-height: 800px">
       <!-- 搜尋的結果 -->
       <div v-if="searchResult !== null">
          <div v-for="question in searchResult" :key="question.id">
-            <div class="card" style="width: 700px; margin: 0px auto">
+            <div class="card mb-2" style="width: 700px; margin: 0px auto">
                <div class="card">
                   <div class="card-body">
                      <h5 class="card-title border-bottom mb-3">{{ question.question }}</h5>
                      <p class="card-text">{{ question.answer }}</p>
-                     <button class="btn btn-light me-2" @click="SatisfYes(question.commonQuestionId)">
+                     <button class="btn btn-light border-0 me-2" @click="SatisfYes(question.commonQuestionId)">
                         <i class="fa-regular fa-thumbs-up"></i>
                      </button>
-                     <button class="btn btn-light" @click="SatisfNo(question.commonQuestionId)"><i
+                     <button class="btn btn-light border-0" @click="SatisfNo(question.commonQuestionId)"><i
                            class="fa-regular fa-thumbs-down"></i></button>
                   </div>
                </div>
@@ -35,7 +38,7 @@
       </div>
       <!-- 所有問題 -->
       <!-- <div v-else> -->
-      <div class="row">
+      <div class="row border-top">
          <div class="col-3 text-center">
             <div class="accordion accordion-flush" id="accordionExample">
                <div v-for="(category, index) in categoryQ" :key="category.categoryId" class="accordion-item">
@@ -48,8 +51,8 @@
                   </div>
                   <div :id="'collapse' + index" class="accordion-collapse collapse" :aria-labelledby="'heading' + index"
                      data-bs-parent="#accordionExample">
-                     <div class="accordion-body" v-for="question in filteredQuestions" :key="question.commonQuestionId"
-                        @click="showAnswer(question)">
+                     <div class="accordion-body text-start" v-for="question in filteredQuestions"
+                        :key="question.commonQuestionId" @click="showAnswer(question)">
                         <p id="qTitle">{{ question.question }}</p>
                      </div>
                   </div>
@@ -57,18 +60,20 @@
             </div>
          </div>
          <!-- 單一問題 -->
-         <div class="col-7 answer m-5" v-if="selectedQuestion">
-            <div>
-               <h3 class="border-bottom">{{ selectedQuestion.question }}</h3>
+         <div class="col-8 answer mx-4 mt-4" v-if="selectedQuestion">
+            <div class="mt-3">
+               <h5 class="fw-bold">{{ selectedQuestion.question }}</h5>
                <div class="mt-5">{{ selectedQuestion.answer }}</div>
             </div>
             <div class="mt-5">
                <p>
                   是否有回答你的問題?
-                  <button type="button" @click="SatisfYes(selectedQuestion.commonQuestionId)" class="btn btn-light ms-2">
+                  <button type="button" @click="SatisfYes(selectedQuestion.commonQuestionId)"
+                     class="btn btn-light border-0 ms-2">
                      <i class="fa-regular fa-thumbs-up me-2"></i>是
                   </button>
-                  <button type="button" @click="SatisfNo(selectedQuestion.commonQuestionId)" class="btn btn-light ms-2">
+                  <button type="button" @click="SatisfNo(selectedQuestion.commonQuestionId)"
+                     class="btn btn-light border-0 ms-2">
                      <i class="fa-regular fa-thumbs-down me-2 SolidHeart"></i>否
                   </button>
                </p>
@@ -100,7 +105,7 @@
       </div>
       <div class="chat-window" :class="{ show: showChat }">
          <div class="chat-header">
-            <h6>聊天室</h6>
+            <h6 class="p-0 m-0">聊天室</h6>
             <button class="close-button" @click="toggleChat">x</button>
          </div>
          <div class="chat-content">
@@ -279,10 +284,11 @@ hr {
 
 #qTitle {
    margin: 0px;
+
 }
 
 #qTitle:hover {
-   background-color: lightgray;
+   color: #46a3ff;
    cursor: pointer;
 }
 
@@ -358,4 +364,28 @@ hr {
    bottom: 0;
    width: 100%;
    padding: 10px;
-}</style>
+}
+
+.accordion-button:focus {
+   outline-color: none;
+   box-shadow: none;
+   background-color: transparent;
+   color: #000;
+}
+
+.accordion-button {
+   outline-color: none;
+   box-shadow: none;
+   background-color: transparent;
+   color: #000;
+}
+
+#search-input {
+   width: 400px;
+   padding: 10px 10px;
+   border-radius: 50px;
+   border: #f2f2f2;
+   background-color: #f2f2f2;
+   outline: none;
+}
+</style>

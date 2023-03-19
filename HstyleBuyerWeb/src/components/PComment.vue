@@ -8,7 +8,7 @@
                     </div>
                     <div class="fz-comment col-md-12">{{ data.commentContent }}</div>
                     <div class="col-md-12 my-2"></div>
-                    <div class="col-md-7 mt-4"> <label class="pe-3">購買規格:</label>Size {{ data.size }} | Color {{ data.color
+                    <div class="col-md-7 mt-4"> 購買規格: Size {{ data.size }} | Color {{ data.color
                     }}</div>
                     <div class="col-md-5 mt-4">{{ data.createdTime }} </div>
                 </div>

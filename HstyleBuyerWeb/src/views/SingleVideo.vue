@@ -1,8 +1,10 @@
 <template>
   <div class="container">
     <div class="row border-bottom mb-5 mt-4 pb-2 d-flex justify-content-evenly">
-      <div class="col-md-1"><router-link to="/Blog/EssaysBlog" class="nav-link targetAll btn-underline">文章</router-link></div>
-      <div class="col-md-1"><router-link to="/Blog/VideoBlog" class="nav-link targetAll btn-underline">影音</router-link></div>
+      <div class="col-md-1"><router-link to="/Blog/EssaysBlog" class="nav-link targetAll btn-underline">文章</router-link>
+      </div>
+      <div class="col-md-1"><router-link to="/Blog/VideoBlog" class="nav-link targetAll btn-underline">影音</router-link>
+      </div>
     </div>
   </div>
 
@@ -17,6 +19,7 @@
             </video>
           </div>
         </div>
+
         <!-- <div class="">
                     <video class="video" :src="video.filePath"></video>
                 </div> -->
@@ -32,7 +35,8 @@
                 <label><i class="fa-solid fa-eye fz-16"></i> {{ video.views }}</label>
                 <label class="ms-1"><i class="fa-solid fa-heart fz-16"></i> {{ video.likes }}</label>
                 <span> 喜歡 </span>
-                <span v-if="!isClicked" @click="postVideoLike(video.id)"><i class="fa-regular fa-heart icon-hover fz-18"></i></span>
+                <span v-if="!isClicked" @click="postVideoLike(video.id)"><i
+                    class="fa-regular fa-heart icon-hover fz-18"></i></span>
                 <span v-else @click="postVideoLike(video.id)"><i class="fa-solid fa-heart fz-18"></i></span>
               </label>
             </div>
@@ -41,9 +45,7 @@
         <div class="row">
           <!-- 影片標題 -->
           <div class="content">
-            <label class="title fs-2"
-              ><strong>{{ video.title }}</strong></label
-            >
+            <label class="title fs-2"><strong>{{ video.title }}</strong></label>
             <p class="description fs-5">{{ video.description }}</p>
           </div>
         </div>
@@ -69,9 +71,8 @@
                       <div class="videoCommentLike">
                         <label class="">
                           <span> </span>
-                          <span v-if="!comment.commentIsClicked" @click="postCommentLike(comment.id)"
-                            ><i class="fa-regular fa-heart icon-hover fz-18"></i
-                          ></span>
+                          <span v-if="!comment.commentIsClicked" @click="postCommentLike(comment.id)"><i
+                              class="fa-regular fa-heart icon-hover fz-18"></i></span>
                           <span v-else @click="postCommentLike(comment.id)"><i class="fa-solid fa-heart fz-18"></i></span>
                         </label>
                       </div>
@@ -103,19 +104,20 @@
   </div>
   <!-- 商品推薦 -->
   <div class="container">
-    <div class="" v-if="RecoProducts !== null">
-      <p for="" class="border-bottom">商品推薦</p>
-      <div class="recoProducts d-inline-flex flex-row bd-highlight mb-3" v-for="product in RecoProducts" :key="product.product_Id">
-        <div class="">
-          <div class="card d-flex justify-content-center align-items-center me-4">
-            <a :href="`http://localhost:5173/product/${product.product_Id}`">
-              <div class="img-sz">
-                <img :src="product.imgs[0]" class="card-img-top" alt="Product Image" />
+    <div class="row" v-if="RecoProducts !== null">
+      <div class="pt-6 pb-2">商品推薦</div>
+      <div class="col-md-12 border-top">
+        <div class="row h-500">
+          <div class="col-lg-4 py-5 px-0" v-for="product in RecoProducts" :key="product.product_Id">
+            <div class="card d-flex justify-content-center align-items-center">
+              <a :href="`http://localhost:5173/product/${product.product_Id}`">
+                <div class="img-sz ">
+                  <img :src="product.imgs[0]" alt="Product Image" />
+                </div>
+              </a>
+              <div class="card-body position-relative">
+                <div class="card-title fw-bold">{{ product.product_Name }}</div>
               </div>
-            </a>
-            <div class="card-body position-relative">
-              <div class="card-title fw-bold">{{ product.product_Name }}</div>
-              <span>$NT {{ product.unitPrice }}</span>
             </div>
           </div>
         </div>
@@ -262,7 +264,7 @@ const postCommentLike = (commentId) => {
 const postView = () => {
   axios
     .post(`https://localhost:7243/api/Video/View/${route.params.id}`)
-    .then((response) => {})
+    .then((response) => { })
     .catch((error) => {
       console.log(error);
     });
@@ -292,6 +294,7 @@ onMounted(() => {
   // getComments();
   getRecommenations();
   postView();
+  window.scrollTo(0, 0);
 });
 
 eventBus.on("postVideoLike", () => {
@@ -310,6 +313,10 @@ img {
 
 video {
   width: 800px;
+}
+
+.pt-6 {
+  padding-top: 6%;
 }
 
 .comment {
@@ -334,12 +341,29 @@ video {
 }
 
 .img-sz {
-  width: 100%;
+  margin-top: 5%;
+  width: 250px;
+  height: 300px;
+  overflow: hidden;
 }
 
+.img-sz img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1s ease-in-out;
+}
+
+img:hover {
+  transform: scale(1.1);
+  animation: rotate 1s linear infinite;
+}
+
+
 .card {
-  width: 200px;
   border: none;
+  border-radius: 0%;
+  cursor: pointer;
 }
 
 .comment {
@@ -350,6 +374,10 @@ input {
   border-radius: 25px;
 }
 
+.h-500 {
+  height: 600px;
+}
+
 #search-input {
   width: 400px;
   padding: 10px 10px;
@@ -358,6 +386,11 @@ input {
   background-color: #f2f2f2;
   outline: none;
 }
+
+.card-body {
+  width: 100%;
+}
+
 #searchButtom {
   position: absolute;
   left: 385px;

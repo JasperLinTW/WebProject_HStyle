@@ -64,6 +64,7 @@ const getEssayInfo = async () => {
 };
 onMounted(() => {
   getEssayInfo();
+  window.scrollTo(0, 0);
 });
 
 onMounted(() => {

@@ -9,13 +9,13 @@
             </div>
         </div>
     </div>
-        <div class="searchDiv mb-4">
-            <!-- <label for="search-input" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden"> 搜尋： </label> -->
-            <input type="text" id="search-input" v-model="keyword" placeholder="搜尋" />
-            <button @click="searchVideosByIndex(keyword)" id="searchButtom" type="submit">
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </button>
-        </div>
+    <div class="searchDiv mb-4 ps-4">
+        <!-- <label for="search-input" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden"> 搜尋： </label> -->
+        <input type="text" id="search-input" v-model="keyword" placeholder="搜尋" />
+        <button @click="searchVideosByIndex(keyword)" id="searchButtom" type="submit">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+    </div>
     <div class="">
         <div class="container">
             <div class="row">
@@ -101,6 +101,7 @@ onMounted(() => {
     getVideos();
     getLikesVideos();
     searchVideosByIndex();
+    window.scrollTo(0, 0);
 });
 
 eventBus.on("postVideoLike", () => {
@@ -110,23 +111,25 @@ eventBus.on("postVideoLike", () => {
 
 <style scoped>
 #search-input {
-   width: 200px;
-   padding: 10px 10px;
-   border-radius: 50px;
-   border:#f2f2f2 ;
-   background-color :#f2f2f2;
-   outline: none;
+    width: 200px;
+    padding: 10px 10px;
+    border-radius: 50px;
+    border: #f2f2f2;
+    background-color: #f2f2f2;
+    outline: none;
 }
+
 #searchButtom {
-   position: relative;
-   left: -40px;
-   padding: 10px;
-   background-color: #f2f2f2;
-   border: none;
-   border-radius:50px;
-   outline: none;
+    position: relative;
+    left: -40px;
+    padding: 10px;
+    background-color: #f2f2f2;
+    border: none;
+    border-radius: 50px;
+    outline: none;
 }
-.searchDiv{
+
+.searchDiv {
     /* left:50px; */
 }
 </style>

@@ -3,8 +3,11 @@
         <div class="card card-deck">
             <router-link :to="'/VideoBlog/' + data.id" class="text-dark text-decoration-none">
                 <div class="card border-0 card1">
-                    <div class="img-sz w-100 h200px rounded overflow-hidden">
+                    <div class="img-sz w-100 h200px rounded overflow-hidden position-relative">
                         <img class="card-img-top" :src="data.image" alt="VideoImage">
+                        <div class="position-absolute bottom-0 end-0 pe-2 pb-1"><i
+                                class="fa-solid fa-circle-play fz-10"></i>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="d-flex bg-white border-bottom-0">
@@ -89,7 +92,7 @@ eventBus.on("postVideoLike", () => {
 </script>
 
 <style scoped>
-.card{
+.card {
     height: 350px;
     border: none;
 }
@@ -106,15 +109,15 @@ eventBus.on("postVideoLike", () => {
 }
 
 .img-sz {
-  width: 450px;
-  height: 300px;
-  overflow: hidden;
+    width: 450px;
+    height: 300px;
+    overflow: hidden;
 }
 
 .img-sz img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 
@@ -140,8 +143,10 @@ a {
     font-size: 70%;
     text-decoration: none;
     text-align: left;
-    display: flex; /* 使用flexbox布局 */
-  justify-content: space-between; /* 内部两个<div>元素水平分布 */
+    display: flex;
+    /* 使用flexbox布局 */
+    justify-content: space-between;
+    /* 内部两个<div>元素水平分布 */
 }
 
 .h200px {
@@ -160,6 +165,10 @@ a {
     transform: scale(1.1);
 }
 
+.img-sz:hover i {
+    transform: scale(1.05);
+}
+
 .SolidHeart {
     color: #46a3ff;
 }
@@ -169,7 +178,13 @@ a {
     cursor: pointer;
 }
 
-.card-body{
+.fz-10 {
+    font-size: 25px;
+    color: white;
+    opacity: 0.85;
+}
+
+.card-body {
     height: 150px;
 }
 </style>

@@ -85,20 +85,28 @@ const handleFileUpload = (event) => {
   files.value = event.target.files;
 };
 
+const errorMessage = ref(null);
+
+
+
 // 檔案
-const maxFileSize = 4 * 1024 * 1024; // 2MB
+const maxFileSize = 4 * 1024 * 1024; // 4MB
 const createComment = async () => {
-  if (files.value != null) {
-    if (files.value.length > 2) {
-      alert("超過照片張數限制");
+  if (selectedRating.value == 0 || selectedRating.value == null) {
+    alert("請填入評分");
+    return;
+  }
+  if (files.value.length > 2) {
+    alert("超過照片張數限制");
+    return;
+  }
+  for (let i = 0; i < files.value.length; i++) {
+    if (files.value[i].size > maxFileSize) {
+      alert(`檔案 ${files.value[i].name} 過大，請選擇小於 4MB 的檔案`);
       return;
     }
-    for (let i = 0; i < files.value.length; i++) {
-      if (files.value[i].size > maxFileSize) {
-        alert(`檔案 ${files.value[i].name} 過大，請選擇小於 4MB 的檔案`);
-        return;
-      }
-    }
+  }
+  if (files.value != null) {
     const form = document.forms.namedItem("PCommentForm");
     const formData = new FormData(form);
     formData.append("CommentId", 0);
@@ -106,6 +114,9 @@ const createComment = async () => {
     formData.append("CreatedTime", new Date().toDateString());
     formData.append('Score', selectedRating.value);
     formData.append('CommentContent', CommentContent.value);
+    for (let i = 0; i < files.value.length; i++) {
+      formData.append("files", files.value[i]);
+    }
     axios.post(`https://localhost:7243/api/Products/comment?orderId=${props.modalData.orderId}&productId=${props.modalData.productId}`, formData,
       {
         withCredentials: true,
@@ -121,31 +132,7 @@ const createComment = async () => {
         }
       });
   }
-  else {
-    const form = document.forms.namedItem("PCommentForm");
-    const formData = new FormData(form);
-    formData.append("CommentId", 0);
-    formData.append("PcommentImgs", null);
-    formData.append("CreatedTime", new Date().toDateString());
-    formData.append('Score', selectedRating.value);
-    formData.append('CommentContent', CommentContent.value);
-    formData.append('files', null);
-    axios.post(`https://localhost:7243/api/Products/comment?orderId=${props.modalData.orderId}&productId=${props.modalData.productId}`, formData,
-      {
-        withCredentials: true,
-      })
-      .then((response) => {
-        alert("發表評論成功");
-      })
-      .catch((error) => {
-        alert(error.response.data);
-        if (error.response.status === 401) {
-          router.push("/login");
-        }
-      });
-  }
 };
-
 
 
 

@@ -34,15 +34,15 @@
                 忘記密碼?
               </button>
             </div>
-            <div>
-            <button class="btn_Login1 mt-3 px-5 ms-6" @click="fillIn">
-              填入正式用
-            </button>
-            <button class="btn_Login1 mt-3 px-5 ms-6" @click="fillIn1">
-              填入註冊驗證
-            </button>
           </div>
-          </div>
+        </div>
+        <div class="text-start mt-5">
+          <button class="btn btn-link text-dark text-decoration-none" @click="fillIn">
+            填入正式用
+          </button>
+          <button class="btn btn-link text-dark text-decoration-none" @click="fillIn1">
+            填入註冊驗證
+          </button>
         </div>
       </div>
       <div v-else class="m-0 p-0">
@@ -111,8 +111,9 @@
                 註冊
               </button>
               <div>
-            <button class="btn_Login mt-3 ms-5 px-7" @click="RfillIn">填入：註冊資訊</button>
-          </div>
+                <button class="btn btn-link text-dark text-decoration-none mt-3 ms-5 px-7"
+                  @click="RfillIn">填入註冊資訊</button>
+              </div>
             </div>
           </div>
         </div>
@@ -128,27 +129,26 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLabel">請輸入帳號信箱以更新密碼!!</h1>
+              <h1 class="modal-title fs-5" id="exampleModalLabel">請輸入帳號信箱以更新密碼</h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
               <form>
-                <div class="mb-3">
-                  <label for="forgetaccont" class="col-form-label">帳號:</label>
+                <div class="mb-3 form-floating">
                   <input type="text" class="form-control" id="forgetaccont" v-model="forgetaccont" require>
+                  <label for="forgetaccont" class="col-form-label">帳號</label>
                 </div>
-                <div class="mb-3">
-                  <label for="mail" class="col-form-label">信箱:</label>
+                <div class="mb-3 form-floating">
                   <input class="form-control" id="mail" v-model="mail" require>
+                  <label for="mail" class="col-form-label">信箱</label>
                 </div>
               </form>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" @click="fillIn2">
-              填入註冊驗證
-            </button>
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-              <button type="button" class="btn btn-primary" @click="ForgetPassword">送出驗證信</button>
+            <div class="modal-footer border-0">
+              <button type="button" class="btn btn-link text-dark text-decoration-none" @click="fillIn2">
+                填入註冊驗證
+              </button>
+              <button type="button" class="btn_Login" @click="ForgetPassword">送出驗證信</button>
             </div>
           </div>
         </div>
@@ -158,7 +158,6 @@
     <!-- <button type="button" @click="getMemberId" class="btn btn-light">取id</button>
         <button type="button" @click="getCartInfo" class="btn btn-light">取購物車測試</button> -->
   </div>
-
 </template>
 
 <script setup>
@@ -185,10 +184,10 @@ const Rphone_Number = ref("");
 const Rgender = ref("male");
 
 const phoneRegex = /^09\d{8}$/;
-const nameRegex=/^[\u4e00-\u9fa5]{2,5}$/;
-const accountPattern=/^[a-zA-Z][a-zA-Z0-9_]{5,15}$/;
-const passwordPattern=/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
-const addersPattern=/^[\u4e00-\u9fa5]{3,}(?:縣|市|區|鄉|鎮|村|里)?[\u4e00-\u9fa5]{2,}(?:街|路|巷)?\d{1,4}[號樓室]?$/;
+const nameRegex = /^[\u4e00-\u9fa5]{2,5}$/;
+const accountPattern = /^[a-zA-Z][a-zA-Z0-9_]{5,15}$/;
+const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+const addersPattern = /^[\u4e00-\u9fa5]{3,}(?:縣|市|區|鄉|鎮|村|里)?[\u4e00-\u9fa5]{2,}(?:街|路|巷)?\d{1,4}[號樓室]?$/;
 
 
 const login = () => {
@@ -202,30 +201,31 @@ const login = () => {
       { withCredentials: true }
     )
     .then((response) => {
-      
+
       console.log(response.data);
-        eventBus.emit("Login");
+      eventBus.emit("Login");
       router.go(-1);
     })
     .catch((error) => {
       if (error.response.status === 400) {  //傳回BadRequest
-      alert(error.response.data);}
+        alert(error.response.data);
+      }
     });
 };
 
 const checkLogin = () => {
-   axios
-      .get("https://localhost:7243/api/Member/id", { withCredentials: true })
-      .then((response) => {
-         if (response.data <= 0) {
-            isLoging.value = false;
-         } else {
-            router.push("/");
-         }
-      })
-      .catch((error) => {
-         console.error(error);
-      });
+  axios
+    .get("https://localhost:7243/api/Member/id", { withCredentials: true })
+    .then((response) => {
+      if (response.data <= 0) {
+        isLoging.value = false;
+      } else {
+        router.push("/");
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 };
 
 const ForgetPassword = () => {
@@ -295,11 +295,11 @@ const validateForm = () => {
 
   if (!Rname.value) {
     error.value.Rpassword = "密碼必填";
-    }
+  }
   const emailRegex = /^[^\s@]+@[^\s@]+.[^\s@]+$/;
-    if (!Rname.value) {
+  if (!Rname.value) {
     error.value.Remail = "信箱必填";
-  }  
+  }
   else if (!emailRegex.test(Remail.value)) {
     error.value.Remail = "信箱格式錯誤,例xxx@gmcil.com";
   }
@@ -328,63 +328,63 @@ const validateForm = () => {
 }
 
 
- //以下是登入填值用
-    const fillIn = () => {
-      account.value = 'test';
-      password.value = 'test';
+//以下是登入填值用
+const fillIn = () => {
+  account.value = 'test';
+  password.value = 'test';
 
 
-    return {
-      account,
-      password,
-      fillIn,
-    };
+  return {
+    account,
+    password,
+    fillIn,
   };
-  const fillIn1 = () => {
-      account.value = 'test88888';
-      password.value = 'test88888';
+};
+const fillIn1 = () => {
+  account.value = 'test88888';
+  password.value = 'test88888';
 
 
-    return {
-      account,
-      password,
-      fillIn1,
-    };
+  return {
+    account,
+    password,
+    fillIn1,
   };
-  const fillIn2 = () => {
-    forgetaccont.value = 'test88888';
-    mail.value = 'vunvun0213@gmail.com';
+};
+const fillIn2 = () => {
+  forgetaccont.value = 'test88888';
+  mail.value = 'vunvun0213@gmail.com';
 
 
-    return {
-      forgetaccont,
-      mail,
-      fillIn2,
-    };
+  return {
+    forgetaccont,
+    mail,
+    fillIn2,
   };
+};
 //以下註冊用
 
 const RfillIn = () => {
-    Raccount.value= 'test88888';
-    Rpassword.value= 'test88888';
-    Raddress.value= '桃園市中壢區新生路二段421號';
-    Rbirthday.value= Date.now;
-    Rgender.value= true;
-    Rname.value= 'test88888';
-    Rphone_Number.value= '0955878888';
-    Remail.value= 'vunvun0213@gmail.com';
-    return {
-      Raccount,
-      Rpassword,
-      Raddress,
-      Rbirthday,
-      Rgender,
-      Rname,
-      Rphone_Number,
-      Remail,
-      RfillIn,
-    };
+  Raccount.value = 'test88888';
+  Rpassword.value = 'test88888';
+  Raddress.value = '桃園市中壢區新生路二段421號';
+  Rbirthday.value = Date.now;
+  Rgender.value = true;
+  Rname.value = 'test88888';
+  Rphone_Number.value = '0955878888';
+  Remail.value = 'vunvun0213@gmail.com';
+  return {
+    Raccount,
+    Rpassword,
+    Raddress,
+    Rbirthday,
+    Rgender,
+    Rname,
+    Rphone_Number,
+    Remail,
+    RfillIn,
   };
+};
 
 </script>
 
@@ -415,25 +415,25 @@ const RfillIn = () => {
 }
 
 .fz-sm {
-   font-size: 14px;
+  font-size: 14px;
 }
 
 .px-10 {
-   padding-left: 19%;
-   padding-right: 19%;
+  padding-left: 19%;
+  padding-right: 19%;
 }
 
 .fz-big {
-   font-size: 20px;
-   font-weight: bold;
+  font-size: 20px;
+  font-weight: bold;
 }
 
 .login {
-   height: 100%;
+  height: 100%;
 }
 
 .mb-6 {
-   margin-bottom: 50px;
+  margin-bottom: 50px;
 }
 
 .h-500px {
@@ -441,12 +441,12 @@ const RfillIn = () => {
 }
 
 .textbox {
-   border: none;
-   border-bottom: 1px solid transparent;
-   outline: none;
-   font-size: 16px;
-   transition: border-bottom-color 0.2s ease-in-out;
-   padding-right: 4px;
+  border: none;
+  border-bottom: 1px solid transparent;
+  outline: none;
+  font-size: 16px;
+  transition: border-bottom-color 0.2s ease-in-out;
+  padding-right: 4px;
 }
 
 .btn_Login {
@@ -457,7 +457,8 @@ const RfillIn = () => {
   border: 1px solid rgb(12, 13, 12);
   transition: all 0.3s ease;
 }
-.btn_Login1{
+
+.btn_Login1 {
   background-color: #fff;
   color: rgb(12, 13, 12);
   padding: 10px 28px;
@@ -477,29 +478,29 @@ const RfillIn = () => {
 }
 
 .form-control {
-   border: none;
-   border-bottom: 1px solid #ccc;
-   border-radius: 0;
-   box-shadow: none;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .form-control:focus {
-   border: none;
-   outline: none;
-   border-bottom: 1px solid #ccc;
-   box-shadow: none;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #ccc;
+  box-shadow: none;
 }
 
 input:-webkit-autofill,
 textarea:-webkit-autofill,
 select:-webkit-autofill {
-   -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
 
-   background-color: transparent;
+  background-color: transparent;
 
-   background-image: none;
+  background-image: none;
 
-   transition: background-color 50000s ease-in-out 0s;
+  transition: background-color 50000s ease-in-out 0s;
 }
 
 .px-6 {
@@ -507,33 +508,33 @@ select:-webkit-autofill {
 }
 
 .btn-underline::after {
-   content: "";
-   position: absolute;
-   bottom: 0;
-   left: 0;
-   width: 100%;
-   height: 2px;
-   background-color: #000000;
-   transform: scaleX(0);
-   transition: transform 0.3s ease;
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #000000;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
 }
 
 .btn-underline:hover::after {
-   transform: scaleX(1);
+  transform: scaleX(1);
 }
 
 .btn-underline {
-   position: relative;
-   padding: 0;
-   border: none;
-   background: none;
-   text-decoration: none;
-   font-size: 12pt;
-   color: #333;
-   cursor: pointer;
+  position: relative;
+  padding: 0;
+  border: none;
+  background: none;
+  text-decoration: none;
+  font-size: 12pt;
+  color: #333;
+  cursor: pointer;
 }
 
 .btn-underline:hover {
-   color: #000000;
+  color: #000000;
 }
 </style>

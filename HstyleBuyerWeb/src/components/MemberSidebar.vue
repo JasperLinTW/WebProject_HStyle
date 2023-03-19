@@ -20,7 +20,7 @@
                 <router-link to="/account/responses" class="text-decoration-none text-dark">客服回覆</router-link>
             </li>
         </ul>
-        <button type="button" @click="logout" class="btn">登出</button>
+        <button type="button" @click="logout" class="btn btn-link text-dark text-decoration-none">登出</button>
     </div>
 </template>
   
