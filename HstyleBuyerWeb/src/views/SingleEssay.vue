@@ -240,6 +240,7 @@ onMounted(async () => {
   getComments();
   // getEssayCommentLikes();
   getEssayRecommenations();
+  window.scrollTo(0, 0);
 });
 
 const formatDate = (dateString) => {

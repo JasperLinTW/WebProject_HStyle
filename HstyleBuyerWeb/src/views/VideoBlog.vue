@@ -101,6 +101,7 @@ onMounted(() => {
     getVideos();
     getLikesVideos();
     searchVideosByIndex();
+    window.scrollTo(0, 0);
 });
 
 eventBus.on("postVideoLike", () => {

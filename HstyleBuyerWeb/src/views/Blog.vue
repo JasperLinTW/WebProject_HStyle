@@ -84,7 +84,7 @@
       <div class="row">
         <EssayCard v-for="item in essays.slice(0, 4)" :data="item"></EssayCard>
       <!-- </div>
-              <div class="row"> -->
+                <div class="row"> -->
         <VideoCard v-for="items in videos.slice(0, 4)" :data="items"></VideoCard>
       </div>
       <!-- <EssayCard v-for="item in newessays.slice(0, 2)" :data="item"></EssayCard> -->
@@ -114,7 +114,7 @@
         <img src="../assets/image/jisoo.jpg" alt="Image" />
         <img src="../assets/image/jisoo.jpg" alt="Image" />
       </div>
-      </div> -->
+        </div> -->
 
     <div class="container-essay" ref="container">
       <div class="col-4 column card " ref="firstColumn">
@@ -145,15 +145,15 @@
           <div class="row mt-3">
             <div class="col mb-3">
               <div class="custom-card">
-                  <img src="../assets/image/column07.jpg" class="card-img-top" alt="..." />
-                  <div class="card-body">
-                    <h5 class="card-text">從街拍學 5 種風衣穿搭——懂得搭配經典風衣，讓都市女人美得更有情調</h5>
-                  <!-- <p class="card-text">
+                <img src="../assets/image/column07.jpg" class="card-img-top" alt="..." />
+                <div class="card-body">
+                  <h5 class="card-text">從街拍學 5 種風衣穿搭——懂得搭配經典風衣，讓都市女人美得更有情調</h5>
+                <!-- <p class="card-text">
                       2222222222This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit
                       longer.
-                            </p> -->
-                    <!-- <small class="text-muted">Last updated 3 mins ago</small> -->
-                  </div>
+                              </p> -->
+                  <!-- <small class="text-muted">Last updated 3 mins ago</small> -->
+                </div>
               </div>
             </div>
           </div>
@@ -165,7 +165,7 @@
                 <div class="card-body">
                   <h5 class="card-title1">Chanel 2023秋冬:這裡不是天堂，而是香奈兒秀場</h5>
                   
-                        </div> -->
+                          </div> -->
               </div>
             </div>
           </div>
@@ -208,7 +208,7 @@
     <!-- <div class="row">
           <VideoCard v-for="item in videos.slice(0,3)" :data="item"></VideoCard>
         </div>
-                                                    <EssayCard v-for="item in newessays.slice(0, 2)" :data="item"></EssayCard> -->
+                                                      <EssayCard v-for="item in newessays.slice(0, 2)" :data="item"></EssayCard> -->
     </div>
   </div>
 </template>
@@ -244,7 +244,7 @@ const getVideos = async () => {
     .get(`https://localhost:7243/api/Video`)
     .then((response) => {
       videos.value = response.data;
-       console.log(videos.value);
+      console.log(videos.value);
       // loaded.value = true;
     })
     .catch((error) => {
@@ -254,6 +254,7 @@ const getVideos = async () => {
 onMounted(() => {
   getEssayInfo();
   getVideos();
+  window.scrollTo(0, 0);
 });
 // const videos=ref([])
 // const getVideos=async()=>{
@@ -353,16 +354,16 @@ const setup = () => {
 </script>
 
 <style scoped>
-.caouselText1{
+.caouselText1 {
   margin-top: 100px;
 }
 
-.caouselText4{
+.caouselText4 {
   margin-top: 110px;
 }
 
 
-.caouselText5{
+.caouselText5 {
   margin-top: 80px;
 }
 
@@ -376,17 +377,18 @@ const setup = () => {
 }
 
 .caption-text {
-  margin-bottom: -50px; /* 清除<h5>元素預設的底部間距 */
+  margin-bottom: -50px;
+  /* 清除<h5>元素預設的底部間距 */
   color: #fff;
 }
 
-.caption-title{
-  top:100px;
+.caption-title {
+  top: 100px;
 }
 
- .card-text{
+.card-text {
   color: black;
- }
+}
 
 .wrap {
   width: 1300px;

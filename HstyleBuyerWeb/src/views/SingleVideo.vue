@@ -104,10 +104,10 @@
   </div>
   <!-- 商品推薦 -->
   <div class="container">
-    <div class="h-500 row" v-if="RecoProducts !== null">
-      <div class="border-bottom pt-6">商品推薦</div>
-      <div class="col-md-12">
-        <div class="row">
+    <div class="row" v-if="RecoProducts !== null">
+      <div class="pt-6 pb-2">商品推薦</div>
+      <div class="col-md-12 border-top">
+        <div class="row h-500">
           <div class="col-lg-4 py-5 px-0" v-for="product in RecoProducts" :key="product.product_Id">
             <div class="card d-flex justify-content-center align-items-center">
               <a :href="`http://localhost:5173/product/${product.product_Id}`">
@@ -294,6 +294,7 @@ onMounted(() => {
   // getComments();
   getRecommenations();
   postView();
+  window.scrollTo(0, 0);
 });
 
 eventBus.on("postVideoLike", () => {
