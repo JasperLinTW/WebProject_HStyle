@@ -14,22 +14,22 @@
             </button>
          </div>
       </form>
-      <!-- <button type="buttom" @click="putData()" class="btn btn-dark">填入資料</button> -->
+      <button type="buttom" @click="putData()" class="btn btn-link text-dark text-decoration-none">填入資料</button>
    </div>
    <!-- 呈現問題 -->
    <div class="container-sm" style="min-height: 800px">
       <!-- 搜尋的結果 -->
       <div v-if="searchResult !== null">
          <div v-for="question in searchResult" :key="question.id">
-            <div class="card" style="width: 700px; margin: 0px auto">
+            <div class="card mb-2" style="width: 700px; margin: 0px auto">
                <div class="card">
                   <div class="card-body">
                      <h5 class="card-title border-bottom mb-3">{{ question.question }}</h5>
                      <p class="card-text">{{ question.answer }}</p>
-                     <button class="btn btn-light me-2" @click="SatisfYes(question.commonQuestionId)">
+                     <button class="btn btn-light border-0 me-2" @click="SatisfYes(question.commonQuestionId)">
                         <i class="fa-regular fa-thumbs-up"></i>
                      </button>
-                     <button class="btn btn-light" @click="SatisfNo(question.commonQuestionId)"><i
+                     <button class="btn btn-light border-0" @click="SatisfNo(question.commonQuestionId)"><i
                            class="fa-regular fa-thumbs-down"></i></button>
                   </div>
                </div>
