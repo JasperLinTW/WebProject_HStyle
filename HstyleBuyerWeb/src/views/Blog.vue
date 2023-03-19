@@ -2,29 +2,72 @@
 <template>
   <div class="container">
     <div class="row border-bottom mb-5 mt-4 pb-2 d-flex justify-content-evenly">
-      <div class="col-md-1"><router-link to="/Blog/EssaysBlog" class="nav-link targetAll btn-underline">文章</router-link>
+      <div class="col-md-1">
+        <router-link
+          to="/Blog/EssaysBlog"
+          class="nav-link targetAll btn-underline"
+          >文章</router-link
+        >
       </div>
-      <div class="col-md-1"><router-link to="/Blog/VideoBlog" class="nav-link targetAll btn-underline">影音</router-link>
+      <div class="col-md-1">
+        <router-link
+          to="/Blog/VideoBlog"
+          class="nav-link targetAll btn-underline"
+          >影音</router-link
+        >
       </div>
     </div>
   </div>
 
   <div class="container">
-    <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+    <div
+      id="carouselExampleFade"
+      class="carousel slide carousel-fade"
+      data-bs-ride="carousel"
+    >
       <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselExampleFade" data-bs-slide-to="0" class="active"
-          aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#carouselExampleFade" data-bs-slide-to="1" aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#carouselExampleFade" data-bs-slide-to="2" aria-label="Slide 3"></button>
-        <button type="button" data-bs-target="#carouselExampleFade" data-bs-slide-to="3" aria-label="Slide 4"></button>
-        <button type="button" data-bs-target="#carouselExampleFade" data-bs-slide-to="4" aria-label="Slide 5"></button>
+        <button
+          type="button"
+          data-bs-target="#carouselExampleFade"
+          data-bs-slide-to="0"
+          class="active"
+          aria-current="true"
+          aria-label="Slide 1"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#carouselExampleFade"
+          data-bs-slide-to="1"
+          aria-label="Slide 2"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#carouselExampleFade"
+          data-bs-slide-to="2"
+          aria-label="Slide 3"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#carouselExampleFade"
+          data-bs-slide-to="3"
+          aria-label="Slide 4"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#carouselExampleFade"
+          data-bs-slide-to="4"
+          aria-label="Slide 5"
+        ></button>
       </div>
       <div class="carousel-inner">
         <div class="carousel-item active">
           <router-link :to="'/EssaysBlog/' + 19">
             <img src="../assets/image/carousel01.webp" alt="" />
             <div class="carousel-caption d-none d-md-block">
-              <h5 class="caouselText1">26歲的南韓女生Miss Sohee，是如何成為BLACKPINK演唱會指定的訂製服設計師？一件訂製服甚至要價上百萬</h5>
+              <h5 class="caouselText1">
+                26歲的南韓女生Miss
+                Sohee，是如何成為BLACKPINK演唱會指定的訂製服設計師？一件訂製服甚至要價上百萬
+              </h5>
             </div>
           </router-link>
         </div>
@@ -32,7 +75,9 @@
           <router-link :to="'/VideoBlog/' + 1">
             <img src="../assets/image/carousel02.jpg" alt="" />
             <div class="carousel-caption d-none d-md-block">
-              <h5>回顧英國女王伊麗莎白二世19套經典造型：從少女優雅到七彩同色系套裝</h5>
+              <h5>
+                回顧英國女王伊麗莎白二世19套經典造型：從少女優雅到七彩同色系套裝
+              </h5>
             </div>
           </router-link>
         </div>
@@ -40,7 +85,9 @@
           <router-link :to="'/EssaysBlog/' + 27">
             <img src="../assets/image/carousel03.jpg" alt="" />
             <div class="carousel-caption d-none d-md-block">
-              <h5 class="caption-title caouselText1">【2023奧斯卡】得獎名單一覽！《媽的多重宇宙》勇奪最佳影片等7大獎、楊紫瓊寫新歷史成為華人首位奧斯卡影后</h5>
+              <h5 class="caption-title caouselText1">
+                【2023奧斯卡】得獎名單一覽！《媽的多重宇宙》勇奪最佳影片等7大獎、楊紫瓊寫新歷史成為華人首位奧斯卡影后
+              </h5>
             </div>
           </router-link>
         </div>
@@ -48,7 +95,10 @@
           <router-link :to="'/EssaysBlog/' + 20">
             <img class="queenImg" src="../assets/image/carousel04.jpg" alt="" />
             <div class="carousel-caption d-none d-md-block">
-              <h5 class=".caouselText4">從黛安娜王妃、凱特王妃到 Jennie，Chanel 斜紋軟呢外套橫跨 70 年仍經典不敗</h5>
+              <h5 class=".caouselText4">
+                從黛安娜王妃、凱特王妃到 Jennie，Chanel 斜紋軟呢外套橫跨 70
+                年仍經典不敗
+              </h5>
             </div>
           </router-link>
         </div>
@@ -61,11 +111,21 @@
           </router-link>
         </div>
       </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+      <button
+        class="carousel-control-prev"
+        type="button"
+        data-bs-target="#carouselExampleFade"
+        data-bs-slide="prev"
+      >
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Previous</span>
       </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+      <button
+        class="carousel-control-next"
+        type="button"
+        data-bs-target="#carouselExampleFade"
+        data-bs-slide="next"
+      >
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
       </button>
@@ -83,16 +143,19 @@
     <div class="container">
       <div class="row">
         <EssayCard v-for="item in essays.slice(0, 4)" :data="item"></EssayCard>
-      <!-- </div>
+        <!-- </div>
                 <div class="row"> -->
-        <VideoCard v-for="items in videos.slice(0, 4)" :data="items"></VideoCard>
+        <VideoCard
+          v-for="items in videos.slice(0, 4)"
+          :data="items"
+        ></VideoCard>
       </div>
       <!-- <EssayCard v-for="item in newessays.slice(0, 2)" :data="item"></EssayCard> -->
     </div>
 
     <!-- 左右兩邊文章專區 -->
 
-  <!-- <div v-if="loaded" class="container-essay">
+    <!-- <div v-if="loaded" class="container-essay">
       <div class="column">
         <router-link :to="'/EssaysBlog/' + essays[1].essayId">
           <img :src="essays[0].imgs[0]" class="" alt="" />
@@ -117,11 +180,14 @@
         </div> -->
 
     <div class="container-essay" ref="container">
-      <div class="col-4 column card " ref="firstColumn">
+      <div class="col-4 column card" ref="firstColumn">
         <router-link :to="'/EssaysBlog/' + 19">
           <img src="../assets/image/jisoo.jpg" alt="Image" />
           <div class="card-overlay">
-            <h5>26歲的南韓女生Miss Sohee，是如何成為BLACKPINK演唱會指定的訂製服設計師？一件訂製服甚至要價上百萬</h5>
+            <h5>
+              26歲的南韓女生Miss
+              Sohee，是如何成為BLACKPINK演唱會指定的訂製服設計師？一件訂製服甚至要價上百萬
+            </h5>
           </div>
         </router-link>
       </div>
@@ -131,10 +197,17 @@
             <div class="col mb-3">
               <div class="custom-card">
                 <router-link :to="'/VideoBlog/' + 6">
-                  <img src="../assets/image/gigi.webp" class="card-img-top" alt="..." />
+                  <img
+                    src="../assets/image/gigi.webp"
+                    class="card-img-top"
+                    alt="..."
+                  />
                   <div class="card-body">
                     <h5 class="card-title1"></h5>
-                    <p class="card-text">Gigi吉吉哈蒂德的 #一週ootd：時裝週下班舒適不失時尚、酷媽工裝穿搭口袋藏女兒的零食</p>
+                    <p class="card-text">
+                      Gigi吉吉哈蒂德的
+                      #一週ootd：時裝週下班舒適不失時尚、酷媽工裝穿搭口袋藏女兒的零食
+                    </p>
                     <!-- <small class="text-muted">Last updated 3 mins ago</small> -->
                   </div>
                 </router-link>
@@ -145,10 +218,17 @@
           <div class="row mt-3">
             <div class="col mb-3">
               <div class="custom-card">
-                <img src="../assets/image/column07.jpg" class="card-img-top" alt="..." />
+                <img
+                  src="../assets/image/column07.jpg"
+                  class="card-img-top"
+                  alt="..."
+                />
                 <div class="card-body">
-                  <h5 class="card-text">從街拍學 5 種風衣穿搭——懂得搭配經典風衣，讓都市女人美得更有情調</h5>
-                <!-- <p class="card-text">
+                  <h5 class="card-text">
+                    從街拍學 5
+                    種風衣穿搭——懂得搭配經典風衣，讓都市女人美得更有情調
+                  </h5>
+                  <!-- <p class="card-text">
                       2222222222This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit
                       longer.
                               </p> -->
@@ -161,7 +241,7 @@
           <div class="row mt-3">
             <div class="col mb-3">
               <div class="custom-card">
-              <!-- <img src="../assets/image/column06.jpg" class="card-img-top" alt="..." />
+                <!-- <img src="../assets/image/column06.jpg" class="card-img-top" alt="..." />
                 <div class="card-body">
                   <h5 class="card-title1">Chanel 2023秋冬:這裡不是天堂，而是香奈兒秀場</h5>
                   
@@ -178,15 +258,22 @@
         </router-link>
         <router-link :to="'/EssaysBlog/' + 27">
           <img src="../assets/image/carousel03.jpg" alt="Image" />
-          <label class="card-text" for="">【2023奧斯卡】得獎名單一覽！《媽的多重宇宙》勇奪最佳影片等7大獎、楊紫瓊寫新歷史成為華人首位奧斯卡影后</label>
+          <label class="card-text" for=""
+            >【2023奧斯卡】得獎名單一覽！《媽的多重宇宙》勇奪最佳影片等7大獎、楊紫瓊寫新歷史成為華人首位奧斯卡影后</label
+          >
         </router-link>
         <router-link :to="'/EssaysBlog/' + 20">
           <img src="../assets/image/carousel04.webp" alt="" />
-          <label class="card-text" for="">從黛安娜王妃、凱特王妃到 Jennie，Chanel 斜紋軟呢外套橫跨 70 年仍經典不敗</label>
+          <label class="card-text" for=""
+            >從黛安娜王妃、凱特王妃到 Jennie，Chanel 斜紋軟呢外套橫跨 70
+            年仍經典不敗</label
+          >
         </router-link>
         <router-link :to="'/VideoBlog/' + 10">
           <img src="../assets/image/column05.jpg" alt="Image" />
-          <label class="card-text" for="">巴黎人冬天怎麼穿？直擊2023流行趨勢</label>
+          <label class="card-text" for=""
+            >巴黎人冬天怎麼穿？直擊2023流行趨勢</label
+          >
         </router-link>
       </div>
     </div>
@@ -205,7 +292,7 @@
         <EssayCard v-for="item in essays.slice(2, 6)" :data="item"></EssayCard>
         <VideoCard v-for="item in videos.slice(7, 11)" :data="item"></VideoCard>
       </div>
-    <!-- <div class="row">
+      <!-- <div class="row">
           <VideoCard v-for="item in videos.slice(0,3)" :data="item"></VideoCard>
         </div>
                                                       <EssayCard v-for="item in newessays.slice(0, 2)" :data="item"></EssayCard> -->
@@ -305,7 +392,11 @@ $(function () {
   function moveImg() {
     slideMove = 0 - index * 1300;
     $("#slideImg").css("left", slideMove);
-    $(".pages li").eq(index).css("background", "white").siblings().css("background", "transparent");
+    $(".pages li")
+      .eq(index)
+      .css("background", "white")
+      .siblings()
+      .css("background", "transparent");
   }
   setInterval(autoImg, 2000);
   function autoImg() {
@@ -328,8 +419,10 @@ const setup = () => {
     const thirdColumnEl = thirdColumn.value;
     containerEl.addEventListener("scroll", () => {
       const scrollTop = containerEl.scrollTop;
-      const secondColumnTop = secondColumnEl.getBoundingClientRect().top + window.scrollY;
-      const thirdColumnTop = thirdColumnEl.getBoundingClientRect().top + window.scrollY;
+      const secondColumnTop =
+        secondColumnEl.getBoundingClientRect().top + window.scrollY;
+      const thirdColumnTop =
+        thirdColumnEl.getBoundingClientRect().top + window.scrollY;
       if (scrollTop < secondColumnTop || scrollTop > thirdColumnTop) {
         firstColumnEl.classList.add("col-4");
         secondColumnEl.classList.add("col-4");
@@ -361,7 +454,6 @@ const setup = () => {
 .caouselText4 {
   margin-top: 110px;
 }
-
 
 .caouselText5 {
   margin-top: 80px;
@@ -573,7 +665,7 @@ hr .lan {
   display: flex;
   position: relative;
   overflow-x: hidden;
-  height: 100vh;
+  height: 85vh;
   /* overflow-x: scroll; */
 }
 

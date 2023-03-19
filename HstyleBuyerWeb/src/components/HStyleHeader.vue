@@ -1,6 +1,13 @@
 <template>
   <header class="bg-opacity-0 targetAll sticky-top" id="myHeader">
     <router-link class="logo-style targetAll" to="/">
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap"
+        rel="stylesheet"
+      />
+      <!-- 改樣式 -->
       <h1 class="trans1">H'STYLE</h1>
     </router-link>
   </header>
@@ -10,67 +17,92 @@
         <span class="icon ma-1 my-1 px-3">
           <i class="fa-solid fa-magnifying-glass search targetAll"></i>
         </span>
-        <input class="fz14 pb-1 ps-4 textbox" id="search" type="text" v-model="keyword" @keydown.enter="onEnter" />
+        <input
+          class="fz14 pb-1 ps-4 textbox"
+          id="search"
+          type="text"
+          v-model="keyword"
+          @keydown.enter="onEnter"
+        />
       </div>
       <div id="NavbarContent" class="nav">
         <ul class="navbar-nav">
-
           <li class="nav-item dropdown">
-            <router-link to="/recommend" class="nav-link text-dark px-3"><span class="targetAll">推薦商品</span></router-link>
+            <router-link to="/recommend" class="nav-link text-dark px-3"
+              ><span class="targetAll">推薦商品</span></router-link
+            >
           </li>
           <a href="#"></a>
           <li class="nav-item dropdown">
-            <router-link to="/products/new" class="nav-link text-dark px-3"><span
-                class="targetAll">新品上市</span></router-link>
+            <router-link to="/products/new" class="nav-link text-dark px-3"
+              ><span class="targetAll">新品上市</span></router-link
+            >
           </li>
           <li class="nav-item dropdown">
-            <router-link to="/products/all" class="nav-link text-dark px-3"><span
-                class="targetAll">服飾名品</span></router-link>
+            <router-link to="/products/all" class="nav-link text-dark px-3"
+              ><span class="targetAll">服飾名品</span></router-link
+            >
           </li>
 
           <li class="nav-item dropdown">
             <a class="nav-link text-dark px-4" href="/Blog">部落格</a>
             <div class="dropdown-menu border-0 menu">
-              <div class="container ">
+              <div class="container">
                 <div class="row">
                   <!-- 文章部落格 -->
                   <div class="col-lg-12">
-                    <router-link to="/Blog/EssaysBlog" class="dropdown-item">文章部落格</router-link>
+                    <router-link to="/Blog/EssaysBlog" class="dropdown-item"
+                      >文章部落格</router-link
+                    >
                   </div>
                   <!-- 影片部落格 -->
                   <div class="col-lg-12">
-                    <router-link to="/Blog/VideoBlog" class="dropdown-item">影片部落格</router-link>
+                    <router-link to="/Blog/VideoBlog" class="dropdown-item"
+                      >影片部落格</router-link
+                    >
                   </div>
                 </div>
               </div>
             </div>
           </li>
-
-
         </ul>
       </div>
 
       <div class="nav justify-content-end ps-5">
         <div class="mx-3">
-          <router-link to="/account/MemberCollection" title="喜歡" class="text-dark"><i
-              class="fa-regular fa-heart icon-hover fz-18"></i></router-link>
+          <router-link
+            to="/account/MemberCollection"
+            title="喜歡"
+            class="text-dark"
+            ><i class="fa-regular fa-heart icon-hover fz-18"></i
+          ></router-link>
         </div>
         <div class="mx-3">
-          <a href="#" title="打卡" class="text-dark"><i class="fa-regular fa-circle-check  icon-hover fz-18"
-              data-bs-toggle="modal" data-bs-target="#checkInModal"></i></a>
+          <a href="#" title="打卡" class="text-dark"
+            ><i
+              class="fa-regular fa-circle-check icon-hover fz-18"
+              data-bs-toggle="modal"
+              data-bs-target="#checkInModal"
+            ></i
+          ></a>
         </div>
         <div class="mx-3">
-          <router-link to="/account/memberprofile" class="text-dark"><i
-              class="fa-regular fa-circle-user icon-hover"></i></router-link>
+          <router-link to="/account/memberprofile" class="text-dark"
+            ><i class="fa-regular fa-circle-user icon-hover"></i
+          ></router-link>
         </div>
         <div class="mx-3">
           <a href="#" title="購物車" class="text-dark">
-            <i class="fa-solid fa-cart-shopping icon-hover position-relative" data-bs-toggle="modal"
-              data-bs-target="#cartModal"><span
-                class="position-absolute top-0 start-100 translate-middle badge rounded-pill  bg-danger font-monospace px-1  ">{{
-                  cartItemsNum }}</span></i>
+            <i
+              class="fa-solid fa-cart-shopping icon-hover position-relative"
+              data-bs-toggle="modal"
+              data-bs-target="#cartModal"
+              ><span
+                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger font-monospace px-1"
+                >{{ cartItemsNum }}</span
+              ></i
+            >
           </a>
-
         </div>
       </div>
     </div>
@@ -90,19 +122,16 @@ const UpdateCartCount = (CartCount) => {
   cartItemsNum.value = CartCount;
 };
 
-
 const showCart = () => {
-  $("#cartModal").modal('show');
-}
-eventBus.on('showCartEvent', showCart)
-
+  $("#cartModal").modal("show");
+};
+eventBus.on("showCartEvent", showCart);
 
 const keyword = ref(null);
 
 const onEnter = () => {
-  eventBus.emit('search', keyword)
-}
-
+  eventBus.emit("search", keyword);
+};
 
 onMounted(() => {
   window.addEventListener("scroll", function () {
@@ -115,6 +144,11 @@ onMounted(() => {
 });
 </script>
 <style scoped>
+h1.trans1 {
+  font-family: "Roboto Slab", serif;
+  text-align: center;
+}
+
 .badge {
   font-size: 5px;
 }

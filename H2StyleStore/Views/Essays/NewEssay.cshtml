@@ -104,7 +104,7 @@
                     @Html.LabelFor(model => model.UpLoad, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-12">
                         <input class="form-control" type="datetime-local" id="Upload" name="UpLoad" value="@UpLoad" />
-                        @Html.ValidationMessageFor(model => model.UpLoad, "", new { @class = "text-danger"})
+                        @Html.ValidationMessageFor(model => model.UpLoad, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 @{
@@ -123,10 +123,16 @@
 
             <br />
             <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
+                <div class="col-md-offset-2 col-md-12">
                     <input id="submit" type="submit" value="確定" class="btn btn-secondary" />
+                    <input type="button" id="insertInfo" value="demo" class="btn btn-link text-dark text-decoration-none" />
                 </div>
             </div>
+            @*<div class="form-group">
+                <div class="col-md-offset-2 col-md-12">
+                    <input type="button" id="insertInfo" value="demo" class="btn btn-link text-dark text-decoration-none" />
+                </div>
+            </div>*@
         </div>
     </div>
 
@@ -185,6 +191,12 @@
     <script src="../../Scripts/plugins/codemirror/mode/xml/xml.js"></script>
     <script src="../../Scripts/plugins/codemirror/mode/htmlmixed/htmlmixed.js"></script>
     <script>
+        //1.使用jQuery的$(function(){})函数，当DOM元素都已加载完毕时执行其中的函数。
+
+        //2.使用Summernote插件对ID为summernote的元素进行富文本编辑器的初始化。
+
+        //3.当ID为submit的元素被点击时，将.note - editable类下的HTML内容获取出来，
+        //并经过encodeURI()进行编码，然后将编码后的值赋给ID为editor的元素的value属性。
         $(function () {
             // Summernote
             $('#summernote').summernote()
@@ -232,6 +244,24 @@
             });
         });
 
+        $('#insertInfo').on("click", function () {
+            document.getElementById("ETitle").value = "太想要！Jimmy Choo《美少女戰士》聯名又釋出新款，桃紅夢幻水晶靴、露娜貓水晶手拿包，與月光仙子一同變身！";
+
+            document.getElementById("CategoryId").value = 1;
+            document.getElementById("Tags").value = "少女心,經典漫畫";
+            //document.getElementById("#summernote").value = "aaadaaaaa";
+
+
+            // 在編輯器中預設輸入指定的文字
+            var defaultContent = '《美少女戰士》的深層涵義，時尚自信的女性力量「透過時裝進行變身」正是武內直子的核心創作理念，而服飾在角色的身份上扮演極為重要的功能，特別是美少女戰士變身時的鞋履。我們兩人皆希望能在展現女性賦權之外，透過個人的時尚品味與特色，提升自信、激發包容心並彰顯魅力。— JIMMY CHOO 創意總監 Sandra Choi我非常開心幻想中的人物和故事情節，受到世界各地人們的喜愛。一直以來，我覺得最重要的是這些年輕女孩身上的青春活力、純粹想像力和女性力量，這與時髦又帶有個性的JIMMY CHOO品牌精神不謀而合。美少女戰士》漫畫作者武內直子女士';
+            $('#summernote').summernote('code', defaultContent);
+
+            // 獲取其他表單的值
+            var uploadDate = $('#UpLoad').val();
+            var removedDate = $('#Removed').val();
+            document.getElementById("UploadDate").value = uploadDate;
+            document.getElementById("RemovedDate").value = removedDate;
+        })
     </script>
 }
 
