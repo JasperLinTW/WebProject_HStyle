@@ -109,7 +109,7 @@ namespace H2StyleStore.Controllers
 		public ActionResult CreateVideo(CreateVideoVM model, HttpPostedFileBase videoFile, HttpPostedFileBase imageFile)
 		{
 			ViewBag.VideoCategoryItems = _videoRepository.GetVideoCategories();
-
+			if (!ModelState.IsValid) { return View(model); }
 			try
 			{
 				if (model.OffShelffTime<=DateTime.Now)
@@ -128,7 +128,7 @@ namespace H2StyleStore.Controllers
 
 			try
 			{
-				if (model.OnShelffTime <= DateTime.Now)
+				if (model.OnShelffTime <= DateTime.Today)
 				{
 					throw new Exception("上架時間不能小於今天");
 				}

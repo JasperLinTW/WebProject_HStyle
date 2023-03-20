@@ -106,11 +106,11 @@
                             <b>標簽：</b>
                             @("#"+string.Join(" #",item.Tags))
 
-                            <b>上架：</b>
+                            @*<b>上架：</b>
                             @Html.DisplayFor(modelItem => item.UpLoad)
 
                             <b>下架：</b>
-                            @Html.DisplayFor(modelItem => item.Removed)
+                            @Html.DisplayFor(modelItem => item.Removed)*@
                         </td>
                         <td class="invisible">
                             @Html.DisplayFor(modelItem => item.CategoryId)
