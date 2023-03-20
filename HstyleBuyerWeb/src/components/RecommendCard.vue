@@ -8,7 +8,7 @@
             </a>
             <div class="card-body position-relative">
                 <div class="card-title fw-bold">{{ data.product_Name }}</div>
-                <span>$NT {{ data.unitPrice }}</span>
+                <span>NT$ {{ data.unitPrice.toLocaleString() }}</span>
             </div>
 
         </div>

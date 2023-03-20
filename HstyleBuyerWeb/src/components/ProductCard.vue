@@ -12,7 +12,7 @@
           <label class="fz-9" v-if="tag === newProduct">{{ newProduct }}</label>
         </div>
         <div class="card-title fw-bold">{{ data.product_Name }}</div>
-        <span>$NT {{ data.unitPrice }}</span>
+        <span>NT$ {{ data.unitPrice.toLocaleString() }}</span>
         <div class="card-text text-end">
           <span v-if="!data.isClicked"><i class="fa-regular fa-heart icon-hover fz-18"
               @click="likesProduct(data)"></i></span>
