@@ -46,7 +46,12 @@
                 class="d-flex justify-content-between align-items-center pt-3"
               >
                 <div class="mb-0 fz-15 mx-2 pt-2">
-                  <span>NT$ {{ item.unitPrice * item.quantity }}</span>
+                  <span
+                    >NT$
+                    {{
+                      (item.unitPrice * item.quantity).toLocaleString()
+                    }}</span
+                  >
                 </div>
                 <div class="btn-group-sm" role="group">
                   <button
@@ -76,7 +81,7 @@
         </div>
         <div v-if="!isEmpty" class="modal-footer px-2">
           <div>
-            <strong>NT$ {{ products.total }}</strong>
+            <strong>NT$ {{ products.total.toLocaleString() }}</strong>
           </div>
 
           <div class="ps-2">
