@@ -184,7 +184,11 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 			{
 				foreach (var pId in order)
 				{
-					ordersproducts.Add(pId);
+					if (pId != 37) //新品標籤
+					{
+						ordersproducts.Add(pId);
+					}
+					
 				}
 			}
 			var dbPro = _db.Products.Include(x => x.Tags);

@@ -163,8 +163,6 @@ namespace HStyleApi.Models.Services
 		{
 			IEnumerable<ProductDto> products;
 			List<int> recommendlist = new List<int>();
-			List<string> tag = new List<string>();
-			tag.Add("新品");
 			List<int> products_id = new List<int>();
 			int targetnumber = 3;
 
