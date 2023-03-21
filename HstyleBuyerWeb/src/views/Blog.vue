@@ -451,6 +451,7 @@ const setup = () => {
     container,
     secondColumn,
     thirdColumn,
+    
   };
 };
 </script>

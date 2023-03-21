@@ -184,13 +184,13 @@ namespace HStyleApi.Models.InfraStructures.Repositories
 			var data = _db.EcommentsLikes.SingleOrDefault(e => e.CommentId==commentId && e.MemberId == memberId);
 			if (data== null)
 			{
-				EssaysComment ecommentlike = new EssaysComment()
+				EcommentsLike ecommentlike = new EcommentsLike()
 				{
 					MemberId = memberId,
 					CommentId = commentId
 				};
 				_db.Add(ecommentlike);
-				Ecommentdata.Elike +=1;
+				Ecommentdata.Elike ++;
 			}
 			else
 			{

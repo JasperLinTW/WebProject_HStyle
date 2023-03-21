@@ -8,12 +8,13 @@
   <div class="column">
     <div class="fashion">{{ essays.categoryName }}</div>
     <div class="text">{{ essays.etitle }}</div>
-    <div class="Who">
+    <div class="Who">By {{ essays.influencerName }}</div>
+    <!-- <div class="Who">
       By
       <router-link :to="`/Blog/EssaysBlog/${essays.influencerName}`">{{
         essays.influencerName
       }}</router-link>
-    </div>
+    </div> -->
     <div class="Time">{{ formatDate(essays.uplodTime) }}</div>
     <hr />
 
@@ -78,26 +79,39 @@
       </div>
     </form>
     <div class="comments-container">
-      <div class="comments">
-        <div
-          class="comment"
-          v-for="comment in essayComments"
-          :key="comment.commentId"
-        >
-          <img class="avatar" src="../assets/image/user.png" alt="avatar" />
-          <div class="comment-body">
-            <h5 class="comment-user">{{ comment.memberName }}</h5>
-            <p class="comment-text">{{ comment.ecomment }}</p>
-            <div class="comment-actions">
+      <div class="row comments">
+        <div class="" v-for="comment in essayComments" :key="comment.commentId">
+          <div
+            class="row"
+            style="background-color: #f8f8f8; padding-top: 10px; margin: 10px"
+          >
+            <div class="col-1">
+              <img class="avatar" src="../assets/image/user.png" alt="avatar" />
+            </div>
+            <div class="col-7 d-flex justify-content-start">
+              <div class="row">
+                <div class="col-8">
+                  <h5 class="comment=user">{{ comment.memberName }}</h5>
+                </div>
+                <div class="col-12">
+                  <p class="comment=text">{{ comment.ecomment }}</p>
+                </div>
+              </div>
+              <!-- <div class="row">
+                        
+                     </div> -->
+            </div>
+            <div class="col-4">
+              <!-- <div class="comment-actions"> -->
               <i
                 v-if="!comment.commentIsClicked"
                 class="far fa-thumbs-up like-btn"
-                @click="postCommentLike()"
+                @click="postCommentLike(comment.commentId)"
               ></i>
               <i
-                v-else="comment.commentIsClicked"
+                v-else
                 class="fas fa-thumbs-up like-btn"
-                @click="postCommentLike()"
+                @click="postCommentLike(comment.commentId)"
               ></i>
               <span class="likes-count">{{ comment.likes }}</span>
               <span class="comment-date">{{ comment.etime.slice(0, 10) }}</span>
@@ -114,12 +128,10 @@ import { useRoute } from "vue-router";
 import { ref, onMounted } from "vue";
 // import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
-
 // const router = useRouter();
-
 const route = useRoute();
 //console.log(route.params.id);
-
+const isLoaded = ref(false);
 const essays = ref({});
 //得到essay
 const getEssayInfo = async () => {
@@ -129,13 +141,61 @@ const getEssayInfo = async () => {
       essays.value = response.data;
       //console.log(essays.value);
     })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+const RecoProducts = ref([]);
 
+// 喜歡的評論
+let likesComments = ref([]);
+const likeCommentId = ref([]);
+const getCommentLikes = async () => {
+  await axios
+    .get(`https://localhost:7243/api/Essay/comment/Likes`, {
+      withCredentials: true,
+    })
+    .then((response) => {
+      if (response.data.length > 0) {
+        likesComments.value = response.data;
+        likeCommentId.value = likesComments.value.map((likes) => {
+          return likes.commentId;
+        });
+      }
+      console.log("like comment");
+      console.log(likeCommentId.value);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  getComments();
+};
+//得到評論的值
+const commentIsClicked = ref([]);
+const getComments = async () => {
+  await axios
+    .get(`https://localhost:7243/api/Essay/Comments/${route.params.id}`)
+    .then((response) => {
+      essayComments.value = response.data;
+      commentIsClicked.value = response.data.map((v) => {
+        v.commentIsClicked = likeCommentId.value.includes(
+          parseInt(v.commentId)
+        );
+        return v;
+      });
+      // essayComments.value = response.data;
+      isLoaded.value = true;
+      //console.log(commentIsClicked.value);
+      console.log("評論");
+      console.log(essayComments.value);
+    })
     .catch((error) => {
       console.log(error);
     });
 };
 
-const RecoProducts = ref([]);
+const essayComments = ref([]);
+
 //商品推薦
 const getEssayRecommenations = async () => {
   await axios
@@ -150,36 +210,15 @@ const getEssayRecommenations = async () => {
     });
 };
 
-const essayComments = ref([]);
-//得到評論的值
-const getComments = async () => {
-  await axios
-    .get(`https://localhost:7243/api/Essay/Comments/${route.params.id}`)
-    .then((response) => {
-      response.data.map((v) => {
-        v.commentIsClicked = likeCommentId.value.includes(parseInt(v.id));
-        return v;
-      });
-      essayComments.value = response.data;
-      //isLoaded.value = true;
-      //console.log(commentIsClicked.value);
-      console.log(essayComments.value);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-};
-
-// const likesessayComments = ref([]);
-// const likesCommenrId = ref([]);
-// //評論按贊
-// const getEssayCommentLikes = async () => {
+//評論按贊
+// const postEssayCommentLikes = async () => {
 //   await axios
-//     .get(`https://localhost:7243/api/Essay/comment/Likes/${commentId}`, {
+//     .post(`https://localhost:7243/api/Essay/comment/Likes/${commentId}`, {
 //       withCredentials: true,
 //     })
 //     .then((response) => {
 //       commentIsClicked.value = !commentIsClicked.value;
+//       getCommentLikes();
 //     })
 //     .catch((error) => {
 //       console.log(error);
@@ -189,36 +228,14 @@ const getComments = async () => {
 //     });
 // };
 
-// 喜歡的評論
-const likeCommentId = ref([]);
-const getCommentLikes = async () => {
-  await axios
-    .get(`https://localhost:7243/api/Essay/comment/Likes`, {
-      withCredentials: true,
-    })
-    .then((response) => {
-      if (response.data.length > 0) {
-        //likesComments.value = response.data;
-        likeCommentId.value = response.data.map((likes) => {
-          return likes.commentId;
-        });
-      }
-      console.log(response.data);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  // getComments();
-};
-
 // 點擊喜歡的留言
 // const commentId = ref(false);
 const postCommentLike = (commentId) => {
   console.log(commentId);
-  console.log(essayComments.value.commentId);
+  console.log(essayComments.value);
   axios
     .post(
-      `https://localhost:7243/api/Essay/comment/Likes/${commentId}`,
+      `https://localhost:7243/api/Essay/CommentLike/${commentId}`,
       {},
       { withCredentials: true }
     )
@@ -233,7 +250,6 @@ const postCommentLike = (commentId) => {
       }
     });
 };
-
 //寫留言
 const comment = ref("");
 const postComment = async () => {
@@ -254,15 +270,13 @@ const postComment = async () => {
       }
     });
 };
-
 onMounted(async () => {
   getEssayInfo();
-  getComments();
+  // getComments();
   getCommentLikes();
   getEssayRecommenations();
   window.scrollTo(0, 0);
 });
-
 const formatDate = (dateString) => {
   const date = new Date(dateString);
   const year = date.getFullYear();
@@ -416,16 +430,20 @@ img {
 
 .Who {
   position: absolute;
-  top: -34em;
+  margin-top: 8px;
+ 
   left: 70%;
-  transform: translateX(-50%);
+  transform: translateX(-50%); 
+  top: -18em;
+  font-size: 18px;
 }
 
 .Time {
   position: absolute;
-  top: -32em;
+  top: -16em;
   left: 70%;
   transform: translateX(-50%);
+  font-size: 18px;
 }
 
 .wrapper {
@@ -617,8 +635,9 @@ a {
 }
 
 .comment-text {
+  margin-top: 30px;
   margin-bottom: 5px;
-  margin-left: 50px;
+  margin-left: 60px;
 }
 
 .comment-actions {
@@ -667,8 +686,8 @@ a {
 }
 
 .comment {
-  display: flex;
-  align-items: flex-start;
+  /* display: flex; */
+  /* align-items: flex-start; */
   margin-bottom: 20px;
 }
 
