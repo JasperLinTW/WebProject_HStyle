@@ -8,27 +8,21 @@
                   <div class="dropdown-toggle" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">排序</div>
                   <ul class="dropdown-menu menu border-0 mt-1" aria-labelledby="sortDropdown">
                      <li>
-                        <a class="dropdown-item" href="#" v-for="(option, index) in sortOptions" :key="index" @click="setSortOption(option)"
-                           >{{ option }}
-                           <i
-                              class="fa-solid fa-check ps-1 fs-7"
-                              v-if="selectedSortOption === option && selectedSortOption !== null && selectedSortOption !== ''"
-                           ></i
-                        ></a>
+                        <a class="dropdown-item" href="#" v-for="(option, index) in sortOptions" :key="index"
+                           @click="setSortOption(option)">{{ option }}
+                           <i class="fa-solid fa-check ps-1 fs-7"
+                              v-if="selectedSortOption === option && selectedSortOption !== null && selectedSortOption !== ''"></i></a>
                      </li>
                   </ul>
                </div>
                <div class="filter">
-                  <div class="dropdown-toggle" id="categoryDropdown" data-bs-toggle="dropdown" aria-expanded="false">類別</div>
+                  <div class="dropdown-toggle" id="categoryDropdown" data-bs-toggle="dropdown" aria-expanded="false">類別
+                  </div>
                   <ul class="dropdown-menu menu border-0 mt-1" aria-labelledby="categoryDropdown">
                      <li>
-                        <router-link
-                           v-for="(option, index) in categoryOptions"
-                           :key="index"
-                           :to="option === '全部' ? '/products/all' : `/products/${option}`"
-                           class="dropdown-item"
-                           >{{ option }}<i class="fa-solid fa-check ps-1 fs-7" v-if="selectedCatoOption === option"></i
-                        ></router-link>
+                        <router-link v-for="(option, index) in categoryOptions" :key="index"
+                           :to="option === '全部' ? '/products/all' : `/products/${option}`" class="dropdown-item">{{ option
+                           }}<i class="fa-solid fa-check ps-1 fs-7" v-if="selectedCatoOption === option"></i></router-link>
                      </li>
                   </ul>
                </div>
@@ -37,24 +31,18 @@
                   <ul class="dropdown-menu menu border-0 mt-1" aria-labelledby="colorDropdown">
                      <div class="row">
                         <li class="col-md-4">
-                           <a
-                              class="dropdown-item item me-3"
-                              href="#"
+                           <a class="dropdown-item item me-3" href="#"
                               v-for="(option, index) in colorOptions.slice(0, Math.ceil(colorOptions.length / 2))"
-                              :key="index"
-                              @click="setColorOption(option)"
-                              >{{ option
-                              }}<i class="fa-solid fa-check ps-1 fs-7" v-if="selectedColorOption === option && selectedColorOption !== null"></i>
+                              :key="index" @click="setColorOption(option)">{{ option
+                              }}<i class="fa-solid fa-check ps-1 fs-7"
+                                 v-if="selectedColorOption === option && selectedColorOption !== null"></i>
                            </a>
                         </li>
                         <li class="col-md-3">
-                           <a
-                              class="dropdown-item item"
-                              href="#"
+                           <a class="dropdown-item item" href="#"
                               v-for="(option, index) in colorOptions.slice(Math.ceil(colorOptions.length / 2))"
-                              :key="index"
-                              @click="setColorOption(option)"
-                              >{{ option }}<i class="fa-solid fa-check ps-1 fs-7" v-if="selectedColorOption === option"></i>
+                              :key="index" @click="setColorOption(option)">{{ option }}<i
+                                 class="fa-solid fa-check ps-1 fs-7" v-if="selectedColorOption === option"></i>
                            </a>
                         </li>
                      </div>

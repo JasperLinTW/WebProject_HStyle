@@ -43,8 +43,9 @@
           </div>
           <div class="col-md-12 pt-5"></div>
           <div class="col-md-12 text-start mt-2">
-            <button @click="addItem()" class="add-to-cart"> NT$ {{ product.unitPrice }}<span class="border-start  ms-2"
-                data-bs-target="#exampleModal"><span class="ps-2">加入購物車</span></span></button>
+            <button @click="addItem()" class="add-to-cart"> NT$ {{ product.unitPrice > 0 ?
+              product.unitPrice.toLocaleString() : 0 }}<span class="border-start  ms-2" data-bs-target="#exampleModal"><span
+                  class="ps-2">加入購物車</span></span></button>
             <span class=" pl-2" v-if="!isClicked" @click="likesProduct()"><i
                 class="fa-regular fa-heart icon-hover fz-18"></i></span>
             <span class="pl-2" v-else @click="likesProduct()"><i class="fa-solid fa-heart fz-18"></i></span>
