@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>數字輸入驗證</title>
+</head>
+<body>
+
+  <form>
+    <label for="numberInput">請輸入數字：</label>
+    <input type="text" id="numberInput" oninput="validateNumber(this)" onkeypress="allowOnlyNumbersAndDot(event)">
+  </form>
+
+  <script>
+    function validateNumber(input) {
+        var regex = /^(\d{1,18}(\.\d{0,2})?)?$/;
+
+        // 驗證輸入值
+        if (!regex.test(input.value)) {
+            input.value = input.value.slice(0, input.value.length-1);
+        } 
+    }
+
+    function allowOnlyNumbersAndDot(event) {
+      // 允許數字、小數點、退格鍵
+      var allowedKeys = [8, 46];
+      
+      // 檢查是否為數字或小數點
+      if ((event.keyCode < 48 || event.keyCode > 57) && (event.keyCode !== 46 && event.keyCode !== 8)) {
+        event.preventDefault();
+      }
+    }
+  </script>
+
+</body>
+</html>

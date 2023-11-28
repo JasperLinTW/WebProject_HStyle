@@ -21,7 +21,7 @@ namespace HStyleApi.Controllers
         {
             _repo= new CartRepo(db);
             _CartService = new CartService(_repo);
-			_memberId = 1;//TODO從COOKIE取
+			_memberId = 2;//TODO從COOKIE取
 		}
         [HttpPost("Checkout")]
         public IActionResult Checkout(CheckoutDTO value)

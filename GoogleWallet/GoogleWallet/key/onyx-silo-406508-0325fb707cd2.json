@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "onyx-silo-406508",
+  "private_key_id": "0325fb707cd2271b968666df77fa434437c75a11",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCtJN178qbRTBqp\nUWSKsfVk+mLA+RXoMwodsKgy60yEUoeJcFFs8CjqDgPZSx6DLau0fnI/M3g2Ofgl\nqRxRcqF5a2bMwAUsZh1sz57t0S6rWlDRBDH3B1xV0BtxlWtqbUQmAD4DIgLTihe8\nKfmSszGBPxm6LNJtj7A/d35zyTTMn/nsRk40tb2TGZxTu2dcBupupX8rqzdBxwvs\nA5/BmI/tnHGwADEnfdJwkqANR8c5d0ZOgM/f5MnxI6a+6hdowqV3mFXQma4vQrto\nyJLsCCmkPPjbb0rUh4Ag/Vkkd/ZAfptDWw9uBQCSVaB4AAhX/0in/EA9s9bmxu7R\nwWEwxTJPAgMBAAECggEABsYBmNGSKhpGlBIi6J7JS//URjADEI2Smz0SehokvlZ2\nMUUWF7jAzlXpsPdUhGrlzo6rIdgodJf0TRDeZ+dKnt6PQST6mX/jLc26LhvirgG/\nVfX1OHCZcaKjDYtRY51OWbLlD31QoVLugRtz79kXxN0hlgbJMqUOOZAPVTCYDVsy\nRyGuwXwek5eHKRaHIAnZTYV07FSsKBhoUimlwOLOpTt/YHLGJl4WoBH8+ZA2B3r/\nsoz6AOYdcR0EkHolFSaFvOHlgdQmFWeQ69YMaFbQl885iKPAJfXjgtFdi9NQPyJJ\n+vW97bamq6aXVZZvCwrBb2kJjMblLre0eba3Ndd14QKBgQDj06+dzCUk3Wvu8vIq\nJLZfj8M4d7IMo1lt1Vx+kWdWxzlps2NWUx6s49nF5RPrSTRy3mLewa9Ifli0ky/r\n0iNmXU36Q4gj4X7kG5XVNu0f3uVCUFw9IgjJSzuzalkeE/CzUYEabA1UY8d0Iyi1\nNSCEN5D6LTfKb+YcszgPSik/7wKBgQDCjhVT0E4oEullW470gGymSuVtUQMNjWFx\nsqwhavtEfuPYFKDbDGW0SWlZnG02yIjNqIggoECfIZGDowcVG/H72KRZv3X3HmvB\nyyVeukJNhg49HzliTKkR/pdKgt4Eg03fsughXMYGcyjo3VOb4TSOzYhIwyOimE5a\nqALtwv7ToQKBgERR5bcXUgg1EjnsxuwWaE5N6UgUtOMPVTEXq44VAn1GbxQghGiN\nsoQ8K8EpigijwkO0JsgQIwVFRkqYXOWF9bGrx0eGWtwPsiKrlwoCV6eYCv4Q5Sg7\n/ZCHrBaIjML1TdgoV+PZhUHKTjSomnuEvASKOUKcrr9ZQRNYNzZ2kdonAoGALPmH\neJ6Y0q68gY/O1jqx4ydBLioiGInsUspI/FisyULEDPmHzdtpz2mBDxQYMyfcaB5j\niZdCGQc7ikCvrHOPVvbX119pN70yj9QUSXepSB6LQBntvAmYs+40rybdiBGKeQH0\no3G83VTVyi8P2uMOsUxWCuwBWt72jgJ02t3O5sECgYEAt9xvDJZ8E4scXTKWb/Q+\nM8DRX8rbe6mnVqaCXUFnpcA9oaCVCkcg5PDmQNOrXKe/3hi0EwSjBuOsOw9zWgKU\nd7o1Oert2DUTkeQjlQC7rBPaBVMjlLazs4bw3oA++tT2xtaHoEVGGl5KA5OxNumf\nJ0tBRm9uS8byXhAWvVs1ii4=\n-----END PRIVATE KEY-----\n",
+  "client_email": "wallet-acct@onyx-silo-406508.iam.gserviceaccount.com",
+  "client_id": "110601521988906614829",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/wallet-acct%40onyx-silo-406508.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

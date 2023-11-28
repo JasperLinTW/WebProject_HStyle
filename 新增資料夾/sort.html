@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var data = [
+    { str: "A", date1: new Date("2023-01-01"), date2: new Date("2023-01-03"),date3: new Date("2023-01-02") },
+    { str: "B", date1: new Date("2023-01-02"), date2: new Date("2023-01-04"),date3: new Date("2023-01-03") },
+    { str: "C", date1: new Date("2023-01-02"), date2: new Date("2023-01-04"),date3: new Date("2023-01-03") },
+];
+
+
+
+function getDateForString(data) {
+    switch (data.str) {
+        case "A":
+            return data.date1;
+        case "B":
+            return data.date2;
+        case "C":
+            return data.date3;
+        default:
+            return null; 
+    }
+}
+data.sort(function(a, b) {
+    let aTime = getDateForString(a);
+    let bTime = getDateForString(b);
+    console.log("Atime:"+aTime);
+    console.log("Btime:"+bTime);
+    console.log(aTime > bTime);
+    return aTime - bTime;
+});
+        console.log(data);
+    </script>
+</body>
+</html>
